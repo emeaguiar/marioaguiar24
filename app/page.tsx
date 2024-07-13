@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { Bars3Icon } from "@heroicons/react/16/solid";
+
 /**
  * Next dependencies
  */
@@ -11,7 +12,7 @@ import Link from "next/link";
  * Internal dependencies
  */
 import { merriweather } from "@/app/ui/fonts";
-import Card from "@/app/ui/card/card";
+import ServicesCard from "@/app/ui/services/card";
 import Logo from "@/app/ui/logo";
 
 export default function Home() {
@@ -40,24 +41,37 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-4 items-center">
-        <Card title="Desarrollo de Frontend" type="mobile">
+        <ServicesCard title="Desarrollo de Frontend" type="mobile">
           <p className="text-center">
             Sitios responsivos con las últimas tecnologías y la mejor experiencia del usuario
           </p>
-        </Card>
+        </ServicesCard>
 
-        <Card title="Performance y Accesibilidad" type="performance">
+        <ServicesCard title="Performance y Accesibilidad" type="performance">
           <p className="text-center">
             Sitios rápidos, inclusivos, y fáciles de encontrar
           </p>
-        </Card>
+        </ServicesCard>
 
-        <Card title="WordPress" type="wordpress">
+        <ServicesCard title="WordPress" type="wordpress">
           <p className="text-center">
             Temas, plugins, optimización a nivel avanzado
           </p>
-        </Card>
+        </ServicesCard>
       </div>
+
+      <div className="flex items-center bg-primary px-4 py-8 text-background text-center">
+        <p className="font-bold text-xl">
+          Desde hace 10 años que comencé mi viaje, he hecho trabajos freelance, de agencia, consultoría, pláticas, y he colaborado con personas talentosas para crear sitios web en todo tipo de ramos.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-4 items-center">
+        <h2 className={ `${ merriweather.className } font-bold` }>
+          Del Blog…
+        </h2>
+      </div>
+
     </main>
   );
 }

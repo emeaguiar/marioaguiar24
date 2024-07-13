@@ -8,7 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {},
+      colors: {
+        'foreground': 'var(--color--foreground)',
+        'background': 'var(--color--background)',
+        'primary': 'var(--color--primary)',
+        'secondary': 'var(--color--secondary)',
+      }
     },
   },
   plugins: [],
