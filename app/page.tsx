@@ -14,6 +14,7 @@ import Link from "next/link";
 import { H2 } from "@/app/ui/blog/elements";
 import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
+import ProjectCards from "@/app/ui/projects/cards";
 import ServicesCard from "@/app/ui/services/card";
 import Logo from "@/app/ui/logo";
 
@@ -76,10 +77,12 @@ export default function Home() {
         <BlogCards />
       </div>
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 items-center">
         <H2>
           Projectos
         </H2>
+
+        <ProjectCards />
       </div>
     </main>
   );
