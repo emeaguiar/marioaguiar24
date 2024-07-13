@@ -3,8 +3,10 @@
  */
 import {
     Merriweather,
-    Noto_Sans
+    Long_Cang,
+    Noto_Sans,
 } from "next/font/google";
 
 export const merriweather = Merriweather({ subsets: ["latin"], weight: [ '400', '700' ] });
 export const notoSans = Noto_Sans({ subsets: ["latin"], weight: [ '400', '600' ] });
+export const longCang = Long_Cang({ subsets: ["latin"], weight: [ '400' ] });
