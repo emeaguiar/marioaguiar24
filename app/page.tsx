@@ -11,6 +11,7 @@ import Link from "next/link";
 /**
  * Internal dependencies
  */
+import { H2 } from "@/app/ui/blog/elements";
 import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
 import ServicesCard from "@/app/ui/services/card";
@@ -68,11 +69,17 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-10 items-center px-4">
-        <h2 className={ `${ merriweather.className } font-bold text-2xl` }>
+        <H2>
           Del Blog…
-        </h2>
+        </H2>
 
         <BlogCards />
+      </div>
+
+      <div className="flex flex-col gap-8">
+        <H2>
+          Projectos
+        </H2>
       </div>
     </main>
   );
