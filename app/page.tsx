@@ -11,7 +11,7 @@ import Link from "next/link";
 /**
  * Internal dependencies
  */
-import { H2 } from "@/app/ui/blog/elements";
+import { H2 } from "@/app/ui/elements";
 import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
 import ProjectCards from "@/app/ui/projects/cards";
@@ -83,6 +83,22 @@ export default function Home() {
         </H2>
 
         <ProjectCards />
+      </div>
+
+      <div className="bg-primary flex flex-col gap-8 items-center px-4 py-8 w-full">
+        <div className="flex flex-col gap-4 items-center">
+          <H2 className="text-background">
+            ¿Convencido?
+          </H2>
+
+          <p className="text-background text-center">
+            ¡Trabajemos juntos! Enviáme un mensaje de correo y descubramos como podemos colaborar
+          </p>
+        </div>
+
+        <button className="bg-background font-bold px-4 py-2 rounded-lg text-primary uppercase">
+          Contact
+        </button>
       </div>
     </main>
   );
