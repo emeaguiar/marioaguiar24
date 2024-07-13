@@ -16,6 +16,7 @@ import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
 import ProjectCards from "@/app/ui/projects/cards";
 import ServicesCard from "@/app/ui/services/card";
+import TestimonialsCard from "@/app/ui/testimonials/card";
 import Logo from "@/app/ui/logo";
 
 export default function Home() {
@@ -99,6 +100,14 @@ export default function Home() {
         <button className="bg-background font-bold px-4 py-2 rounded-lg text-primary uppercase">
           Contact
         </button>
+      </div>
+
+      <div className="flex flex-col gap-10 items-center">
+        <H2>
+          ¿Por qué trabajar conmigo?
+        </H2>
+
+        <TestimonialsCard />
       </div>
     </main>
   );
