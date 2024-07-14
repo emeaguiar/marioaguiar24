@@ -9,6 +9,7 @@
   --color--primary: hsla(350, 72%, 52%, 1);
   --color--surface: var(--color--background);
   --color--on-surface: var(--color--foreground);
+  --color--underline: var(--color--primary);
 }
 
 body {

@@ -11,7 +11,10 @@ import Link from "next/link";
 /**
  * Internal dependencies
  */
-import { H2 } from "@/app/ui/elements";
+import {
+  H2,
+  WithUnderline,
+} from "@/app/ui/elements";
 import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
 import Logo from "@/app/ui/logo";
@@ -42,7 +45,9 @@ export default function Home() {
         </h1>
 
         <p className="text-lg text-center lg:text-3xl">
-          ¡Hola! Soy <strong>Mario</strong>.
+          ¡Hola! Soy <strong>
+            <WithUnderline>Mario</WithUnderline>
+          </strong>.
         </p>
 
         <p className="text-center">
