@@ -87,7 +87,7 @@ export default function Home() {
         <BlogCards />
       </div>
 
-      <div className="flex flex-col gap-8 items-center">
+      <div className="flex flex-col gap-8 items-center w-full lg:max-w-screen-xl">
         <H2 id="projects">
           Proyectos
         </H2>
@@ -95,20 +95,22 @@ export default function Home() {
         <ProjectCards />
       </div>
 
-      <div className="bg-primary flex flex-col gap-8 items-center px-4 py-8 w-full">
-        <div className="flex flex-col gap-4 items-center max-w-screen-md">
-          <H2 className="text-white">
-            ¿Convencido?
-          </H2>
+      <div className="bg-primary flex items-center px-4 py-8 w-full lg:max-w-screen-xl lg:rounded-2xl lg:p-12">
+        <div className="flex flex-col gap-8 w-full lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-4 items-center max-w-screen-md lg:items-start">
+            <H2 className="text-white">
+              ¿Convencido?
+            </H2>
 
-          <p className="text-white text-center">
-            ¡Trabajemos juntos! Enviáme un mensaje de correo y descubramos como podemos colaborar
-          </p>
+            <p className="text-white text-center">
+              ¡Trabajemos juntos! Enviáme un mensaje de correo y descubramos como podemos colaborar
+            </p>
+          </div>
+
+          <button className="bg-background font-bold px-4 py-2 rounded-lg text-primary uppercase">
+            Contact
+          </button>
         </div>
-
-        <button className="bg-background font-bold px-4 py-2 rounded-lg text-primary uppercase">
-          Contact
-        </button>
       </div>
 
       <div className="flex flex-col gap-10 items-center max-w-screen-md">

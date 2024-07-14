@@ -31,7 +31,7 @@ function CardsRow( {
                     </div>
 
                     <div className="h-full lg:col-span-2 lg:overflow-hidden">
-                        <Card className="aspect-video" />
+                        <Card className="lg:aspect-video" />
                     </div>
                 </>
             ) }
@@ -39,7 +39,7 @@ function CardsRow( {
             { inverted && (
                 <>
                     <div className="h-full lg:col-span-2 lg:overflow-hidden">
-                        <Card className="aspect-video" />
+                        <Card className="lg:aspect-video" />
                     </div>
 
                     <div className="h-full lg:overflow-hidden">
@@ -56,7 +56,7 @@ function Card( {
 }: {
     className?: string;
 } ) {
-    // @TODO: Fix aspect ratio and colum span
+    // @TODO: Fix width in mobile
     return (
         <div className={ clsx(
             'flex aspect-project-closed h-full',
@@ -68,6 +68,7 @@ function Card( {
                 width="700"
                 height="420"
                 className="w-full object-cover"
+                sizes="(max-width: 1280px) 100vw, 33vw"
             />
         </div>
     )
