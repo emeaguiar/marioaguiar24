@@ -113,7 +113,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-10 items-center max-w-screen-md">
+      <div className="flex flex-col gap-10 items-center max-w-screen-md lg:gap-20">
         <H2 id="testimonials">
           ¿Por qué trabajar conmigo?
         </H2>
