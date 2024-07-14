@@ -16,6 +16,7 @@ import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
 import ProjectCards from "@/app/ui/projects/cards";
 import ServicesCard from "@/app/ui/services/card";
+import SocialLinks from "@/app/ui/social/social-links";
 import TestimonialsCard from "@/app/ui/testimonials/card";
 import Logo from "@/app/ui/logo";
 
@@ -24,7 +25,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col gap-6 items-center">
       <div className="flex justify-between w-full p-4">
         <Link href="/">
-          <Logo />
+          <Logo className="text-2xl" />
         </Link>
 
         <button className="md:hidden">
@@ -88,11 +89,11 @@ export default function Home() {
 
       <div className="bg-primary flex flex-col gap-8 items-center px-4 py-8 w-full">
         <div className="flex flex-col gap-4 items-center">
-          <H2 className="text-background">
+          <H2 className="text-white">
             ¿Convencido?
           </H2>
 
-          <p className="text-background text-center">
+          <p className="text-white text-center">
             ¡Trabajemos juntos! Enviáme un mensaje de correo y descubramos como podemos colaborar
           </p>
         </div>
@@ -109,6 +110,19 @@ export default function Home() {
 
         <TestimonialsCard />
       </div>
+
+      <div className="flex">
+        <p className={ `${ merriweather.className } font-bold text-2xl text-center` }>
+          Siempre mejoro,<br />
+          mejorando la web.
+        </p>
+      </div>
+
+      <footer className="bg-primary flex flex-col gap-10 items-center p-8 w-full">
+        <SocialLinks />
+
+        <Logo className="text-3xl" inverted={ true } />
+      </footer>
     </main>
   );
 }

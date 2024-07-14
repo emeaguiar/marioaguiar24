@@ -7,15 +7,8 @@
   --color--background: hsla(0, 0%, 100%, 1);
   --color--secondary: hsla(339, 80%, 78%, 1);
   --color--primary: hsla(350, 72%, 52%, 1);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color--foreground: hsla(0, 0%, 100%, 1);
-    --color--background: hsla(0, 0%, 0%, 1);
-    --color--secondary: hsla(339, 80%, 78%, 1);
-    --color--primary: hsla(350, 72%, 52%, 1);
-  }
+  --color--surface: var(--color--background);
+  --color--on-surface: var(--color--foreground);
 }
 
 body {
