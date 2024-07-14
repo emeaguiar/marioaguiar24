@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { Bars3Icon } from "@heroicons/react/24/solid";
-
-/**
  * Next dependencies
  */
 import Link from "next/link";
@@ -21,10 +16,6 @@ export default function Header() {
             <Link href="/" className="hover:text-primary">
                 <Logo />
             </Link>
-
-            <button className="lg:hidden">  
-                <Bars3Icon className="h-6 w-6" />
-            </button>
 
             <DesktopMenu />
 

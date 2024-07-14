@@ -1,7 +1,14 @@
+"use client";
+
 /**
  * External dependencies
  */
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import {
+    Bars3Icon,
+    XMarkIcon,
+} from "@heroicons/react/24/solid";
+import clsx from "clsx";
+import { useState } from "react";
 
 /**
  * Next dependencies
@@ -14,22 +21,43 @@ import Link from "next/link";
 import { MENU_ITEMS } from "@/app/lib/data";
 
 export default function MobileMenu() {
+    const [ isOpen, setIsOpen ] = useState( false );
+
     return (
-        <div className="absolute inset-0 bg-background z-10 lg:hidden">
-            <button className="absolute top-0 right-0 p-4">
-                <XMarkIcon className="h-6 w-6" />
+        <>
+            <button
+                className="lg:hidden"
+                onClick={ () => setIsOpen( true ) }
+            >  
+                <Bars3Icon className="h-6 w-6" />
             </button>
-            
-            <nav aria-label="Menú Principal" className="flex flex-col gap-4">
-                <ul className="flex flex-col gap-4 py-2 w-full">
-                    { MENU_ITEMS.map( ( item, index ) => (
-                        <MenuItem key={ index } href={ item.href }>
-                            { item.label }
-                        </MenuItem>
-                    ) ) }
-                </ul>
-            </nav>
-        </div>        
+
+            <div className={
+                clsx(
+                    "absolute inset-0 bg-background z-10 transition-transform -translate-y-full lg:hidden",
+                    {
+                        "translate-y-0": isOpen,
+                    }
+                )
+            }>
+                <button
+                    className="absolute top-1 right-0 p-4"
+                    onClick={ () => setIsOpen( false ) }
+                >
+                    <XMarkIcon className="h-6 w-6" />
+                </button>
+
+                <nav aria-label="Menú Principal" className="flex flex-col gap-4">
+                    <ul className="flex flex-col gap-4 py-3 w-full">
+                        { MENU_ITEMS.map( ( item, index ) => (
+                            <MenuItem key={ index } href={ item.href }>
+                                { item.label }
+                            </MenuItem>
+                        ) ) }
+                    </ul>
+                </nav>
+            </div>
+        </>      
     );
 }
 
