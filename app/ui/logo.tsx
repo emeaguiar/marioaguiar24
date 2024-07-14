@@ -9,10 +9,8 @@ import clsx from "clsx";
 import { longCang } from "@/app/ui/fonts";
 
 export default function Logo( {
-    className,
     inverted,
 }: {
-    className?: string;
     inverted?: boolean;
 } ) {
     return (
@@ -22,7 +20,7 @@ export default function Logo( {
                 "text-white": inverted,
             }
         ) }>
-            <h2 className={ className }>
+            <h2 className="text-3xl">
                 Mario Aguiar.
             </h2>
         </div>

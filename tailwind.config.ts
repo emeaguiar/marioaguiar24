@@ -13,7 +13,10 @@ const config: Config = {
         'background': 'var(--color--background)',
         'primary': 'var(--color--primary)',
         'secondary': 'var(--color--secondary)',
-      }
+      },
+      spacing: {
+        '18': '4.5rem',
+      },
     },
   },
   plugins: [],

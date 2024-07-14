@@ -14,23 +14,26 @@ import Link from "next/link";
 import { H2 } from "@/app/ui/elements";
 import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
+import Logo from "@/app/ui/logo";
+import Navigation from "@/app/ui/navigation";
 import ProjectCards from "@/app/ui/projects/cards";
 import ServicesCard from "@/app/ui/services/card";
 import SocialLinks from "@/app/ui/social/social-links";
 import TestimonialsCard from "@/app/ui/testimonials/card";
-import Logo from "@/app/ui/logo";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col gap-6 items-center">
       <div className="flex justify-between w-full p-4 max-w-screen-xl">
         <Link href="/">
-          <Logo className="text-2xl" />
+          <Logo />
         </Link>
 
         <button className="md:hidden">
           <Bars3Icon className="h-6 w-6" />
         </button>
+
+        <Navigation />
       </div>
 
       <div className={`${merriweather.className} flex flex-col gap-4 items-center`}>
@@ -80,8 +83,8 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-8 items-center">
-        <H2>
-          Projectos
+        <H2 id="projects">
+          Proyectos
         </H2>
 
         <ProjectCards />
@@ -104,7 +107,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-10 items-center max-w-screen-md">
-        <H2>
+        <H2 id="testimonials">
           ¿Por qué trabajar conmigo?
         </H2>
 
@@ -121,7 +124,7 @@ export default function Home() {
       <footer className="bg-primary flex flex-col gap-10 items-center p-8 w-full">
         <SocialLinks />
 
-        <Logo className="text-3xl" inverted={ true } />
+        <Logo inverted={ true } />
       </footer>
     </main>
   );
