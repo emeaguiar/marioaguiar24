@@ -28,7 +28,7 @@ export default function Navigation() {
             <ul className="flex justify-between gap-18">
                 { NAVIGATION_ITEMS.map( ( item, index ) => (
                     <NavigationItem key={ index }>
-                        <Link href={ item.href }>
+                        <Link href={ item.href } className="hover:text-primary">
                             { item.label }
                         </Link>
                     </NavigationItem>

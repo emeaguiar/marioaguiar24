@@ -128,10 +128,12 @@ export default function Home() {
         </p>
       </div>
 
-      <footer className="bg-primary flex flex-col gap-10 items-center p-8 w-full">
+      <footer className="bg-primary flex flex-col gap-10 items-center p-8 w-full lg:gap-20">
         <SocialLinks />
 
-        <Logo inverted={ true } />
+        <Link href="/">
+          <Logo inverted={ true } />
+        </Link>
       </footer>
     </main>
   );

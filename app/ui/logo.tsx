@@ -16,8 +16,10 @@ export default function Logo( {
     return (
         <div className={ clsx(
             longCang.className,
+            'hover:text-primary',
             {
                 "text-white": inverted,
+                "hover:text-black": inverted,
             }
         ) }>
             <h2 className="text-3xl">
