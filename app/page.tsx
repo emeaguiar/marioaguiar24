@@ -79,7 +79,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-10 items-center px-4">
+      <div className="flex flex-col gap-10 items-center px-4 lg:max-w-screen-xl">
         <H2>
           Del Blog…
         </H2>
@@ -95,8 +95,8 @@ export default function Home() {
         <ProjectCards />
       </div>
 
-      <div className="bg-primary flex items-center px-4 py-8 w-full lg:max-w-screen-xl lg:rounded-2xl lg:p-12">
-        <div className="flex flex-col gap-8 w-full lg:flex-row lg:items-center lg:justify-between">
+      <div className=" flex items-center w-full lg:max-w-screen-xl lg:px-4">
+        <div className="bg-primary flex flex-col gap-8 px-4 py-8 w-full lg:flex-row lg:items-center lg:justify-between lg:rounded-2xl lg:p-12">
           <div className="flex flex-col gap-4 items-center max-w-screen-md lg:items-start">
             <H2 className="text-white">
               ¿Convencido?

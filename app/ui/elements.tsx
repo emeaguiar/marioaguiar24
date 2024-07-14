@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import clsx from "clsx";
+
+/**
  * Internal dependencies
  */
 import { merriweather } from "@/app/ui/fonts";
@@ -14,7 +19,10 @@ export function H2( {
 } ) {
     return (
         <h2
-            className={ `${ merriweather.className } font-bold text-2xl ${ className }` }
+            className={ clsx(
+                `${ merriweather.className } font-bold text-2xl`,
+                className,
+            ) }
             id={ id }
         >
             { children }

@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function Cards() {
     return (
-        <div className="grid gap-8 items-center w-full lg:grid-cols-3 lg:max-w-screen-xl">
+        <div className="grid gap-8 items-center w-full lg:grid-cols-3 lg:max-w-screen-xl lg:px-4">
             <CardsRow />
             <CardsRow inverted />
         </div>
