@@ -23,7 +23,7 @@ import Logo from "@/app/ui/logo";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col gap-6 items-center">
-      <div className="flex justify-between w-full p-4">
+      <div className="flex justify-between w-full p-4 max-w-screen-xl">
         <Link href="/">
           <Logo className="text-2xl" />
         </Link>
@@ -65,8 +65,8 @@ export default function Home() {
         </ServicesCard>
       </div>
 
-      <div className="flex items-center bg-primary px-4 py-8 text-background text-center">
-        <p className="font-bold text-xl">
+      <div className="bg-primary flex items-center justify-center px-4 py-8 text-background w-full">
+        <p className="font-bold max-w-screen-md text-center text-xl">
           Desde hace 10 años que comencé mi viaje, he hecho trabajos freelance, de agencia, consultoría, pláticas, y he colaborado con personas talentosas para crear sitios web en todo tipo de ramos.
         </p>
       </div>
@@ -88,7 +88,7 @@ export default function Home() {
       </div>
 
       <div className="bg-primary flex flex-col gap-8 items-center px-4 py-8 w-full">
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col gap-4 items-center max-w-screen-md">
           <H2 className="text-white">
             ¿Convencido?
           </H2>
@@ -103,7 +103,7 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="flex flex-col gap-10 items-center">
+      <div className="flex flex-col gap-10 items-center max-w-screen-md">
         <H2>
           ¿Por qué trabajar conmigo?
         </H2>
@@ -112,7 +112,7 @@ export default function Home() {
       </div>
 
       <div className="flex">
-        <p className={ `${ merriweather.className } font-bold text-2xl text-center` }>
+        <p className={ `${ merriweather.className } font-bold my-8 text-2xl text-center` }>
           Siempre mejoro,<br />
           mejorando la web.
         </p>
