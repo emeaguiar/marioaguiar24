@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      aspectRatio: {
+        'project-closed': '195 / 244',
+      },
       colors: {
         'foreground': 'var(--color--foreground)',
         'background': 'var(--color--background)',
