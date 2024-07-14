@@ -34,7 +34,7 @@ export default function MobileMenu() {
 
             <div className={
                 clsx(
-                    "absolute inset-0 bg-background z-10 transition-transform -translate-y-full lg:hidden",
+                    "fixed inset-0 bg-background z-10 transition-transform -translate-y-full lg:hidden",
                     {
                         "translate-y-0": isOpen,
                     }
