@@ -23,28 +23,33 @@ import TestimonialsCard from "@/app/ui/testimonials/card";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col gap-6 items-center">
+    <main className="flex min-h-screen flex-col gap-6 items-center md:gap-20">
       <div className="flex justify-between w-full p-4 max-w-screen-xl">
         <Link href="/">
           <Logo />
         </Link>
 
-        <button className="md:hidden">
+        <button className="md:hidden">  
           <Bars3Icon className="h-6 w-6" />
         </button>
 
         <Navigation />
       </div>
 
-      <div className={`${merriweather.className} flex flex-col gap-4 items-center`}>
-        <h1 className="text-2xl text-center">
-          Desarrollo de <br />Frontend
+      <div className={`${merriweather.className} flex flex-col gap-4 items-center md:gap-8`}>
+        <h1 className="font-bold text-2xl text-center md:text-5xl">
+          Desarrollo de <br className="md:hidden" />Frontend
         </h1>
 
+        <p className="text-lg text-center md:text-3xl">
+          ¡Hola! Soy <strong>Mario</strong>.
+        </p>
+
         <p className="text-center">
-          ¡Hola! Soy <strong>Mario</strong>. <br />
-          Desarrollador Frontend <br />
-          por más de 10 años
+          <span className="text-base md:mt-6 md:text-2xl">
+            Desarrollador Frontend <br />
+            por más de 10 años
+          </span>
         </p>
       </div>
 

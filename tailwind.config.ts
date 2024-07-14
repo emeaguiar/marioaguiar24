@@ -17,6 +17,9 @@ const config: Config = {
       spacing: {
         '18': '4.5rem',
       },
+      lineHeight: {
+        '12': '3rem',
+      },
     },
   },
   plugins: [],
