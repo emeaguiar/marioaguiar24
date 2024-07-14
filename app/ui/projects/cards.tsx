@@ -19,8 +19,8 @@ function Card() {
             <Image
                 src="/projects-thumbnail.jpg"
                 alt="Thumbnail"
-                width="390"
-                height="488"
+                width="500"
+                height="626"
             />
         </div>
     )
