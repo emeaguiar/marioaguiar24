@@ -12,7 +12,8 @@ import Link from "next/link";
  * Internal dependencies
  */
 import Logo from "@/app/ui/logo";
-import Navigation from "@/app/ui/navigation";
+import MobileMenu from "@/app/ui/menu/mobile";
+import DesktopMenu from "@/app/ui/menu/desktop";
 
 export default function Header() {
     return (
@@ -25,7 +26,9 @@ export default function Header() {
                 <Bars3Icon className="h-6 w-6" />
             </button>
 
-            <Navigation />
+            <DesktopMenu />
+
+            <MobileMenu />
         </div>
     )
 }

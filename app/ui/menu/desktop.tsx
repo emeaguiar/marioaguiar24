@@ -3,42 +3,28 @@
  */
 import Link from "next/link";
 
-const NAVIGATION_ITEMS = [
-    {
-        label: "Portafolio",
-        href: "/",
-    },
-    {
-        label: "Blog",
-        href: "/blog",
-    },
-    {
-        label: "Testimonios",
-        href: "#testimonials",
-    },
-    {
-        label: "Contacto",
-        href: "/contact",
-    },
-];
+/**
+ * Internal dependencies
+ */
+import { MENU_ITEMS } from "@/app/lib/data";
 
-export default function Navigation() {
+export default function DesktopMenu() {
     return (
         <nav aria-label="Navegación principal" className="hidden lg:flex">
             <ul className="flex justify-between gap-18">
-                { NAVIGATION_ITEMS.map( ( item, index ) => (
-                    <NavigationItem key={ index }>
+                { MENU_ITEMS.map( ( item, index ) => (
+                    <MenuItem key={ index }>
                         <Link href={ item.href } className="hover:text-primary">
                             { item.label }
                         </Link>
-                    </NavigationItem>
+                    </MenuItem>
                 ) ) }
             </ul>
         </nav>
     );
 }
 
-function NavigationItem( {
+function MenuItem( {
     children
 }: {
     children: React.ReactNode;
