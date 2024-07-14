@@ -38,13 +38,8 @@ export function WithUnderline( {
     className?: string;
 } ) {
     return (
-        <span
-            className={ clsx(
-                "relative isolate",
-                className,
-            ) }
-        >
-            <span className="absolute bottom-1 left-0 w-full h-2 bg-secondary opacity-80" />
+        <span className="relative isolate">
+            <span className="absolute bottom-1 left-0 w-full h-1 bg-secondary opacity-80 lg:h-2" />
 
             <span className="relative z-10">
                 { children }

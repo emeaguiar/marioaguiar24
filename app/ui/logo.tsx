@@ -14,14 +14,7 @@ export default function Logo( {
     inverted?: boolean;
 } ) {
     return (
-        <div className={ clsx(
-            longCang.className,
-            'hover:text-primary',
-            {
-                "text-white": inverted,
-                "hover:text-black": inverted,
-            }
-        ) }>
+        <div className={ longCang.className }>
             <h2 className="text-3xl">
                 Mario Aguiar.
             </h2>

@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col gap-6 items-center lg:gap-20">
       <div className="flex justify-between w-full p-4 max-w-screen-xl">
-        <Link href="/">
+        <Link href="/" className="hover:text-primary">
           <Logo />
         </Link>
 
@@ -136,7 +136,7 @@ export default function Home() {
       <footer className="bg-primary flex flex-col gap-10 items-center p-8 w-full lg:gap-20">
         <SocialLinks />
 
-        <Link href="/">
+        <Link href="/" className="text-white hover:text-black">
           <Logo inverted={ true } />
         </Link>
       </footer>
