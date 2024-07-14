@@ -10,7 +10,7 @@ import { merriweather } from "@/app/ui/fonts";
 
 export default function Cards() {
     return (
-        <div className="flex flex-col gap-8 items-center w-full">
+        <div className="grid gap-8 items-center w-full lg:grid-cols-3 lg:max-w-screen-xl">
             <Card />
             <Card />
             <Card />
@@ -24,8 +24,9 @@ function Card() {
             <Image
                 src="/thumbnail.jpg"
                 alt="Thumbnail"
-                width="500"
-                height="300"
+                width="700"
+                height="420"
+                sizes="(max-width: 1280px) 100vw, 33vw"
             />
 
             <div className="flex flex-col gap-4">
