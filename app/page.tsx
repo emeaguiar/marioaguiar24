@@ -23,37 +23,37 @@ import TestimonialsCard from "@/app/ui/testimonials/card";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col gap-6 items-center md:gap-20">
+    <main className="flex min-h-screen flex-col gap-6 items-center lg:gap-20">
       <div className="flex justify-between w-full p-4 max-w-screen-xl">
         <Link href="/">
           <Logo />
         </Link>
 
-        <button className="md:hidden">  
+        <button className="lg:hidden">  
           <Bars3Icon className="h-6 w-6" />
         </button>
 
         <Navigation />
       </div>
 
-      <div className={`${merriweather.className} flex flex-col gap-4 items-center md:gap-8`}>
-        <h1 className="font-bold text-2xl text-center md:text-5xl">
-          Desarrollo de <br className="md:hidden" />Frontend
+      <div className={`${merriweather.className} flex flex-col gap-4 items-center lg:gap-8`}>
+        <h1 className="font-bold text-2xl text-center lg:text-5xl">
+          Desarrollo de <br className="lg:hidden" />Frontend
         </h1>
 
-        <p className="text-lg text-center md:text-3xl">
+        <p className="text-lg text-center lg:text-3xl">
           ¡Hola! Soy <strong>Mario</strong>.
         </p>
 
         <p className="text-center">
-          <span className="text-base md:mt-6 md:text-2xl">
+          <span className="text-base lg:mt-6 lg:text-2xl">
             Desarrollador Frontend <br />
             por más de 10 años
           </span>
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 items-center">
+      <div className="grid gap-4 items-center lg:items-start lg:grid-cols-3 lg:max-w-screen-xl">
         <ServicesCard title="Desarrollo de Frontend" type="mobile">
           <p className="text-center">
             Sitios responsivos con las últimas tecnologías y la mejor experiencia del usuario
@@ -73,8 +73,8 @@ export default function Home() {
         </ServicesCard>
       </div>
 
-      <div className="bg-primary flex items-center justify-center px-4 py-8 text-background w-full">
-        <p className="font-bold max-w-screen-md text-center text-xl">
+      <div className="bg-primary flex items-center justify-center px-4 py-8 text-background w-full lg:py-20">
+        <p className="font-bold max-w-screen-md text-center text-xl lg:text-2xl">
           Desde hace 10 años que comencé mi viaje, he hecho trabajos freelance, de agencia, consultoría, pláticas, y he colaborado con personas talentosas para crear sitios web en todo tipo de ramos.
         </p>
       </div>

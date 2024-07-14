@@ -24,7 +24,7 @@ const NAVIGATION_ITEMS = [
 
 export default function Navigation() {
     return (
-        <nav aria-label="Navegación principal" className="flex">
+        <nav aria-label="Navegación principal" className="hidden lg:flex">
             <ul className="flex justify-between gap-18">
                 { NAVIGATION_ITEMS.map( ( item, index ) => (
                     <NavigationItem key={ index }>
