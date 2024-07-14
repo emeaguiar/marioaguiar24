@@ -4,6 +4,10 @@
 import { H2 } from "@/app/ui/elements";
 import BlogCards from "@/app/ui/blog/cards";
 
+export const metadata = {
+    title: "Blog",
+};
+
 export default function Page() {
     return (
         <div className="flex flex-col gap-10 items-center px-4 lg:max-w-screen-xl">
