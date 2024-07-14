@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { Bars3Icon } from "@heroicons/react/16/solid";
-
-/**
  * Next dependencies
  */
 import Link from "next/link";
@@ -17,27 +12,16 @@ import {
 } from "@/app/ui/elements";
 import { merriweather } from "@/app/ui/fonts";
 import BlogCards from "@/app/ui/blog/cards";
-import Logo from "@/app/ui/logo";
-import Navigation from "@/app/ui/navigation";
+import Footer from "@/app/ui/footer";
+import Header from "@/app/ui/header";
 import ProjectCards from "@/app/ui/projects/cards";
 import ServicesCard from "@/app/ui/services/card";
-import SocialLinks from "@/app/ui/social/social-links";
 import TestimonialsCard from "@/app/ui/testimonials/card";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col gap-6 items-center lg:gap-20">
-      <div className="flex justify-between w-full p-4 max-w-screen-xl">
-        <Link href="/" className="hover:text-primary">
-          <Logo />
-        </Link>
-
-        <button className="lg:hidden">  
-          <Bars3Icon className="h-6 w-6" />
-        </button>
-
-        <Navigation />
-      </div>
+      <Header />
 
       <div className={`${merriweather.className} flex flex-col gap-4 items-center lg:gap-8`}>
         <h1 className="font-bold text-2xl text-center lg:text-5xl">
@@ -133,13 +117,7 @@ export default function Home() {
         </p>
       </div>
 
-      <footer className="bg-primary flex flex-col gap-10 items-center p-8 w-full lg:gap-20">
-        <SocialLinks />
-
-        <Link href="/" className="text-white hover:text-black">
-          <Logo inverted={ true } />
-        </Link>
-      </footer>
+      <Footer />
     </main>
   );
 }
