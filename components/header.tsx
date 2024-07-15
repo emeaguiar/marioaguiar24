@@ -6,9 +6,9 @@ import Link from "next/link";
 /**
  * Internal dependencies
  */
-import Logo from "@/app/ui/logo";
-import MobileMenu from "@/app/ui/menu/mobile";
-import DesktopMenu from "@/app/ui/menu/desktop";
+import Logo from "@/components/logo";
+import MobileMenu from "@/components/menu/mobile";
+import DesktopMenu from "@/components/menu/desktop";
 
 export default function Header() {
     return (

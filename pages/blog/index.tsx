@@ -1,8 +1,8 @@
 /**
  * Internal dependencies
  */
-import { H2 } from "@/app/ui/elements";
-import BlogCards from "@/app/ui/blog/cards";
+import { H2 } from "@/components/elements";
+import BlogCards from "@/components/blog/cards";
 
 export const metadata = {
     title: "Blog",

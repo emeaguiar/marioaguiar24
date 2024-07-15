@@ -6,7 +6,7 @@ import Image from "next/image";
 /**
  * Internal dependencies
  */
-import { merriweather } from "@/app/ui/fonts";
+import { merriweather } from "@/components/fonts";
 
 export default function Cards() {
     return (
@@ -26,7 +26,6 @@ function Card() {
                 alt="Thumbnail"
                 width="700"
                 height="420"
-                sizes="(max-width: 1280px) 100vw, 33vw"
             />
 
             <div className="flex flex-col gap-4">

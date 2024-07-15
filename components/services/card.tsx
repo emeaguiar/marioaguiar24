@@ -1,10 +1,10 @@
 /**
  * Internal dependencies
  */
-import { merriweather } from "@/app/ui/fonts";
-import MobileIcon from "@/app/ui/services/icons/mobile-icon";
-import PerformanceIcon from "@/app/ui/services/icons/performance-icon";
-import WordPressIcon from "@/app/ui/services/icons/wordpress-icon";
+import { merriweather } from "@/components/fonts";
+import MobileIcon from "@/components/services/icons/mobile-icon";
+import PerformanceIcon from "@/components/services/icons/performance-icon";
+import WordPressIcon from "@/components/services/icons/wordpress-icon";
 
 const icons = {
     mobile: <MobileIcon />,
