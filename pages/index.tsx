@@ -31,6 +31,7 @@ export default function Home() {
         <title>
           { t( 'title' ) }
         </title>
+        <link rel="shortcut icon" href="/favicon.png" />
       </Head>
 
       <div className={`${merriweather.className} flex flex-col gap-4 items-center lg:gap-8`}>
