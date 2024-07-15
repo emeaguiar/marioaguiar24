@@ -2,11 +2,7 @@
  * External dependencies
  */
 import useTranslation from "next-translate/useTranslation";
-
-/**
- * Next dependencies
- */
-import Head from "next/head";
+import { NextSeo } from "next-seo";
 
 /**
  * Internal dependencies
@@ -30,6 +26,11 @@ export default function Page( {
 
     return (
         <>
+            <NextSeo
+                title={ t( 'title' ) }
+                description={ t( 'description' ) }
+            />
+
             <div className="flex flex-col gap-10 items-center px-4 lg:max-w-screen-xl">
                 <H2>
                     { t( 'title' ) }
