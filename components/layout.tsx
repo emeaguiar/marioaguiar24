@@ -8,15 +8,16 @@ export default function Layout( {
     children
 }: { children: React.ReactNode } ) {
     return (
-        <div className="flex flex-col gap-6 lg:gap-20">
-            <Header />
+        <>
+            <div className="flex flex-col items-center mb-6 lg:mb-20">
+                <Header />
+            </div>
 
             <main className="flex min-h-screen flex-col gap-6 items-center lg:gap-20">
                 { children }
             </main>
 
             <Footer />
-        </div>
-
+        </>
     );
 }
