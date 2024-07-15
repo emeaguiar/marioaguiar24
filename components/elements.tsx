@@ -30,12 +30,8 @@ export function H2( {
     );
 }
 
-export function WithUnderline( {
-    children,
-    className,
-}: {
+export function WithUnderline( { children }: {
     children?: React.ReactNode;
-    className?: string;
 } ) {
     return (
         <span className="relative isolate">
