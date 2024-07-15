@@ -3,6 +3,7 @@
  */
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import { NextSeo } from 'next-seo';
 
 /**
  * Next dependencies
@@ -28,9 +29,6 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>
-          { t( 'title' ) }
-        </title>
         <link rel="shortcut icon" href="/favicon.png" />
       </Head>
 

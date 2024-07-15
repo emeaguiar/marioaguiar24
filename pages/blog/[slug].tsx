@@ -4,6 +4,7 @@
 import { useMemo } from "react";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
+import { NextSeo } from "next-seo";
 
 /**
  * Internal dependencies
@@ -22,9 +23,13 @@ export default function PostPage( {
     const Component = useMemo( () => getMDXComponent( code ), [ code ] );
 
     return (
-        <div>
+        <>
+            <NextSeo
+                title={ frontmatter.title }
+                description={ frontmatter.description }
+            />
             <Component />
-        </div>
+        </>
     );
 }
 
