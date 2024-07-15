@@ -1,0 +1,67 @@
+/**
+ * External dependencies
+ */
+import { useMemo } from "react";
+import { bundleMDX } from "mdx-bundler";
+import { getMDXComponent } from "mdx-bundler/client";
+
+/**
+ * Internal dependencies
+ */
+import { getAllPosts, getPostsDirectory } from "@/lib/posts";
+
+export default function PostPage( {
+    code,
+    frontmatter,
+}: {
+    code: string;
+    frontmatter: {
+        [ key: string ]: any;
+    };
+} ) {
+    const Component = useMemo( () => getMDXComponent( code ), [ code ] );
+
+    return (
+        <div>
+            <Component />
+        </div>
+    );
+}
+
+export async function getStaticProps( {
+    params,
+    locale
+}: {
+    params: {
+        slug: string;
+    };
+    locale: '';
+} ) {
+    const postLocaleDirectory = getPostsDirectory( locale as "en" | "es" );
+
+    const { code, frontmatter } = await bundleMDX( {
+        file: `${ postLocaleDirectory }/${ params.slug }.mdx`,
+    } );
+
+    return {
+        props: {
+            code,
+            frontmatter,
+        },
+    };
+}
+
+export async function getStaticPaths() {
+    const spanishPosts = getAllPosts( 'es' );
+    const englishPosts = getAllPosts( 'en' );
+
+    const paths = [
+        ...spanishPosts.map( ( post ) => ( { params: { slug: post.slug }, locale: 'es' } ) ),
+        ...englishPosts.map( ( post ) => ( { params: { slug: post.slug }, locale: 'en' } ) ),
+    ];
+
+    return {
+        paths,
+        fallback: false,
+    };
+}
