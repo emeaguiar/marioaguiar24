@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import useTranslation from 'next-translate/useTranslation';
+
+/**
  * Next dependencies
  */
 import Head from "next/head";
@@ -17,11 +22,13 @@ import ServicesCard from "@/components/services/card";
 import TestimonialsCard from "@/components/testimonials/card";
 
 export default function Home() {
+  const { t } = useTranslation( 'home' );
+
   return (
     <>
       <Head>
         <title>
-          Mario Aguiar | Desarrollador Frontend
+          { t( 'title' ) }
         </title>
       </Head>
 
