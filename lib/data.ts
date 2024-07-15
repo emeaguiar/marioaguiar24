@@ -1,18 +1,18 @@
 export const MENU_ITEMS = [
     {
-        label: "Portafolio",
+        key: "portfolio",
         href: "/",
     },
     {
-        label: "Blog",
+        key: "blog",
         href: "/blog",
     },
     {
-        label: "Testimonios",
+        key: "testimonials",
         href: "#testimonials",
     },
     {
-        label: "Contacto",
+        key: "contact",
         href: "/contact",
     },
 ];

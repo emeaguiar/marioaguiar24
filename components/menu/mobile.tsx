@@ -8,6 +8,7 @@ import {
     XMarkIcon,
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
+import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 
 /**
@@ -22,6 +23,7 @@ import { MENU_ITEMS } from "@/lib/data";
 
 export default function MobileMenu() {
     const [ isOpen, setIsOpen ] = useState( false );
+    const { t } = useTranslation( 'common' );
 
     return (
         <>
@@ -49,9 +51,9 @@ export default function MobileMenu() {
 
                 <nav aria-label="Menú Principal" className="flex flex-col gap-4">
                     <ul className="flex flex-col gap-4 py-3 w-full">
-                        { MENU_ITEMS.map( ( item, index ) => (
-                            <MenuItem key={ index } href={ item.href }>
-                                { item.label }
+                        { MENU_ITEMS.map( ( { href, key }, index ) => (
+                            <MenuItem key={ index } href={ href }>
+                                { t( key ) }
                             </MenuItem>
                         ) ) }
                     </ul>
