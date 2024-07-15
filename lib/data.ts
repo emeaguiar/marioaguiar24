@@ -9,7 +9,7 @@ export const MENU_ITEMS = [
     },
     {
         key: "testimonials",
-        href: "#testimonials",
+        href: "/#testimonials",
     },
     {
         key: "contact",
