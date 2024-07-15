@@ -1,4 +1,9 @@
 /**
+ * Next dependencies
+ */
+import Head from "next/head";
+
+/**
  * Internal dependencies
  */
 import {
@@ -14,6 +19,12 @@ import TestimonialsCard from "@/components/testimonials/card";
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>
+          Mario Aguiar | Desarrollador Frontend
+        </title>
+      </Head>
+
       <div className={`${merriweather.className} flex flex-col gap-4 items-center lg:gap-8`}>
         <h1 className="font-bold text-2xl text-center lg:text-5xl">
           Desarrollo de <br className="lg:hidden" />Frontend
