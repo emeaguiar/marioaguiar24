@@ -8,12 +8,19 @@ import Head from "next/head";
  */
 import { H2 } from "@/components/elements";
 import BlogCards from "@/components/blog/cards";
+import { getPosts } from "@/lib/posts";
 
 export const metadata = {
     title: "Blog",
 };
 
-export default function Page() {
+export default function Page( {
+    posts,
+}: {
+    posts: {
+        [ key: string ]: any;
+    };
+} ) {
     return (
         <>
             <Head>
@@ -35,7 +42,7 @@ export default function Page() {
                     Lo más reciente…
                 </H2>
 
-                <BlogCards />
+                <BlogCards posts={ posts } />
 
                 <H2>
                     Lo más interesante…
@@ -45,4 +52,16 @@ export default function Page() {
             </div>
         </>
     );
+}
+
+export async function getStaticProps( { locale }: {
+    locale: "es" | "en";
+} ) {
+    const posts = getPosts( locale, 3 );
+
+    return {
+        props: {
+            posts,
+        },
+    };
 }

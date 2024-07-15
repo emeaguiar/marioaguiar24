@@ -9,7 +9,7 @@ import { NextSeo } from "next-seo";
 /**
  * Internal dependencies
  */
-import { getAllPosts, getPostsDirectory } from "@/lib/posts";
+import { getPosts, getPostsDirectory } from "@/lib/posts";
 
 export default function PostPage( {
     code,
@@ -57,8 +57,8 @@ export async function getStaticProps( {
 }
 
 export async function getStaticPaths() {
-    const spanishPosts = getAllPosts( 'es' );
-    const englishPosts = getAllPosts( 'en' );
+    const spanishPosts = getPosts( 'es' );
+    const englishPosts = getPosts( 'en' );
 
     const paths = [
         ...spanishPosts.map( ( post ) => ( { params: { slug: post.slug }, locale: 'es' } ) ),

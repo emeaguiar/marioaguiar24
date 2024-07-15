@@ -5,11 +5,10 @@ import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
 
-type PostItem = {
-    slug: string;
-    content: string;
-    [key: string]: string;
-};
+/**
+ * Internal dependencies
+ */
+import type { PostItem } from "@/types/post";
 
 function getPostSlugs( lang: "en" | "es" ) {
     return fs.readdirSync (getPostsDirectory( lang ) );
@@ -19,12 +18,18 @@ export function getPostsDirectory( lang: "en" | "es" ) {
     return join( process.cwd(), `/lib/_posts/${ lang }` );
 }
 
-export function getAllPosts(
-    lang: "en" | "es"
+export function getPosts(
+    lang: "en" | "es",
+    limit: number = 0
 ) {
-    const slugs = getPostSlugs( lang );
+    let slugs = getPostSlugs( lang );
+
+    if ( limit > 0 ) {
+        slugs = slugs.slice( 0, limit );
+    }
+
     const posts = slugs
-        .map( ( slug ) => getPostDataBySlug( slug, lang, [ 'slug', 'title' ] ) )
+        .map( ( slug ) => getPostDataBySlug( slug, lang, [ 'slug', 'title', 'description' ] ) )
         .sort( ( post1, post2 ) => ( post1.date > post2.date ? -1 : 1 ) );
 
     return posts;    
@@ -39,11 +44,11 @@ function getPostDataBySlug(
     const trimmedSlug = slug.replace( /\.mdx$/, '' );
     const fullPath = join( getPostsDirectory( lang ), `${ trimmedSlug }.mdx` );
     const fileContents = fs.readFileSync( fullPath, 'utf8' );
-    const { data, content } = matter( fileContents );
+    const { data } = matter( fileContents );
 
     const items: PostItem = {
         slug: '',
-        content: '',
+        description: '',
     };
 
     // Ensure only the minimal needed data is exposed
@@ -52,10 +57,7 @@ function getPostDataBySlug(
             items.slug = trimmedSlug;
         }
 
-        if ( field === 'content' ) {
-            items.content = content;
-        }
-
+        // Generic data.
         if ( data[ field ] ) {
             items[ field ] = data[ field ];
         }
