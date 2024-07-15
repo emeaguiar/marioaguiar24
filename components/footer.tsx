@@ -6,8 +6,8 @@ import Link from "next/link";
 /**
  * Internal dependencies
  */
-import Logo from "@/app/ui/logo";
-import SocialLinks from "@/app/ui/social/social-links";
+import Logo from "@/components/logo";
+import SocialLinks from "@/components/social/social-links";
 
 export default function Footer() {
     return (

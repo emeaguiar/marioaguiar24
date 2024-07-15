@@ -6,7 +6,7 @@ import clsx from "clsx";
 /**
  * Internal dependencies
  */
-import { longCang } from "@/app/ui/fonts";
+import { longCang } from "@/components/fonts";
 
 export default function Logo( {
     inverted,

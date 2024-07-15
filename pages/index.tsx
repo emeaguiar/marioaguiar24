@@ -1,28 +1,19 @@
 /**
- * Next dependencies
- */
-import Link from "next/link";
-
-/**
  * Internal dependencies
  */
 import {
   H2,
   WithUnderline,
-} from "@/app/ui/elements";
-import { merriweather } from "@/app/ui/fonts";
-import BlogCards from "@/app/ui/blog/cards";
-import Footer from "@/app/ui/footer";
-import Header from "@/app/ui/header";
-import ProjectCards from "@/app/ui/projects/cards";
-import ServicesCard from "@/app/ui/services/card";
-import TestimonialsCard from "@/app/ui/testimonials/card";
+} from "@/components/elements";
+import { merriweather } from "@/components/fonts";
+import BlogCards from "@/components/blog/cards";
+import ProjectCards from "@/components/projects/cards";
+import ServicesCard from "@/components/services/card";
+import TestimonialsCard from "@/components/testimonials/card";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col gap-6 items-center lg:gap-20">
-      <Header />
-
+    <>
       <div className={`${merriweather.className} flex flex-col gap-4 items-center lg:gap-8`}>
         <h1 className="font-bold text-2xl text-center lg:text-5xl">
           Desarrollo de <br className="lg:hidden" />Frontend
@@ -116,8 +107,6 @@ export default function Home() {
           mejorando la web.
         </p>
       </div>
-
-      <Footer />
-    </main>
+    </>
   );
 }

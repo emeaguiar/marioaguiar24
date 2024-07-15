@@ -6,7 +6,7 @@ import Image from "next/image";
 /**
  * Internal dependencies
  */
-import { merriweather } from "@/app/ui/fonts";
+import { merriweather } from "@/components/fonts";
 
 export default function Card() {
     return (

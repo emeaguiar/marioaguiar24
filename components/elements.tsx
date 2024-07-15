@@ -6,7 +6,7 @@ import clsx from "clsx";
 /**
  * Internal dependencies
  */
-import { merriweather } from "@/app/ui/fonts";
+import { merriweather } from "@/components/fonts";
 
 export function H2( {
     children,

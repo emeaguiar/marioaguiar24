@@ -6,7 +6,7 @@ import Link from "next/link";
 /**
  * Internal dependencies
  */
-import { MENU_ITEMS } from "@/app/lib/data";
+import { MENU_ITEMS } from "@/lib/data";
 
 export default function DesktopMenu() {
     return (

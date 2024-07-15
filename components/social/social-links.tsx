@@ -11,10 +11,10 @@ import Link from "next/link";
 /**
  * Internal dependencies
  */
-import FacebookIcon from "@/app/ui/social/icons/facebook";
-import InstagramIcon from "@/app/ui/social/icons/instagram";
-import LinkedInIcon from "@/app/ui/social/icons/linkedin";
-import TwitterIcon from "@/app/ui/social/icons/twitter";
+import FacebookIcon from "@/components/social/icons/facebook";
+import InstagramIcon from "@/components/social/icons/instagram";
+import LinkedInIcon from "@/components/social/icons/linkedin";
+import TwitterIcon from "@/components/social/icons/twitter";
 
 const SOCIAL_LINKS = [
     {
