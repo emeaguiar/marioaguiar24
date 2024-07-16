@@ -8,12 +8,34 @@ import clsx from "clsx";
  */
 import { merriweather } from "@/components/fonts";
 
+export function H1( {
+    children,
+    className,
+    id,
+}: {
+    children?: React.ReactNode;
+    className?: string;
+    id?: string;
+} ) {
+    return (
+        <h1
+            className={ clsx(
+                `${ merriweather.className } font-bold text-3xl/10 my-16 lg:max-w-screen-sm lg:mb-20 lg:mt-12 lg:text-4xl/normal lg:text-center`,
+                className,
+            ) }
+            id={ id }
+        >
+            { children }
+        </h1>
+    );
+}
+
 export function H2( {
     children,
     className,
     id,
 }: {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     className?: string;
     id?: string;
 } ) {
@@ -41,5 +63,15 @@ export function WithUnderline( { children }: {
                 { children }
             </span>
         </span>
+    );
+}
+
+export function BlogP( { children }: {
+    children?: React.ReactNode;
+} ) {
+    return (
+        <p className="text-xl/9 max-w-screen-sm">
+            { children }
+        </p>
     );
 }

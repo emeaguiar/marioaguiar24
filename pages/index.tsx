@@ -3,7 +3,6 @@
  */
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
-import { NextSeo } from 'next-seo';
 
 /**
  * Next dependencies
@@ -19,11 +18,17 @@ import {
 } from "@/components/elements";
 import { merriweather } from "@/components/fonts";
 import BlogCards from "@/components/blog/cards";
-import ProjectCards from "@/components/projects/cards";
 import ServicesCard from "@/components/services/card";
 import TestimonialsCard from "@/components/testimonials/card";
+import { getPosts } from "@/lib/posts";
 
-export default function Home() {
+export default function Home( {
+  posts,
+}: {
+  posts: {
+    [ key: string ]: any;
+  };
+} ) {
   const { t } = useTranslation( 'home' );
 
   return (
@@ -90,20 +95,12 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-10 items-center px-4 lg:max-w-screen-xl">
+      <div className="flex flex-col gap-10 items-center px-4 w-full lg:max-w-screen-xl">
         <H2>
           { t( 'blogTitle' ) }
         </H2>
 
-        <BlogCards />
-      </div>
-
-      <div className="flex flex-col gap-8 items-center w-full lg:max-w-screen-xl">
-        <H2 id="projects">
-          Proyectos
-        </H2>
-
-        <ProjectCards />
+        <BlogCards posts={ posts } />
       </div>
 
       <div className=" flex items-center w-full lg:max-w-screen-xl lg:px-4">
@@ -114,7 +111,7 @@ export default function Home() {
             </H2>
 
             <p className="text-white text-center">
-              { t( 'cta' ) }
+              { t( 'cta' ) }  
             </p>
           </div>
 
@@ -144,4 +141,16 @@ export default function Home() {
       </div>
     </>
   );
+}
+
+export async function getStaticProps( { locale }: {
+  locale: "es" | "en";
+} ) {
+  const posts = getPosts( locale, 3 );
+
+  return {
+    props: {
+      posts,
+    },
+  };
 }
