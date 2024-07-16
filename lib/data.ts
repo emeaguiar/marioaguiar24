@@ -16,3 +16,5 @@ export const MENU_ITEMS = [
         href: "/contact",
     },
 ];
+
+export const BLOG_PREFIX = "/blog";

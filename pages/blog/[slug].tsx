@@ -9,7 +9,15 @@ import { NextSeo } from "next-seo";
 /**
  * Internal dependencies
  */
-import { getPosts, getPostsDirectory } from "@/lib/posts";
+import {
+    H1,
+    H2,
+    BlogP,
+} from "@/components/elements";
+import {
+    getPosts,
+    getPostsDirectory,
+} from "@/lib/posts";
 
 export default function PostPage( {
     code,
@@ -28,7 +36,16 @@ export default function PostPage( {
                 title={ frontmatter.title }
                 description={ frontmatter.description }
             />
-            <Component />
+
+            <div className="flex flex-col gap-6 px-4">
+                <Component
+                    components={ {
+                        h1: H1,
+                        h2: H2,
+                        p: BlogP,
+                    } }
+                />
+            </div>
         </>
     );
 }

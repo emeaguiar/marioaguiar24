@@ -31,7 +31,7 @@ export default function Page( {
                 description={ t( 'description' ) }
             />
 
-            <div className="flex flex-col gap-10 items-center px-4 lg:max-w-screen-xl">
+            <div className="flex flex-col gap-10 items-center px-4 w-full lg:max-w-screen-xl">
                 <H2>
                     { t( 'title' ) }
                 </H2>
