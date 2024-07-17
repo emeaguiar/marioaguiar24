@@ -64,7 +64,7 @@ export function SocialLink( {
 } ) {
     return (
         <li>
-            <Link href={ href } aria-label={ `Go to social profile in ${ label }` } className="text-white hover:text-black">
+            <Link href={ href } aria-label={ `Go to social profile in ${ label }` } className="text-white hover:text-black dark:hover:text-sky-300">
                 { children }
             </Link>
         </li>

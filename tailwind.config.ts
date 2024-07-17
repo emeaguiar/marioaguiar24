@@ -7,6 +7,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./lib/_posts/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'selector',
   theme: {
     extend: {
       aspectRatio: {
@@ -17,6 +18,7 @@ const config: Config = {
         'background': 'var(--color--background)',
         'primary': 'var(--color--primary)',
         'secondary': 'var(--color--secondary)',
+        'underline': 'var(--color--underline)',
       },
       spacing: {
         '18': '4.5rem',

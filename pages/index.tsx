@@ -89,8 +89,8 @@ export default function Home( {
         </ServicesCard>
       </div>
 
-      <div className="bg-primary flex items-center justify-center px-4 py-8 text-background w-full lg:py-20">
-        <p className="font-bold max-w-screen-md text-center text-xl lg:text-2xl">
+      <div className="bg-primary flex items-center justify-center px-4 py-8 text-background w-full lg:py-20 dark:bg-slate-800">
+        <p className="font-bold max-w-screen-md text-center text-xl lg:text-2xl dark:text-foreground">
           { t( 'strip' ) }
         </p>
       </div>
@@ -104,7 +104,7 @@ export default function Home( {
       </div>
 
       <div className=" flex items-center w-full lg:max-w-screen-xl lg:px-4">
-        <div className="bg-primary flex flex-col gap-8 px-4 py-8 w-full lg:flex-row lg:items-center lg:justify-between lg:rounded-2xl lg:p-12">
+        <div className="bg-primary dark:bg-slate-800 flex flex-col gap-8 px-4 py-8 w-full lg:flex-row lg:items-center lg:justify-between lg:rounded-2xl lg:p-12">
           <div className="flex flex-col gap-4 items-center max-w-screen-md lg:items-start">
             <H2 className="text-white">
               { t( 'ctaTitle' ) }
