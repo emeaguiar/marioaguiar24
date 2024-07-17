@@ -14,7 +14,7 @@ export default function Alert( { children, type }: {
     return (
         <div
             className={ clsx(
-                'p-4 my-4 border-l-4 rounded-lg -mx-8',
+                'p-4 my-4 border-l-4 rounded-lg lg:-mx-8',
                 {
                     'border-blue-400 bg-blue-50': type === 'note',
                     'border-green-400 bg-green-50': type === 'tip',
