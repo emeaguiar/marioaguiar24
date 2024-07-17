@@ -65,7 +65,7 @@ export async function getStaticProps( {
 
     const { code, frontmatter } = await bundleMDX( {
         file: `${ postLocaleDirectory }/${ params.slug }.mdx`,
-        mdxOptions( options, formatter ) {
+        mdxOptions( options: any ) {
             options.remarkPlugins = [
                 ...( options.remarkPlugins ?? [] ),
                 remarkGfm,
