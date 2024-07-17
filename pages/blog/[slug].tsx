@@ -3,6 +3,7 @@
  */
 import { useMemo } from "react";
 import { bundleMDX } from "mdx-bundler";
+import remarkGfm from "remark-gfm";
 import { getMDXComponent } from "mdx-bundler/client";
 import { NextSeo } from "next-seo";
 
@@ -39,6 +40,7 @@ export default function PostPage( {
 
             <div className="flex flex-col gap-6 px-4">
                 <Component
+                
                     components={ {
                         h1: H1,
                         h2: H2,
@@ -63,6 +65,14 @@ export async function getStaticProps( {
 
     const { code, frontmatter } = await bundleMDX( {
         file: `${ postLocaleDirectory }/${ params.slug }.mdx`,
+        mdxOptions( options, formatter ) {
+            options.remarkPlugins = [
+                ...( options.remarkPlugins ?? [] ),
+                remarkGfm,
+            ];
+
+            return options;
+        }
     } );
 
     return {
