@@ -32,7 +32,7 @@ function Card( { post }: { post: PostItem } ) {
     const { t } = useTranslation( 'common' );
 
     return (
-        <div className="flex flex-col gap-4 rounded-2xl border p-6">
+        <div className="flex flex-col gap-4 rounded-2xl border p-6 dark:bg-slate-800">
             <h3 className={ `${ merriweather.className } font-bold text-xl` }>
                 <Link href={ `${ BLOG_PREFIX }/${ post.slug }` }>
                     { post.title }
