@@ -6,8 +6,14 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./lib/_posts/**/*.{js,ts,jsx,tsx,mdx}",
+    "./examples/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: 'selector',
+  darkMode: [
+    'variant', [
+        '@media (prefers-color-scheme: dark) { &:not(.light *) }',
+        '&:is(.dark *)',
+    ],
+  ],
   theme: {
     extend: {
       aspectRatio: {
