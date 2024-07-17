@@ -65,13 +65,3 @@ export function WithUnderline( { children }: {
         </span>
     );
 }
-
-export function BlogP( { children }: {
-    children?: React.ReactNode;
-} ) {
-    return (
-        <p className="text-xl/9 max-w-screen-sm">
-            { children }
-        </p>
-    );
-}

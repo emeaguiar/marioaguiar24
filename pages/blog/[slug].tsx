@@ -13,8 +13,8 @@ import { NextSeo } from "next-seo";
 import {
     H1,
     H2,
-    BlogP,
 } from "@/components/elements";
+import Code from "@/components/code/code";
 import {
     getPosts,
     getPostsDirectory,
@@ -38,13 +38,12 @@ export default function PostPage( {
                 description={ frontmatter.description }
             />
 
-            <div className="flex flex-col gap-6 px-4">
+            <div className="flex flex-col gap-6 px-4 text-xl/9">
                 <Component
-                
                     components={ {
                         h1: H1,
                         h2: H2,
-                        p: BlogP,
+                        p: ( { children }: { children?: React.ReactNode } ) => <p className="max-w-screen-sm">{ children }</p>,
                     } }
                 />
             </div>
