@@ -1,7 +1,13 @@
 /**
  * External dependencies
  */
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
+
+/**
+ * Next.js dependencies
+ */
+import Link from "next/link";
 
 /**
  * Internal dependencies
@@ -63,5 +69,31 @@ export function WithUnderline( { children }: {
                 { children }
             </span>
         </span>
+    );
+}
+
+export function P( { children }: {
+    children?: React.ReactNode
+} ) {
+    return <p className="max-w-screen-sm">{ children }</p>
+};
+
+export function A( { children, href }: any ) {
+    const isExternal = href.startsWith( "http" );
+
+    return (
+        <Link
+            className={ clsx( 'text-primary hover:underline', {
+                'inline-flex items-center': isExternal,
+            } ) }
+            href={ href }
+            passHref={ isExternal }
+        >
+            { children }
+
+            { isExternal && (
+                <ArrowTopRightOnSquareIcon aria-hidden className="w-5 h-5 inline-flex ml-1" />
+            ) }
+        </Link>
     );
 }
