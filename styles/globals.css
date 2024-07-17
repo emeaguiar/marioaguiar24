@@ -62,3 +62,6 @@ ul.contains-task-list {
   text-transform: uppercase;
 }
 
+.prism-code {
+  max-width: calc(100vw - 32px);
+}
