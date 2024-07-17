@@ -21,7 +21,7 @@ export default function Code( { children, language }: {
                             clsx(
                                 className,
                                 'rounded-md overflow-x-auto text-sm/1.5 bg-slate-700',
-                                'lg:text-base lg:rounded-lg lg:overflow-hidden lg:-mx-8 lg:max-w-screen-md'
+                                'lg:text-base lg:rounded-lg lg:-mx-8 lg:max-w-screen-md'
                             )
                         }
                     >
