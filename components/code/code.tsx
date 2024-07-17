@@ -4,14 +4,13 @@
 import { Highlight, themes } from "prism-react-renderer";
 import clsx from "clsx";
 
-export default function Code( { children, className, language }: {
+export default function Code( { children, language }: {
     children: string;
-    className: string;
     language: string;
 } ) {
     return (
         <Highlight
-            {...themes.nightOwl}
+            {...themes.dracula}
             code={ children }
             language={ language }
         >

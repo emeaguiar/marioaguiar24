@@ -11,10 +11,11 @@ import { NextSeo } from "next-seo";
  * Internal dependencies
  */
 import {
+    A,
     H1,
     H2,
+    P,
 } from "@/components/elements";
-import Code from "@/components/code/code";
 import {
     getPosts,
     getPostsDirectory,
@@ -41,9 +42,10 @@ export default function PostPage( {
             <div className="flex flex-col gap-6 px-4 text-xl/9">
                 <Component
                     components={ {
+                        a: A,
                         h1: H1,
                         h2: H2,
-                        p: ( { children }: { children?: React.ReactNode } ) => <p className="max-w-screen-sm">{ children }</p>,
+                        p: P,
                     } }
                 />
             </div>
