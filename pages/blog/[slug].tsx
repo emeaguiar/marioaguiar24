@@ -17,6 +17,7 @@ import {
     H2,
     P,
 } from "@/components/elements";
+import Alert from "@/components/alerts";
 import {
     getPosts,
     getPostsDirectory,
@@ -47,6 +48,15 @@ export default function PostPage( {
                         h1: H1,
                         h2: H2,
                         p: P,
+                        div: ( props: any ) => {
+                            if ( props.className.includes( 'markdown-alert' ) ) {
+                                const type = props.className.replace( 'markdown-alert markdown-alert-', '' );
+                                
+                                return <Alert type={ type }>{ props.children }</Alert>;
+                            }
+
+                            return <div { ...props } />;
+                        },
                     } }
                 />
             </div>
