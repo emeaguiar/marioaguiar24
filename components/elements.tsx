@@ -58,6 +58,28 @@ export function H2( {
     );
 }
 
+export function H3( {
+    children,
+    className,
+    id,
+}: {
+    children?: React.ReactNode;
+    className?: string;
+    id?: string;
+} ) {
+    return (
+        <h3
+            className={ clsx(
+                `${ merriweather.className } font-bold text-xl text-gray-600`,
+                className,
+            ) }
+            id={ id }
+        >
+            { children }
+        </h3>
+    );
+}
+
 export function WithUnderline( { children }: {
     children?: React.ReactNode;
 } ) {
