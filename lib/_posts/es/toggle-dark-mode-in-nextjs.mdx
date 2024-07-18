@@ -356,6 +356,14 @@ const config: Config = {
 export default config;`}
 />
 
+> [!NOTE]
+> La forma en que esto funciona, es gracias a la magia de `&`, que hace referencia al
+> selector actual, en este caso `html`, y `*` que hace referencia a todos los elementos
+> dentro de `html`. Así, lo que estamos diciendo es:
+>
+> - Si el selector actual (`html`) tiene la clase `dark`, entonces aplica los estilos a todos los hijos.
+> - Si el sistema operativo tiene configurado el modo oscuro, entonces aplica los estilos a todos los hijos de `html`.
+
 Y con eso, Tailwind se encargará de cambiar el color de nuestro componente si el usuario
 cambia las preferencias de su sistema operativo.
 
