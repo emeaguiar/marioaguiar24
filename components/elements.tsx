@@ -70,7 +70,7 @@ export function H3( {
     return (
         <h3
             className={ clsx(
-                `${ merriweather.className } font-bold text-xl text-gray-600`,
+                `${ merriweather.className } font-bold text-xl text-gray-600 dark:text-gray-300`,
                 className,
             ) }
             id={ id }
@@ -105,7 +105,7 @@ export function A( { children, href }: any ) {
 
     return (
         <Link
-            className={ clsx( 'text-primary hover:underline', {
+            className={ clsx( 'text-inherit underline hover:no-underline', {
                 'inline-flex items-center': isExternal,
             } ) }
             href={ href }
