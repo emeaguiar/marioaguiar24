@@ -70,7 +70,7 @@ export function H3( {
     return (
         <h3
             className={ clsx(
-                `${ merriweather.className } font-bold text-xl max-w-screen-sm text-gray-500 w-full dark:text-gray-300`,
+                `${ merriweather.className } font-bold text-xl max-w-screen-sm text-gray-600 w-full dark:text-gray-300`,
                 className,
             ) }
             id={ id }

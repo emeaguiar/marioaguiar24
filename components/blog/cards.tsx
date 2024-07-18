@@ -45,7 +45,7 @@ function Card( { post }: { post: PostItem } ) {
 
             <Link
                 href={ `${ BLOG_PREFIX }/${ post.slug }` }
-                className={ `${ merriweather.className } flex items-center gap-2 text-primary text-sm` }
+                className={ `flex items-center gap-2 text-primary text-sm` }
             >
                 <span>
                     { t( 'readMore' ) }
