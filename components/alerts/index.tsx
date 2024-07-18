@@ -37,7 +37,18 @@ export default function Alert( { children, type }: {
 
                     return (
                         <div className="alert-content text-base">
-                            { child }
+                            {
+                                child && 'ul' === child.type && (
+                                    <div className="alert-list mt-4">
+                                        { child }
+                                    </div>
+                                )
+
+                            }
+
+                            {
+                                'ul' !== child.type && child
+                            }
                         </div>
                     );
                 } )
