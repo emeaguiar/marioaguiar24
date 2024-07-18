@@ -334,27 +334,32 @@ Y con eso, al dar click al botón, el **color de nuestro componente cambiará**,
     <Component />
 </AlignWide>
 
-## Paso 3.2 Mantener preferencias del sistema operativo
+### Paso 3.2 Mantener preferencias del sistema operativo
 
 Hay un pequeño detalle que viene con esta implementación, y es que cuando seleccionamos 
 el modo oscuro `selector` como lo hicimos más arriba, Tailwind no se encargará de
-cambiar el color de nuestro componente si el usuario cambia las preferencias de, esto afortunadamente
-es fácil de solucionar, simplemente agregamos el media query dentro del mismo archivo 
-de configuración de Tailwind. Así:
+cambiar el color de nuestro componente si el usuario cambia las preferencias del sistema,
+esto afortunadamente es fácil de solucionar, simplemente agregamos el _media query_ dentro
+del mismo archivo de configuración de Tailwind. Así:
 
 <Code
     language="ts"
     children={`import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: [
-        'selector',
-        'media',
+    darkMode: [ 'variant, [
+        '&.is(.dark *)',
+        'media (prefers-color-scheme: dark) {  & * }',
     ],
 };
 
 export default config;`}
 />
+
+Y con eso, Tailwind se encargará de cambiar el color de nuestro componente si el usuario
+cambia las preferencias de su sistema operativo.
+
+
 
 
 [^1]: [Utility classes](https://tailwindcss.com/docs/utility-first)
