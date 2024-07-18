@@ -20,6 +20,7 @@ import {
     P,
 } from "@/components/elements";
 import SocialLinks from "@/components/social/social-links";
+import ContactForm from "@/components/contact-form";
 
 export default function Modal() {
     const searchParams = useSearchParams();
@@ -43,6 +44,8 @@ export default function Modal() {
                                 <P>
                                     { t( 'contactModalMessage' ) }
                                 </P>
+
+                                <ContactForm />
 
                                 <SocialLinks className="mb-0 mt-auto lg:mt-8" />
                             </div>
