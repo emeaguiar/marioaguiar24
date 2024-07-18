@@ -32,7 +32,7 @@ export default function Page( {
             />
 
             <div className="flex flex-col gap-10 items-center px-4 w-full lg:max-w-screen-xl">
-                <H2>
+                <H2 className="text-center">
                     { t( 'title' ) }
                 </H2>
 
@@ -40,13 +40,13 @@ export default function Page( {
                     { t( 'description' ) }
                 </p>
 
-                <H2>
+                <H2 className="text-center">
                     { t( 'latest' ) }
                 </H2>
 
                 <BlogCards posts={ posts } />
 
-                <H2>
+                <H2 className="text-center">
                     { t( 'mostInteresting' ) }
                 </H2>
 

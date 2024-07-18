@@ -96,7 +96,7 @@ export default function Home( {
       </div>
 
       <div className="flex flex-col gap-10 items-center px-4 w-full lg:max-w-screen-xl">
-        <H2>
+        <H2 className="text-center">
           { t( 'blogTitle' ) }
         </H2>
 
@@ -106,7 +106,7 @@ export default function Home( {
       <div className=" flex items-center w-full lg:max-w-screen-xl lg:px-4">
         <div className="bg-primary dark:bg-slate-800 flex flex-col gap-8 px-4 py-8 w-full lg:flex-row lg:items-center lg:justify-between lg:rounded-2xl lg:p-12">
           <div className="flex flex-col gap-4 items-center max-w-screen-md lg:items-start">
-            <H2 className="text-white">
+            <H2 className="text-center text-white">
               { t( 'ctaTitle' ) }
             </H2>
 
@@ -122,7 +122,7 @@ export default function Home( {
       </div>
 
       <div className="flex flex-col gap-10 items-center max-w-screen-md lg:gap-20">
-        <H2 id="testimonials">
+        <H2 id="testimonials" className="text-center">
           { t( 'whyMe' ) }
         </H2>
 
