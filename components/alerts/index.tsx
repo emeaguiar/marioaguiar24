@@ -14,7 +14,8 @@ export default function Alert( { children, type }: {
     return (
         <div
             className={ clsx(
-                'p-4 my-4 border-l-4 rounded-lg lg:-mx-8 lg:max-w-screen-md',
+                'flex flex-col gap-2 p-4 my-4 border-l-4 max-w-screen-md rounded-lg text-base w-full',
+                'lg:-mx-8 lg:max-w-screen-md',
                 {
                     'border-blue-400 bg-blue-50 text-blue-800 dark:border-blue-700 dark:bg-blue-950 dark:text-blue-100': type === 'note',
                     'border-green-400 bg-green-50 text-green-800 dark:border-green-700 dark:bg-green-950 dark:text-green-100': type === 'tip',
@@ -35,22 +36,7 @@ export default function Alert( { children, type }: {
                         );
                     }
 
-                    return (
-                        <div className="alert-content text-base">
-                            {
-                                child && 'ul' === child?.type && (
-                                    <div className="alert-list mt-4">
-                                        { child }
-                                    </div>
-                                )
-
-                            }
-
-                            {
-                                'ul' !== child?.type && child
-                            }
-                        </div>
-                    );
+                    return child;
                 } )
             }
         </div>

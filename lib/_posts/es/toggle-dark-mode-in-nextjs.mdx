@@ -361,13 +361,34 @@ export default config;`}
 > selector actual, en este caso `html`, y `*` que hace referencia a todos los elementos
 > dentro de `html`. Así, lo que estamos diciendo es:
 >
+>
 > - Si el selector actual (`html`) tiene la clase `dark`, entonces aplica los estilos a todos los hijos.
 > - Si el sistema operativo tiene configurado el modo oscuro, entonces aplica los estilos a todos los hijos de `html`.
 
 Y con eso, Tailwind se encargará de cambiar el color de nuestro componente si el usuario
 cambia las preferencias de su sistema operativo.
 
+## Siguentes pasos
 
+Y con eso, hemos terminado, para recapitular, veamos los requerimientos que teníamos:
 
+- [x] Crear una aplicación con modo oscuro
+- [x] Agregar un botón que cambie el modo de la aplicación manualmente
+- [x] El modo debe cambiar automáticamente si el usuario tiene configurado el modo oscuro en su sistema operativo
+
+Hemos completado todos los requerimientos, sin embargo en mi opinión **aún hay mucho 
+que se puede hacer para mejorar nuestro botón**, que tal vez podrías intentar (o lo dejaré
+para otro tutorial), por ejemplo:
+
+- Agregar una animación al botón
+- Cambiar el ícono del botón dependiendo del estado del modo oscuro
+- Agregar un _tooltip_ al botón
+- Guardar la preferencia manual del usuario en el `localStorage`
+
+Y muchas otras cosas más, pero por ahora, creo que es suficiente. Si tienes alguna
+duda o sugerencia, no dudes en contactarme a travéz de mis redes sociales o el formulario
+de contacto.
+
+¡Gracias por leer!
 
 [^1]: [Utility classes](https://tailwindcss.com/docs/utility-first)

@@ -33,7 +33,7 @@ export default function Code( { children, language }: {
                         className={
                             clsx(
                                 className,
-                                'rounded-md overflow-x-auto text-sm/1.5 p-2 bg-slate-700',
+                                'rounded-md overflow-x-auto text-sm/1.5 p-2 w-full',
                                 'lg:text-base lg:rounded-lg lg:-mx-8 lg:max-w-screen-md lg:p-4'
                             )
                         }

@@ -17,6 +17,7 @@ import {
     H2,
     H3,
     P,
+    UL,
 } from "@/components/elements";
 import Alert from "@/components/alerts";
 import {
@@ -42,14 +43,22 @@ export default function PostPage( {
                 description={ frontmatter.description }
             />
 
-            <div className="flex flex-col gap-6 px-4 text-xl/9">
+            <div className="flex flex-col items-center gap-6 px-4 text-xl/9">
                 <Component
                     components={ {
                         a: A,
                         h1: H1,
-                        h2: H2,
+                        h2: ( props: any ) => {
+                            let classes;
+                            if ( 'footnote-label' === props.id ) {
+                                classes = 'footnote-label font-bold mb-4 text-xl';
+                            }
+
+                            return <H2 { ...props } className={ classes } />;
+                        },
                         h3: H3,
                         p: P,
+                        ul: UL,
                         div: ( props: any ) => {
                             if ( props.className.includes( 'markdown-alert' ) ) {
                                 const type = props.className.replace( 'markdown-alert markdown-alert-', '' );
@@ -58,6 +67,14 @@ export default function PostPage( {
                             }
 
                             return <div { ...props } />;
+                        },
+                        section: ( props: any ) => {
+                            let classes;
+                            if ( props.className.includes( 'footnotes' ) ) {
+                                classes = 'footnotes text-sm w-full max-w-screen-sm';
+                            }
+
+                            return <div { ...props } className={ classes } />;
                         },
                     } }
                 />
