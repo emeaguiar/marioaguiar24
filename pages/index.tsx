@@ -8,6 +8,7 @@ import Trans from 'next-translate/Trans';
  * Next dependencies
  */
 import Head from "next/head";
+import Link from 'next/link';
 
 /**
  * Internal dependencies
@@ -106,7 +107,7 @@ export default function Home( {
       <div className=" flex items-center w-full lg:max-w-screen-xl lg:px-4">
         <div className="bg-primary dark:bg-slate-800 flex flex-col gap-8 px-4 py-8 w-full lg:flex-row lg:items-center lg:justify-between lg:rounded-2xl lg:p-12">
           <div className="flex flex-col gap-4 items-center max-w-screen-md lg:items-start">
-            <H2 className="text-center text-white">
+            <H2 className="text-center text-white lg:text-start">
               { t( 'ctaTitle' ) }
             </H2>
 
@@ -115,9 +116,9 @@ export default function Home( {
             </p>
           </div>
 
-          <button className="bg-background font-bold px-4 py-2 rounded-lg text-primary uppercase">
+          <Link href="/?modal=1" className="bg-background font-bold px-4 py-2 rounded-lg text-primary uppercase">
             { t( 'common:contactCta' ) }
-          </button>
+          </Link>
         </div>
       </div>
 
