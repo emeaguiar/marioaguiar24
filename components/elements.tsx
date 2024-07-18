@@ -48,7 +48,7 @@ export function H2( {
     return (
         <h2
             className={ clsx(
-                `${ merriweather.className } font-bold text-2xl`,
+                `${ merriweather.className } font-bold text-2xl max-w-screen-sm w-full`,
                 className,
             ) }
             id={ id }
@@ -70,7 +70,7 @@ export function H3( {
     return (
         <h3
             className={ clsx(
-                `${ merriweather.className } font-bold text-xl text-gray-500 dark:text-gray-300`,
+                `${ merriweather.className } font-bold text-xl max-w-screen-sm text-gray-500 w-full dark:text-gray-300`,
                 className,
             ) }
             id={ id }
@@ -97,7 +97,7 @@ export function WithUnderline( { children }: {
 export function P( { children }: {
     children?: React.ReactNode
 } ) {
-    return <p className="max-w-screen-sm">{ children }</p>
+    return <p className="max-w-screen-sm w-full">{ children }</p>
 };
 
 export function A( { children, href }: any ) {
@@ -105,9 +105,13 @@ export function A( { children, href }: any ) {
 
     return (
         <Link
-            className={ clsx( 'text-inherit underline hover:no-underline', {
-                'inline-flex items-center': isExternal,
-            } ) }
+            className={ clsx( 
+                'text-inherit underline', 
+                'hover:no-underline',
+                {
+                    'inline-flex items-center': isExternal,
+                }
+            ) }
             href={ href }
             passHref={ isExternal }
         >
@@ -118,4 +122,10 @@ export function A( { children, href }: any ) {
             ) }
         </Link>
     );
+}
+
+export function UL( { children }: {
+    children?: React.ReactNode
+} ) {
+    return <ul className="list-disc list-inside pl-8 max-w-screen-sm">{ children }</ul>
 }
