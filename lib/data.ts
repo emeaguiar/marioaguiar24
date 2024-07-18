@@ -13,7 +13,7 @@ export const MENU_ITEMS = [
     },
     {
         key: "contact",
-        href: "/contact",
+        href: "?modal=1",
     },
 ];
 
