@@ -39,9 +39,17 @@ const SOCIAL_LINKS = [
     },
 ];
 
-export default function SocialLinks() {
+export default function SocialLinks( { className }: {
+    className?: string;
+} ) {
     return (
-        <nav aria-label="Navegación social" className="flex gap-4">
+        <nav
+            aria-label="Navegación social"
+            className={ clsx(
+                "flex gap-4",
+                className
+            ) }
+        >
             <ul className="flex justify-between gap-4">
                 { SOCIAL_LINKS.map( ( { href, icon, label }, index ) => (
                     <SocialLink key={ index } href={ href } label={ label }>
