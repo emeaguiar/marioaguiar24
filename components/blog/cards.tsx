@@ -15,6 +15,7 @@ import Link from "next/link";
 import { merriweather } from "@/components/fonts";
 import { BLOG_PREFIX } from "@/lib/data";
 import type { PostItem } from "@/types/post";
+import clsx from "clsx";
 
 export default function Cards( { posts }: { [ key: string ]: any } ) {
     return (
@@ -32,7 +33,12 @@ function Card( { post }: { post: PostItem } ) {
     const { t } = useTranslation( 'common' );
 
     return (
-        <div className="flex flex-col gap-4 rounded-2xl border p-6 dark:bg-slate-800">
+        <div className={
+            clsx(
+                'flex flex-col gap-4 rounded-2xl border p-6',
+                'dark:bg-slate-800'
+            )
+        }>
             <h3 className={ `${ merriweather.className } font-bold text-xl` }>
                 <Link href={ `${ BLOG_PREFIX }/${ post.slug }` }>
                     { post.title }
@@ -45,7 +51,7 @@ function Card( { post }: { post: PostItem } ) {
 
             <Link
                 href={ `${ BLOG_PREFIX }/${ post.slug }` }
-                className={ `flex items-center gap-2 text-primary text-sm` }
+                className={ `flex items-center gap-2 text-primary text-sm hover:text-foreground transition-colors` }
             >
                 <span>
                     { t( 'readMore' ) }
