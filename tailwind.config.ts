@@ -6,6 +6,13 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./lib/_posts/**/*.{js,ts,jsx,tsx,mdx}",
+    "./examples/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  darkMode: [
+    'variant', [
+        '@media (prefers-color-scheme: dark) { &:not(.light *) }',
+        '&:is(.dark *)',
+    ],
   ],
   theme: {
     extend: {
@@ -17,6 +24,7 @@ const config: Config = {
         'background': 'var(--color--background)',
         'primary': 'var(--color--primary)',
         'secondary': 'var(--color--secondary)',
+        'underline': 'var(--color--underline)',
       },
       spacing: {
         '18': '4.5rem',

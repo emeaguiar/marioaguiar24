@@ -1,7 +1,13 @@
 /**
  * External dependencies
  */
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
+
+/**
+ * Next.js dependencies
+ */
+import Link from "next/link";
 
 /**
  * Internal dependencies
@@ -42,7 +48,7 @@ export function H2( {
     return (
         <h2
             className={ clsx(
-                `${ merriweather.className } font-bold text-2xl`,
+                `${ merriweather.className } font-bold text-2xl max-w-screen-sm w-full`,
                 className,
             ) }
             id={ id }
@@ -52,12 +58,34 @@ export function H2( {
     );
 }
 
+export function H3( {
+    children,
+    className,
+    id,
+}: {
+    children?: React.ReactNode;
+    className?: string;
+    id?: string;
+} ) {
+    return (
+        <h3
+            className={ clsx(
+                `${ merriweather.className } font-bold text-xl max-w-screen-sm text-gray-600 w-full dark:text-gray-300`,
+                className,
+            ) }
+            id={ id }
+        >
+            { children }
+        </h3>
+    );
+}
+
 export function WithUnderline( { children }: {
     children?: React.ReactNode;
 } ) {
     return (
         <span className="relative isolate">
-            <span className="absolute bottom-1 left-0 w-full h-1 bg-secondary opacity-80 lg:h-2" />
+            <span className="absolute bottom-1 left-0 w-full h-1 bg-underline opacity-80 lg:h-2" />
 
             <span className="relative z-10">
                 { children }
@@ -66,12 +94,38 @@ export function WithUnderline( { children }: {
     );
 }
 
-export function BlogP( { children }: {
-    children?: React.ReactNode;
+export function P( { children }: {
+    children?: React.ReactNode
 } ) {
+    return <p className="max-w-screen-sm w-full">{ children }</p>
+};
+
+export function A( { children, href }: any ) {
+    const isExternal = href.startsWith( "http" );
+
     return (
-        <p className="text-xl/9 max-w-screen-sm">
+        <Link
+            className={ clsx( 
+                'text-inherit underline', 
+                'hover:no-underline',
+                {
+                    'inline-flex items-center': isExternal,
+                }
+            ) }
+            href={ href }
+            passHref={ isExternal }
+        >
             { children }
-        </p>
+
+            { isExternal && (
+                <ArrowTopRightOnSquareIcon aria-hidden className="w-5 h-5 inline-flex ml-1" />
+            ) }
+        </Link>
     );
+}
+
+export function UL( { children }: {
+    children?: React.ReactNode
+} ) {
+    return <ul className="list-disc list-inside pl-8 max-w-screen-sm">{ children }</ul>
 }
