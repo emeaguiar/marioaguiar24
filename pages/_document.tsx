@@ -18,6 +18,7 @@ export default function Document() {
         'bg-background text-foreground',
         {
           "dark": isDarkMode,
+          "light": ! isDarkMode,
         }
       )
     }>

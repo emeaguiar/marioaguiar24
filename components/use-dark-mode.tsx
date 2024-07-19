@@ -9,7 +9,7 @@ export function useDarkMode() {
     const [ isDarkMode, setIsDarkMode ] = useState(false);
 
     useEffect(() => {
-        setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+        setIsDarkMode( window.matchMedia('(prefers-color-scheme: dark)').matches );
     }, [] );
 
     useEffect(() => {
