@@ -79,7 +79,7 @@ export default function ContactForm()  {
             <label htmlFor="message" className="mb-2">Message *</label>
             <textarea id="message" name="message" required className={
                 clsx(
-                    "text-foreground w-full p-2 mb-4 border border-gray-300 rounded",
+                    "text-foreground w-full p-2 mb-4 border border-gray-300 rounded min-h-44",
                     "invalid:border-pink-500 invalid:text-pink-600",
                     "focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                 )
