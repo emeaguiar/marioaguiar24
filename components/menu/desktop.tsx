@@ -18,7 +18,7 @@ export default function DesktopMenu() {
 
     return (
         <nav aria-label="Navegación principal" className="hidden lg:flex">
-            <ul className="flex justify-between gap-18">
+            <ul className="flex items-center justify-between gap-18">
                 { MENU_ITEMS.map( ( { href, key }, index ) => (
                     <MenuItem key={ index }>
                         <Link href={ href } className="hover:text-primary">

@@ -29,7 +29,9 @@ export default function Card( {
     
     return (
         <div className={ `${ merriweather.className } flex flex-col gap-4 mb-8 items-center`}>
-            <IconComponent />
+            <div className="text-secondary dark:text-sky-300">
+                <IconComponent />
+            </div>
     
             <h2 className="font-bold">
                 { title }

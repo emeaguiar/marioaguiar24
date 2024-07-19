@@ -9,11 +9,23 @@
   --color--primary: hsla(350, 72%, 52%, 1);
   --color--surface: var(--color--background);
   --color--on-surface: var(--color--foreground);
-  --color--underline: var(--color--primary);
+  --color--underline: var(--color--secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color--foreground: hsl(210, 40%, 98%);
+    --color--background: hsl(228.60000000000002, 84%, 4.9%);
+    --color--secondary: hsl(328.6, 85.5%, 70.2%);
+    --color--primary: hsl(199.39999999999998, 95.5%, 73.9%);
+    --color--surface: var(--color--background);
+    --color--on-surface: var(--color--foreground);
+    --color--underline: var(--color--primary);
+  }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(var(--color--foreground));
 }
 
 @layer utilities {
@@ -37,3 +49,24 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+ul.contains-task-list {
+  max-width: 640px;
+}
+
+.alert-title p {
+  align-items: center;
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  text-transform: uppercase;
+}
+
+.alert-list ul {
+  list-style-type: disc;
+  padding-inline-start: 2rem;
+}
+
+.prism-code {
+  max-width: calc(100vw - 48px);
+}

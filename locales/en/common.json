@@ -6,5 +6,8 @@
     "contact": "Contact",
     "seoTitle": "Mario Aguiar | Frontend Developer",
     "seoDescription": "Frontend Developer with over 10 years of experience. Specializing in responsive websites, performance, and accessibility. Let's work together!",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "contactModalTitle": "Contact me",
+    "contactModalMessage": "If you have any questions or would like to work together, please send me an email. I'll reply as soon as possible. Or you can contact me in my social networks:",
+    "close": "Close"
 }
