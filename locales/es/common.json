@@ -15,5 +15,6 @@
     "email": "Correo electrónico",
     "message": "Mensaje",
     "contactSuccess": "¡Gracias por tu mensaje! Te responderé lo antes posible.",
-    "contactError": "Hubo un error al enviar tu mensaje. Por favor inténtalo de nuevo."
+    "contactError": "Hubo un error al enviar tu mensaje. Por favor inténtalo de nuevo.",
+    "socialText": "Ir al perfil social en {{ label }}"
 }

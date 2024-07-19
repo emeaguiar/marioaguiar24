@@ -2,6 +2,7 @@
  * External dependencies
  */
 import clsx from "clsx";
+import useTranslation from "next-translate/useTranslation";
 
 /**
  * Next dependencies
@@ -70,9 +71,11 @@ export function SocialLink( {
     href: string;
     label: string;
 } ) {
+    const { t } = useTranslation( 'common' );
+
     return (
         <li>
-            <Link href={ href } aria-label={ `Go to social profile in ${ label }` } className="text-white hover:text-black dark:hover:text-sky-300">
+            <Link href={ href } aria-label={ t( 'socialText', { label } ) } className="text-foreground hover:text-primary transition-colors">
                 { children }
             </Link>
         </li>
