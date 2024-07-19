@@ -7,7 +7,7 @@ import clsx from "clsx";
 /**
  * Internal dependencies
  */
-import { useDarkMode } from '@/components/dark-mode';
+import { useDarkMode } from "@/components/use-dark-mode";
 
 export default function Document() {
   const { isDarkMode } = useDarkMode();

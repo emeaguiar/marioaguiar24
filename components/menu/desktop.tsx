@@ -2,6 +2,7 @@
  * External dependencies
  */
 import useTranslation from "next-translate/useTranslation";
+import clsx from "clsx";
 
 /**
  * Next dependencies
@@ -12,7 +13,7 @@ import Link from "next/link";
  * Internal dependencies
  */
 import { MENU_ITEMS } from "@/lib/data";
-import { useDarkMode } from "@/components/dark-mode";
+import { useDarkMode } from "@/components/use-dark-mode";
 
 export default function DesktopMenu() {
     const { t } = useTranslation( 'common' );
