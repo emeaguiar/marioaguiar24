@@ -12,9 +12,11 @@ import Link from "next/link";
  * Internal dependencies
  */
 import { MENU_ITEMS } from "@/lib/data";
+import { useDarkMode } from "@/components/dark-mode";
 
 export default function DesktopMenu() {
     const { t } = useTranslation( 'common' );
+    const { DarkModeToggle } = useDarkMode();
 
     return (
         <nav aria-label="Navegación principal" className="hidden lg:flex">
@@ -26,6 +28,10 @@ export default function DesktopMenu() {
                         </Link>
                     </MenuItem>
                 ) ) }
+
+                <li>
+                    <DarkModeToggle />
+                </li>
             </ul>
         </nav>
     );
