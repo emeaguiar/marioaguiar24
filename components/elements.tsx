@@ -94,10 +94,16 @@ export function WithUnderline( { children }: {
     );
 }
 
-export function P( { children }: {
-    children?: React.ReactNode
+export function P( { children, className }: {
+    children?: React.ReactNode,
+    className?: string
 } ) {
-    return <p className="max-w-screen-sm w-full">{ children }</p>
+    return <p className={
+        clsx(
+            'max-w-screen-sm w-full',
+            className,
+        )
+    }>{ children }</p>
 };
 
 export function A( { children, href }: any ) {

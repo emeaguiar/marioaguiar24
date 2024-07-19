@@ -3,7 +3,7 @@
  */
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import ContactModal from "@/components/contact-modal";
+import ContactModal from "@/components/contact/modal";
 
 export default function Layout( {
     children

@@ -10,5 +10,10 @@
     "note": "Nota",
     "contactModalTitle": "Contáctame",
     "contactModalMessage": "Si tienes alguna pregunta o te gustaría trabajar juntos, por favor envíame un correo electrónico. Responderé lo antes posible. O puedes contactarme en mis redes sociales:",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "message": "Mensaje",
+    "contactSuccess": "¡Gracias por tu mensaje! Te responderé lo antes posible.",
+    "contactError": "Hubo un error al enviar tu mensaje. Por favor inténtalo de nuevo."
 }

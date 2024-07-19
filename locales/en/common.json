@@ -9,5 +9,10 @@
     "readMore": "Read more",
     "contactModalTitle": "Contact me",
     "contactModalMessage": "If you have any questions or would like to work together, please send me an email. I'll reply as soon as possible. Or you can contact me in my social networks:",
-    "close": "Close"
+    "close": "Close",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "contactSuccess": "Thank you for your message! I'll reply as soon as possible.",
+    "contactError": "There was an error sending your message. Please try again."
 }

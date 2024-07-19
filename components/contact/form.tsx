@@ -4,6 +4,7 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
 import clsx from "clsx";
+import useTranslation from "next-translate/useTranslation";
 
 /**
  * Internal dependencies
@@ -13,6 +14,7 @@ import Alert from "@/components/alerts";
 
 export default function ContactForm()  {
     const [ isLoading, setIsLoading ] = useState( false );
+    const { t } = useTranslation( 'common' );
     const [ successMessage, setSuccessMessage ] = useState( '' );
     const [ errorMessage, setErrorMessage ] = useState( '' );
 
@@ -46,13 +48,13 @@ export default function ContactForm()  {
                 throw new Error( `HTTP error Status: ${response.status}` );
             }
 
-            setSuccessMessage( "Message sent! I'll be in touch soon." );
+            setSuccessMessage( () => t( 'contactSuccess' ) );
             setIsLoading( false );
 
             form.reset();
         } catch ( error: unknown ) {
             console.error( error );
-            setErrorMessage( 'Error sending message. Please try again later.' );
+            setErrorMessage( () => t('contactError') );
             setIsLoading( false );
         }
     }
@@ -62,21 +64,21 @@ export default function ContactForm()  {
             className="flex flex-col items-start mt-8 w-full"
             onSubmit={ handleOnSubmit }
         >
-            <label htmlFor="name" className="mb-2">Name *</label>
+            <label htmlFor="name" className="mb-2">{ t( 'name' ) } *</label>
             <input type="text" id="name" name="name" required className={ clsx(
                 "text-foreground w-full p-2 mb-4 border border-gray-300 rounded",
                 "invalid:border-pink-500 invalid:text-pink-600",
                 "focus:invalid:border-pink-500 focus:invalid:ring-pink-500",
             ) } />
 
-            <label htmlFor="email" className="mb-2">Email *</label>
+            <label htmlFor="email" className="mb-2">{ t( 'email' ) } *</label>
             <input type="email" id="email" name="email" required className={ clsx(
                 "text-foreground w-full p-2 mb-4 border border-gray-300 rounded",
                 "invalid:border-pink-500 invalid:text-pink-600",
                 "focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
             ) } />
 
-            <label htmlFor="message" className="mb-2">Message *</label>
+            <label htmlFor="message" className="mb-2">{ t( 'message' ) } *</label>
             <textarea id="message" name="message" required className={
                 clsx(
                     "text-foreground w-full p-2 mb-4 border border-gray-300 rounded min-h-44",
