@@ -3,6 +3,7 @@
  */
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import clsx from 'clsx';
 
 /**
  * Next dependencies
@@ -116,7 +117,14 @@ export default function Home( {
             </p>
           </div>
 
-          <Link href="/?modal=1" className="bg-background font-bold px-4 py-2 rounded-lg text-primary uppercase">
+          <Link href="/?modal=1" className={
+            clsx(
+              "flex items-center border border-red-700 bg-background font-bold px-4 py-2 rounded-lg text-white uppercase transition-colors",
+              "hover:bg-red-50",
+              "disabled:cursor-not-allowed disabled:bg-red-50 disabled:text-gray-500 disabled:border-gray-900",
+              "dark:border-slate-900 dark:hover:bg-slate-900"
+          )
+          }>
             { t( 'common:contactCta' ) }
           </Link>
         </div>

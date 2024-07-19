@@ -21,7 +21,7 @@ export default function DesktopMenu() {
             <ul className="flex items-center justify-between gap-18">
                 { MENU_ITEMS.map( ( { href, key }, index ) => (
                     <MenuItem key={ index }>
-                        <Link href={ href } className="hover:text-primary">
+                        <Link href={ href } className="hover:text-primary transition-colors">
                             { t( key ) }
                         </Link>
                     </MenuItem>

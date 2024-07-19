@@ -9,8 +9,8 @@ import useTranslation from "next-translate/useTranslation";
 /**
  * Internal dependencies
  */
-import { Spinner } from "@/components/icons";
 import Alert from "@/components/alerts";
+import { Spinner } from "@/components/icons";
 
 export default function ContactForm()  {
     const [ isLoading, setIsLoading ] = useState( false );
@@ -69,13 +69,15 @@ export default function ContactForm()  {
                 "text-foreground w-full p-2 mb-4 border border-gray-300 rounded",
                 "invalid:border-pink-500 invalid:text-pink-600",
                 "focus:invalid:border-pink-500 focus:invalid:ring-pink-500",
+                "dark:border-slate-900"
             ) } />
 
             <label htmlFor="email" className="mb-2">{ t( 'email' ) } *</label>
             <input type="email" id="email" name="email" required className={ clsx(
                 "text-foreground w-full p-2 mb-4 border border-gray-300 rounded",
                 "invalid:border-pink-500 invalid:text-pink-600",
-                "focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                "focus:invalid:border-pink-500 focus:invalid:ring-pink-500",
+                "dark:border-slate-900"
             ) } />
 
             <label htmlFor="message" className="mb-2">{ t( 'message' ) } *</label>
@@ -83,7 +85,8 @@ export default function ContactForm()  {
                 clsx(
                     "text-foreground w-full p-2 mb-4 border border-gray-300 rounded min-h-44",
                     "invalid:border-pink-500 invalid:text-pink-600",
-                    "focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                    "focus:invalid:border-pink-500 focus:invalid:ring-pink-500",
+                    "dark:border-slate-900"
                 )
             } />
 
@@ -111,7 +114,8 @@ export default function ContactForm()  {
                 clsx(
                     "flex items-center border border-red-700 bg-background font-bold px-4 py-2 rounded-lg mt-4 text-primary uppercase transition-colors",
                     "hover:bg-red-50",
-                    "disabled:cursor-not-allowed disabled:bg-red-50 disabled:text-gray-500 disabled:border-gray-900"
+                    "disabled:cursor-not-allowed disabled:bg-red-50 disabled:text-gray-500 disabled:border-gray-900",
+                    "dark:border-slate-900 dark:hover:bg-slate-900 dark:text-white"
                 )
             }>
                 {

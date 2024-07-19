@@ -72,7 +72,7 @@ function MenuItem( {
 } ) {
     return (
         <li>
-            <Link href={ href } className="block font-bold px-4 py-2 uppercase">
+            <Link href={ href } className="block font-bold px-4 py-2 uppercase transition-colors">
                 { children }
             </Link>
         </li>
