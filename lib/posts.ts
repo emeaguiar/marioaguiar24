@@ -32,7 +32,7 @@ export function getPosts(
         .map( ( slug ) => getPostDataBySlug( slug, lang, [ 'slug', 'title', 'description' ] ) )
         .sort( ( post1, post2 ) => ( post1.date > post2.date ? -1 : 1 ) );
 
-    return posts;    
+    return posts;
 }
 
 function getPostDataBySlug(
