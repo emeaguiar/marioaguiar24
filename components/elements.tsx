@@ -127,6 +127,8 @@ export function A({ children, href }: any) {
 
 export function UL({ children }: { children?: React.ReactNode }) {
   return (
-    <ul className='max-w-screen-sm list-inside list-disc pl-8'>{children}</ul>
+    <ul className='w-full max-w-screen-sm list-inside list-disc pl-8'>
+      {children}
+    </ul>
   );
 }

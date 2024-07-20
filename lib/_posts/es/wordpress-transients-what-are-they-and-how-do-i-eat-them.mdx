@@ -1,0 +1,165 @@
+---
+title: 'Transientes de WordPress: ¿Qué son y cómo me los como?'
+publishedOn: '2011-07-22T18:50:36.516Z'
+updatedOn: '2024-07-20T23:21:20.250Z'
+description: >-
+  A pesar de ser mi herramienta de trabajo diario favorita y la que más conozco,
+  WordPress todavía tiene varias opciones y funciones que nunca he usado. Hace
+  no mucho tiempo, una de ellas fue la API de Transientes. Funciones realmente 
+  útiles para almacenar datos temporales en la base de datos.
+published: true
+readingTime: 480
+---
+
+import Code from '@/components/code/code';
+
+> [!WARNING]
+> Este artículo fue escrito en **2011** 👴🏼. La mayoría de los consejos aquí pueden no ser válidos.
+>
+> Mantengo este artículo aquí por razones históricas y para recordarme cuánto he mejorado
+> a lo largo de los años.
+>
+> _Solo se hicieron cambios cosméticos a este artículo._
+
+A pesar de ser mi herramienta de trabajo diario favorita y la que más conozco,
+WordPress todavía tiene varias opciones y funciones que nunca he usado. Hace no mucho tiempo,
+una de ellas fue la [API de Transientes](https://marioaguiar.net/web/20120430100255/http://codex.wordpress.org/Transients_API).
+Funciones realmente útiles para **almacenar datos temporales en la base de datos**.
+
+## ¿Qué son los Transientes?
+
+En el lenguaje de WordPress, un transient es cualquier pieza de datos temporal, lo que significa que
+**esperamos que se elimine**. Esto es útil si tenemos información que vamos a usar
+por un corto período de tiempo y no queremos llenar la base de datos.
+
+Digamos que tenemos un formulario de contacto (o comentarios) donde el usuario escribirá el nombre,
+correo electrónico, sitio web y comentario, una vez que los escriba, se envía el formulario,
+5 minutos después el usuario encuentra un error en nuestro sitio y quiere ponerse en contacto de nuevo,
+¿tiene que volver a llenar TODOS los campos? Por lo general, sí, pero usando **Transients** 
+podemos ahorrarle la molestia.
+
+## El Código
+
+La API de Transientes y la API de Opciones son bastante similares, y también muy fáciles de usar,
+de hecho, está conformada por solo tres funciones:
+
+- `set_transient( $transient, $value, $expiration)`: La función que crea nuestro transient, donde:
+- `$transient` es el **nombre único** del transient, esto es importante ya que es
+la clave para encontrar el transient más tarde.
+- `$value` es el contenido del transient, puede ser una cadena o un array.
+- `$expiration` es la parte importante aquí, es el tiempo (en segundos) que nuestros datos
+permanecerán en nuestra base de datos, una vez que se acabe el tiempo, el transient se eliminará.
+- `get_transient( $transient )`: La función que usamos para llamar a nuestro transient, donde
+`$transient` es el **nombre único** que establecimos antes.
+- `delete_transient( $transient )`: Aunque los transientes se eliminan automáticamente
+cuando se acaban el tiempo, puede ser el caso de que queramos eliminarlos manualmente,
+donde $transient sigue siendo el **nombre único** del que hablo tanto.
+
+## ¿Cómo se usan?
+
+Siguiendo la situación anterior (el formulario de contacto), mostraré un pequeño ejemplo
+del uso de transientes, nada de qué preocuparse, comenzamos con el formulario:
+
+<Code
+    language="php"
+    children={`<form id="transient_test" action="process.php" method="post">
+    <fieldset>
+        <label for="name">Nombre:</label>
+        <input id="name" type="text" name="name" />
+        <label for="email">Correo electrónico:</label>
+        <input id="email" type="email" name="email" />
+        <label for="url">URL:</label>
+        <input id="url" type="url" name="url" />
+        <label for="comment">Comentario:</label>
+        <textarea id="comment" name="comment"></textarea>
+        <input id="submit" type="submit" name="submit" value="enviado" />
+    </fieldset>
+</form>`}
+/>
+
+Esto nos dará un formulario bastante simple, tomamos **Nombre**, **Correo electrónico**, 
+**URL** y **Comentario**. También note que estoy usando atributos HTML5, no se preocupen,
+no soy un hipster.
+
+Una vez que tenemos los datos, por supuesto debemos procesarlos, para hacer eso necesitaremos
+un archivo php que he llamado `process.php`, este funcionará más o menos así.
+
+<Code
+    language="php"
+    children={`<?php 
+    if ( isset( $_POST['submit'] ) ) { // Asegúrate de que el formulario fue enviado
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $url = $_POST['url'];
+        $comment = $_POST['comment'];
+        $time = 60*60*24; // Expira en 1 día *
+        $this_transient = get_transient($name . '_' . $email); // Busca algún transient
+        if (!$this_transient ) { // Si no existe
+            set_transient('name_' . $email, $name, $time);
+            set_transient('mail_' . $email, $email, $time);
+            set_transient('url_' . $email, $url, $time);
+        }
+        $message = "Nombre: " . $name . "nnCorreo electrónico: " . $email . "nnURL: " . $url;
+        $headers = 'De: ' . $name;
+        wp_mail("me@me.com", "Prueba de Transientes", $comment, $headers); // Enviar un correo
+    }
+?>`}
+/>
+
+Ok, ahora este código tomará los datos que enviamos a través del formulario y buscará la
+base de datos para el valor clave (nuestro correo), si no existe, creará nuevos
+transientes con nombres como **name_me@me.com** usando los datos, estos expirarán en
+24 horas. Después de eso enviará un correo con el comentario.
+
+> [!NOTE]
+> `$time` debe ser un valor de tiempo en segundos, como no tengo idea de cuántos segundos
+> hay en un día** es más fácil dejar que PHP haga el cálculo, esto es **60 segundos
+> × 60 minutos × 24 horas**, aún más fácil: **60″ × 60′ = 1 hora × 24 = 24 horas**.
+
+Bien, tenemos el código para almacenar los transientes, ¿y ahora qué? Correcto, los necesitábamos
+para que el usuario no tenga que escribirlos una y otra vez en el formulario, para
+hacer eso tenemos que modificar nuestro formulario y agregar una `cookie`:
+
+<Code
+    language="php"
+    children={`$cookie = $_COOKIE['transients_test'];
+<form id="transient_test" action="process.php" method="post">
+    <fieldset>
+        <label for="name">Nombre:</label>
+        <input id="name" type="text" name="name" value="<?php echo get_transient('name_'.$cookie); ?>" />
+        <label for="email">Correo electrónico:</label>
+        <input id="email" type="email" name="email" value="<?php echo get_transient('name_'.$cookie); ?>" />
+        <label for="url">URL:</label>
+        <input id="url" type="url" name="url" value="<?php echo get_transient('name_'.$cookie); ?>" />
+        <label for="comment">Comentario:</label>
+        <textarea id="comment" name="comment"></textarea>
+        <input id="submit" type="submit" name="submit" value="enviado" />
+    </fieldset>
+</form>`}
+/>
+
+Ahora el formulario comprobará la existencia de la cookie llamada transients_test, que
+no existe en este momento, para crearla tenemos que agregar lo siguiente al archivo `process.php`:
+
+<Code
+    language="php"
+    children={`setcookie('transients_test', $_POST['email'], time()+86400, '/', $_SERVER['HTTP_HOST'], 0, 0 );
+`}
+/>
+
+Eso creará la cookie llamada `transients_test`, con el correo del usuario, expirará en
+**86400 segundos** (total de segundos en un día) y será válida para todo nuestro sitio.
+
+Eso es todo, tenemos nuestro formulario de contacto que recuerda a nuestros visitantes por un día completo,
+después de eso sus datos se borrarán de nuestra base de datos hasta la próxima vez que
+llenen y envíen el formulario.
+
+## Notas
+
+Por lo general, los transientes se almacenan en nuestra tabla de base de datos wp_options, pero
+pueden no estar, algunos plugins pueden cambiar su ubicación, por eso se recomienda usar
+transientes **solo con datos que se espera que se borren**. Si quieres mantenerlo, usa otro método.
+
+## Leer más
+
+- [Transients API « WordPress Codex](https://marioaguiar.net/web/20120430100255/http://codex.wordpress.org/Transients_API)
