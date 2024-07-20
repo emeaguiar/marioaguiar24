@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { NextSeo } from 'next-seo';
+import Trans from 'next-translate/Trans';
 
 /**
  * Internal dependencies
@@ -14,35 +15,59 @@ import { NextSeo } from 'next-seo';
 import { A, H1, H2, H3, P, UL } from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
+import FormatDate from '@/components/format-date';
 
 export default function PostPage({
   code,
   frontmatter,
+  locale,
 }: {
   code: string;
   frontmatter: {
     [key: string]: any;
   };
+  locale: string;
 }) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
+  const { publishedOn, updatedOn, title, description } = frontmatter;
 
   return (
     <>
-      <NextSeo
-        title={frontmatter.title}
-        description={frontmatter.description}
-      />
+      <NextSeo title={title} description={description} />
 
       <div className='my-16 flex flex-col items-center gap-6 px-4 text-xl/9 lg:mb-20'>
-        <H1>{frontmatter.title}</H1>
+        <H1>{title}</H1>
 
         <div className='flex flex-col gap-4 text-sm'>
-          <span className='italic'>
-            Published on{' '}
-            <time dateTime={frontmatter.publishedOn}>
-              {frontmatter.publishedOn}
-            </time>
-          </span>
+          {publishedOn && (
+            <span className='italic'>
+              <Trans
+                i18nKey='common:publishedOn'
+                components={[
+                  <FormatDate
+                    key='publishedOn'
+                    dateString={publishedOn}
+                    locale={locale}
+                  />,
+                ]}
+              />
+            </span>
+          )}
+
+          {updatedOn && (
+            <span className='italic'>
+              <Trans
+                i18nKey='common:updatedOn'
+                components={[
+                  <FormatDate
+                    key='updatedOn'
+                    dateString={updatedOn}
+                    locale={locale}
+                  />,
+                ]}
+              />
+            </span>
+          )}
         </div>
       </div>
 
@@ -118,6 +143,7 @@ export async function getStaticProps({
     props: {
       code,
       frontmatter,
+      locale,
     },
   };
 }

@@ -18,7 +18,6 @@ import { H2, WithUnderline } from '@/components/elements';
 import { merriweather } from '@/components/fonts';
 import BlogCards from '@/components/blog/cards';
 import ServicesCard from '@/components/services/card';
-import TestimonialsCard from '@/components/testimonials/card';
 import { getPosts } from '@/lib/posts';
 
 export default function Home({

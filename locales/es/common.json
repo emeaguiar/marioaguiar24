@@ -16,5 +16,7 @@
   "message": "Mensaje",
   "contactSuccess": "¡Gracias por tu mensaje! Te responderé lo antes posible.",
   "contactError": "Hubo un error al enviar tu mensaje. Por favor inténtalo de nuevo.",
-  "socialText": "Ir al perfil social en {{ label }}"
+  "socialText": "Ir al perfil social en {{ label }}",
+  "publishedOn": "Publicado hace <0 />",
+  "updatedOn": "Actualizado hace <0 />"
 }

@@ -32,6 +32,7 @@ export function getPosts(lang: 'en' | 'es', limit: number = 0) {
         'title',
         'description',
         'publishedOn',
+        'updatedOn',
       ])
     )
     .sort((post1, post2) => (post1.publishedOn > post2.publishedOn ? -1 : 1));
@@ -55,6 +56,7 @@ function getPostDataBySlug(
     slug: '',
     description: '',
     publishedOn: '',
+    updatedOn: '',
   };
 
   // Ensure only the minimal needed data is exposed
