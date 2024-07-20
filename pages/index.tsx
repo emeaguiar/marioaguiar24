@@ -113,14 +113,6 @@ export default function Home({
         </div>
       </div>
 
-      <div className='flex max-w-screen-md flex-col items-center gap-10 lg:gap-20'>
-        <H2 id='testimonials' className='text-center'>
-          {t('whyMe')}
-        </H2>
-
-        <TestimonialsCard />
-      </div>
-
       <div className='flex'>
         <p
           className={`${merriweather.className} my-8 text-center text-sm/5 italic`}

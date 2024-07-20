@@ -8,10 +8,6 @@ export const MENU_ITEMS = [
     href: '/blog',
   },
   {
-    key: 'testimonials',
-    href: '/#testimonials',
-  },
-  {
     key: 'contact',
     href: '?modal=1',
   },
