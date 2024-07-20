@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/_posts/**/*.{js,ts,jsx,tsx,mdx}",
-    "./examples/**/*.{js,ts,jsx,tsx,mdx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './lib/_posts/**/*.{js,ts,jsx,tsx,mdx}',
+    './examples/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   darkMode: 'class',
   theme: {
@@ -18,21 +18,21 @@ const config: Config = {
         'project-closed': '195 / 244',
       },
       colors: {
-        'foreground': 'var(--color--foreground)',
-        'background': 'var(--color--background)',
-        'primary': 'var(--color--primary)',
-        'secondary': 'var(--color--secondary)',
-        'underline': 'var(--color--underline)',
+        foreground: 'var(--color--foreground)',
+        background: 'var(--color--background)',
+        primary: 'var(--color--primary)',
+        secondary: 'var(--color--secondary)',
+        underline: 'var(--color--underline)',
       },
       keyframes: {
         glow: {
-          '0%, 100%': { 
+          '0%, 100%': {
             opacity: '0.2',
-            transform: 'scale(1.5)'
+            transform: 'scale(1.5)',
           },
           '50%': {
             opacity: '0.2',
-            transform: 'scale(1)'
+            transform: 'scale(1)',
           },
         },
       },
