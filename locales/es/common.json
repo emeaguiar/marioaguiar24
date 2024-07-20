@@ -18,5 +18,6 @@
   "contactError": "Hubo un error al enviar tu mensaje. Por favor inténtalo de nuevo.",
   "socialText": "Ir al perfil social en {{ label }}",
   "publishedOn": "Publicado hace <0 />",
-  "updatedOn": "Actualizado hace <0 />"
+  "updatedOn": "Actualizado hace <0 />",
+  "readingTime": "{{ minutes }} minutos de lectura"
 }

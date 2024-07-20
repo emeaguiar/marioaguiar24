@@ -45,7 +45,6 @@ function getPostDataBySlug(
   lang: 'en' | 'es',
   fields: string[] = []
 ) {
-  console.log('slug', slug);
   const trimmedSlug = slug.replace(/\.mdx$/, '');
   const fullPath = join(getPostsDirectory(lang), `${trimmedSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -57,17 +56,27 @@ function getPostDataBySlug(
     description: '',
     publishedOn: '',
     updatedOn: '',
+    readingTime: 0,
   };
 
   // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
-    if (field === 'slug') {
-      items.slug = trimmedSlug;
-    }
-
-    // Generic data.
-    if (data[field]) {
-      items[field] = data[field];
+    switch (field) {
+      case 'slug':
+        items.slug = trimmedSlug;
+        break;
+      case 'title':
+        items.title = data.title;
+        break;
+      case 'description':
+        items.description = data.description;
+        break;
+      case 'publishedOn':
+        items.publishedOn = data.publishedOn;
+        break;
+      case 'updatedOn':
+        items.updatedOn = data.updatedOn;
+        break;
     }
   });
 

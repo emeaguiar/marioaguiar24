@@ -16,6 +16,13 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/_posts/es/test.mdx", "lib/hooks/frontmatter.mjs", "components/format-date.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "lib/_posts/es/test.mdx",
+    "lib/hooks/frontmatter.mjs",
+    "components/format-date.tsx"
+  ],
   "exclude": ["node_modules"]
 }

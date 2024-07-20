@@ -7,7 +7,6 @@ import remarkGfm from 'remark-gfm';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { NextSeo } from 'next-seo';
-import Trans from 'next-translate/Trans';
 
 /**
  * Internal dependencies
@@ -15,7 +14,7 @@ import Trans from 'next-translate/Trans';
 import { A, H1, H2, H3, P, UL } from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
-import FormatDate from '@/components/format-date';
+import BlogMeta from '@/components/blog/meta';
 
 export default function PostPage({
   code,
@@ -29,7 +28,8 @@ export default function PostPage({
   locale: string;
 }) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
-  const { publishedOn, updatedOn, title, description } = frontmatter;
+  const { publishedOn, updatedOn, title, description, readingTime } =
+    frontmatter;
 
   return (
     <>
@@ -38,37 +38,12 @@ export default function PostPage({
       <div className='my-16 flex flex-col items-center gap-6 px-4 text-xl/9 lg:mb-20'>
         <H1>{title}</H1>
 
-        <div className='flex flex-col items-center gap-2 text-sm text-gray-500 dark:text-gray-400'>
-          {publishedOn && (
-            <span className='italic'>
-              <Trans
-                i18nKey='common:publishedOn'
-                components={[
-                  <FormatDate
-                    key='publishedOn'
-                    dateString={publishedOn}
-                    locale={locale}
-                  />,
-                ]}
-              />
-            </span>
-          )}
-
-          {updatedOn && (
-            <span className='italic'>
-              <Trans
-                i18nKey='common:updatedOn'
-                components={[
-                  <FormatDate
-                    key='updatedOn'
-                    dateString={updatedOn}
-                    locale={locale}
-                  />,
-                ]}
-              />
-            </span>
-          )}
-        </div>
+        <BlogMeta
+          publishedOn={publishedOn}
+          updatedOn={updatedOn}
+          readingTime={readingTime / 60}
+          locale={locale}
+        />
       </div>
 
       <div className='flex flex-col items-center gap-6 px-4 text-xl/9'>
