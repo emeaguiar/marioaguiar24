@@ -1,0 +1,214 @@
+---
+title: Entendiendo el Loop de WordPress
+publishedOn: '2014-08-04'
+updatedOn: '2024-07-20T23:49:08.108Z'
+description: >-
+  Una de las características más básicas (y poderosas) dentro de WordPress es
+  The Loop, este pequeño fragmento de código que usamos una y otra vez. Y sin
+  embargo, encuentro personas que se llaman a sí mismas expertas en WordPress y
+  no saben qué es, eso es… triste.
+published: true
+readingTime: 600
+---
+
+import Code from '@/components/code/code';
+
+Una de las características más básicas (y poderosas) dentro de WordPress es _The Loop_,
+este pequeño fragmento de código que usamos una y otra vez. Y sin embargo, encuentro
+personas que se llaman a sí mismas expertas en WordPress y **no saben qué es**, eso es… triste.
+
+Recientemente la empresa en la que trabajo compró otra empresa en el extranjero, y me pidieron
+que entrevistara a algunas personas para asegurarme de que saben un poco sobre WordPress, PHP,
+Frontend y demás. Mi primera entrevista fue bastante bien, hasta que pregunté **“¿Cómo iniciamos
+The Loop en WordPress?”**, la respuesta me sorprendió. No sabía ni siquiera qué era el loop.
+
+El Loop es una característica bastante fácil de entender, así que decidí escribir un poco al respecto.
+
+## ¿Qué es un loop?
+
+Si eres programador, seguramente sabes qué es un loop, y si no… ¿En serio?
+
+Cuando escribimos código, a veces necesitamos que un bloque de código se use más de una vez,
+podríamos simplemente escribir el mismo código una y otra vez, pero eso es solo una pérdida de
+tiempo, en esos casos usamos _un loop_, así que básicamente, un loop solo repite cosas. Por ejemplo,
+si queremos mostrar los números del uno al diez, podríamos hacer esto:
+
+<Code
+    language="php"
+    children={`echo "1n";
+echo "2n";
+echo "3n";
+echo "4n";
+echo "5n";
+echo "6n";
+echo "7n";
+echo "8n";
+echo "9n";
+echo "10n";`}
+/>
+
+Para que sepas, _yo escribí todo eso_, y fue cansado… En lugar de eso, debería haber hecho esto:
+
+<Code
+    language="php"
+    children={`for ( $number = 1; $number <= 10; $number++ ) {
+    echo $number . "n";
+}`}
+/>
+
+Mucho más fácil. Por cierto, usé un loop `for`, hay varios tipos de loops. WordPress,
+por ejemplo, usa un loop `while`.
+
+## ¿Qué es "El Loop”?
+
+Ahora sabemos qué es _un_ loop, pero ¿qué hace que el loop de WordPress sea tan especial
+que lo convierte en _el_ loop? Bueno, sin The Loop, WordPress no nos mostraría lo que
+queremos ver, eso siendo **nuestras publicaciones**.
+
+The Loop realiza un montón de acciones bajo el capó para que solo nos preocupemos de
+**cómo mostrar nuestras publicaciones, y no de cómo recuperar nuestras publicaciones**.
+Un loop muy básico (tomado de Twentythirteen) se ve así:
+
+<Code
+    language="php"
+    children={`<?php if ( have_posts() ) : ?>
+    <?php /* El loop */ ?>
+    <?php while ( have_posts() ) : the_post(); ?>
+        <?php get_template_part( 'content', get_post_format() ); ?>
+    <?php endwhile; ?>
+    <?php twentythirteen_paging_nav(); ?>
+<?php else : ?>
+    <?php get_template_part( 'content', 'none' ); ?>
+<?php endif; ?>`}
+/>
+
+Mantengamos en mente que cuando accedemos a cualquier página en WordPress, hay una consulta
+global en marcha, eso significa que **WordPress ya sabe qué página estamos visitando**
+y ya hay un objeto `$wp_query` con toda la información que necesitamos, ahora veamos qué
+hace el loop.
+
+- `if ( have_posts() ):` Primero que nada, esta función verifica el objeto `$wp_query`
+y devuelve verdadero si el objeto tiene publicaciones en él.
+- `while ( have_posts() ):` Ahora, **este es el verdadero inicio del loop**, mientras
+`have_posts()` sea verdadero, ejecutemos el resto del código dentro.
+- `the_post()`: Ahora que estamos dentro del loop, necesitamos poblar nuestro objeto `$post`,
+esta función también dispara `setup_postdata()` que verifica cosas como el número de páginas
+dentro de la publicación.
+- `get_template_part( 'content', get_post_format() )`: Ahora, tenemos nuestro objeto `$post`
+completo, es hora de mostrarlo al mundo, podríamos simplemente insertar el marcado
+y funciones como `the_title()` y `the_content()` aquí mismo, pero es una buena práctica
+mantener las cosas limpias incluyendo una plantilla (planeo hablar sobre `get_template_part`
+en otro post).
+- `endwhile`: Ya incluimos la plantilla para mostrar las publicaciones, así que podemos
+simplemente **terminar el loop**, recuerda, mientras haya publicaciones en la consulta,
+el loop estará en acción.
+- `twentythirteen_paging_nav()`: Esta función es específica de este tema, básicamente
+solo muestra enlaces de navegación en caso de que haya más publicaciones en la página.
+- `else`: Si la consulta estaba vacía, o si `have_posts` devolvió falso, entonces
+deberíamos hacerle saber al usuario incluyendo una plantilla especial para estas situaciones
+embarazosas.
+- `endif`: Termina completamente la declaración if, **termina completamente el loop**
+
+## Usando The Loop con queries personalizadas
+
+Usualmente usamos The Loop junto con la **consulta principal**, o el objeto `$wp_query`,
+pero ¿qué pasa si por alguna razón necesitamos usar una queries personalizada?
+
+Podríamos modificar la consulta usando `query_posts`, pero no lo recomiendo porque
+en realidad modifica la consulta principal, y usualmente trae más problemas que soluciones,
+la solución real es simplemente **crear una nueva consulta**.
+
+## El método `get_posts`
+
+La función `get_posts` es una forma de crear **pequeños loops personalizados**, acepta
+todos los parámetros de `WP_Query` y devuelve un array con el resultado, de esa forma
+podemos usar un loop `foreach` para trabajar con las publicaciones:
+
+<Code
+    language="php"
+    children={`$posts = get_posts( $args );
+foreach ( $posts as $post ) :
+    setup_postdata( $post );
+?>
+    <h2><?php the_title(); ?></h2>
+    <?php the_content(); ?>
+<?php
+endforeach;
+wp_reset_postdata();`}
+/> 
+
+Nótece cómo **necesitamos ejecutar** `setup_postdata` manualmente? Eso es porque no
+usamos `the_post` en este loop.
+
+## El método de la “nueva query”
+
+En mi experiencia personal, he tenido problemas al usar `get_posts` en loops más
+grandes, por eso en esos casos prefiero usar un nuevo WP_Query. Esto crea una nueva
+consulta **completamente independiente** de la consulta principal, y podemos usar el loop
+de WordPress sin preocupaciones.
+
+<Code
+    language="php"
+    children={`$my_query = new WP_Query( $args );
+if ( $my_query->have_posts() ):
+    while ( $my_query->have_posts() ) : $my_query->the_post();
+?>
+        <h2><?php the_title(); ?></h2>
+        <?php the_content(); ?>
+<?php
+    endwhile;
+    wp_reset_postdata();
+endif;
+?>`}
+/>
+
+Como puedes ver, es prácticamente el mismo loop que usamos con la consulta principal,
+la diferencia es el uso constante de `$my_query`, esto es necesario porque las funciones
+`have_posts` y `the_post` **son en realidad alias** que apuntan al objeto `$wp_query`, así que
+cuando llamamos a `have_posts` en realidad estamos llamando a `$wp_query->have_posts`,
+por eso **necesitamos especificar** que estamos llamando a la función en nuestro nuevo objeto `$my_query`.
+
+## Fuera del loop
+
+Cuando lees tutoriales y artículos sobre WordPress, a menudo ves las frases
+“dentro del loop” o “fuera del loop”, ¿qué significan?
+
+**Dentro del loop** debe ser bastante obvio en este momento, todo entre el
+`while` y `endwhile`, o `foreach` y `endforeach` está dentro del loop, eso significa
+que usa ya sea la consulta principal, o una consulta personalizada, y que nuestro objeto `$post` está disponible.
+
+**Fuera del loop**, sin embargo, es todo lo que está fuera de esas etiquetas, no usa
+ninguna consulta y el objeto `$post` no está disponible. ¿Cómo podría ser útil?
+
+Bueno, digamos que tienes una barra lateral personalizada en tus publicaciones, esta
+barra lateral debe mostrar un campo personalizado específico llamado “mood” que pertenece
+a la publicación actual. Pero la barra lateral está **fuera del loop**, ¿cómo puedo acceder
+a los datos de la publicación?
+
+Antes, cuando dije que `$post` no está disponible, quería decir que **no está disponible
+automáticamente**, recuerda, **cuando accedemos a cualquier página en WordPress, hay una
+consulta principal en marcha**, incluso si no tenemos un loop en la barra lateral, _sí tenemos_
+un `$wp_query` y un objeto `$post` _en algún lugar_, solo necesitamos llamarlos.
+
+<Code
+    language="php"
+    children={`<?php
+    global $post;
+    $mood = get_post_meta( $post->ID, 'mood', true );
+?>
+<p>Me siento <?php echo $mood; ?></p>`}
+/>
+
+Como `$post` es una **variable global**, eso significa que siempre está disponible para
+nosotros, solo necesitamos saber cómo llamarlo, como a un viejo amigo.
+
+## Conclusión
+
+Como puedes ver, **El Loop** es bastante fácil de entender, y increíblemente útil.
+Puedes estar seguro de que no importa en qué página de WordPress estés, _siempre_ hay un loop en acción.
+Así que espero que este pequeño artículo te haya ayudado a entender un poco más sobre nuestro amigo The Loop.
+
+## Leer más
+
+- [The Loop (Codex)](http://codex.wordpress.org/The_Loop)
+- [The Loop in action (Codex)](http://codex.wordpress.org/The_Loop_in_Action)
