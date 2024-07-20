@@ -1,3 +1,3 @@
 {
-  "**/*.{md,mdx}": "node ./lib/hooks/frontmatter"
+  "**/*.{md,mdx}": "node ./lib/hooks/frontmatter.mjs"
 }
