@@ -3,6 +3,7 @@
  */
 import { DefaultSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";
+import { ThemeProvider } from "next-themes";
 
 /**
  * Next dependencies
@@ -37,9 +38,11 @@ export default function App( { Component, pageProps }: AppProps ) {
         } }
       />
 
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </>
   );
 }

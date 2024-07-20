@@ -9,7 +9,10 @@ const config: Config = {
     "./examples/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: [
-    'selector',
+    'variant', [
+      '&:is(.dark *)',
+      'media (prefers-color-scheme: dark) { & * }'
+    ]
   ],
   theme: {
     extend: {

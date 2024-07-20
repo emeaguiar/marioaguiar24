@@ -2,7 +2,6 @@
  * External dependencies
  */
 import useTranslation from "next-translate/useTranslation";
-import clsx from "clsx";
 
 /**
  * Next dependencies
@@ -13,11 +12,10 @@ import Link from "next/link";
  * Internal dependencies
  */
 import { MENU_ITEMS } from "@/lib/data";
-import { useDarkMode } from "@/components/use-dark-mode";
+import DarkModeToggle from "@/components/dark-mode-toggle";
 
 export default function DesktopMenu() {
     const { t } = useTranslation( 'common' );
-    const { DarkModeToggle } = useDarkMode();
 
     return (
         <nav aria-label="Navegación principal" className="hidden lg:flex">
