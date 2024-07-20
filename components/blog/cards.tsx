@@ -19,7 +19,7 @@ import clsx from "clsx";
 
 export default function Cards( { posts }: { [ key: string ]: any } ) {
     return (
-        <div className="grid gap-8 items-center w-full lg:grid-cols-3 auto lg:max-w-screen-xl">
+        <div className="grid gap-8 items-stretch w-full lg:grid-cols-3 auto lg:max-w-screen-xl">
             {
                 posts && posts.map( ( post: PostItem ) => (
                     <Card post={ post } key={ post.slug } />
@@ -51,7 +51,7 @@ function Card( { post }: { post: PostItem } ) {
 
             <Link
                 href={ `${ BLOG_PREFIX }/${ post.slug }` }
-                className={ `flex items-center gap-2 text-primary text-sm hover:text-foreground transition-colors` }
+                className={ `flex items-center gap-2 mt-auto mb-0 text-primary text-sm hover:text-foreground transition-colors` }
             >
                 <span>
                     { t( 'readMore' ) }
