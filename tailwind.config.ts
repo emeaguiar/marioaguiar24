@@ -1,4 +1,3 @@
-import { transform } from "esbuild";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
