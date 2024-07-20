@@ -38,7 +38,7 @@ export default function PostPage({
       <div className='my-16 flex flex-col items-center gap-6 px-4 text-xl/9 lg:mb-20'>
         <H1>{title}</H1>
 
-        <div className='flex flex-col gap-4 text-sm'>
+        <div className='flex flex-col items-center gap-2 text-sm text-gray-500 dark:text-gray-400'>
           {publishedOn && (
             <span className='italic'>
               <Trans
