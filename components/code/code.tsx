@@ -14,8 +14,11 @@ export default function Code( { children, language }: {
     useEffect( () => {
         const loadLanguages = async () => {
             (typeof global !== "undefined" ? global : window).Prism = Prism;
+            await import( "prismjs/components/prism-markup-templating" );
             await import( "prismjs/components/prism-css" );
             await import( "prismjs/components/prism-css-extras" );
+            await import( "prismjs/components/prism-php" );
+            await import( "prismjs/components/prism-php-extras" );
         };
 
         loadLanguages();
