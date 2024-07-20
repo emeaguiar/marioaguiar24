@@ -29,7 +29,7 @@ export function getPosts(
     }
 
     const posts = slugs
-        .map( ( slug ) => getPostDataBySlug( slug, lang, [ 'slug', 'title', 'description', 'date' ] ) )
+        .map( ( slug ) => getPostDataBySlug( slug, lang, [ 'slug', 'title', 'description', 'publishedOn' ] ) )
         .sort( ( post1, post2 ) => ( post1.publishedOn > post2.publishedOn ? -1 : 1 ) );
 
     return posts;
@@ -50,7 +50,7 @@ function getPostDataBySlug(
         title: '',
         slug: '',
         description: '',
-        date: '',
+        publishedOn: '',
     };
 
     // Ensure only the minimal needed data is exposed
