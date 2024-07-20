@@ -340,9 +340,9 @@ configuration file. Like this:
     children={`import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: [ 'variant, [
+    darkMode: [ 'variant', [
         '&.is(.dark *)',
-        'media (prefers-color-scheme: dark) {  & * }',
+        'media (prefers-color-scheme: dark) { & * }',
     ],
 };
 

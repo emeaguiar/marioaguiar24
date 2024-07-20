@@ -8,12 +8,7 @@ const config: Config = {
     "./lib/_posts/**/*.{js,ts,jsx,tsx,mdx}",
     "./examples/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: [
-    'variant', [
-      '&:is(.dark *)',
-      'media (prefers-color-scheme: dark) { & * }'
-    ]
-  ],
+  darkMode: 'class',
   theme: {
     extend: {
       aspectRatio: {
