@@ -5,4 +5,5 @@ export type PostItem = {
   readingTime: number;
   publishedOn: string;
   updatedOn: string;
+  published: boolean;
 };

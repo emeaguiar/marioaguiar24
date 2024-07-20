@@ -21,10 +21,6 @@ export function getPostsDirectory(lang: 'en' | 'es') {
 export function getPosts(lang: 'en' | 'es', limit: number = 0) {
   let slugs = getPostSlugs(lang);
 
-  if (limit > 0) {
-    slugs = slugs.slice(0, limit);
-  }
-
   const posts = slugs
     .map((slug) =>
       getPostDataBySlug(slug, lang, [
@@ -33,11 +29,19 @@ export function getPosts(lang: 'en' | 'es', limit: number = 0) {
         'description',
         'publishedOn',
         'updatedOn',
+        'published',
       ])
     )
     .sort((post1, post2) => (post1.publishedOn > post2.publishedOn ? -1 : 1));
 
-  return posts;
+  // Filter out drafts
+  const filteredPosts = posts.filter((post) => post.published);
+
+  if (limit) {
+    return filteredPosts.slice(0, limit);
+  }
+
+  return filteredPosts;
 }
 
 function getPostDataBySlug(
@@ -57,6 +61,7 @@ function getPostDataBySlug(
     publishedOn: '',
     updatedOn: '',
     readingTime: 0,
+    published: false,
   };
 
   // Ensure only the minimal needed data is exposed
@@ -76,6 +81,9 @@ function getPostDataBySlug(
         break;
       case 'updatedOn':
         items.updatedOn = data.updatedOn;
+        break;
+      case 'published':
+        items.published = data.published;
         break;
     }
   });

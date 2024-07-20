@@ -1,0 +1,164 @@
+---
+title: Mostrar un feed RSS en WordPress
+publishedOn: '2011-07-22T18:50:36.516Z'
+updatedOn: '2024-07-20T22:58:10.940Z'
+description: >-
+  Mostrar un feed RSS en WordPress es bastante simple, puedes usar el widget RSS
+  integrado o puedes usar un plugin. Pero ¿qué pasa si quieres mostrar un feed
+  RSS en una entrada o página? Eso es un poco más complicado, pero aún bastante
+  fácil.
+published: true
+readingTime: 240
+---
+
+import Code from '@/components/code/code';
+
+> [!WARNING]
+> Este artículo fue escrito en **2011** 👴🏼. La mayoría de los consejos aquí no son válidos y
+> no recomiendo usar ninguno de los fragmentos mostrados aquí.
+>
+> Mantengo este artículo aquí por razones históricas y para recordarme cuánto he mejorado
+> a lo largo de los años.
+>
+> _Solo se hicieron cambios cosméticos a este artículo._
+
+Una de las cosas que me encanta de **WordPress** es poder hacer prácticamente cualquier cosa,
+y sus funciones integradas hacen que esto sea aún más fácil. Hace unos días tuve la necesidad de crear
+una plantilla para **obtener y mostrar publicaciones de un feed**. A pesar de ser la primera vez que
+hacía algo así, lo hice funcionar en muy poco tiempo. Además, encontré un par de formas de hacer esto.
+
+## Opción 1: WP_Http
+
+La persona que me pidió que hiciera la plantilla me dejó un enlace al blog de [Ozh](http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/),
+donde explica cómo usar la clase `WP_Http` para obtener contenido de sitios externos,
+una forma simple y bien explicada. Una vez más, hay más de una forma de hacer esto.
+
+### Usando la clase
+
+La forma básica (que Ozh explica en su artículo), se hace haciendo una llamada a la clase en sí.
+
+Primero incluimos la clase (desde WP 3.x)
+
+<Code
+    language="php"
+    children={`if( !class_exists( 'WP_Http' ) )
+        include_once( ABSPATH . WPINC. '/class-http.php' );`}
+/>
+
+Luego hacemos la llamada y probamos la conexión:
+
+<Code
+    language="php"
+    children={`$request = new WP_Http;
+    $result = $request->request( 'http://feed.url' );`}
+/>
+
+Si tiene éxito, entonces `$result` será un array con los siguientes datos:
+
+- `'headers'`: Array con… cabeceras… como `"x-powered-by" => "PHP/5.2.1"`
+- `'body'`: El contenido del feed, la cosa que necesitamos. Devuelve _HTML sin formato_
+- `'response'`: Array con la respuesta del servidor, necesitamos `array('code'=>200, 'message'=>'OK')`
+- `'cookies'`: Array con información de cookies.
+
+Ahora a lo bueno, la implementación:
+
+<Code
+    language="php"
+    children={`function fetchFeed2($strFeedURL) { // Función del feed
+    if( !class_exists( 'WP_Http' ) ) // Clase WP_Http
+        include_once( ABSPATH . WPINC. '/class-http.php' ); // Incluir clase
+        
+        $request = new WP_Http;
+        $result = $request->request( $strFeedURL ); // probar conexión
+        
+        if ( ! is_wp_error($result) ) { // Sin error
+            if ( ( $result['response']['code'] = 200 ) && ( $result['response']['message'] = "OK" ) ) { 
+                return $result['body']; // obtener datos
+            } else {
+                return  $result = "";
+            }
+        } else { // error
+            return  $result = "";
+            $error_string = $result->get_error_message(); // ¿qué error fue?
+            echo '
+' . $error_string . '; // mostrar error
+        } 
+    } `}
+/>
+
+Ahora solo tenemos que agregar esto donde queremos que se muestre el feed.
+
+<Code
+    language="php"
+    children={`<?php
+    $strFeedURL = "http://feed.url";
+    echo fetchFeed2($strFeedURL);
+?>
+`}
+/>
+
+Fácil ¿verdad? [fuente](http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/)
+
+### Usando funciones
+
+Como mencioné antes, hay más de una forma de usar esta clase, la otra forma
+es usar las funciones (en lugar de la clase en sí), en este caso `wp_remote_get()`.
+
+Podríamos decir que esta es la forma más rápida de usar la clase, solo necesitamos este código:
+
+<Code
+    language="php"
+    children={`$response = wp_remote_get( 'http://feed.url' );
+if( is_wp_error( $response ) ) { // error
+    echo 'Algo salió mal!';
+    $error_string = $response->get_error_message(); // ¿qué error fue?
+    echo $error_string; // mostrar error
+} else { // Sin error
+    echo $response['body']; // mostrar contenido
+}`}
+/>
+
+El problema aquí es que (al menos en mi caso) devolvió el contenido en **XML**,
+y no soy realmente bueno con eso, ¿cómo lo convierto en un simple html?
+
+## Opción 2: Simplepie
+
+Mi solución final fue usar otro método, afortunadamente ya tenemos [Simplepie](http://simplepie.org/) integrado en WordPress,
+ahora solo tenemos que llamar a la función `fetch_feed()`.
+
+<Code
+    language="php"
+    children={`<?php
+$rss = fetch_feed('http://feed.url');
+if (!is_wp_error( $rss ) ) : // ¿Se creó el objeto?
+    // ¿Cuántos elementos tenemos? (Máximo 5)
+    $maxitems = $rss->get_item_quantity(5); 
+    // Crear un array con elementos comenzando con #0
+    $rss_items = $rss->get_items(0, $maxitems); 
+    endif;
+?>`}
+/>
+
+Ahora solo tenemos que mostrar los elementos, al igual que un loop de WordPress
+
+<Code
+    language="php"
+    children={`<ul>
+<?php if ($maxitems == 0) echo '<li>No hay elementos.</li>';
+else
+// Recorrer cada elemento del feed y mostrar cada elemento como un hipervínculo.
+foreach ( $rss_items as $item ) : ?>
+<li>
+    <a href='<?php echo esc_url( $item->get_permalink() ); ?>'
+    title='<?php echo 'Publicado '.$item->get_date('j F Y | g:i a'); ?>'>
+    <?php echo esc_html( $item->get_title() ); ?></a>
+</li>
+<?php endforeach; ?>
+</ul>
+`}
+/>
+
+Esta fue sin dudas la forma más fácil y rápida ya que **me permite personalizar 
+casi en su totalidad la forma en que se muestran los elementos**, el uso es muy 
+similar al loop de WordPress y soporta una serie de etiquetas, 
+cada una listada en la [documentación de Simplepie](http://simplepie.org/wiki/reference/simplepie_item/start).
