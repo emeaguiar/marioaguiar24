@@ -26,7 +26,7 @@ export function H1( {
     return (
         <h1
             className={ clsx(
-                `${ merriweather.className } font-bold text-3xl/10 my-16 lg:max-w-screen-sm lg:mb-20 lg:mt-12 lg:text-4xl/normal lg:text-center`,
+                `${ merriweather.className } font-bold text-3xl/10 lg:max-w-screen-sm lg:mt-12 lg:text-4xl/normal lg:text-center`,
                 className,
             ) }
             id={ id }

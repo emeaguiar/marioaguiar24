@@ -29,8 +29,8 @@ export function getPosts(
     }
 
     const posts = slugs
-        .map( ( slug ) => getPostDataBySlug( slug, lang, [ 'slug', 'title', 'description' ] ) )
-        .sort( ( post1, post2 ) => ( post1.date > post2.date ? -1 : 1 ) );
+        .map( ( slug ) => getPostDataBySlug( slug, lang, [ 'slug', 'title', 'description', 'date' ] ) )
+        .sort( ( post1, post2 ) => ( post1.publishedOn > post2.publishedOn ? -1 : 1 ) );
 
     return posts;
 }
@@ -47,8 +47,10 @@ function getPostDataBySlug(
     const { data } = matter( fileContents );
 
     const items: PostItem = {
+        title: '',
         slug: '',
         description: '',
+        date: '',
     };
 
     // Ensure only the minimal needed data is exposed
