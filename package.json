@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:staged": "lint-staged",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -38,6 +40,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "husky": "^9.1.1",
+    "lint-staged": "^15.2.7",
     "mdx-bundler": "^10.0.2",
     "postcss": "^8",
     "prettier-plugin-tailwindcss": "^0.6.5",
