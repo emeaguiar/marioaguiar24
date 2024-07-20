@@ -36,17 +36,13 @@ export default function Page({
         <H2 className='text-center'>{t('latest')}</H2>
 
         <BlogCards posts={posts} />
-
-        <H2 className='text-center'>{t('mostInteresting')}</H2>
-
-        <BlogCards posts={posts} />
       </div>
     </>
   );
 }
 
 export async function getStaticProps({ locale }: { locale: 'es' | 'en' }) {
-  const posts = getPosts(locale, 3);
+  const posts = getPosts(locale, 0);
 
   return {
     props: {
