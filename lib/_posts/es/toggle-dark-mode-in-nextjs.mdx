@@ -1,61 +1,61 @@
 ---
 title: Crear un botón de modo oscuro en React con Tailwind
-publishedOn: "2024-07-17"
+publishedOn: '2024-07-17'
 description: En éste rápido tutorial agregaremos un botón para activar modo oscuro a nuestros componentes con Tailwind.
 ---
 
 import Code from '@/components/code/code';
 import AlignWide from '@/components/blog/align-wide';
 import {
-    ComponentWithButton,
-    DarkExample,
-    LightExample,
-    SunButtonExample,
-    SunButtonDarkExample,
-    Component,
+  ComponentWithButton,
+  DarkExample,
+  LightExample,
+  SunButtonExample,
+  SunButtonDarkExample,
+  Component,
 } from '@/examples/toggle-dark-mode-in-nextjs/es';
 
-Durante el rediseño del blog me sorprendió lo fácil que era agregar un modo 
-oscuro en _Tailwind_, así que pensé en por qué no agregar un pequeño botón que 
-pudiera cambiarlo a voluntad (nada del otro mundo), y ya que iba a hacer eso, 
+Durante el rediseño del blog me sorprendió lo fácil que era agregar un modo
+oscuro en _Tailwind_, así que pensé en por qué no agregar un pequeño botón que
+pudiera cambiarlo a voluntad (nada del otro mundo), y ya que iba a hacer eso,
 también pensé en relatar el proceso 🙂.
 
-En este tutorial aprenderemos a **crear un sencillo botón de y hacia modo 
+En este tutorial aprenderemos a **crear un sencillo botón de y hacia modo
 oscuro dentro de nuestra aplicación en React con Tailwind CSS**.
 
 ## Criterios de aceptación
 
-Como siempre, antes de comenzar, definamos los criterios de aceptación para 
+Como siempre, antes de comenzar, definamos los criterios de aceptación para
 esta funcionalidad:
 
 - [ ] Crear una aplicación con modo oscuro
 - [ ] Agregar un botón que cambie el modo de la aplicación manualmente
-- [ ] El modo debe cambiar automáticamente si el usuario tiene configurado el 
-modo oscuro en su sistema operativo
+- [ ] El modo debe cambiar automáticamente si el usuario tiene configurado el
+      modo oscuro en su sistema operativo
 
 Creo que con eso es suficiente, ahora sí, ¡manos a la obra!
 
 ## Pre-requsitos
 
-Mentí 🙈, antes de comenzar… Este tutorial asume que se poseen conocimientos de 
+Mentí 🙈, antes de comenzar… Este tutorial asume que se poseen conocimientos de
 React intermedios (o básicos si así los consideras). Además, necesitarás una
 aplicación en React.
 
-Si aún no la tienes, te sugiero utilizar [Vite](https://vitejs.dev/guide/). Puedes 
+Si aún no la tienes, te sugiero utilizar [Vite](https://vitejs.dev/guide/). Puedes
 encontrar más información en la [documentación oficial](https://tailwindcss.com/docs/guides/vite).
 
-Es bastante sencillo y el asistente te ayudará a travéz del proceso, ahora sí, 
+Es bastante sencillo y el asistente te ayudará a travéz del proceso, ahora sí,
 ¡manos a la obra! (de verdad esta vez).
 
 ## Paso 1: Crear el modo oscuro
 
-Antes que nada, necesitamos que nuestra aplicación tenga un **modo oscuro** al 
-que cambiar, para efectos prácticos de este tutorial, crearemos un sitio muy 
+Antes que nada, necesitamos que nuestra aplicación tenga un **modo oscuro** al
+que cambiar, para efectos prácticos de este tutorial, crearemos un sitio muy
 básico utilizando Tailwind. Por ejemplo, esta sencilla aplicación:
 
 <Code
-    language="jsx"
-    children={`<main>
+  language='jsx'
+  children={`<main>
     <div className="flex flex-col items-center px-4">
         <h1 className="text-4xl font-bold mt-8">¡Hola, mundo!</h1>
         <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
@@ -65,14 +65,14 @@ básico utilizando Tailwind. Por ejemplo, esta sencilla aplicación:
 
 ### Paso 1.1: Crear El "modo light"
 
-La magia de Tailwind (o desgracia, dependiendo de a quién le preguntes) es que 
-puedes agregar todos los estilos que necesites por medio de _utility classes_,[^1] 
-así que para darle forma a nuestro sitio, simplemente agregamos los colores que 
+La magia de Tailwind (o desgracia, dependiendo de a quién le preguntes) es que
+puedes agregar todos los estilos que necesites por medio de _utility classes_,[^1]
+así que para darle forma a nuestro sitio, simplemente agregamos los colores que
 necesitamos en forma de clases `bg-` y `text-`:
 
 <Code
-    language="jsx"
-    children={`<main>
+  language='jsx'
+  children={`<main>
     <div className="flex flex-col items-center p-4 bg-yellow-100 text-slate-900">
         <h1 className="text-4xl font-bold mt-8 text-red-700">¡Hola, mundo!</h1>
         <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
@@ -83,31 +83,30 @@ necesitamos en forma de clases `bg-` y `text-`:
 Lo que nos daría algo más o menos así:
 
 <AlignWide>
-    <LightExample />
+  <LightExample />
 </AlignWide>
 
 > [!TIP]
 > Puedes encontrar más información sobre los colores de Tailwind en la [documentación oficial](https://tailwindcss.com/docs/customizing-colors).
 > O puedes extender la paleta de color con [tu propia configuración](https://tailwindcss.com/docs/customizing-colors#extending-the-defaults).
 
-Este tipo de patrón es… _polémico_ en la comunidad de desarrollo web, pero por 
-motivos prácticos y para efectos de este tutorial, nos sirve muy bien. La ventaja 
-de este enfoque es que podemos cambiar los colores de nuestra aplicación sin tener 
-que modificar el código fuente, simplemente cambiando las clases CSS. Los que 
-**nos da una mayor velocidad de desarrollo**, pero puede volverse complicado de 
+Este tipo de patrón es… _polémico_ en la comunidad de desarrollo web, pero por
+motivos prácticos y para efectos de este tutorial, nos sirve muy bien. La ventaja
+de este enfoque es que podemos cambiar los colores de nuestra aplicación sin tener
+que modificar el código fuente, simplemente cambiando las clases CSS. Los que
+**nos da una mayor velocidad de desarrollo**, pero puede volverse complicado de
 mantener en aplicaciones más grandes.
 
 ### Paso 1.2: Crear el "modo oscuro"
 
-Una vez que tenemos una idea de como queremos que se vea nuestro sitio durante 
-el día, podemos comenzar a jugar con el modo oscuro, para esto (y porque usamos Tailwind), 
-simplemente agregamos las clases de color que necesitamos para el modo oscuro 
+Una vez que tenemos una idea de como queremos que se vea nuestro sitio durante
+el día, podemos comenzar a jugar con el modo oscuro, para esto (y porque usamos Tailwind),
+simplemente agregamos las clases de color que necesitamos para el modo oscuro
 con el prefijo `dark:`.
 
-
 <Code
-    language="jsx"
-    children={`<main>
+  language='jsx'
+  children={`<main>
     <div className="flex flex-col items-center p-4 bg-yellow-100 dark:bg-orange-950 text-slate-900 dark:text-yellow-50">
         <h1 className="text-4xl font-bold mt-8 text-red-700 dark:text-red-200">¡Hola, mundo!</h1>
         <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
@@ -116,13 +115,13 @@ con el prefijo `dark:`.
 />
 
 ¿Fácil, no? ¡Pues eso es todo! Lo que hace Tailwind detrás de bambalinas es buscar
-la _preferencia del usuario_, si tiene configurado el modo oscuro en su sistema operativo, 
-automáticamente aplicará las clases `dark:` a los elementos que tengan esa clase. 
+la _preferencia del usuario_, si tiene configurado el modo oscuro en su sistema operativo,
+automáticamente aplicará las clases `dark:` a los elementos que tengan esa clase.
 Así, lo que normalmente haríamos así:
 
 <Code
-    language="css"
-    children={`@media (prefers-color-scheme: dark) {
+  language='css'
+  children={`@media (prefers-color-scheme: dark) {
     :root {
         --color--foreground: #431407; /* bg-orange-950 */
         --color--background: #fefce8; /* text-yellow-50 */
@@ -133,64 +132,64 @@ Así, lo que normalmente haríamos así:
 Ahora simplemente lo hacemos así:
 
 <Code
-    language="jsx"
-    children={`<div className="dark:bg-orange-950 dark:text-yellow-50">¡Hola, mundo!</div>`}
+  language='jsx'
+  children={`<div className="dark:bg-orange-950 dark:text-yellow-50">¡Hola, mundo!</div>`}
 />
 
 > [!NOTE]
-> Además de el prefijo `dark`, Tailwind también ofrece los prefijos `hover:`, 
-`::after`, `lg:`, [entre otros](https://tailwindcss.com/docs/hover-focus-and-other-states).
+> Además de el prefijo `dark`, Tailwind también ofrece los prefijos `hover:`,
+> `::after`, `lg:`, [entre otros](https://tailwindcss.com/docs/hover-focus-and-other-states).
 
-Y una vez que las preferencias del usuario cambien, Tailwind se encargará de 
+Y una vez que las preferencias del usuario cambien, Tailwind se encargará de
 cambiar los colores automáticamente:
 
 <AlignWide>
-    <DarkExample />
+  <DarkExample />
 </AlignWide>
 
 ## Paso 2: Agregar un botón para de cambio de modo
 
-Hasta ahora tenemos un sitio web que cambia de luz a oscuridad dependendiendo 
-de las preferencias del sistema operativo del usuario, pero, **¿Qué pasa si el 
+Hasta ahora tenemos un sitio web que cambia de luz a oscuridad dependendiendo
+de las preferencias del sistema operativo del usuario, pero, **¿Qué pasa si el
 usuario quiere cambiarlo manualmente?** Para eso necesitamos un botón.
 
 ### Paso 2.1 Creando el botón
 
-Como seguimos utilizando Tailwind, podemos agregar un botón rápidamente con 
+Como seguimos utilizando Tailwind, podemos agregar un botón rápidamente con
 las clases `bg-`, `text-`, `rounded`, `p-`.
 
 <Code
-    language="jsx"
-    children={`<button aria-label="Cambiar a modo oscuro" className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min">
+  language='jsx'
+  children={`<button aria-label="Cambiar a modo oscuro" className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min">
     <SunIcon className="w-6 h-6" />
 </button>`}
 />
 
 Y terminaremos con algo así:
 
-<AlignWide className="flex justify-center">
-    <SunButtonExample />
+<AlignWide className='flex justify-center'>
+  <SunButtonExample />
 </AlignWide>
 
 > [!WARNING]
 > Asegúrate de que el botón tenga un `aria-label` para que sea accesible.
 
 > [!CAUTION]
-> ¿Recuerdas lo que dije sobre las _utility classes_? Bueno, aquí es donde comienza 
-> a ponerse complicado, si te fijas el atributo `className` del botón es un poco 
-> largo, y si necesitamos cambiar el color de fondo, **tendríamos que cambiarlo en 
+> ¿Recuerdas lo que dije sobre las _utility classes_? Bueno, aquí es donde comienza
+> a ponerse complicado, si te fijas el atributo `className` del botón es un poco
+> largo, y si necesitamos cambiar el color de fondo, **tendríamos que cambiarlo en
 > dos lugares**, lo que puede ser un poco tedioso. Para evitar esto, puedes crear
 > tus propios componentes reutilizables.
 
 Y con las clases que acabamos de agregar, el botón cambiará así:
 
-<AlignWide className="flex justify-center">
-    <SunButtonDarkExample />
+<AlignWide className='flex justify-center'>
+  <SunButtonDarkExample />
 </AlignWide>
 
 ### Paso 2.2: Juntando los estilos
 
-Ahora que tenemos nuestro componente y nuestro botón, **necesitamos juntarlos**, 
+Ahora que tenemos nuestro componente y nuestro botón, **necesitamos juntarlos**,
 para esto, no explicaré todas las clases, pero básicamente necesitamos un contenedor
 extra y agregar el botón a nuestro componente.
 
@@ -207,20 +206,21 @@ extra y agregar el botón a nuestro componente.
         <h1 className="text-4xl font-bold text-red-700">¡Hola, mundo!</h1>
         <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
     </div>
+
 </main>`}
 />
 
 Y tendremos nuestro resultado:
 
 <AlignWide>
-    <ComponentWithButton />
+  <ComponentWithButton />
 </AlignWide>
 
 ## Paso 3: Cambiando el modo
 
-Hasta el momento nuestro componente cambiará de color automáticamente dependiendo 
-de las preferencias del sistema operativo del usuario, pero ahora necesitamos que 
-nuestro botón **active el cambio manualmente**. En React, podemos utilizar `useState` 
+Hasta el momento nuestro componente cambiará de color automáticamente dependiendo
+de las preferencias del sistema operativo del usuario, pero ahora necesitamos que
+nuestro botón **active el cambio manualmente**. En React, podemos utilizar `useState`
 para manejar el estado de nuestro componente.
 
 <Code
@@ -252,15 +252,16 @@ export function Component() {
             </div>
         </main>
     );
+
 }`}
 />
 
-Con eso, al dar click a nuestro botón, el estado de `isDarkModeActivated` cambiará 
+Con eso, al dar click a nuestro botón, el estado de `isDarkModeActivated` cambiará
 (será revertido entre `true` y `false`).
 
-Tailwind ofrece otra forma para poder activar el modo oscuro, para que no solo 
-dependa de las preferencias del sistema operativo, si no que también al agregar 
-una clase `dark` al `html`, sin embargo esta debe ser activada en el archivo 
+Tailwind ofrece otra forma para poder activar el modo oscuro, para que no solo
+dependa de las preferencias del sistema operativo, si no que también al agregar
+una clase `dark` al `html`, sin embargo esta debe ser activada en el archivo
 de configuración de Tailwind: `tailwind.config.ts`.
 
 <Code
@@ -268,24 +269,24 @@ de configuración de Tailwind: `tailwind.config.ts`.
     children={`import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: 'selector',
+darkMode: 'selector',
 };
 
 export default config;`}
 />
 
 > [!NOTE]
-> La documentación oficial indica que la case `dark` debe ser agregada al `<html>` 
-> para que funcione correctamente. Sin embargo me di cuenta de que solo necesita estar 
-> en el elemento padre del componente que queremos cambiar. Normalmente queremos que 
-> todo el sitio cambie, por lo que lo agregamos al `<html>`. Aquí simplemente lo 
+> La documentación oficial indica que la case `dark` debe ser agregada al `<html>`
+> para que funcione correctamente. Sin embargo me di cuenta de que solo necesita estar
+> en el elemento padre del componente que queremos cambiar. Normalmente queremos que
+> todo el sitio cambie, por lo que lo agregamos al `<html>`. Aquí simplemente lo
 > agregamos al contenedor principal.
 
-Y si ahora agregamos la clase `dark` al contenedor principal, nuestro componente mágicamente 
+Y si ahora agregamos la clase `dark` al contenedor principal, nuestro componente mágicamente
 cambiará de color:
 
-<AlignWide className="dark">
-    <ComponentWithButton />
+<AlignWide className='dark'>
+  <ComponentWithButton />
 </AlignWide>
 
 ### Paso 3.1: Enchufando el botón
@@ -323,18 +324,19 @@ export function Component() {
             </div>
         </main>
     );
+
 }`}
 />
 
 Y con eso, al dar click al botón, el **color de nuestro componente cambiará**, ¡Pruébalo!
 
 <AlignWide>
-    <Component />
+  <Component />
 </AlignWide>
 
 ### Paso 3.2 Mantener preferencias del sistema operativo
 
-Hay un pequeño detalle que viene con esta implementación, y es que cuando seleccionamos 
+Hay un pequeño detalle que viene con esta implementación, y es que cuando seleccionamos
 el modo oscuro `selector` como lo hicimos más arriba, Tailwind no se encargará de
 cambiar el color de nuestro componente si el usuario cambia las preferencias del sistema,
 esto afortunadamente es fácil de solucionar, simplemente agregamos el _media query_ dentro
@@ -345,10 +347,10 @@ del mismo archivo de configuración de Tailwind. Así:
     children={`import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: [ 'variant, [
-        '&.is(.dark *)',
-        'media (prefers-color-scheme: dark) {  & * }',
-    ],
+darkMode: [ 'variant, [
+'&.is(.dark *)',
+'media (prefers-color-scheme: dark) { & * }',
+],
 };
 
 export default config;`}
@@ -358,7 +360,6 @@ export default config;`}
 > La forma en que esto funciona, es gracias a la magia de `&`, que hace referencia al
 > selector actual, en este caso `html`, y `*` que hace referencia a todos los elementos
 > dentro de `html`. Así, lo que estamos diciendo es:
->
 >
 > - Si el selector actual (`html`) tiene la clase `dark`, entonces aplica los estilos a todos los hijos.
 > - Si el sistema operativo tiene configurado el modo oscuro, entonces aplica los estilos a todos los hijos de `html`.
@@ -374,7 +375,7 @@ Y con eso, hemos terminado, para recapitular, veamos los requerimientos que ten�
 - [x] Agregar un botón que cambie el modo de la aplicación manualmente
 - [x] El modo debe cambiar automáticamente si el usuario tiene configurado el modo oscuro en su sistema operativo
 
-Hemos completado todos los requerimientos, sin embargo en mi opinión **aún hay mucho 
+Hemos completado todos los requerimientos, sin embargo en mi opinión **aún hay mucho
 que se puede hacer para mejorar nuestro botón**, que tal vez podrías intentar (o lo dejaré
 para otro tutorial), por ejemplo:
 

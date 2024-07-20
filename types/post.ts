@@ -1,5 +1,5 @@
 export type PostItem = {
-    slug: string;
-    description: string;
-    [ key: string ]: string;
+  slug: string;
+  description: string;
+  [key: string]: string;
 };

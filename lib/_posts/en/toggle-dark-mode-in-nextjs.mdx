@@ -1,18 +1,18 @@
 ---
 title: Create a Dark Mode Button in React with Tailwind
-publishedOn: "2024-07-17"
+publishedOn: '2024-07-17'
 description: In this quick tutorial, we'll add a button to toggle dark mode to our components with Tailwind.
 ---
 
 import Code from '@/components/code/code';
 import AlignWide from '@/components/blog/align-wide';
 import {
-    ComponentWithButton,
-    DarkExample,
-    LightExample,
-    SunButtonExample,
-    SunButtonDarkExample,
-    Component,
+  ComponentWithButton,
+  DarkExample,
+  LightExample,
+  SunButtonExample,
+  SunButtonDarkExample,
+  Component,
 } from '@/examples/toggle-dark-mode-in-nextjs/en';
 
 During the redesign of the blog, I was surprised at how easy it was to add a dark
@@ -29,8 +29,8 @@ As always, before we start, let's define the acceptance criteria for this featur
 
 - [ ] Create an application with dark mode
 - [ ] Add a button to manually change the application mode
-- [ ] The mode should change automatically if the user has dark mode set on their 
-operating system settings
+- [ ] The mode should change automatically if the user has dark mode set on their
+      operating system settings
 
 I think that's enough, now let's get to work!
 
@@ -53,8 +53,8 @@ practical purposes of this tutorial, we'll create a very basic site using Tailwi
 For example, this simple application:
 
 <Code
-    language="jsx"
-    children={`<main>
+  language='jsx'
+  children={`<main>
     <div className="flex flex-col items-center px-4">
         <h1 className="text-4xl font-bold mt-8">Hello, world!</h1>
         <p className="text-lg mt-4">Wlcome to my website!</p>
@@ -69,8 +69,8 @@ add all the styles you need through _utility classes_,[^1] so to shape our site,
 we simply add the colors we need in the form of `bg-` and `text-` classes:
 
 <Code
-    language="jsx"
-    children={`<main>
+  language='jsx'
+  children={`<main>
     <div className="flex flex-col items-center p-4 bg-yellow-100 text-slate-900">
         <h1 className="text-4xl font-bold mt-8 text-red-700">Hello, world!</h1>
         <p className="text-lg mt-4">Welcome to my website!</p>
@@ -81,7 +81,7 @@ we simply add the colors we need in the form of `bg-` and `text-` classes:
 Would give us something like this:
 
 <AlignWide>
-    <LightExample />
+  <LightExample />
 </AlignWide>
 
 > [!TIP]
@@ -102,8 +102,8 @@ playing with the dark mode, for this (and because we use Tailwind), we simply ad
 the color classes we need for the dark mode with the `dark:` prefix.
 
 <Code
-    language="jsx"
-    children={`<main>
+  language='jsx'
+  children={`<main>
     <div className="flex flex-col items-center p-4 bg-yellow-100 dark:bg-orange-950 text-slate-900 dark:text-yellow-50">
         <h1 className="text-4xl font-bold mt-8 text-red-700 dark:text-red-200">Hello, world!</h1>
         <p className="text-lg mt-4">Welcome to my website!</p>
@@ -117,8 +117,8 @@ it will automatically apply the `dark:` classes to the elements that have that c
 So, what we would normally do like this:
 
 <Code
-    language="css"
-    children={`@media (prefers-color-scheme: dark) {
+  language='css'
+  children={`@media (prefers-color-scheme: dark) {
     :root {
         --color--foreground: #431407; /* bg-orange-950 */
         --color--background: #fefce8; /* text-yellow-50 */
@@ -129,8 +129,8 @@ So, what we would normally do like this:
 Now we simply do it like this:
 
 <Code
-    language="jsx"
-    children={`<div className="dark:bg-orange-950 dark:text-yellow-50">Hello, world!</div>`}
+  language='jsx'
+  children={`<div className="dark:bg-orange-950 dark:text-yellow-50">Hello, world!</div>`}
 />
 
 > [!NOTE]
@@ -141,7 +141,7 @@ And once the user's preferences change, Tailwind will take care of changing the 
 automatically:
 
 <AlignWide>
-    <DarkExample />
+  <DarkExample />
 </AlignWide>
 
 ## Step 2: Add a button that changes the mode
@@ -156,16 +156,16 @@ Since we continue to use Tailwind, we can quickly add a button with the `bg-`, `
 `rounded`, `p-` classes.
 
 <Code
-    language="jsx"
-    children={`<button aria-label="Switch to dark mode" className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min">
+  language='jsx'
+  children={`<button aria-label="Switch to dark mode" className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min">
     <SunIcon className="w-6 h-6" />
 </button>`}
 />
 
 And we'll end up with something like this:
 
-<AlignWide className="flex justify-center">
-    <SunButtonExample />
+<AlignWide className='flex justify-center'>
+  <SunButtonExample />
 </AlignWide>
 
 > [!WARNING]
@@ -180,8 +180,8 @@ And we'll end up with something like this:
 
 And with the classes we just added, the button will change like this:
 
-<AlignWide className="flex justify-center">
-    <SunButtonDarkExample />
+<AlignWide className='flex justify-center'>
+  <SunButtonDarkExample />
 </AlignWide>
 
 ### Step 2.2: Putting the styles together
@@ -203,13 +203,14 @@ and add the button to our component.
         <h1 className="text-4xl font-bold text-red-700">Hello, world!</h1>
         <p className="text-lg mt-4">Welcome to my website!</p>
     </div>
+
 </main>`}
 />
 
 And with that, we'll have our result:
 
 <AlignWide>
-    <ComponentWithButton />
+  <ComponentWithButton />
 </AlignWide>
 
 ## Step 3: Switching the mode
@@ -247,6 +248,7 @@ export function Component() {
             </div>
         </main>
     );
+
 }`}
 />
 
@@ -262,7 +264,7 @@ however this must be activated in the Tailwind configuration file: `tailwind.con
     children={`import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: 'selector',
+darkMode: 'selector',
 };
 
 export default config;`}
@@ -277,8 +279,8 @@ export default config;`}
 And if we now add the `dark` class to the main container, our component will magically
 change color:
 
-<AlignWide className="dark">
-    <ComponentWithButton />
+<AlignWide className='dark'>
+  <ComponentWithButton />
 </AlignWide>
 
 ### Step 3.1: Plugging in the button
@@ -316,13 +318,14 @@ export function Component() {
             </div>
         </main>
     );
+
 }`}
 />
 
 And with that, by clicking the button, the **color of our component will change**,
 
 <AlignWide>
-    <Component />
+  <Component />
 </AlignWide>
 
 ### Step 3.2: Maintaining operating system preferences
@@ -338,10 +341,10 @@ configuration file. Like this:
     children={`import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: [ 'variant', [
-        '&.is(.dark *)',
-        'media (prefers-color-scheme: dark) { & * }',
-    ],
+darkMode: [ 'variant', [
+'&.is(.dark *)',
+'media (prefers-color-scheme: dark) { & * }',
+],
 };
 
 export default config;`}

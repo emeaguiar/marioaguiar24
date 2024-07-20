@@ -1,69 +1,56 @@
 /**
  * External dependencies
  */
-import useTranslation from "next-translate/useTranslation";
-import { NextSeo } from "next-seo";
+import useTranslation from 'next-translate/useTranslation';
+import { NextSeo } from 'next-seo';
 
 /**
  * Internal dependencies
  */
-import { H2 } from "@/components/elements";
-import BlogCards from "@/components/blog/cards";
-import { getPosts } from "@/lib/posts";
+import { H2 } from '@/components/elements';
+import BlogCards from '@/components/blog/cards';
+import { getPosts } from '@/lib/posts';
 
 export const metadata = {
-    title: "Blog",
+  title: 'Blog',
 };
 
-export default function Page( {
-    posts,
+export default function Page({
+  posts,
 }: {
-    posts: {
-        [ key: string ]: any;
-    };
-} ) {
-    const { t } = useTranslation( 'blog' );
+  posts: {
+    [key: string]: any;
+  };
+}) {
+  const { t } = useTranslation('blog');
 
-    return (
-        <>
-            <NextSeo
-                title={ t( 'title' ) }
-                description={ t( 'description' ) }
-            />
+  return (
+    <>
+      <NextSeo title={t('title')} description={t('description')} />
 
-            <div className="flex flex-col gap-10 items-center px-4 w-full lg:max-w-screen-xl">
-                <H2 className="text-center">
-                    { t( 'title' ) }
-                </H2>
+      <div className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'>
+        <H2 className='text-center'>{t('title')}</H2>
 
-                <p className="text-center lg:max-w-screen-md">
-                    { t( 'description' ) }
-                </p>
+        <p className='text-center lg:max-w-screen-md'>{t('description')}</p>
 
-                <H2 className="text-center">
-                    { t( 'latest' ) }
-                </H2>
+        <H2 className='text-center'>{t('latest')}</H2>
 
-                <BlogCards posts={ posts } />
+        <BlogCards posts={posts} />
 
-                <H2 className="text-center">
-                    { t( 'mostInteresting' ) }
-                </H2>
+        <H2 className='text-center'>{t('mostInteresting')}</H2>
 
-                <BlogCards posts={ posts } />
-            </div>
-        </>
-    );
+        <BlogCards posts={posts} />
+      </div>
+    </>
+  );
 }
 
-export async function getStaticProps( { locale }: {
-    locale: "es" | "en";
-} ) {
-    const posts = getPosts( locale, 3 );
+export async function getStaticProps({ locale }: { locale: 'es' | 'en' }) {
+  const posts = getPosts(locale, 3);
 
-    return {
-        props: {
-            posts,
-        },
-    };
+  return {
+    props: {
+      posts,
+    },
+  };
 }

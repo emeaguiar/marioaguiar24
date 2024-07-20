@@ -1,5 +1,5 @@
-const nextTranslate = require( 'next-translate-plugin' )
-const i18n = require( './i18n' );
+const nextTranslate = require('next-translate-plugin');
+const i18n = require('./i18n');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -7,4 +7,4 @@ const nextConfig = {
   i18n,
 };
 
-module.exports = nextTranslate( nextConfig );
+module.exports = nextTranslate(nextConfig);

@@ -1,6 +1,6 @@
 ---
 title: How to take full advantage of your WordPress sidebar
-publishedOn: "2010-10-23"
+publishedOn: '2010-10-23'
 description: Sidebars on blogs are underestimated, and usually you see the exact same sidebar on every single page of a blog, I think that is just a waste of space. But when used properly, you can turn your lame sidebar into a killer sidebar!
 ---
 
@@ -8,27 +8,27 @@ import Code from '@/components/code/code';
 
 > [!NOTE]
 > This article was written in **2010** 👴🏼. Most of the tips here are not valid anymore and
-I don't recommend using any of the snippets displayed here.
+> I don't recommend using any of the snippets displayed here.
 >
 > I'm keeping this article here for historical reasons and to remind myself how much I've improved
-over the years.
+> over the years.
 >
 > _Only cosmetic changes were made to this article._
 
-I am going to show you some codes and hacks that can be applied to almost any 
-theme you want, this will add some really cool features to your sidebar and who knows, 
+I am going to show you some codes and hacks that can be applied to almost any
+theme you want, this will add some really cool features to your sidebar and who knows,
 it may even get you on a date tonight.
 
-Truth be told, in my early years in **WordPress and theme designing**, I never thought 
-the sidebar was something useful, in fact, my first theme didn't even had one at all, 
-but time later, I realized how much in-screen space I was wasting, and changed my mind. 
-This is a walkthrough for the re-design of the WordPress former default theme _Kubrik's_ sidebar, 
+Truth be told, in my early years in **WordPress and theme designing**, I never thought
+the sidebar was something useful, in fact, my first theme didn't even had one at all,
+but time later, I realized how much in-screen space I was wasting, and changed my mind.
+This is a walkthrough for the re-design of the WordPress former default theme _Kubrik's_ sidebar,
 prior to this; I added the sidebar to single posts, just in case you are wondering where it came from.
 
 ## Creating different sidebars
 
-First of all, we are going to need two sidebar files, name the first one `sidebar.php` 
-so it works on pages too (this is the default one), then we create a new one which 
+First of all, we are going to need two sidebar files, name the first one `sidebar.php`
+so it works on pages too (this is the default one), then we create a new one which
 will be shown in our single posts, let's call this one `sidebar-single.php`
 
 > [!NOTE]
@@ -36,12 +36,12 @@ will be shown in our single posts, let's call this one `sidebar-single.php`
 
 ## Separate Home sidebar from Single sidebar
 
-Now, we need WordPress to separate our “home sidebar” from our “single-post sidebar”, 
-this is easier if your theme has a single.php file like here, but if not, **I strongly 
+Now, we need WordPress to separate our “home sidebar” from our “single-post sidebar”,
+this is easier if your theme has a single.php file like here, but if not, **I strongly
 recommend you create one now, it will save you a lot of troubles in the future.**
 
-To make wordpress show a different sidebar in single posts you just have to open 
-the `single.php` file, find the call to the sidebar and tell it to **call the new sidebar 
+To make wordpress show a different sidebar in single posts you just have to open
+the `single.php` file, find the call to the sidebar and tell it to **call the new sidebar
 instead**, something like this:
 
 Now in our blog we can see this:
@@ -52,20 +52,17 @@ Now in our blog we can see this:
 
 ## What if I don't want a single.php file?
 
-I guess we have a rebel here. Well, **if you really don't want a single.php file 
-messing around in your theme** you can just use the __index.php__ file, to do that just 
+I guess we have a rebel here. Well, **if you really don't want a single.php file
+messing around in your theme** you can just use the **index.php** file, to do that just
 find the line where the sidebar is called:
 
-<Code
-    language="php"
-    children={`<?php get_sidebar(); ?>`}
-/>
+<Code language='php' children={`<?php get_sidebar(); ?>`} />
 
 And change it for this:
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
     if( is_single() ) {
         get_sidebar( 'single' );
     } else {
@@ -74,59 +71,59 @@ And change it for this:
 ?>`}
 />
 
-That code will show our __single-sidebar__ ONLY if we are on a single post. If not, 
-it will show our __default sidebar__.
+That code will show our **single-sidebar** ONLY if we are on a single post. If not,
+it will show our **default sidebar**.
 
-OK, **now we have a sidebar just for our single posts**, how can we use it? There are 
-plenty of ways! For example, do you show **related posts or social icons** below your 
+OK, **now we have a sidebar just for our single posts**, how can we use it? There are
+plenty of ways! For example, do you show **related posts or social icons** below your
 posts? Maybe some of this stuff can look better on our new sidebar, let's try it.
 
 ## Adding related posts
 
-Let's start by adding some related entries to our post, to do that I am using 
-the [YARPP plug-in](http://mitcho.com/code/yarpp/) (an old version, don't judge me!), in your 
-`sidebar-single.php` add the `related_posts()` function (or whatever function your plug-in uses) and 
+Let's start by adding some related entries to our post, to do that I am using
+the [YARPP plug-in](http://mitcho.com/code/yarpp/) (an old version, don't judge me!), in your
+`sidebar-single.php` add the `related_posts()` function (or whatever function your plug-in uses) and
 now in your blog you should see something like this:
 
-There is another way to display related posts without needing a plug-in, but 
-**I just cannot make it work on the sidebar**, still, I don't see any problem in using 
+There is another way to display related posts without needing a plug-in, but
+**I just cannot make it work on the sidebar**, still, I don't see any problem in using
 a plug-in for this (since it is the only plug-in I am using in this tutorial).
 
 ## Adding Social Media buttons
 
-Looks good! Now let's add some **social media buttons like Twitter or Facebook**, I 
+Looks good! Now let's add some **social media buttons like Twitter or Facebook**, I
 am using [this set of social icons](http://tydlinka.deviantart.com/art/Set-of-social-icons-109435724).
 
-Here in the default theme I don't have much space, so I will just add twitter 
+Here in the default theme I don't have much space, so I will just add twitter
 and facebook buttons, but if you want to add more, it's pretty much the same thing.
 
-Adding a Facebook button is easy because you only need to **share the URL**, you just 
+Adding a Facebook button is easy because you only need to **share the URL**, you just
 have to paste the following code to the sidebar.
 
 <Code
-    language="php"
-    children={`<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank"><img src="<?php bloginfo('template_directory'); ?>/images/facebook.png" alt="Share on Facebook" /></a>`}
+  language='php'
+  children={`<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank"><img src="<?php bloginfo('template_directory'); ?>/images/facebook.png" alt="Share on Facebook" /></a>`}
 />
 
-**Twitter**, on the other hand, is a little tricky because you want to let your followers 
-know what are you sharing, so you have to add the title, then, when you only have 
-140 characters to use, you cannot send the full URL along with the title, therefore, 
+**Twitter**, on the other hand, is a little tricky because you want to let your followers
+know what are you sharing, so you have to add the title, then, when you only have
+140 characters to use, you cannot send the full URL along with the title, therefore,
 you need a **short URL**.
 
-There are plenty of services to shorten an URL, and you can even create your own, 
+There are plenty of services to shorten an URL, and you can even create your own,
 but right now you can use services like [tinyurl](http://tinyurl.com/) or [bit.ly](http://bit.ly/) if you want.
 
 ### Adding “+” to the title
 
-I've found that sometimes in Twitter, if you don't add a plus sign “+” to the title 
-when sending a tweet from a link, **it shows a horrible “%20” on every space**, luckily, 
+I've found that sometimes in Twitter, if you don't add a plus sign “+” to the title
+when sending a tweet from a link, **it shows a horrible “%20” on every space**, luckily,
 there is a simple way to fix this.
 
-This goes into your __functions.php__ file (noticed the importance of this file already?)
+This goes into your **functions.php** file (noticed the importance of this file already?)
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
     function twitle( $title ) { 
         $newtitle = str_replace( " ", "+", $title );
         echo $newtitle;
@@ -141,8 +138,8 @@ You don't really need to create a function just for that, but I think it could b
 If you want to use tinyurl here is the code you need, paste it on your functions.php file:
 
 <Code
-    language="php"
-    children={`function tinyurl( $url ) {
+  language='php'
+  children={`function tinyurl( $url ) {
     $tinyurl = file_get_contents( "http://tinyurl.com/api-create.php?url=" . $url );
     return $tinyurl;
 }`}
@@ -151,26 +148,26 @@ If you want to use tinyurl here is the code you need, paste it on your functions
 Now, paste the following code in your sidebar:
 
 <Code
-    language="php"
-    children={`<a href="http://twitter.com/home?status=<?php twitle( the_title() ); ?>+<?php echo tinyurl( get_permalink() ); ?>" target="_blank"><img src="<?php bloginfo('template_directory'); ?>/images/twitter.png" alt="Share on Twitter" /></a>`}
+  language='php'
+  children={`<a href="http://twitter.com/home?status=<?php twitle( the_title() ); ?>+<?php echo tinyurl( get_permalink() ); ?>" target="_blank"><img src="<?php bloginfo('template_directory'); ?>/images/twitter.png" alt="Share on Twitter" /></a>`}
 />
 
 > [!NOTE]
-> I have not tried this, but according to [WPRecipes2](http://www.wprecipes.com/how-to-automatically-provide-tinyurls-for-your-wordpress-blog-posts) 
+> I have not tried this, but according to [WPRecipes2](http://www.wprecipes.com/how-to-automatically-provide-tinyurls-for-your-wordpress-blog-posts)
 > it works (I just made a few changes).
 
 ### Using bit.ly
 
-I prefer [bit.ly](http://bit.ly/) because it lets you **keep a track of your shortened URLs**, 
+I prefer [bit.ly](http://bit.ly/) because it lets you **keep a track of your shortened URLs**,
 and it is shorter than tinyurl.
 
-First you need to [sign up in bit.ly](http://bit.ly/account/register?rd=/), 
-and then you will have access to an [API key](http://bit.ly/account/your_api_key/), 
+First you need to [sign up in bit.ly](http://bit.ly/account/register?rd=/),
+and then you will have access to an [API key](http://bit.ly/account/your_api_key/),
 again, paste this code into your functions.php file:
 
 <Code
-    language="php"
-    children={`//create bit.ly url
+  language='php'
+  children={`//create bit.ly url
 function bitly() {
     // login information
     $url = get_permalink(); //generates wordpress' permalink
@@ -200,8 +197,8 @@ function bitly() {
 Don't forget to fill with your username and API key, after that paste this in your sidebar:
 
 <Code
-    language="php"
-    children={`<?php $bitlyurl = bitly(); ?>
+  language='php'
+  children={`<?php $bitlyurl = bitly(); ?>
 <a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php echo $bitlyurl; ?>" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Tweet me!" /></a>`}
 />
 
@@ -215,59 +212,59 @@ The easiest way to create a short URL in wordpress is to use “the Post ID”, 
 
 ### Using your own domain
 
-I believe that **using your own domain** is the best way to create a short URL, 
-it gives you presence, personality and your potential readers know that they are 
-going to a serious website (yes, that's right). Still, if you have a long domain 
+I believe that **using your own domain** is the best way to create a short URL,
+it gives you presence, personality and your potential readers know that they are
+going to a serious website (yes, that's right). Still, if you have a long domain
 (like thisisthebestblogeveraccordingtomymomlol.com) maybe you should use bit.ly or tinyurl.
 
 The easiest way to create a short URL in wordpress is to use “the Post ID”, just paste this in your sidebar:
 
 <Code
-    language="php"
-    children={`<a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php bloginfo('url') ?>/?p=<?php echo $post->ID; ?>" rel="nofollow" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Tweet me!"/></a>`}
+  language='php'
+  children={`<a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php bloginfo('url') ?>/?p=<?php echo $post->ID; ?>" rel="nofollow" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Tweet me!"/></a>`}
 />
 
-That will send twitter something like this: **Hello World http://domain.com/?p=123**, 
-it's short, but it can be even shorter. In addition, you can change `<?php get_bloginfo('url') ?>` 
-(which sends your blog URL) for another domain if you like, for example, a hack domain 
-like aweso.me or bite.me (you know, something cool), just remember that **you have to 
+That will send twitter something like this: **Hello World http://domain.com/?p=123**,
+it's short, but it can be even shorter. In addition, you can change `<?php get_bloginfo('url') ?>`
+(which sends your blog URL) for another domain if you like, for example, a hack domain
+like aweso.me or bite.me (you know, something cool), just remember that **you have to
 own that domain** (don't even think about youtu.be).
 
 ### Using your own domain v2.0
 
-Using the previous code, and adding some 301 redirection to our .htaccess file we 
+Using the previous code, and adding some 301 redirection to our .htaccess file we
 can get rid of the `?p=` earning three precious characters.
 
 In the previous code, delete `?p=` so it becomes:
 
 <Code
-    language="php"
-    children={`<a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php bloginfo('url') ?>/<?php echo $post->ID; ?>" rel="nofollow" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Tweet me!"/></a>`}
+  language='php'
+  children={`<a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php bloginfo('url') ?>/<?php echo $post->ID; ?>" rel="nofollow" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Tweet me!"/></a>`}
 />
 
-That sends something like this **Hello World http://domain.com/123**, but it also 
+That sends something like this **Hello World http://domain.com/123**, but it also
 comes with a pretty 404 error. In order to fix that we have to add this rule to our `.htaccess` file:
 
 <Code
-    language="apache"
-    children={`#shorturl
+  language='apache'
+  children={`#shorturl
 RewriteRule ^([0-9]+)$ ?p=$1 [R=301,L]
 #shorturl`}
 />
 
-There! Now **our own short URL is working**, and now our sidebar looks something 
+There! Now **our own short URL is working**, and now our sidebar looks something
 like this (with working buttons yay!):
 
 ## Adding a “Share me!” URL
 
-You also may want to add a short URL so **your readers can share the post by themselves**, 
+You also may want to add a short URL so **your readers can share the post by themselves**,
 if so, just add the following code depending the shortening method you chose before:
 
 ### Tinyurl
 
 <Code
-    language="php"
-    children={`<form>
+  language='php'
+  children={`<form>
 <input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php echo $turl; ?>" type="text">
 </form>`}
 />
@@ -275,8 +272,8 @@ if so, just add the following code depending the shortening method you chose bef
 ### Bit.ly
 
 <Code
-    language="php"
-    children={`<form>
+  language='php'
+  children={`<form>
 <input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php echo $bitlyurl; ?>" type="text">
 </form>`}
 />
@@ -284,8 +281,8 @@ if so, just add the following code depending the shortening method you chose bef
 ### Your own domain v1.0
 
 <Code
-    language="php"
-    children={`<form>
+  language='php'
+  children={`<form>
 <input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php bloginfo('url'); ?>/?p=<?php echo $post->ID; ?>" type="text">
 </form>`}
 />
@@ -293,8 +290,8 @@ if so, just add the following code depending the shortening method you chose bef
 ### Your own domain v2.0
 
 <Code
-    language="php"
-    children={`<form>
+  language='php'
+  children={`<form>
 <input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php bloginfo('url'); ?>/<?php echo $post->ID; ?>" type="text">
 </form>`}
 />
@@ -306,33 +303,33 @@ That will show something like this:
 
 ## Adding more posts in the same category
 
-Now let's **add some more posts in the same category as the one we are reading** 
+Now let's **add some more posts in the same category as the one we are reading**
 (we want the reader to stay in our blog for a while don't we?)
 
-I took this function (well, it wasn't a function when I took it) from the [Agregado theme](http://www.darrenhoyt.com/2008/09/08/agregado-lifestream-theme-for-wordpress-released/) 
-(which by the way, really knows how to take advantage of the sidebar), add the 
+I took this function (well, it wasn't a function when I took it) from the [Agregado theme](http://www.darrenhoyt.com/2008/09/08/agregado-lifestream-theme-for-wordpress-released/)
+(which by the way, really knows how to take advantage of the sidebar), add the
 first code in your `functions.php` file, and the second one in your `sidebar-single.php` file.
 
-<Code 
-    language="php"
-    children={`<?php
+<Code
+  language='php'
+  children={`<?php
 function get_more_category() {
 global $post;$categories = get_the_category();foreach ($categories as $category) :$posts = get_posts('numberposts=3&exclude='.$post->ID.'&category='. $category->term_id);if(count($posts) > 1) {?><h2>More <em>in</em> '<?php echo $category->name; ?>':</h2><p><ul><?php foreach($posts as $post) : ?><li><a href="<?php the_permalink(); ?>"<?php the_title(); ?></a></li><?php endforeach; ?></ul></p><?php } endforeach;}<?php get_more_category(); ?>`}
 />
 
 ## Showing author info
 
-If you have a blog with more than one author you may want to add a small bio to 
-each post right? All the others blog do it by showing the info below the post 
-but since we like to be different, and we are **improving our sidebar**, how about 
-putting the bio in there? Be sure to fill completely your profile page on the WP admin, 
+If you have a blog with more than one author you may want to add a small bio to
+each post right? All the others blog do it by showing the info below the post
+but since we like to be different, and we are **improving our sidebar**, how about
+putting the bio in there? Be sure to fill completely your profile page on the WP admin,
 that is what we are going to use.
 
 Once you have done that, paste this in your sidebar:
 
 <Code
-    language="php"
-    children={`<?php the_author_link(); ?> is a <?php the_author_meta('description'); ?>`}
+  language='php'
+  children={`<?php the_author_link(); ?> is a <?php the_author_meta('description'); ?>`}
 />
 
 Assuming that I have already put my info on my profile page, this would show something like this:
@@ -342,8 +339,8 @@ Assuming that I have already put my info on my profile page, this would show som
 **Note:** If you want to add a gravatar, use this:
 
 <Code
-    language="php"
-    children={`<?php echo get_avatar( get_the_author_meta('user_email'), '80', '' ); ?>`}
+  language='php'
+  children={`<?php echo get_avatar( get_the_author_meta('user_email'), '80', '' ); ?>`}
 />
 
 Where “80” is the size (in pixels) of the image, you can change that too. [Source](http://line25.com/tutorials/how-to-create-an-author-info-section-in-wordpress).
@@ -353,14 +350,14 @@ Where “80” is the size (in pixels) of the image, you can change that too. [S
 
 ## Showing most popular posts
 
-In case you want to add a list with your blog's **most popular posts** (well, actually most commented), 
+In case you want to add a list with your blog's **most popular posts** (well, actually most commented),
 you are in the right place.
 
 This goes in your `functions.php` file:
 
 <Code
-    language="php"
-    children={`function most_popular_posts($no_posts = 10, $before = '<li>', $after = '</li>', $show_pass_post = false, $duration='') {
+  language='php'
+  children={`function most_popular_posts($no_posts = 10, $before = '<li>', $after = '</li>', $show_pass_post = false, $duration='') {
 global $wpdb;
 $request = "SELECT ID, post_title, COUNT($wpdb->comments.comment_post_ID) AS 'comment_count' FROM $wpdb->posts, $wpdb->comments";
 $request .= " WHERE comment_approved = '1' AND $wpdb->posts.ID=$wpdb->comments.comment_post_ID AND post_status = 'publish'";
@@ -388,23 +385,23 @@ echo $output;
 And this goes in your sidebar:
 
 <Code
-    language="php"
-    children={`<h2>Popular</h2>
+  language='php'
+  children={`<h2>Popular</h2>
 <ul><?php most_popular_posts(); ?></ul>`}
 />
 
 ## Showing recent posts
 
-Many blogs (almost all of them) show some **recent posts** in their home, and there 
-are many plug-ins for that, but I said I wouldn't use more plugins, and I cannot 
+Many blogs (almost all of them) show some **recent posts** in their home, and there
+are many plug-ins for that, but I said I wouldn't use more plugins, and I cannot
 take that back right?
 
-I took this code from the well known [Recent Posts plug-in](http://wordpress.org/extend/plugins/recent-posts/), 
+I took this code from the well known [Recent Posts plug-in](http://wordpress.org/extend/plugins/recent-posts/),
 it's just one function, so it can easily be placed in our `functions.php` file.
 
 <Code
-    language="php"
-    children={`<?php function mdv_recent_posts($no_posts = 5, $before = '<li>', $after = '</li>', $hide_pass_post = true, $skip_posts = 0, $show_excerpts = false, $include_pages = false) {
+  language='php'
+  children={`<?php function mdv_recent_posts($no_posts = 5, $before = '<li>', $after = '</li>', $hide_pass_post = true, $skip_posts = 0, $show_excerpts = false, $include_pages = false) {
 global $wpdb;
 $time_difference = get_settings('gmt_offset');
 $now = gmdate("Y-m-d H:i:s",time());
@@ -436,23 +433,20 @@ echo $output;
 
 Paste this in your sidebar:
 
-<Code
-    language="php"
-    children={`<?php mdv_recent_posts(); ?>`}
-/>
+<Code language='php' children={`<?php mdv_recent_posts(); ?>`} />
 
 ## Showing recent comments
 
-**Blogs are all about the community**, so we want our readers to make a lot of comments, 
-but they are shy, they need to know that some other cool guy did it before. To make this 
+**Blogs are all about the community**, so we want our readers to make a lot of comments,
+but they are shy, they need to know that some other cool guy did it before. To make this
 happen, we need to show a list with the most recent comments on our blog.
 
-Paste the following code to your `functions.php` file (sorry, but I really cannot remember 
+Paste the following code to your `functions.php` file (sorry, but I really cannot remember
 where I took this from, it was on my `functions.php` file):
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 function recent_comments($comm = 5) {
 global $wpdb;
 $sql = "SELECT DISTINCT ID, post_title, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type,comment_author_url, SUBSTRING(comment_content,1,30) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID = $wpdb->posts.ID) WHERE comment_approved = '1' AND comment_type = '' AND post_password = '' ORDER BY comment_date_gmt DESC LIMIT $comm"; 
@@ -471,21 +465,21 @@ echo $output;
 Now we call the function from our sidebar:
 
 <Code
-    language="php"
-    children={`<?php recent_comments(); ?>
+  language='php'
+  children={`<?php recent_comments(); ?>
 `}
 />
 
 ## Showing random posts
 
-At this point, **we have a lot of posts showing in our sidebar**, but that is a 
+At this point, **we have a lot of posts showing in our sidebar**, but that is a
 good thing right? Posts! Posts everywhere!!
 
 Ok, just add the following code to your sidebar:
 
 <Code
-    language="php"
-    children={`<li><h2>Random posts</h2></li>
+  language='php'
+  children={`<li><h2>Random posts</h2></li>
 <li><ul>
 <?php
 $rand_posts = get_posts('numberposts=5&orderby=rand');
@@ -503,27 +497,27 @@ foreach( $rand_posts as $post ) :
 
 ## Displaying a Blogroll
 
-OK, maybe this is not the ultimate-wordpress-trick, but it is pretty useful when 
-you have several websites, or you can show all your profiles on twitter, 
-facebook, linkedin, etc. Just add those links in your wordpress link manager, 
+OK, maybe this is not the ultimate-wordpress-trick, but it is pretty useful when
+you have several websites, or you can show all your profiles on twitter,
+facebook, linkedin, etc. Just add those links in your wordpress link manager,
 and show them with this code:
 
 <Code
-    language="php"
-    children={`<?php wp_list_bookmarks('title_li=&category_before=&category_after='); ?>`}
+  language='php'
+  children={`<?php wp_list_bookmarks('title_li=&category_before=&category_after='); ?>`}
 />
 
 ## The result
 
-I think now we have a **pretty useful sidebar for our blog**, but if you want, 
+I think now we have a **pretty useful sidebar for our blog**, but if you want,
 you can keep adding features as you like, there is no limit!
 
 Here is how my sidebar looks like after a few little fixes:
 
 ## Be creative!
 
-Remember, this is just an example, your sidebar doesn't have to look exactly like 
-mine, but I hope that these tips/tricks help you to take full advantage of your sidebar, 
-also, **be creative!** Think of different ways to use that sidebar, I saw this blog once 
-that had the comments in the sidebar. Put yourself in your reader's place, 
+Remember, this is just an example, your sidebar doesn't have to look exactly like
+mine, but I hope that these tips/tricks help you to take full advantage of your sidebar,
+also, **be creative!** Think of different ways to use that sidebar, I saw this blog once
+that had the comments in the sidebar. Put yourself in your reader's place,
 **how can their experience be improved?**
