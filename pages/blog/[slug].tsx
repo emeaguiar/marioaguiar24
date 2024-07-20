@@ -35,7 +35,7 @@ export default function PostPage({
     <>
       <NextSeo title={title} description={description} />
 
-      <div className='my-16 flex flex-col items-center gap-6 px-4 text-xl/9 lg:mb-20'>
+      <div className='my-16 flex flex-col items-center gap-6 px-4 text-xl/9 lg:mb-4'>
         <H1>{title}</H1>
 
         <BlogMeta

@@ -1,12 +1,524 @@
 ---
-title: How to take full advantage of your WordPress sidebar
+title: Cómo Aprovechar al Máximo la sidebar de WordPress
 publishedOn: '2010-10-23T18:50:36.516Z'
-description: >-
-  Sidebars on blogs are underestimated, and usually you see the exact same
-  sidebar on every single page of a blog, I think that is just a waste of space.
-  But when used properly, you can turn your lame sidebar into a killer sidebar!
+description: |-
+  Las sidebars en los blogs son subestimadas, y usualmente ves la misma sidebar
+    en cada página de un blog, creo que eso es solo una pérdida de espacio. Pero
+    cuando se usan correctamente, ¡puedes convertir tu sidebar aburrida en una
+    sidebar increíble!
 published: true
-updatedOn: '2024-07-20T21:25:54.149Z'
+updatedOn: '2024-07-20T22:25:59.120Z'
 readingTime: 1620
 ---
 
+import Code from '@/components/code/code'
+
+> [!WARNING]
+> Este artículo fue escrito en **2010** 👴🏼. La mayoría de los consejos aquí no son válidos y
+> no recomiendo usar ninguno de los fragmentos mostrados aquí.
+>
+> Mantengo este artículo aquí por razones históricas y para recordarme cuánto he mejorado
+> a lo largo de los años.
+>
+> _Solo se hicieron cambios cosméticos a este artículo._
+
+Voy a mostrarte algunos códigos y trucos que se pueden aplicar a casi cualquier
+tema que desees, esto agregará algunas características realmente geniales a tu barra
+lateral y quién sabe, tal vez incluso te consiga una cita esta noche.
+
+La verdad, en mis primeros años en **WordPress y diseño de temas**, nunca pensé
+que la sidebar fuera algo útil, de hecho, mi primer tema ni siquiera tenía una,
+pero tiempo después, me di cuenta de cuánto espacio en pantalla estaba desperdiciando,
+y cambié de opinión.
+Este es un recorrido por el rediseño de la sidebar del antiguo tema por defecto de WordPress _Kubrik_,
+antes de esto; agregué la sidebar a las entradas individuales, por si te preguntas de dónde vino.
+
+## Creando diferentes barras laterales
+
+Primero que nada, necesitamos dos archivos de sidebar, nombra el primero `sidebar.php`
+para que funcione en las páginas también (este es el predeterminado), luego creamos uno nuevo
+que se mostrará en nuestras entradas individuales, llamémoslo `sidebar-single.php`
+
+> [!NOTE]
+> En `sidebar-single.php` eliminé casi todo, excepto el cuadro de búsqueda y algo de texto.
+
+## Separar la sidebar de Inicio de la de Entradas
+
+Ahora, necesitamos que WordPress separe nuestra “sidebar de inicio” de nuestra “sidebar de entrada”,
+esto es más fácil si tu tema tiene un archivo `single.php` como aquí, pero si no, **te recomiendo encarecidamente
+que crees uno ahora, te ahorrará muchos problemas en el futuro.**
+
+Para que WordPress muestre una sidebar diferente en las entradas individuales solo tienes que abrir
+el archivo `single.php`, encontrar la llamada a la sidebar y decirle que **llame a la nueva sidebar
+en su lugar**, algo así:
+
+Ahora en nuestro blog podemos ver esto:
+
+**Inicio:**
+
+**Post:**
+
+## ¿Y si no quiero un archivo `single.php`?
+
+Bueno, supongo que tenemos un rebelde aquí. Bueno, **si realmente no quieres un archivo `single.php`
+rondando en tu tema** puedes simplemente usar el archivo **index.php**, para hacer eso solo
+encuentra la línea donde se llama la sidebar:
+
+<Code language='php' children={`<?php get_sidebar(); ?>`} />
+
+Y cámbiala por esto:
+
+<Code language='php' children={`<?php
+  if( is_single() ) {
+      get_sidebar( 'single' );
+  } else {
+      get_sidebar();
+  }`}
+/>
+
+
+Ese código mostrará nuestra **sidebar única** SOLO si estamos en una entrada individual. Si no,
+mostrará nuestra **sidebar predeterminada**.
+
+OK, **now we have a sidebar just for our single posts**, how can we use it? There are
+plenty of ways! For example, do you show **related posts or social icons** below your
+posts? Maybe some of this stuff can look better on our new sidebar, let's try it.
+
+## Agregando entradas relacionadas
+
+Empecemos por agregar algunas entradas relacionadas a nuestra entrada, para hacer eso estoy usando
+el [plug-in YARPP](http://mitcho.com/code/yarpp/) (¡una versión antigua, no me juzgues!), en tu
+`sidebar-single.php` agrega la función `related_posts()` (o cualquier función que use tu plug-in) y
+ahora en tu blog deberías ver algo así:
+
+Hay otra forma de mostrar entradas relacionadas sin necesidad de un plug-in, pero
+**simplemente no puedo hacer que funcione en la sidebar**, aún así, no veo ningún problema en usar
+un plug-in para esto (ya que es el único plug-in que estoy usando en este tutorial).
+
+## Agregando botones de redes sociales
+
+¡Se ve bien! Ahora agreguemos algunos **botones de redes sociales como Twitter o Facebook**, estoy usando
+[este set de iconos sociales](http://tydlinka.deviantart.com/art/Set-of-social-icons-109435724).
+
+Aquí en el tema predeterminado no tengo mucho espacio, así que solo agregaré botones de twitter
+y facebook, pero si quieres agregar más, es prácticamente lo mismo.
+
+Agregar un botón de Facebook es fácil porque solo necesitas **compartir la URL**, solo
+tienes que pegar el siguiente código en la sidebar.
+
+<Code
+  language='php'
+  children={`<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank"><img src="<?php bloginfo('template_directory'); ?>/images/facebook.png" alt="Compartir en Facebook" /></a>`}
+/>
+
+**Twitter**, por otro lado, es un poco complicado porque quieres que tus seguidores
+sepan qué estás compartiendo, por lo tanto, debes agregar el título, luego, cuando solo tienes
+140 caracteres para usar, no puedes enviar la URL completa junto con el título, por lo tanto,
+necesitas una **URL corta**.
+
+Hay muchos servicios para acortar una URL, e incluso puedes crear la tuya,
+pero por ahora puedes usar servicios como [tinyurl](http://tinyurl.com/) o [bit.ly](http://bit.ly/) si quieres.
+
+### Agregando "+" al título
+
+He encontrado que a veces en Twitter, si no agregas un signo más “+” al título
+cuando envías un tweet desde un enlace, **muestra un horrible “%20” en cada espacio**, afortunadamente,
+hay una forma sencilla de solucionar esto.
+
+Esto va en tu archivo **functions.php** (¿ya notaste la importancia de este archivo?)
+
+<Code
+  language='php'
+  children={`<?php
+    function twitle( $title ) { 
+        $newtitle = str_replace( " ", "+", $title );
+        echo $newtitle;
+    }
+?>`}
+/>
+
+En realidad no necesitas crear una función solo para eso, pero creo que podría ser útil más adelante.
+
+### Usando Tinyurl
+
+Si quieres usar tinyurl, aquí está el código que necesitas, pégalo en tu archivo `functions.php`:
+
+<Code
+  language='php'
+  children={`function tinyurl( $url ) {
+    $tinyurl = file_get_contents( "http://tinyurl.com/api-create.php?url=" . $url );
+    return $tinyurl;
+}`}
+/>
+
+Ahora, pega el siguiente código en tu sidebar:
+
+<Code
+  language='php'
+  children={`<a href="http://twitter.com/home?status=<?php twitle( the_title() ); ?>+<?php echo tinyurl( get_permalink() ); ?>" target="_blank"><img src="<?php bloginfo('template_directory'); ?>/images/twitter.png" alt="Compartir en Twitter" /></a>`}
+/>
+
+> [!NOTE]
+> No lo he probado, pero según [WPRecipes2](http://www.wprecipes.com/how-to-automatically-provide-tinyurls-for-your-wordpress-blog-posts)
+> funciona (solo hice algunos cambios).
+
+### Usando bit.ly
+
+Prefiero [bit.ly](http://bit.ly/) porque te permite **mantener un registro de tus URLs acortadas**,
+y es más corto que tinyurl.
+
+Primero necesitas [registrarte en bit.ly](http://bit.ly/account/register?rd=/),
+y luego tendrás acceso a una [clave de API](http://bit.ly/account/your_api_key/),
+nuevamente, pega este código en tu archivo `functions.php`:
+
+<Code
+  language='php'
+  children={`//create bit.ly url
+function bitly() {
+    // login information
+    $url = get_permalink(); //generates wordpress' permalink
+    $login = '';//your bit.ly login
+    $apikey = ''; //your bit.ly apikey
+    $format = 'json';//choose between json or xml
+    $version = '2.0.1';
+    //create the URL
+    $bitly = 'http://api.bit.ly/shorten?version='.$version.'&longUrl='.urlencode($url).'&login='.$login.'&apiKey='.$apikey.'&format='.$format;
+    //get the url
+    //could also use cURL here
+    $response = file_get_contents($bitly);
+    //parse depending on desired format
+    if(strtolower($format) == 'json')
+    {
+        $json = @json_decode($response,true);
+        echo $json['results'][$url]['shortUrl'];
+    }
+    else //xml
+    {
+        $xml = simplexml_load_string($response);
+        echo 'http://bit.ly/'.$xml->results->nodeKeyVal->hash;
+    }
+}`}
+/>
+
+No olvides llenar con tu nombre de usuario y clave de API, después de eso pega esto en tu sidebar:
+
+<Code
+  language='php'
+  children={`<?php $bitlyurl = bitly(); ?>
+<a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php echo $bitlyurl; ?>" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Tweet me!" /></a>`}
+/>
+
+> [!WARNING]
+> Tampoco lo he probado, fuente: [DevMoose](http://devmoose.com/coding/automatically-create-a-bitly-url-for-wordpress-posts/)
+
+### Usando tu propio dominio.
+
+Creo que usar tu propio dominio es la mejor forma de crear una URL corta, te da presencia,
+personalidad y tus potenciales lectores saben que van a un sitio web serio (sí, es cierto).
+Aún así, si tienes un dominio largo (como thisisthebestblogeveraccordingtomymomlol.com)
+tal vez deberías usar bit.ly o tinyurl.
+
+La forma más fácil de crear una URL corta en WordPress es usar “el ID del post”,
+solo pega esto en tu sidebar:
+
+<Code
+  language='php'
+  children={`<a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php bloginfo('url') ?>/?p=<?php echo $post->ID; ?>" rel="nofollow" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Twiteame!"/></a>`}
+/>
+
+Eso enviará algo como esto: **Hola Mundo http://dominio.com/?p=123**, es corto, pero puede ser aún más corto.
+Además, puedes cambiar `<?php get_bloginfo('url') ?>` (que envía la URL de tu blog) por otro dominio si quieres,
+por ejemplo, un dominio hack como aweso.me o bite.me (ya sabes, algo genial), solo recuerda que **tienes que
+ser dueño de ese dominio** (ni siquiera pienses en youtu.be).
+
+### Usando tu propio dominio v2.0
+
+Usando el código anterior, y agregando algunas redirecciones 301 a nuestro archivo `.htaccess` podemos
+desprendernos del `?p=` ganando tres valiosos caracteres.
+
+En el código anterior, elimina `?p=` para que quede así:
+
+<Code
+  language='php'
+  children={`<a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php bloginfo('url') ?>/<?php echo $post->ID; ?>" rel="nofollow" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Twiteame!"/></a>`}
+/>
+
+Eso envía algo como esto: **Hola Mundo http://dominio.com/123**, pero también viene con un bonito error 404.
+Para arreglar eso tenemos que agregar esta regla a nuestro archivo `.htaccess`:
+
+<Code
+  language='apache'
+  children={`#shorturl
+RewriteRule ^([0-9]+)$ ?p=$1 [R=301,L]
+#shorturl`}
+/>
+
+¡Listo! Ahora **nuestro propio URL corto está funcionando**, y ahora nuestra sidebar se ve algo
+así (¡con botones funcionando!):
+
+## Agregando una URL “¡Compártelo!”
+
+También puedes querer agregar una URL corta para que **tus lectores puedan compartir la entrada por sí mismos**,
+si es así, solo agrega el siguiente código dependiendo del método de acortamiento que elegiste antes:
+
+### Tinyurl
+
+<Code
+  language='php'
+  children={`<form>
+<input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php echo $turl; ?>" type="text">
+</form>`}
+/>
+
+### Bit.ly
+
+<Code
+  language='php'
+  children={`<form>
+<input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php echo $bitlyurl; ?>" type="text">
+</form>`}
+/>
+
+### Tu propio dominio v1.0
+
+<Code
+  language='php'
+  children={`<form>
+<input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php bloginfo('url'); ?>/?p=<?php echo $post->ID; ?>" type="text">
+</form>`}
+/>
+
+### Tu propio dominio v2.0
+
+<Code
+  language='php'
+  children={`<form>
+<input id="shorturl" name="q" size="30" readonly="readonly" onClick="javascript:this.form.shorturl.focus();this.form.shorturl.select();" value="<?php bloginfo('url'); ?>/<?php echo $post->ID; ?>" type="text">
+</form>`}
+/>
+
+Eso mostrará algo como esto:
+
+> [!CAUTION]
+> **Tienes** que usar el mismo método de acortamiento que usaste antes si quieres que esto funcione.
+
+## Agregando más entradas en la misma categoría
+
+Ahora, **agreguemos más entradas en la misma categoría que la que estamos leyendo**
+(queremos que el lector se quede en nuestro blog por un tiempo, ¿no?)
+
+Tomé esta función (bueno, no era una función cuando la tomé) del [tema Agregado](http://www.darrenhoyt.com/2008/09/08/agregado-lifestream-theme-for-wordpress-released/)
+(que por cierto, realmente sabe cómo aprovechar la sidebar), agrega el primer código en tu archivo `functions.php`,
+y el segundo en tu archivo `sidebar-single.php`.
+
+<Code
+  language='php'
+  children={`<?php
+function get_more_category() {
+global $post;$categories = get_the_category();foreach ($categories as $category) :$posts = get_posts('numberposts=3&exclude='.$post->ID.'&category='. $category->term_id);if(count($posts) > 1) {?><h2>Mas <em>en</em> '<?php echo $category->name; ?>':</h2><p><ul><?php foreach($posts as $post) : ?><li><a href="<?php the_permalink(); ?>"<?php the_title(); ?></a></li><?php endforeach; ?></ul></p><?php } endforeach;}<?php get_more_category(); ?>`}
+/>
+
+## Mostrando información del autor
+
+Si tienes un blog con más de un autor, es posible que desees agregar una pequeña biografía a
+cada entrada, ¿verdad? Todos los demás blogs lo hacen mostrando la información debajo de la entrada,
+pero como nos gusta ser diferentes, y estamos **mejorando nuestra sidebar**, ¿qué tal si ponemos
+la biografía allí? Asegúrate de completar completamente tu página de perfil en el WP admin,
+eso es lo que vamos a usar.
+
+Una vez que hayas hecho eso, pega esto en tu sidebar:
+
+<Code
+  language='php'
+  children={`<?php the_author_link(); ?> is a <?php the_author_meta('description'); ?>`}
+/>
+
+Suponiendo que ya he puesto mi información en mi página de perfil, esto mostraría algo como esto:
+
+> Mario es un diseñador genial que ama hacer temas, escribir blogs y comer bebés, en ese orden.
+
+> [!NOTE]
+> Si quieres agregar gravatar, usa esto:
+
+<Code
+  language='php'
+  children={`<?php echo get_avatar( get_the_author_meta('user_email'), '80', '' ); ?>`}
+/>
+
+Donde "80" es el tamaño (en píxeles) de la imagen, también puedes cambiar eso. [Fuente](http://line25.com/tutorials/how-to-create-an-author-info-section-in-wordpress).
+
+> [!NOTE]
+> A partir de aquí, los próximos trucos se adaptarán mejor a nuestra sidebar de inicio (el archivo `sidebar.php`).
+
+## Mostrando las entradas más populares
+
+En caso de que quieras agregar una lista con las **entradas más populares de tu blog** (bueno, en realidad las más comentadas),
+estás en el lugar correcto.
+
+Esto va en tu archivo `functions.php`:
+
+<Code
+  language='php'
+  children={`function most_popular_posts($no_posts = 10, $before = '<li>', $after = '</li>', $show_pass_post = false, $duration='') {
+global $wpdb;
+$request = "SELECT ID, post_title, COUNT($wpdb->comments.comment_post_ID) AS 'comment_count' FROM $wpdb->posts, $wpdb->comments";
+$request .= " WHERE comment_approved = '1' AND $wpdb->posts.ID=$wpdb->comments.comment_post_ID AND post_status = 'publish'";
+if(!$show_pass_post) $request .= " AND post_password =''";
+if($duration !="") {
+$request .= " AND DATE_SUB(CURDATE(),INTERVAL ".$duration." DAY) < post_date ";
+}
+$request .= " GROUP BY $wpdb->comments.comment_post_ID ORDER BY comment_count DESC LIMIT $no_posts";
+$posts = $wpdb->get_results($request);
+$output = '';
+if ($posts) {
+foreach ($posts as $post) {
+$post_title = stripslashes($post->post_title);
+$comment_count = $post->comment_count;
+$permalink = get_permalink($post->ID);
+$output .= $before . '<a href="' . $permalink . '" title="' . $post_title.'">' . $post_title . '</a> (' . $comment_count.')' . $after;
+}
+} else {
+$output .= $before . "None found" . $after;
+}
+echo $output;
+}`}
+/>
+
+Y esto va en tu sidebar:
+
+<Code
+  language='php'
+  children={`<h2>Popular</h2>
+<ul><?php most_popular_posts(); ?></ul>`}
+/>
+
+## Mostrando entradas recientes
+
+Muchos blogs (casi todos) muestran algunas **entradas recientes** en su página de inicio, y hay
+muchos plug-ins para eso, pero dije que no usaría más plug-ins, y no puedo retractarme, ¿verdad?
+
+Tomé este código del conocido [plug-in de entradas recientes](http://wordpress.org/extend/plugins/recent-posts/),
+es solo una función, por lo que se puede colocar fácilmente en nuestro archivo `functions.php`.
+
+<Code
+  language='php'
+  children={`<?php function mdv_recent_posts($no_posts = 5, $before = '<li>', $after = '</li>', $hide_pass_post = true, $skip_posts = 0, $show_excerpts = false, $include_pages = false) {
+global $wpdb;
+$time_difference = get_settings('gmt_offset');
+$now = gmdate("Y-m-d H:i:s",time());
+$request = "SELECT ID, post_title, post_excerpt FROM $wpdb->posts WHERE post_status = 'publish' ";
+if($hide_pass_post) $request .= "AND post_password ='' ";
+if($include_pages) $request .= "AND (post_type='post' OR post_type='page') ";
+else $request .= "AND post_type='post' ";
+$request .= "AND post_date_gmt < '$now' ORDER BY post_date DESC LIMIT $skip_posts, $no_posts";
+$posts = $wpdb->get_results($request);
+$output = '';
+if($posts) {
+foreach ($posts as $post) {
+$post_title = stripslashes($post->post_title);
+$permalink = get_permalink($post->ID);
+$output .= $before . '<a href="' . $permalink . '" rel="bookmark" title="Permanent Link: ' . htmlspecialchars($post_title, ENT_COMPAT) . '">' . htmlspecialchars($post_title) . '</a>';
+if($show_excerpts) {
+$post_excerpt = stripslashes($post->post_excerpt);
+$output.= '<br />' . $post_excerpt;
+}
+$output .= $after;
+}
+} else {
+$output .= $before . "Can't find any :S" . $after;
+}
+echo $output;
+}
+?>`}
+/>
+
+Pega esto en tu sidebar:
+
+<Code language='php' children={`<?php mdv_recent_posts(); ?>`} />
+
+## Mostrando comentarios recientes
+
+**Los blogs son sobre la comunidad**, así que queremos que nuestros lectores hagan muchos comentarios,
+pero son tímidos, necesitan saber que algún otro tipo genial lo hizo antes. Para que esto suceda,
+necesitamos mostrar una lista con los comentarios más recientes en nuestro blog.
+
+Pega el siguiente código en tu archivo `functions.php` (lo siento, pero realmente no puedo recordar
+de dónde saqué esto, estaba en mi archivo `functions.php`):
+
+<Code
+  language='php'
+  children={`<?php
+function recent_comments($comm = 5) {
+global $wpdb;
+$sql = "SELECT DISTINCT ID, post_title, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type,comment_author_url, SUBSTRING(comment_content,1,30) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID = $wpdb->posts.ID) WHERE comment_approved = '1' AND comment_type = '' AND post_password = '' ORDER BY comment_date_gmt DESC LIMIT $comm"; 
+$comments = $wpdb->get_results($sql);
+$output = $pre_HTML;
+$output .= "n<ul class="recentcomments">";
+foreach ($comments as $comment) {
+$output .= "n<li><strong>".strip_tags($comment->comment_author) ."</strong> <em>en</em> " . "<a href="" . get_permalink($comment->ID)."#comment-" . $comment->comment_ID . "" title="". strip_tags($comment->com_excerpt). "">".$comment->post_title ."</a></li>";
+}
+$output .= "n</ul>";
+$output .= $post_HTML;
+echo $output;
+}`}
+/>
+
+Ahora llamamos a la función en nuestra sidebar:
+
+<Code
+  language='php'
+  children={`<?php recent_comments(); ?>
+`}
+/>
+
+## Mostrando entradas aleatorias
+
+En este punto, **tenemos muchas entradas mostrándose en nuestra sidebar**, pero eso es algo bueno, ¿verdad?
+¡Entradas! ¡Entradas por todas partes!
+
+Ok, solo agrega el siguiente código a tu sidebar:
+
+<Code
+  language='php'
+  children={`<li><h2>Entradas aleatorias</h2></li>
+<li><ul>
+<?php
+$rand_posts = get_posts('numberposts=5&orderby=rand');
+foreach( $rand_posts as $post ) :
+?>
+<li><a href="<?php the_permalink(); ?>">
+ <?php the_title(); ?>
+</a></li>
+<?php endforeach;
+?>
+</ul></li>`}
+/>
+
+[Source](http://www.honeytechblog.com/how-to-show-random-posts-without-using-any-wordpress-plugins/)
+
+## Mostrando un blogroll
+
+OK, tal vez esto no sea el mejor truco de WordPress, pero es bastante útil cuando
+tienes varios sitios web, o puedes mostrar todos tus perfiles en twitter,
+facebook, linkedin, etc. Solo agrega esos enlaces en tu administrador de enlaces de WordPress,
+y muéstralos con este código:
+
+<Code
+  language='php'
+  children={`<?php wp_list_bookmarks('title_li=&category_before=&category_after='); ?>`}
+/>
+
+## El resultado
+
+Creo que ahora tenemos una **sidebar bastante útil para nuestro blog**, pero si quieres,
+puedes seguir agregando funciones como quieras, ¡no hay límites!
+
+Así es como se ve mi sidebar después de algunas correcciones:
+
+## ¡Sé creativo!
+
+Recuerda, esto es solo un ejemplo, tu sidebar no tiene que verse exactamente como
+la mía, pero espero que estos consejos/trucos te ayuden a aprovechar al máximo tu sidebar,
+además, **¡sé creativo!** Piensa en diferentes formas de usar esa sidebar, una vez vi un blog
+que tenía los comentarios en la sidebar. Ponte en el lugar de tus lectores,
+**¿cómo se puede mejorar su experiencia?**
