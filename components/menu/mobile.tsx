@@ -20,6 +20,7 @@ import Link from "next/link";
  * Internal dependencies
  */
 import { MENU_ITEMS } from "@/lib/data";
+import DarkModeToggle from "@/components/dark-mode-toggle";
 
 export default function MobileMenu() {
     const [ isOpen, setIsOpen ] = useState( false );
@@ -27,6 +28,8 @@ export default function MobileMenu() {
 
     return (
         <>
+            <DarkModeToggle className="ml-auto mr-8 lg:hidden" />
+
             <button
                 className="lg:hidden"
                 onClick={ () => setIsOpen( true ) }

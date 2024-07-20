@@ -6,7 +6,9 @@ import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 import clsx from "clsx";
 import { useTheme } from "next-themes";
 
-export default function DarkModeToggle() {
+export default function DarkModeToggle( { className }: {
+    className?: string;
+} ) {
     const [ isMounted, setIsMounted ] = useState( false );
     const { setTheme, theme } = useTheme();
     const isDarkMode = theme === 'dark';
@@ -19,7 +21,12 @@ export default function DarkModeToggle() {
         <button
             aria-label={ isDarkMode ? 'Activar modo claro' : 'Activar modo oscuro' }
             onClick={ () => setTheme( isDarkMode ? 'light' : 'dark' ) }
-            className="relative group flex items-center"
+            className={
+                clsx(
+                    'relative group flex items-center',
+                    className
+                )
+            }
         >
             {
                 ! isMounted && (
@@ -46,8 +53,7 @@ function SunButton() {
         <>
             <div className={
                 clsx(
-                    "absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full transform transition-transform duration-300 blur opacity-20",
-                    "group-hover:scale-150"
+                    "absolute -inset-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full transform transition-transform duration-300 blur animate-glow",
                 )
             } />
 
@@ -61,8 +67,7 @@ function MoonButton() {
         <>
             <div className={
                 clsx(
-                    "absolute -inset-1 bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 rounded-full transform transition-transform duration-300 blur opacity-20",
-                    "group-hover:scale-150"
+                    "absolute -inset-1 bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 rounded-full transform transition-transform duration-300 blur animate-glow",
                 )
             } />
             

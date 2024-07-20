@@ -1,3 +1,4 @@
+import { transform } from "esbuild";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -11,6 +12,9 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      animation: {
+        glow: 'glow 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+      },
       aspectRatio: {
         'project-closed': '195 / 244',
       },
@@ -20,6 +24,18 @@ const config: Config = {
         'primary': 'var(--color--primary)',
         'secondary': 'var(--color--secondary)',
         'underline': 'var(--color--underline)',
+      },
+      keyframes: {
+        glow: {
+          '0%, 100%': { 
+            opacity: '0.2',
+            transform: 'scale(1.5)'
+          },
+          '50%': {
+            opacity: '0.2',
+            transform: 'scale(1)'
+          },
+        },
       },
       spacing: {
         '18': '4.5rem',
