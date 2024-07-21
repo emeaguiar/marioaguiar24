@@ -45,7 +45,7 @@ export default function Modal() {
               <XMarkIcon className='h-6 w-6' />
             </Link>
 
-            <div className='flex h-full flex-col items-center'>
+            <div className='flex h-max flex-col items-center'>
               <H2 className='mb-4 max-w-screen-xl'>{t('contactModalTitle')}</H2>
 
               <P className='max-w-screen-xl lg:max-w-screen-md'>
