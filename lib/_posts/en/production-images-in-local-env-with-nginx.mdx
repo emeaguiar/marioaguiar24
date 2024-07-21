@@ -1,0 +1,75 @@
+---
+title: Production images in local environment with nginx
+publishedOn: '2019-01-25'
+updatedOn: '2024-07-21T20:35:11.746Z'
+description: Quick tutorial to serve production images in a local environment with nginx
+published: true
+readingTime: 180
+---
+
+import Code from '@/components/code/code';
+
+One of the most common and useful processes when developing a new website is _the
+creation of multiple work environments_ to ensure that our changes or new features
+work perfectly _before even approaching production_.
+
+At the same time, one of the most common problems in these cases is the _disconnect
+between new environments_, it is not uncommon to have 3 different databases between
+local, staging, and production.
+
+Ideally, each of these environments should be an exact copy of production, having
+the same “server” (or at least something as close as possible), the same database,
+and in increasingly common cases, _the same multimedia files_.
+
+## The problem
+
+While for the database, or servers, it is not so much of a problem to receive a copy
+that we can use in our local system, multimedia files generally have a _much larger
+size_, and therefore sometimes result in a loss of space by having several copies
+of the same file for each of our environments, especially with images that many
+systems crop, creating **more and more copies of the same image**.
+
+## The solution
+
+The solution in these cases is actually quite simple, all we need to do is: _use
+our production files in our local environment_.
+
+The steps for this may vary, but in my case, _I usually use nginx_, and the steps
+for this are to find the configuration file (usually `default.conf` or `site.conf`).
+Within this file, we will add a `location` tag, so that it looks like this example:
+
+<Code
+    language="plain"
+    children={`# Basic conf
+server {
+	server_name  _;
+	return 302 $scheme://mysite.test$request_uri;
+}
+
+# Custom conf
+server {
+	server_name ~^(.*)\.mysite\.test$ mysite.test;
+	root /app/public/;
+
+	# If file ends with these extensions
+	location ~* ^.+\.(svg|svgz|jpg|jpeg|gif|png|ico|bmp|webp)$ {
+		try_files $uri @image_fallback; # Try this address (defined below)
+	}
+
+	# Define URL to try (prod url)
+	location @image_fallback {
+		proxy_pass https://mysite.com;
+	}
+
+	# More default conf...
+	index index.php index.html index.htm;
+	include do-not-modify/*.conf;
+}`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/aa8998e75094197f9a8197073ac936eb)
+
+Now, every time my server receives a request to one of the files I have defined,
+instead of looking for them on my local server, _it will look for them on my
+production server_, giving me _the real image I have in production_ without the
+need to copy it locally.

@@ -1,0 +1,80 @@
+---
+title: Imágenes de producción en ambiente local con nginx
+publishedOn: '2019-01-25'
+updatedOn: '2024-07-21T20:35:11.751Z'
+description: >-
+  Rápido tutorial para servir imágenes de producción en un ambiente local con
+  nginx
+published: true
+readingTime: 180
+---
+
+import Code from '@/components/code/code';
+
+Uno de los procesos más comunes y más útiles a la hora de desarrollar un nuevo 
+sitio web, es _la creación de multiples ambientes de trabajo_ para asegurarnos de 
+que nuestros cambios o nuevas funcionalidades funcionen a la perfección _antes 
+siquiera de acercarse a producción_.
+
+Al mismo tiempo, uno de los problemas más comunes en estos casos es el _desconecte 
+entre nuevos ambientes_, no es raro tener 3 bases de datos distintas entre local, 
+staging, y producción.
+
+Lo ideal, es que cada uno de estos ambientes sea una copia exacta de producción, 
+teniendo el mismo “servidor” (o amenos algo lo más parecido), la misma base de datos, 
+y en casos cada vez más comunes, _los mismos archivos multimedia_.
+
+## El problema
+
+Mientras que para la base de datos, u servidores, no es tanto problema recibir 
+una copia que podemos utilizar en nuestro sistema local, los archivos multimedia 
+por lo general tienen un tamaño _mucho mayor_, y por lo tanto algunas veces resulta 
+en una perdida de espacio el tener varias copias del mismo para cada uno de nuestros 
+ambientes, especialmente con imágenes que muchos sistemas recortan, creado **más y 
+más copias de la misma imagen**.
+
+## La solución
+
+La solución en estos casos es en realidad bastante sencilla, lo único que necesitamos 
+hacer es: _usar nuestros archivos de producción en nuestro local_.
+
+Los pasos para esto pueden variar, pero en mi caso, _utilizo normalmente nginx_, 
+y los pasos para esto son, encontrar el archivo de configuración (normalmente `default.conf` 
+ó `site.conf`) . Dentro de éste archivo agregaremos una etiqueta de `location`, 
+para que se vea como éste ejemplo:
+
+<Code
+    language="plain"
+    children={`# Basic conf
+server {
+	server_name  _;
+	return 302 $scheme://mysite.test$request_uri;
+}
+
+# Custom conf
+server {
+	server_name ~^(.*)\.mysite\.test$ mysite.test;
+	root /app/public/;
+
+	# If file ends with these extensions
+	location ~* ^.+\.(svg|svgz|jpg|jpeg|gif|png|ico|bmp|webp)$ {
+		try_files $uri @image_fallback; # Try this address (defined below)
+	}
+
+	# Define URL to try (prod url)
+	location @image_fallback {
+		proxy_pass https://mysite.com;
+	}
+
+	# More default conf...
+	index index.php index.html index.htm;
+	include do-not-modify/*.conf;
+}`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/aa8998e75094197f9a8197073ac936eb)
+
+Ahora, cada que mi servidor reciba una petición hacia uno de los archivos que he 
+definido, en vez de buscarlos en mi servidor local, _los buscará en mi servidor 
+de producción_, dándome _la imagen real que tengo en producción_ sin necesidad de 
+copiarla localmente.
