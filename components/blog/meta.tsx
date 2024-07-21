@@ -28,7 +28,7 @@ export default function BlogHeader({
   const { t } = useTranslation('blog');
 
   return (
-    <div className='flex gap-8 text-sm text-gray-500 dark:text-gray-400'>
+    <div className='flex flex-col gap-4 self-start text-sm text-gray-500 dark:text-gray-400 lg:flex-row lg:items-center lg:gap-8'>
       {publishedOn && (
         <div className='flex items-center gap-2'>
           <CalendarIcon className='h-4 w-4' />
