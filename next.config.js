@@ -5,6 +5,16 @@ const i18n = require('./i18n');
 const nextConfig = {
   reactStrictMode: true,
   i18n,
+  async redirects() {
+    return [
+      {
+        source: '/how-to-take-full-advantage-of-your-wordpress-sidebar',
+        destination:
+          '/blog/how-to-take-full-advantage-of-your-wordpress-sidebar',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextTranslate(nextConfig);
