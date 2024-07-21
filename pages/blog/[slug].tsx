@@ -69,7 +69,7 @@ export default function PostPage({
               const { src, alt } = props;
 
               return (
-                <span className='relative my-8 block h-96 w-full'>
+                <span className='relative block h-96 w-full my-8'>
                   <Image
                     src={src}
                     alt={alt}

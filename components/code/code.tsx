@@ -17,16 +17,14 @@ export default function Code({
   useEffect(() => {
     const loadLanguages = async () => {
       (typeof global !== 'undefined' ? global : window).Prism = Prism;
-      await Promise.all([
-        import('prismjs/components/prism-markup-templating'),
-        import('prismjs/components/prism-css'),
-        import('prismjs/components/prism-css-extras'),
-        import('prismjs/components/prism-php'),
-        import('prismjs/components/prism-php-extras'),
-        import('prismjs/components/prism-bash'),
-        import('prismjs/components/prism-json'),
-        import('prismjs/components/prism-scss'),
-      ]);
+      require('prismjs/components/prism-markup-templating');
+      require('prismjs/components/prism-css');
+      require('prismjs/components/prism-css-extras');
+      require('prismjs/components/prism-php');
+      require('prismjs/components/prism-php-extras');
+      require('prismjs/components/prism-bash');
+      require('prismjs/components/prism-json');
+      require('prismjs/components/prism-scss');
     };
 
     loadLanguages();
