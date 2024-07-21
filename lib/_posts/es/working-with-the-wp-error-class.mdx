@@ -1,0 +1,148 @@
+---
+title: Working with the WP_Error class
+publishedOn: '2014-08-25'
+updatedOn: '2024-07-21T03:13:45.421Z'
+description: Sencillo tutorial sobre cómo usar la clase WP_Error en WordPress.
+published: true
+readingTime: 420
+---
+
+import Code from '@/components/code/code';
+
+A veces cuando estamos codificando una nueva característica... En realidad, _cada_ 
+vez que estamos codificando una nueva característica necesitamos saber qué está pasando, 
+específicamente si algo no está funcionando como queremos. Esa es la razón por la que 
+tiendo a mostrar muchos mensajes en mis entornos de desarrollo. Incluso si no es un error.
+
+Pero a veces _sí es un error_, y cuando eso sucede siempre es mejor tratarlo como tal.
+Un simple mensaje puede no ser suficiente, tal vez necesitamos registrarlo, tal vez
+necesitamos detener la ejecución de la página. Tal vez necesitamos usar **WP_Error**.
+
+En WordPress, tenemos una clase especial para trabajar con errores, `WP_Error`. es una
+clase bastante simple que nos ayuda a rastrear y registrar mensajes de error, digamos
+que tenemos un formulario de contacto con dos campos, Nombre y Correo electrónico, por supuesto
+queremos asegurarnos de que nuestros visitantes ingresen solo direcciones de correo electrónico válidas
+y si no lo hacen, usamos `WP_Error` para informarles.
+
+## El setup
+
+Tengo un formulario simple con solo dos campos, cuando el usuario envía ese formulario,
+los datos se enviarán a través de `$_POST`, adjuntaré una acción para procesar el formulario
+y validar los datos, así:
+
+<Code
+    language="php"
+    children={`function mah_custom_shortcode( $atts, $content = null ) {
+    ob_start();
+?>
+    <form action="" id="mah_custom_form" method="post">
+        <p>
+            <label for="name"><?php _e( 'Nombre' ); ?></label><br>
+            <input type="text" id="name" name="mah_name">
+        </p>
+        <p>
+            <label for="email"><?php _e( 'Email' ); ?></label><br>
+            <input type="text" id="email" name="mah_email">
+        </p>
+        <?php wp_nonce_field( 'mah_nonce_action', 'mah_nonce_field' ); ?>
+        <input type="submit" class="primary" name="mah_submit" value="<?php _e( 'Enviar' ); ?>">
+    </form>
+<?php
+    return apply_filters( 'mah_custom_shortcode', ob_get_clean() );
+}
+add_shortcode( 'mah_custom_form', 'mah_custom_shortcode' );`}
+/>
+
+Esto es bastante sencillo, solo estoy creando un shortcode para usar en mis publicaciones,
+ese shortcode mostrará el formulario, ahora veamos la función de proceso:
+
+<Code
+    language="php"
+    children={`function mah_process_function() {
+    if ( isset( $_POST[ 'mah_submit' ] ) && wp_verify_nonce( $_POST[ 'mah_nonce_field' ], 'mah_nonce_action' ) ) {
+        // Comienza la validación y guárdala en una variable
+        $email = is_email( $_POST[ 'mah_email' ]) // Revisa si es una dirección válida
+            ? sanitize_email( $_POST[ 'mah_email' ] ) // Es válida
+            : new WP_Error( 'mah_email_error', __( 'Por favor agrega una dirección válida' ) );
+
+        // Revisa si hubo un error
+        if ( is_wp_error( $email ) ) {
+            wp_die( $email->get_error_message(), 'mah_form_error' );
+        }
+    }
+}
+add_action( 'init', 'mah_process_function' );`}
+/>
+
+- Primero verificamos si el valor de `mah_submit` está establecido, eso significa 
+que el formulario ha sido enviado, luego verificamos el campo de nonce para asegurarnos 
+de que todavía sea válido.
+- Usamos `is_email` para validar la dirección de correo electrónico, esta función es
+proporcionada por WordPress y devuelve `true` si es válida.
+- Si el correo electrónico era válido, asignamos ese valor a la variable `$email`,
+después de usar `sanitize_email` para limpiar la dirección por si acaso.
+- Si el correo electrónico **no** era válido, el valor que asignamos a la variable 
+`$email` será un nuevo objeto de error.
+    - `mah_email_error` es el código que usamos para este error específico, cuando
+trabajamos con varios errores es una buena idea darles un código.
+    - Luego podemos especificar el mensaje que se usará cuando mostremos este error al usuario.
+
+Ahora, hemos creado nuestro error, pero aún necesitamos mostrarlo al usuario.
+
+Afortunadamente, la clase `WP_Error` también proporciona una función para esto: `is_wp_error`.
+Esta función verifica los datos pasados y si es un objeto de error devuelve `true`.
+Después de eso, es fácil usar `wp_die` para mostrar el mensaje de error.
+
+## Trabajando con varios mensajes de error
+
+Este pedazo de código fue útil si solo necesitábamos mostrar un mensaje de error a la vez,
+pero ¿qué pasa si quiero validar el campo Nombre también y mostrar ambos mensajes en la misma pantalla?
+
+Podría usar el mismo enfoque, pero luego tendría dos objetos de error diferentes,
+solo quiero uno, así que necesito tener listo _antes_ de validar los datos.
+
+<Code
+    language="php"
+    children={`function mah_process_function() {
+    if ( isset( $_POST[ 'mah_submit' ] ) && wp_verify_nonce( $_POST[ 'mah_nonce_field' ], 'mah_nonce_action' ) ) {
+        // Comienza el objeto de error
+        $mah_error = new WP_Error();
+
+        // Validar correo electrónico
+        if ( is_email( $_POST[ 'mah_email' ] ) ) { // Revisa si es una dirección válida
+            $email = sanitize_email( $_POST[ 'mah_email' ] ); // Es válida
+            // Agrega un nuevo error al objeto
+        } else {
+            $mah_error->add( 'mah_email_error', __( 'Por favor agrega una dirección válida' ) );
+        }
+
+        // Validar nombre
+        if ( ! is_numeric( $_POST[ 'mah_name' ] ) ) { // no se permiten valores numéricos
+            $name = sanitize_text_field( $_POST[ 'mah_name' ] ); // límpialo
+        } else {
+            $mah_error->add( 'mah_name_error', __( 'El nombre no puede ser un número') );
+        }
+
+        // Revisa si hubo un error
+        if ( is_wp_error( $mah_error ) ) {
+            wp_die( $mah_error, __( 'Form Error' ) );
+        }
+    }
+}`}
+/>
+
+Puede ser bastante similar, pero tiene algunas diferencias, desglosemos:
+
+- Ahora declaro `$mah_error` al principio, esto estará vacío ya que no he agregado
+ningún error todavía.
+- `$mah_error->add`: En lugar de devolver `new WP_Error` simplemente uso el método add
+para insertar un nuevo error en la lista, hago lo mismo con el siguiente campo.
+- Incluso si declaré `$mah_error` como un objeto `WP_Error` al principio,
+**no se tratará como un error** hasta que agregue al menos un error a la lista,
+por lo que `is_wp_error` seguirá siendo válido si está vacío.
+- `wp_die` puede aceptar una cadena como en el ejemplo anterior, o el objeto completo
+`WP_Error`, si envío el objeto mostrará **todos los errores en la lista**.
+
+Esta fue solo una simple introducción a la clase `WP_Error`, recomiendo leer
+a través del codex y tratar de usarlo tan a menudo como sea posible y revisar el resto
+de métodos, hay cosas realmente útiles allí.
