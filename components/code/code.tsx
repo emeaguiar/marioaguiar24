@@ -22,6 +22,7 @@ export default function Code({
       await import('prismjs/components/prism-css-extras');
       await import('prismjs/components/prism-php');
       await import('prismjs/components/prism-php-extras');
+      await import('prismjs/components/prism-bash');
     };
 
     loadLanguages();

@@ -1,0 +1,259 @@
+---
+title: How to manage WordPress using Git
+publishedOn: '2019-01-18'
+updatedOn: '2024-07-21T04:45:11.774Z'
+description: Learn how to manage your WordPress installation using Git.
+published: true
+readingTime: 720
+---
+
+import Code from '@/components/code/code';
+
+Last week I published an article about [why it's a very bad idea to use FTP](/blog/the-importance-of-not-using-ftp) 
+to manage our site. Although the topic is very general and not only applies to 
+WordPress, this time I want to explain a little more about the process I personally 
+use to **combine WordPress with Git**.
+
+## What is Git?
+
+If this is your first question, my young grasshopper, you have a _long way to go_.
+But don't worry, we all do.
+
+To start, Git is a **file versioning system**, something similar to SVN, but generally
+more appreciated. Git _allows us to save versions in time of each file we modify_,
+this way we can easily go back to a previous version, or have a record of exactly
+what has changed, when it changed, and who changed it.
+
+## Why use Git?
+
+As I mentioned before, _Git saves versions of each file on our site_ so we can
+go back to any of them easily.
+
+Have you ever made a modification to a file, and all you got was a white screen?
+With Git, you could easily _go back to a previous version of your site_, to be
+able to find the problem **without affecting your visitors**.
+
+Git is also very useful when we are working in a _large team_, or when many people
+can touch the code, as it saves a history of who, and when each thing was done.
+And _many people can work on the same site at the same time without stepping on each other_.
+
+Convinced?
+
+## How to use Git on our site?
+
+We are almost at the important part, now that we know what it is, and what we need
+it for, let's see some of **the most common ways we can use Git**.
+
+### As a file versioning only
+
+If we only need to have a _history of changes_ on our site, and we don't need anything
+very complex, we can only create a repository, either on
+[Gtihub](https://github.com/), [Gitlab](https://gitlab.com/), or [Bitbucket](https://bitbucket.org/).
+
+Having our repository, we can add or modify anything on our site in **a completely
+different version of files than what we have in production**, this way we can keep
+them in the cloud without the danger of our production files being modified. We can
+also share our code with other members of our team, who can continue making modifications
+in their own versions.
+
+### As a deployment tool
+
+One of the biggest advantages I see in using Git + WordPress is, in addition to
+file versioning. The possibility of **moving our deployment flow to Git** (to finally
+forget about FTP). These methods are a bit more advanced, but without a doubt, they
+make our existence much easier once they have been mastered.
+
+The main idea is, _having a copy of the repository on your development machine,
+and having a copy of the repository on the server_. The recommended is, having in
+the repository only things we don't worry about being overwritten by an update.
+Such as:
+
+- Our custom themes
+- Our custom plugins
+
+Therefore, most of the time, the repository will be made up of our `wp-content` folder.
+In the case that we have more plugins, made by other people or that are available
+in the official WordPress repository, it is recommended to ignore them in the repository,
+and manage them using Composer (which I will talk about in an article in the future).
+
+Let's say we have already created our repository on Github, and we have added the
+contents of our `wp-content` folder to it, then we would have a repository more or
+less like this:
+
+<Code
+    language="bash"
+    children={`git@github.com:user/site.git`}
+/>
+
+Once we have our repository, we can now worry about **synchronizing it with our server**.
+
+### Deployment via SSH
+
+As I mentioned in my last article, **SSH is much more secure than FTP**, and if we
+need to enter our server to move files or make configurations, it is also much more
+recommended.
+
+To start, we need to connect to our server via SSH (it can vary depending on your
+hosting company, make sure you have access).
+
+> [!NOTE]
+> This process can vary greatly depending on who uses it, some urls and procedures
+> depend a lot on personal matters, take the basic idea and adjust to your tastes.
+
+Let's say our repository is made up of the `wp-content` folder, and that it looks
+like this:
+
+<Code
+    language="plain"
+    children={`- site
+--	.gitignore
+--	themes
+---		our-theme
+----		style.css
+--	plugins
+---		our-plugin
+----		our-plugin.php`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/bb2d0e00d955b4777e7cd91d47459d07)
+
+To be able to replace our default folder with our new repository, we need to enter
+the server and create a copy of the repository:
+
+<Code
+    language="bash"
+    children={`# Assuming that our wp-content folder is in /public_html/wp-content
+$ ssh user@domain.com
+$ cd /public_html
+$ mv wp-content wp-content.bk # Create a backup of the current wp-content folder in case we need it in the future
+$ git clone git@github.com:user/site.git wp-content # Create a copy of the repository in a folder called wp-content`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/33a7b4b7bc526e442e634b47e72297b2)
+
+And that's it! Now we have our local repository in sync with our repository on the
+server, and we can **share files between them very easily**.
+
+I recommend having at least three branches in the repository:
+
+- `master`, which we will use as **production**, everything here is the final version
+of the site and must be 100% tested before it arrives. It also serves as the base
+of our “feature” branches
+- `staging`, which will be **the test version** of our site, a “beta” version so to
+speak, once it has been proven that the new functionality works here, we can send
+it to `master`
+- `feature/*` Our “feature” branches are **work in progress**, they are not ready
+to see production and should only be merged into `master` once it has been 100%
+proven to work in `staging`. Once they have been merged into master, they will be
+deleted from the repository
+
+The development process is quite simple once you master it, let's say we have created
+a `feature/slideshow` and we are ready to test it in `staging`, then we would do
+something like this:
+
+<Code
+    language="bash"
+    children={`# Assuming that the work has been completed
+
+$ git checkout master
+$ git pull origin master # Make sure we have the latest version
+$ git checkout -b feature/slideshow # Move to a new branch so as not to modify production
+
+# Start and end of work
+
+$ git add -A
+$ git commit -m "Implementing image carousel" # Save a version of these files with the new modifications
+$ git push origin feature/slideshow # Send this new version to the remote repository (on Github)
+$ git checkout staging # Move to the staging version
+$ git pull origin staging # Make sure we have the latest version
+$ git merge --no-ff feature/slideshow # Merge our version with the carousel to staging to be able to test it
+$ git push origin staging # Send the new version of staging to the remote repository (on Github)`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/e96d07e040e292e0d563e03a2ea19ecf)
+
+Now we have our new functionality in the repository, but we still need a place to
+test it, right?
+
+For this, I recommend **having a new test environment on the server** (something like
+staging.site.com). With a completely different WordPress installation, its own database,
+etc. In which we will repeat the same steps we did before to create a copy of the
+repository on the server, with two differences:
+
+1. We will create the copy of the repository within the folder of our test site
+(example: `/staging.site.com/public_html`) instead of `/public_html`)
+2. The base of this repository will be a branch called `staging` instead of `master`,
+so we make sure to test things in the right place.
+
+To make our deploy and test in staging, we move to the folder where we have the copy
+of the repository (`wp-content`), and do the following:
+
+<Code
+    language="bash"
+    children={`$ ssh user@domain.com # Enter the server
+$ cd /staging.site.com/public_html/wp-content # Make sure we are in the test site
+$ git checkout staging # Make sure we are in the staging branch
+$ git merge --no-ff feature/slideshow # Merge our new work into our staging branch`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/bf9283c6a2c5afd64ab7130d2759fbac)
+
+And that's it, now if we enter staging.site.com we will see the most recent version
+of our `staging` branch, which now has the changes made in `feature/slideshow`.
+So, once we have tested the test site (we have not touched production yet) and we
+are sure that it will work correctly in production, we can **merge our new changes**:
+
+<Code
+    language="bash"
+    children={`$ git checkout master # Make sure we have the latest version of master
+$ git merge --no-ff feature/slideshow # Merge our new functionality into master
+$ git push origin master # Send the latest version to the repository (on Github)`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/3c37d519608d9ce5c8a7dd946c5b7391)
+
+Now that we have the latest version in the Github repository, we have made sure that
+everything works as we want, and we are ready for **deployment to production**. We
+can enter our server and download the latest changes to production:
+
+<Code
+    language="bash"
+    children={`$ ssh usuario@sitio.com
+$ cd /public_html # Make sure we are in production
+$ git checkout master
+$ git pull origin master # Download the latest changes from the repository`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/e229444097d1aaba4a87431ba71fddad)
+
+And that's it! **We have the latest version of our site in production**, now we can
+do a final test just to confirm and our deployment is complete.
+
+### What if something went wrong?
+
+In the unlikely event that we did not test the new functionality as we should and
+for some reason our site in _production went down_, there is no reason to panic,
+the priority now is **to return production to a previous version** that did work,
+which in this case, would be just before we joined the carousel to production, that
+is, just one version before, we enter the terminal and do something like this:
+
+<Code
+    language="bash"
+    children={`$ ssh user@domain.com
+$ cd /public_html # Make sure we are in production
+$ git checkout master
+$ git revert HEAD # Revert the last commit, return to a previous version`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/f84ed7fda024f8b43e1c3b9382337050)
+
+This will return exactly one version back, which in this case, just before our carousel,
+**raising our site in production** and giving us time to find and fix the error locally
+without production being affected again.
+
+## Next steps
+
+This turned out to be a larger article than I expected, but this is not the ideal
+flow that inspired this article, in the next one, I will explain how **to automate
+the process** in staging to reduce the number of times we enter the server, and explain
+what tools can make this process even easier.
