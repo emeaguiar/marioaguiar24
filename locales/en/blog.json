@@ -2,5 +2,6 @@
   "title": "The Blog",
   "description": "One of my great passions is writing and sharing knowledge, here you will find some of my most recent articles. Mostly about web development, but also about other topics I may find interesting.",
   "latest": "The Latest…",
-  "mostInteresting": "Most Interesting…"
+  "mostInteresting": "Most Interesting…",
+  "switchLanguage": "Cambiar a Español"
 }

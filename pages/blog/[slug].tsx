@@ -9,12 +9,18 @@ import { getMDXComponent } from 'mdx-bundler/client';
 import { NextSeo } from 'next-seo';
 
 /**
+ * Next dependencies
+ */
+import { usePathname } from 'next/navigation';
+
+/**
  * Internal dependencies
  */
 import { A, H1, H2, H3, P, OL, UL } from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
+import LanguageSwitcher from '@/components/blog/language-switcher';
 
 export default function PostPage({
   code,
@@ -30,6 +36,7 @@ export default function PostPage({
   const Component = useMemo(() => getMDXComponent(code), [code]);
   const { publishedOn, updatedOn, title, description, readingTime } =
     frontmatter;
+  const pathname = usePathname();
 
   return (
     <>
@@ -44,6 +51,8 @@ export default function PostPage({
           readingTime={readingTime / 60}
           locale={locale}
         />
+
+        <LanguageSwitcher locale={locale} pathname={pathname} />
       </div>
 
       <div className='flex flex-col items-center gap-6 px-4 text-xl/9'>

@@ -2,5 +2,6 @@
   "title": "El Blog",
   "description": "Una de mis grandes pasiones es escribir y compartir conocimiento, aquí encontrarás algunos de mis artículos más recientes. Mayormente sobre desarrollo web, pero también sobre otros temas que me interesan.",
   "latest": "Lo más reciente…",
-  "mostInteresting": "Lo más interesante…"
+  "mostInteresting": "Lo más interesante…",
+  "switchLanguage": "Switch to English"
 }
