@@ -1,0 +1,59 @@
+---
+title: Actualizar un Fork de Github
+publishedOn: '2019-09-10'
+updatedOn: '2024-07-21T21:46:39.995Z'
+description: >-
+  Cuando estoy contribuyendo ya sea al core de WordPress o a algún otro projecto
+  de Github, me gusta crear mi propio repositorio para no crear problemas en el
+  original.
+published: true
+readingTime: 120
+---
+
+import Code from '@/components/code/code';
+
+Cuando estoy contribuyendo ya sea al **core de WordPress** o a algún otro projecto 
+de Github, me gusta crear mi propio repositorio para no crear problemas en el original.
+
+El problema es que muchas veces el repositorio original se actualiza antes de que 
+yo termine mi trabajo, creando algunos conflictos en el pull request, como esto 
+no existe en mi fork, siempre me veo obligado a buscar la forma de **actualizar mi 
+fork con el trabajo del repositorio principal**.
+
+Esta es la forma más fácil que he encontrado:
+
+**Paso 1**: Agregamos un nuevo `remote` con el repositorio original 
+(se puede llamar como queramos, generalmente “upstream”)
+
+<Code
+    language="bash"
+    children={`git remote add upstream https://github.com/usuario/repo-original.git
+`}
+/>
+
+**Paso 2**: Hacemos un `fetch` con los cambios del repositorio original 
+(no `pull`, no queremos hacer `merge` aún)
+
+<Code
+    language="bash"
+    children={`git fetch upstream`}
+/>
+
+**Paso 3**: Hacemos un `rebase` para reemplazar el master de nuestro repositorio, 
+con el del original
+
+<Code
+    language="bash"
+    children={`git rebase upstream/master`}
+/>
+
+**Paso 4**: Hacemos `push` para tener el master actualizado en nuestro repo
+
+<Code
+    language="bash"
+    children={`git push origin master`}
+/>
+
+Ahora podemos hacer `merge` del nuevo master en nuestro branch para resolver conflictos.
+
+
