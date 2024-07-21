@@ -11,7 +11,7 @@ import { NextSeo } from 'next-seo';
 /**
  * Next dependencies
  */
-import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 /**
  * Internal dependencies
@@ -35,7 +35,6 @@ export default function PostPage({
   const Component = useMemo(() => getMDXComponent(code), [code]);
   const { publishedOn, updatedOn, title, description, readingTime } =
     frontmatter;
-  const pathname = usePathname();
 
   return (
     <>
@@ -66,6 +65,20 @@ export default function PostPage({
               return <H2 {...props} className={classes} />;
             },
             h3: H3,
+            img: (props: any) => {
+              const { src, alt } = props;
+
+              return (
+                <span className='relative block h-96 w-full my-8'>
+                  <Image
+                    src={src}
+                    alt={alt}
+                    layout='fill'
+                    objectFit='contain'
+                  />
+                </span>
+              );
+            },
             ol: OL,
             p: P,
             ul: UL,
