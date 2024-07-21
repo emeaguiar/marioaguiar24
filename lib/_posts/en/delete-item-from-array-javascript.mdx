@@ -1,0 +1,156 @@
+---
+title: Remove items from an array in Javascript
+publishedOn: '2018-11-20'
+updatedOn: '2024-07-21T03:52:40.061Z'
+description: How to remove items from an array in Javascript.
+published: true
+readingTime: 420
+---
+
+import Code from '@/components/code/code';
+
+Many of the simplest things are the ones that give us the most headaches,
+despite having many years of experience in the world of web development, I still
+have to Google the most basic things practically every day. That's why I've
+decided to simply create my **own version of these tips**, so I have a reference
+on my site when I inevitably have to look them up again, this time. _Remove items
+from an array in Javascript_.
+
+## Remove an item using `.splice()`
+
+The `.splice()` method is probably the easiest way to manipulate arrays, it allows
+us to add, replace, or remove a certain element based on its index, example:
+
+<Code
+    language="js"
+    children={`const array = [ 'foo', 'bar', 'baz' ];
+// Starting at position 1, remove the next element
+const removedElement = array.splice( 1, 1 );
+// [ 'foo', 'baz' ]
+console.log( array );
+// [ 'bar' ]
+console.log( removedElement );`}
+/>
+
+The advantage of this method is: It doesn't _remove_ the element from the array,
+it _moves_ it. Basically the method returns any value that has been removed from
+the array, in this case we store it in a new constant, for future use.
+
+Another point to note, is that we can remove _several_ elements using this same
+method, we just need to increase the quantity in the second argument.
+
+<Code
+    language="js"
+    children={`const array = [ 'foo', 'bar', 'baz' ];
+// Starting at position 1, remove the next two elements
+const removedElement = array.splice( 1, 2 );
+// [ 'foo' ]
+console.log( array );
+// [ 'bar', 'baz' ]
+console.log( removedElement );`}
+/>
+
+## Remove the last item using .pop()
+
+The `.pop()` method is something like the opposite of `.push()`, while `.push()`
+Adds a new element to the end of an array, `.pop()` removes the last element
+from an array, example:
+
+<Code
+    language="js"
+    children={`const array = [ 'foo', 'bar', 'baz' ];
+// Remove the last element from the array
+const removedElement = array.pop();
+// [ 'foo', 'bar' ]
+console.log( array )
+// 'baz'
+console.log( removedElement );`}
+/>
+
+Like `.splice()`, `.pop()` will return the “removed” element so we can use it in
+the future. However, note that this time we receive a `string`, and not an `array`.
+
+## Remove the first item using .shift()
+
+The `.shift()` method is the opposite of `.unshift()`, and these in turn are opposite
+to `.pop()` and `.push()`, while the latter work _at the end_ of the array, the
+former do their magic at the _beginning_ of the array.
+
+`.shift()` will remove the _first_ element in our array, example:
+
+<Code
+    language="js"
+    children={`const array = [ 'foo', 'bar', 'baz' ];
+// Remove the first element from the array
+const removedElement = array.shift();
+// [ 'bar', 'baz' ]
+console.log( array );
+// 'foo'
+console.log( removedElement );`}
+/>
+
+Once again, note that the value we receive is a `string`
+
+## Remove an item based on its value
+
+So far we have seen how to remove elements based on their _index_, but what
+happens when we need to remove something based on its _value_?
+
+The procedure is similar, but in this case we need to first _find the index_ of 
+the element with that value.
+
+To find the index we can use `.indexOf()`, and we use it in conjunction with `.splice()`, 
+example, let's remove “bar”:
+
+<Code
+    language="js"
+    children={`let array = [ 'foo', 'bar', 'baz' ];
+let removedElement;
+// Remove the first instance of 'bar'
+if ( array.indexOf( 'bar' ) > -1 ) {
+    removedElement = array.splice( array.indexOf( 'bar' ), 1 );
+}
+// [ 'foo', 'baz' ]
+console.log( array );
+// [ 'bar' ]
+console.log( removedElement );
+// Reset for the next example
+let index;
+array = [ 'foo', 'bar', 'baz', 'bar' ];
+// Remove all instances of 'bar'
+while ( ( index = array.indexOf( 'bar' ) ) > -1 ) {
+    removedElement = array.splice( array.indexOf( 'bar' ), 1 );
+    
+    // [ 'bar' ]
+    console.log( removedElement );
+}
+// [ 'foo', 'baz' ]
+console.log( array );`}
+/>
+
+Note the comparison to make sure the index exists, if it doesn't exist, it will return `-1`.
+Usually a failed comparison would return `0`, (translating to `false`), but since arrays
+start at index `0`, it wouldn't help us much, right?
+
+## Remove items using .filter()
+
+Finally, we can use the `.filter()` method to create a new array with the desired values,
+technically this method does not remove the elements from the array, since the original
+array does not change. Example, let's create a new array without “bar”:
+
+<Code
+    language="js"
+    children={`const array = [ 'foo', 'bar', 'baz' ];
+// Returns everything that is not "bar"
+const newArray = array.filter( element => element !== 'bar' );
+// [ 'foo', 'baz' ]
+console.log( newArray );
+// [ 'foo', 'bar', 'baz' ]
+console.log( array );`}
+/>
+
+## Conclusion
+
+So we can see that, like many things in life (and in Javascript), despite not being
+as simple as it should be, there are many ways to achieve our goal, so I hope these
+ways of removing elements from an array in Javascript are useful to you.
