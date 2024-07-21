@@ -1,0 +1,90 @@
+---
+title: The importance of NOT using FTP
+publishedOn: '2019-01-11'
+updatedOn: '2024-07-21T04:05:14.025Z'
+description: Why you shouldn't use FTP to upload files to your server.
+published: true
+readingTime: 360
+---
+
+When you start in the world of WordPress development, one of the first and most basic
+things you will encounter is: **installing your site**. Whether locally to upload it
+later to your server, or directly to your server (not recommended).
+
+The site needs to be hosted somewhere so that it can be visited by users. Obviously,
+since the end user cannot see our site if it remains on our computer, unless we turn
+it into a personal server, which is not very recommended.
+
+However you start, it will always be necessary to move our installation to our server,
+the question is: How do we do that? The most common (and in almost all cases wrong)
+answer is: _use FTP_.
+
+## What is FTP?
+
+FTP stands for _File Transfer Protocol_. It is basically used to move files between
+computers (our computer → the server and vice versa). It is one of the most basic
+ways to achieve this.
+
+## Why not use FTP?
+
+FTP is popular for its ease of use. There are countless FTP clients that only require
+us to drag our files from one side of the client (our PC) to the other (the server)
+and voilà, our file has been uploaded to the cloud.
+
+However, there are many, _many_ reasons why using FTP today is a _very bad_ idea.
+
+## 1. It's ancient
+
+FTP has been around since the beginning of the internet. The first specification of
+the protocol was written in _1971_, and its last update was in 1998, _20 years ago_.
+Fun fact, do you know HTTP? well when the first version of HTTP was launched _it already
+surpassed FTP in every way_.
+
+## 2. Firewall issues
+
+I'm not 100% sure how common this is, but one of the problems I've encountered doing
+this research is that FTP doesn't play well with Firewalls, for reasons that go straight
+to the way FTP works.
+
+The problem is that during the FTP transfer it opens simultaneous connections. One
+of them on a randomly selected port, which ends up causing the Firewall to block that
+connection (since we don't know which port it will come from). Many times forcing us
+to disable the Firewall, _bad idea_.
+
+## 3. It's not secure
+
+Perhaps the most important point I want to touch on is that FTP is probably _the
+most insecure tool you can use_ for a couple of reasons:
+
+- It does not support encrypted files. This means that anything you send using FTP
+can be viewed and taken by any possible character who is spying on your connection.
+_Security risk_.
+- Likewise, even when you use a username and password to protect your connection,
+_they are not encrypted_. Anyone who is spying on your connection can clearly see
+your username and password, and now they have _access to your server_. It's like
+sending a locked suitcase with a padlock, and sending the key to the padlock attached
+to the suitcase.
+
+## Safe versions of FTP
+
+Due to the multiple problems that FTP has, it is not surprising that attempts have
+been made to solve them in the past. The most important of course is **security**.
+And for this, many answers have been given, such as _sFTP_.
+
+sFTP is a version of FTP that runs through _SSH_, which makes the connection finally
+encrypted. Solving one of the biggest problems of FTP, right?
+
+sFTP **protects the files while they are on the way**. However, there is a small
+(or large, depending on how long the transfer lasts) moment when our files are exposed:
+_At the moment of receiving them_.
+
+The system needs to download the file before it can encrypt it. The longer the file,
+or the longer the connection, _the more time an attacker will have to be able to
+see the file_. But, considering that an attacker must already have access to the system
+to achieve this, I think that file would be the least of our problems.
+
+## So, what can I use?
+
+For now I suggest you move _immediately_ to sFTP, at least. I would recommend using
+**a combination of SSH and Git** to manage your sites. Do you want to know how to do it?
+Stay tuned 😉
