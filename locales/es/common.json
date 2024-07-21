@@ -19,5 +19,7 @@
   "socialText": "Ir al perfil social en {{ label }}",
   "publishedOn": "Publicado hace <0 />",
   "updatedOn": "Actualizado hace <0 />",
-  "readingTime": "{{ minutes }} minutos de lectura"
+  "readingTime": "{{ minutes }} minutos de lectura",
+  "tooBad": "¡Que mal!",
+  "pageNotFound": "La página que buscas no existe."
 }
