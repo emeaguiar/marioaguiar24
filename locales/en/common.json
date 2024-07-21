@@ -16,9 +16,6 @@
   "contactSuccess": "Thank you for your message! I'll reply as soon as possible.",
   "contactError": "There was an error sending your message. Please try again.",
   "socialText": "Go to social profile in {{ label }}",
-  "publishedOn": "Published <0 /> ago",
-  "updatedOn": "Updated <0 /> ago",
-  "readingTime": "{{ minutes }} min read",
   "tooBad": "Too bad!",
   "pageNotFound": "The page you are looking for does not exist."
 }

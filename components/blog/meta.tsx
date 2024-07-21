@@ -25,7 +25,7 @@ export default function BlogHeader({
   readingTime: number;
   locale: string;
 }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('blog');
 
   return (
     <div className='flex gap-8 text-sm text-gray-500 dark:text-gray-400'>
@@ -35,7 +35,7 @@ export default function BlogHeader({
 
           <span>
             <Trans
-              i18nKey='common:publishedOn'
+              i18nKey='blog:publishedOn'
               components={[
                 <FormatDate
                   key='publishedOn'
@@ -54,7 +54,7 @@ export default function BlogHeader({
 
           <span>
             <Trans
-              i18nKey='common:updatedOn'
+              i18nKey='blog:updatedOn'
               components={[
                 <FormatDate
                   key='updatedOn'
@@ -71,7 +71,7 @@ export default function BlogHeader({
         <div className='flex items-center gap-2'>
           <ClockIcon className='h-4 w-4' />
 
-          <span>{t('common:readingTime', { minutes: readingTime })}</span>
+          <span>{t('blog:readingTime', { minutes: readingTime })}</span>
         </div>
       )}
     </div>

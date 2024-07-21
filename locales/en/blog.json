@@ -3,5 +3,8 @@
   "description": "One of my great passions is writing and sharing knowledge, here you will find some of my most recent articles. Mostly about web development, but also about other topics I may find interesting.",
   "latest": "The Latest…",
   "mostInteresting": "Most Interesting…",
+  "publishedOn": "Published <0 /> ago",
+  "updatedOn": "Updated <0 /> ago",
+  "readingTime": "{{ minutes }} min read",
   "switchLanguage": "Cambiar a Español"
 }
