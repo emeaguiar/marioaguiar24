@@ -76,7 +76,7 @@ export default function ContactForm() {
           'mb-4 w-full rounded border border-gray-300 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
-          'dark:border-slate-900'
+          'dark:border-slate-900 dark:bg-white dark:text-black'
         )}
       />
 
@@ -92,7 +92,7 @@ export default function ContactForm() {
           'mb-4 w-full rounded border border-gray-300 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
-          'dark:border-slate-900'
+          'dark:border-slate-900 dark:bg-white dark:text-black'
         )}
       />
 
@@ -107,7 +107,7 @@ export default function ContactForm() {
           'mb-4 min-h-44 w-full rounded border border-gray-300 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
-          'dark:border-slate-900'
+          'dark:border-slate-900 dark:bg-white dark:text-black'
         )}
       />
 
