@@ -1,0 +1,168 @@
+---
+title: Primeros pasos con Vue.js
+publishedOn: '2018-11-20'
+updatedOn: '2024-07-21T03:38:38.757Z'
+description: Un rápido ejercicio para comenzar a trabajar con Vue.js
+published: true
+readingTime: 420
+---
+
+import Code from '@/components/code/code';
+
+Hace algunos meses comencé a estudiar React.js, al ver que muy probablemente sería 
+el próximo rey de los Frameworks y sería adoptado por WordPress.
+
+Sin embargo, durante la gran batalla de Frameworks en WP, existía otro gran 
+contendiente para ser convertido en el Framework oficial, éste se llamaba _Vue_.
+
+## ¿Qué es Vue?
+
+Como mencioné antes, [Vue.js](https://vuejs.org/) (pronunciado “view”) es un 
+_framework progresivo de Javascript_ diseñado para construir interfaces de usuario.
+
+Aún cuando es un Framework bastante distinto a React, aún tienen algunas similitudes, ambos:
+
+- Utilizan un DOM virtual
+- Proveen facilidad para crear componentes
+- Se enfocan en la librería principal, dejando cosas como rutas y manejo de estado a librerías secundarias
+
+Para ver más formas en las que éstas librerías se parecen, puedes seguir el artículo 
+en el [sitio oficial de Vue](https://vuejs.org/v2/guide/comparison.html).
+
+## ¿Por qué utilizar Vue?
+
+Si Vue y React son tan parecidos, _¿por qué querría utilizar Que en lugar de ir directo a React?_
+
+La respuesta más sencilla es: es tu decisión, no voy a decirte que cambies todo 
+tu ecosistema para utilizar Vue simplemente porque es la librería de moda en la 
+comunidad (o la segunda librería de moda). La realidad es que no hace daño probar 
+nuevas herramientas, y así poder hacer una decisión informada sobre cuál es la que 
+mejor se acomoda a tus necesidades.
+
+Las mayores ventajas que tiene Vue a comparación de sus “rivales” (React, Angular, Ember, etc.) son:
+
+- La facilidad para implementarse
+- La rápida curva de aprendizaje
+- Su bajo tamaño (~58.8K minificado vs 133K de React)
+
+Una vez más, al final es tu decisión, pero si quieres darle una oportunidad como 
+lo hago yo, puedes acompañarme en mi curva de aprendizaje, y veamos lo básico:
+
+## ¡Hola Mundo!
+
+Para comenzar haré el típico ejercicio que todos nos sabemos de memoria, 
+el ¡Hola mundo!, en versión Vue, así que comencemos, lo primero que necesitamos, 
+es agregar Vue a nuestro sitio, lo cual podemos hacer facilmente agregando esta 
+línea antes de nuestro `</body>`.
+
+<Code
+    language="jsx"
+    children={`<!doctype html>
+
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+
+	<title>¡Hola Mundo! - Vue.js</title>
+	<meta name="description" content="Primeros pasos en Vue">
+	<meta name="author" content="Mario Aguiar">
+
+</head>
+
+<body>
+	<div id="app"></div>
+	
+	<!-- versión de desarrollo, incluye mensajes en la consola -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="hola-mundo.vue.js"></script>
+</body>
+</html>`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/955748ddd6c3d3bfeafb5864bc3a49c1)
+
+Cómo pueden ver es una estructura bastante simple, tenemos nuestro `head`, nuestro 
+`body`, e incluimos nuestros `script`. Si se fijan bien, verán que también tenemos un 
+`div` con un id de _app_, este pronto se convertirá en el contenedor de nuestra aplicación.
+
+Lo que sigue ahora, es inicializar nuestra aplicación con Vue, en nuestro `hola-mundo.vue.js`
+
+<Code
+    language="js"
+    children={`const app = new Vue( {
+	el: '#app'
+} );`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/80dd3310e5fe7df684d162563dfb9a6a)
+
+¡Y eso es todo! Así de fácil hemos creado nuestra instancia de Vue, como se puede ver, 
+dentro de esa instancia hemos especificado el `el` (elemento) que servirá de contenedor 
+para nuestra aplicación, y, como se puede ver, utilizamos selectores como los que 
+siempre hemos utilizado desde los tiempos de jQuery, así, `#app` significa: _el elemento 
+con un id de “app”_.
+
+### Pasando datos a la aplicación
+
+Ahora, ya tenemos nuestra instancia de Vue activa, pero aún no es el _Hola Mundo_ que queremos, 
+¿Cómo solucionar esto? Podríamos simplemente escribir hola mundo dentro del contenedor, 
+pero eso no es divertido, y no es la forma en que Vue lo hace, así que en lugar de eso, 
+utilizaremos lo que se conoce como _template syntax_.
+
+Primero modifiquemos nuestro HTML para que se vea así:
+
+<Code
+    language="jsx"
+    children={`<!doctype html>
+
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+
+	<title>¡Hola Mundo! - Vue.js</title>
+	<meta name="description" content="Primeros pasos en Vue">
+	<meta name="author" content="Mario Aguiar">
+
+</head>
+
+<body>
+	<div id="app">
+		{{ mensaje }}
+	</div>
+	
+	<!-- versión de desarrollo, incluye mensajes en la consola -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="hola-mundo.vue.js"></script>
+</body>
+</html>`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/a186ca9068e400268a5beababfea51c0)
+
+Si miran detenidamente, verán que hemos agregado un `{{ mensaje }}` dentro de nuestra 
+aplicación, esto es conocido como _template syntax_ y sirve como un _placeholder_ que 
+será sustituido por nuestro… mensaje.
+
+Ahora simplemente le decimos a Vue cuál es ese mensaje que queremos que sustituya:
+
+<Code
+    language="jsx"
+    children={`const app = new Vue( {
+	el: '#app',
+	data: {
+		mensaje: '¡Hola Mundo!'
+	}
+} );`}
+/>
+
+[View Gist on GitHub](https://gist.github.com/emeaguiar/3fa91a278976eda148a448d494ad680b)
+
+Dentro del ecosistema Vue, podemos agregar un objeto llamado `data`, Vue tomará 
+todo lo que esté dentro de este objeto como datos de la aplicación, y mantendrá 
+un ojo en ellos mientras la aplicación esté funcionando, esto significa que 
+cualquier cambio que se haga en `data.mensaje` se verá reflejado en nuestro markup 
+de manera instantánea.
+
+¡Listo! SI ahora recargamos nuestra aplicación podremos ver ¡Hola Mundo! reflejado en ella, nuestra primer aplicación con Vue.
+
+[https://codepen.io/emeaguiar/pen/aQEpyb](https://codepen.io/emeaguiar/pen/aQEpyb)
