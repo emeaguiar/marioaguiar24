@@ -18,5 +18,7 @@
   "socialText": "Go to social profile in {{ label }}",
   "publishedOn": "Published <0 /> ago",
   "updatedOn": "Updated <0 /> ago",
-  "readingTime": "{{ minutes }} min read"
+  "readingTime": "{{ minutes }} min read",
+  "tooBad": "Too bad!",
+  "pageNotFound": "The page you are looking for does not exist."
 }

@@ -9,6 +9,7 @@ import { ThemeProvider } from 'next-themes';
  * Next dependencies
  */
 import type { AppProps } from 'next/app';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 /**
  * Internal dependencies
@@ -43,6 +44,8 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>
+
+      <GoogleAnalytics gaId='G-6MSTR35N5E' />
     </>
   );
 }
