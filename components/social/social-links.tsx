@@ -73,7 +73,7 @@ export function SocialLink({
       <Link
         href={href}
         aria-label={t('socialText', { label })}
-        className='text-foreground transition-colors hover:text-primary'
+        className='transition-colors'
       >
         {children}
       </Link>

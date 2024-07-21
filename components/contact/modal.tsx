@@ -29,7 +29,7 @@ export default function Modal() {
   return (
     <>
       {usesModal && (
-        <dialog className='fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'>
+        <dialog className='modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'>
           <div
             className={clsx(
               'm-auto h-full w-full bg-primary bg-opacity-90 p-8 text-background',
@@ -54,7 +54,7 @@ export default function Modal() {
 
               <ContactForm />
 
-              <SocialLinks className='mb-0 mt-auto lg:mt-8' />
+              <SocialLinks className='mb-8 mt-auto lg:mt-8 text-white' />
             </div>
           </div>
         </dialog>

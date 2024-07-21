@@ -6,12 +6,13 @@
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Next dependencies
  */
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 /**
  * Internal dependencies
@@ -22,6 +23,11 @@ import DarkModeToggle from '@/components/dark-mode-toggle';
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation('common');
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -53,6 +59,15 @@ export default function MobileMenu() {
                 {t(key)}
               </MenuItem>
             ))}
+
+            <li>
+              <Link
+                href={{ pathname, search: '?modal=1' }}
+                className='block px-4 py-2 font-bold uppercase transition-colors'
+              >
+                {t('contact')}
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>

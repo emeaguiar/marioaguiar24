@@ -8,7 +8,7 @@ export default function Document() {
   return (
     <Html className={clsx('bg-background text-foreground', {})}>
       <Head />
-      <body>
+      <body className='has-[dialog]:overflow-hidden'>
         <Main />
         <NextScript />
       </body>
