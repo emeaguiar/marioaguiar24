@@ -1,7 +1,7 @@
 ---
 title: Compiling CSS and Javascript with wp-scripts
 publishedOn: '2022-01-14'
-updatedOn: '2024-07-21T21:00:32.368Z'
+updatedOn: '2024-07-21T22:44:57.005Z'
 description: Quick tutorial to compile CSS and Javascript with `wp-scripts`
 published: true
 readingTime: 180
@@ -39,8 +39,8 @@ our application**, for the purposes of this tutorial we don't need much, we can 
 `package.json`
 
 <Code
-    language="json"
-    children={`{
+  language='json'
+  children={`{
     "name": "scripts",
     "version": "1.0.0",
     "description": "Simple @wordpress/scripts tutorial",
@@ -60,8 +60,8 @@ our application**, for the purposes of this tutorial we don't need much, we can 
 > Why `--save-dev`?
 >
 > By using that flag we are implying that **the installed dependency should be saved**
-as such in the `package.json` file in that way we make sure that any other member of our team
-who wants to install this application receives all the dependencies when running `npm install`.
+> as such in the `package.json` file in that way we make sure that any other member of our team
+> who wants to install this application receives all the dependencies when running `npm install`.
 
 ## Hello World
 
@@ -73,8 +73,8 @@ add it to our list of scripts in our `package.json`, like this:
 `package.json`
 
 <Code
-    language="json"
-    children={`{
+  language='json'
+  children={`{
     "name": "scripts",
     "version": "1.0.0",
     "description": "Simple @wordpress/scripts tutorial",
@@ -102,8 +102,8 @@ so we can start there.
 `index.js`
 
 <Code
-    language="js"
-    children={`import { __ } from '@wordpress/i18n';
+  language='js'
+  children={`import { __ } from '@wordpress/i18n';
 const init = () => {
     console.log( __( 'Hello World' ) );
 };
@@ -118,8 +118,8 @@ our application can easily list them within our plugin**, for example:
 `plugin.php`
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Include scripts and dependencies in our plugin
  *
  * @return void

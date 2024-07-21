@@ -1,7 +1,7 @@
 ---
 title: Remove items from an array in Javascript
 publishedOn: '2018-11-20'
-updatedOn: '2024-07-21T03:52:40.061Z'
+updatedOn: '2024-07-21T22:44:57.010Z'
 description: How to remove items from an array in Javascript.
 published: true
 readingTime: 420
@@ -22,8 +22,8 @@ The `.splice()` method is probably the easiest way to manipulate arrays, it allo
 us to add, replace, or remove a certain element based on its index, example:
 
 <Code
-    language="js"
-    children={`const array = [ 'foo', 'bar', 'baz' ];
+  language='js'
+  children={`const array = [ 'foo', 'bar', 'baz' ];
 // Starting at position 1, remove the next element
 const removedElement = array.splice( 1, 1 );
 // [ 'foo', 'baz' ]
@@ -40,8 +40,8 @@ Another point to note, is that we can remove _several_ elements using this same
 method, we just need to increase the quantity in the second argument.
 
 <Code
-    language="js"
-    children={`const array = [ 'foo', 'bar', 'baz' ];
+  language='js'
+  children={`const array = [ 'foo', 'bar', 'baz' ];
 // Starting at position 1, remove the next two elements
 const removedElement = array.splice( 1, 2 );
 // [ 'foo' ]
@@ -57,8 +57,8 @@ Adds a new element to the end of an array, `.pop()` removes the last element
 from an array, example:
 
 <Code
-    language="js"
-    children={`const array = [ 'foo', 'bar', 'baz' ];
+  language='js'
+  children={`const array = [ 'foo', 'bar', 'baz' ];
 // Remove the last element from the array
 const removedElement = array.pop();
 // [ 'foo', 'bar' ]
@@ -79,8 +79,8 @@ former do their magic at the _beginning_ of the array.
 `.shift()` will remove the _first_ element in our array, example:
 
 <Code
-    language="js"
-    children={`const array = [ 'foo', 'bar', 'baz' ];
+  language='js'
+  children={`const array = [ 'foo', 'bar', 'baz' ];
 // Remove the first element from the array
 const removedElement = array.shift();
 // [ 'bar', 'baz' ]
@@ -96,15 +96,15 @@ Once again, note that the value we receive is a `string`
 So far we have seen how to remove elements based on their _index_, but what
 happens when we need to remove something based on its _value_?
 
-The procedure is similar, but in this case we need to first _find the index_ of 
+The procedure is similar, but in this case we need to first _find the index_ of
 the element with that value.
 
-To find the index we can use `.indexOf()`, and we use it in conjunction with `.splice()`, 
+To find the index we can use `.indexOf()`, and we use it in conjunction with `.splice()`,
 example, let's remove “bar”:
 
 <Code
-    language="js"
-    children={`let array = [ 'foo', 'bar', 'baz' ];
+  language='js'
+  children={`let array = [ 'foo', 'bar', 'baz' ];
 let removedElement;
 // Remove the first instance of 'bar'
 if ( array.indexOf( 'bar' ) > -1 ) {
@@ -139,8 +139,8 @@ technically this method does not remove the elements from the array, since the o
 array does not change. Example, let's create a new array without “bar”:
 
 <Code
-    language="js"
-    children={`const array = [ 'foo', 'bar', 'baz' ];
+  language='js'
+  children={`const array = [ 'foo', 'bar', 'baz' ];
 // Returns everything that is not "bar"
 const newArray = array.filter( element => element !== 'bar' );
 // [ 'foo', 'baz' ]

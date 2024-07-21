@@ -1,7 +1,7 @@
 ---
 title: Creando un formulario de contacto con PHP y AngularJS
 publishedOn: '2014-08-07'
-updatedOn: '2024-07-21T01:36:58.804Z'
+updatedOn: '2024-07-21T22:44:57.020Z'
 description: >-
   AngularJS parece ser la sensación en estos días, por eso decidí intentar y
   aprender lo básico de él. De hecho, este mismo sitio web está construido
@@ -26,8 +26,8 @@ Para este tutorial voy a usar una configuración muy básica, solo un par de cam
 un botón de envío, así que empecemos.
 
 <Code
-    language="jsx"
-    children={`<!DOCTYPE html>
+  language='jsx'
+  children={`<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -56,8 +56,8 @@ lo ocultaremos usando css.
 Antes de comenzar con AngularJS, veamos cómo haríamos esto usando jQuery, como en los buenos viejos tiempos:
 
 <Code
-    language="js"
-    children={`(function($) {
+  language='js'
+  children={`(function($) {
   var contactForm = {
     $form: $( 'form' ),
     init: function() {
@@ -148,18 +148,18 @@ a esto:
                            
 ¡Gracias por ponerte en contacto!
 
-               
 ¡Algo falló!, intenta de nuevo.
 
-                            Contacto                                    
-                        Nombre:                                            
-                   
-                        Email:                                            
-                   
-                        Mensaje:                                            
-                   
-                        Prometo que no soy un bot                                         
+                            Contacto
+                        Nombre:
+
+                        Email:
+
+                        Mensaje:
+
+                        Prometo que no soy un bot
                 </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>          //ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js          http://angularForm.js     </body> </html>`}
+
 />
 
 Unas cuantas directivas aquí y allá y nuestro marcado está listo para ser integrado con AngularJS,
@@ -174,8 +174,8 @@ desglosemos un poco:
 Ahora veamos nuestro archivo js:
 
 <Code
-    language="js"
-    children={`(function(angular) {
+  language='js'
+  children={`(function(angular) {
   var app = angular.module("contact", []);
   app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
     $scope.success = false;
@@ -200,7 +200,7 @@ Ahora veamos nuestro archivo js:
 />
 
 Mucho más pequeño que nuestro homólogo de jQuery, esto se debe a que no tenemos ninguna
-función de validación en este, ¿por qué? Simple, porque **AngularJS por defecto 
+función de validación en este, ¿por qué? Simple, porque **AngularJS por defecto
 valida el formulario antes de enviarlo**. No solo eso, sino que automáticamente
 agrega clases css para campos válidos e inválidos, gracias Angular.
 
@@ -208,17 +208,17 @@ Así que lo único que necesitamos hacer es hacer la solicitud AJAX usando el co
 y estar atentos al resultado, desglosemos:
 
 - `angular.module("contact", []):` Primero definimos nuestro módulo, o nuestra aplicación, y
-todas sus dependencias externas, en este caso no hay ninguna. También almacenaré esto en la variable app.
-- `app.controller("contactForm", ["$scope", "$http", function...`: Luego definimos nuestro controlador 
-`contactForm` para manejar nuestro formulario, y sus dependencias, $scope es 
+  todas sus dependencias externas, en este caso no hay ninguna. También almacenaré esto en la variable app.
+- `app.controller("contactForm", ["$scope", "$http", function...`: Luego definimos nuestro controlador
+  `contactForm` para manejar nuestro formulario, y sus dependencias, $scope es 
 bastante estándar pero no necesario, puedes aprender sobre $scope en [aquí](https://docs.angularjs.org/guide/scope).
 `$http` es el módulo que usaremos para hacer la solicitud AJAX, ya que AngularJS trabaja con **inyección de dependencia**, necesitamos hacerle saber que lo necesitamos.
 - `$scope.success`: definimos valores predeterminados para nuestros objetos de respuesta, estos podrían
-cambiarse más tarde dependiendo de la respuesta AJAX.
+  cambiarse más tarde dependiendo de la respuesta AJAX.
 - `$scope.sendMessage( input )`: Esta es la función que usaremos para hacer la solicitud AJAX,
-**tomará todos los datos de entrada que definimos en nuestro formulario**. Luego hará
-una solicitud `POST` a `processForm.php` y establecerá las variables de éxito o error
-dependiendo de la respuesta.
+  **tomará todos los datos de entrada que definimos en nuestro formulario**. Luego hará
+  una solicitud `POST` a `processForm.php` y establecerá las variables de éxito o error
+  dependiendo de la respuesta.
 
 ## El problema
 
@@ -240,13 +240,13 @@ puedes elegir la que mejor se adapte a tus necesidades.
 ### La forma "salvame jQuery"
 
 Podemos usar jQuery para evitar este problema. Aunque AngularJS ya tiene una
-versión reducida de jQuery en él, no proporciona el método que necesitamos, 
-esto por supuesto significa que **necesitamos incluir jQuery junto con AngularJS**. 
+versión reducida de jQuery en él, no proporciona el método que necesitamos,
+esto por supuesto significa que **necesitamos incluir jQuery junto con AngularJS**.
 Gracias al método `$.param`.
 
 <Code
-    language="js"
-    children={`(function(angular) {
+  language='js'
+  children={`(function(angular) {
   var app = angular.module("contact", []);
   app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
     $scope.success = false;
@@ -282,8 +282,8 @@ Es realmente simple, no podemos acceder a nuestras variables `$_POST` de la mane
 pero podemos acceder a ellas usando `file_get_contents`, así que cambiaremos nuestro PHP a esto:
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
     $response = array( 'success' => false );
     $formData = file_get_contents( 'php://input' );
     $data = json_decode( $formData );

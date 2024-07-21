@@ -1,7 +1,7 @@
 ---
 title: Entendiendo el Loop de WordPress
 publishedOn: '2014-08-04'
-updatedOn: '2024-07-20T23:49:08.108Z'
+updatedOn: '2024-07-21T22:44:57.025Z'
 description: >-
   Una de las características más básicas (y poderosas) dentro de WordPress es
   The Loop, este pequeño fragmento de código que usamos una y otra vez. Y sin
@@ -34,8 +34,8 @@ tiempo, en esos casos usamos _un loop_, así que básicamente, un loop solo repi
 si queremos mostrar los números del uno al diez, podríamos hacer esto:
 
 <Code
-    language="php"
-    children={`echo "1n";
+  language='php'
+  children={`echo "1n";
 echo "2n";
 echo "3n";
 echo "4n";
@@ -50,8 +50,8 @@ echo "10n";`}
 Para que sepas, _yo escribí todo eso_, y fue cansado… En lugar de eso, debería haber hecho esto:
 
 <Code
-    language="php"
-    children={`for ( $number = 1; $number <= 10; $number++ ) {
+  language='php'
+  children={`for ( $number = 1; $number <= 10; $number++ ) {
     echo $number . "n";
 }`}
 />
@@ -70,8 +70,8 @@ The Loop realiza un montón de acciones bajo el capó para que solo nos preocupe
 Un loop muy básico (tomado de Twentythirteen) se ve así:
 
 <Code
-    language="php"
-    children={`<?php if ( have_posts() ) : ?>
+  language='php'
+  children={`<?php if ( have_posts() ) : ?>
     <?php /* El loop */ ?>
     <?php while ( have_posts() ) : the_post(); ?>
         <?php get_template_part( 'content', get_post_format() ); ?>
@@ -88,25 +88,25 @@ y ya hay un objeto `$wp_query` con toda la información que necesitamos, ahora v
 hace el loop.
 
 - `if ( have_posts() ):` Primero que nada, esta función verifica el objeto `$wp_query`
-y devuelve verdadero si el objeto tiene publicaciones en él.
+  y devuelve verdadero si el objeto tiene publicaciones en él.
 - `while ( have_posts() ):` Ahora, **este es el verdadero inicio del loop**, mientras
-`have_posts()` sea verdadero, ejecutemos el resto del código dentro.
+  `have_posts()` sea verdadero, ejecutemos el resto del código dentro.
 - `the_post()`: Ahora que estamos dentro del loop, necesitamos poblar nuestro objeto `$post`,
-esta función también dispara `setup_postdata()` que verifica cosas como el número de páginas
-dentro de la publicación.
+  esta función también dispara `setup_postdata()` que verifica cosas como el número de páginas
+  dentro de la publicación.
 - `get_template_part( 'content', get_post_format() )`: Ahora, tenemos nuestro objeto `$post`
-completo, es hora de mostrarlo al mundo, podríamos simplemente insertar el marcado
-y funciones como `the_title()` y `the_content()` aquí mismo, pero es una buena práctica
-mantener las cosas limpias incluyendo una plantilla (planeo hablar sobre `get_template_part`
-en otro post).
+  completo, es hora de mostrarlo al mundo, podríamos simplemente insertar el marcado
+  y funciones como `the_title()` y `the_content()` aquí mismo, pero es una buena práctica
+  mantener las cosas limpias incluyendo una plantilla (planeo hablar sobre `get_template_part`
+  en otro post).
 - `endwhile`: Ya incluimos la plantilla para mostrar las publicaciones, así que podemos
-simplemente **terminar el loop**, recuerda, mientras haya publicaciones en la consulta,
-el loop estará en acción.
+  simplemente **terminar el loop**, recuerda, mientras haya publicaciones en la consulta,
+  el loop estará en acción.
 - `twentythirteen_paging_nav()`: Esta función es específica de este tema, básicamente
-solo muestra enlaces de navegación en caso de que haya más publicaciones en la página.
+  solo muestra enlaces de navegación en caso de que haya más publicaciones en la página.
 - `else`: Si la consulta estaba vacía, o si `have_posts` devolvió falso, entonces
-deberíamos hacerle saber al usuario incluyendo una plantilla especial para estas situaciones
-embarazosas.
+  deberíamos hacerle saber al usuario incluyendo una plantilla especial para estas situaciones
+  embarazosas.
 - `endif`: Termina completamente la declaración if, **termina completamente el loop**
 
 ## Usando The Loop con queries personalizadas
@@ -125,8 +125,8 @@ todos los parámetros de `WP_Query` y devuelve un array con el resultado, de esa
 podemos usar un loop `foreach` para trabajar con las publicaciones:
 
 <Code
-    language="php"
-    children={`$posts = get_posts( $args );
+  language='php'
+  children={`$posts = get_posts( $args );
 foreach ( $posts as $post ) :
     setup_postdata( $post );
 ?>
@@ -135,7 +135,7 @@ foreach ( $posts as $post ) :
 <?php
 endforeach;
 wp_reset_postdata();`}
-/> 
+/>{' '}
 
 Nótece cómo **necesitamos ejecutar** `setup_postdata` manualmente? Eso es porque no
 usamos `the_post` en este loop.
@@ -148,8 +148,8 @@ consulta **completamente independiente** de la consulta principal, y podemos usa
 de WordPress sin preocupaciones.
 
 <Code
-    language="php"
-    children={`$my_query = new WP_Query( $args );
+  language='php'
+  children={`$my_query = new WP_Query( $args );
 if ( $my_query->have_posts() ):
     while ( $my_query->have_posts() ) : $my_query->the_post();
 ?>
@@ -191,8 +191,8 @@ consulta principal en marcha**, incluso si no tenemos un loop en la barra latera
 un `$wp_query` y un objeto `$post` _en algún lugar_, solo necesitamos llamarlos.
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
     global $post;
     $mood = get_post_meta( $post->ID, 'mood', true );
 ?>

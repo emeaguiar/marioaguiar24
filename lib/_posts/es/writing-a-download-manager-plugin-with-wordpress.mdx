@@ -1,7 +1,7 @@
 ---
 title: Escribiendo un manejador de descargas en WordPress
 publishedOn: '2014-08-13'
-updatedOn: '2024-07-21T02:58:48.156Z'
+updatedOn: '2024-07-21T22:44:57.027Z'
 description: >-
   Siempre he dicho que puedes hacer casi cualquier cosa usando WordPress
   gracias  a todas las funciones y APIs integradas que tenemos a nuestra
@@ -54,20 +54,19 @@ class Mah_Download_Manager {
     function __construct() {
         add_action( 'admin_menu', array( $this, 'register_menu_pages' ) );
     }
-    
+
     function register_menu_pages() {
         add_menu_page( 'Mah Download manager', 'Downloads', 'manage_options', 'mah-download-manager', array( $this, 'display_menu_page' ), 'dashicons-download', 12 );
     }
 
     function display_menu_page() {
+
 ?>
-       
-           
+
 “>
-                       
+
 Aquí mostraremos una lista de los archivos subidos.
 
-       
 <?php
     }
 }
@@ -96,10 +95,9 @@ archivos, y mostrará lo que pongamos en la función `display_add_new_page`.
             return;
         }
 ?>
-       
-           
- 
-                                            :                                 ” name=”mdm-upload”>                    
+
+                                            :                                 ” name=”mdm-upload”>
+
 <?php
     }`}
 />
@@ -215,6 +213,7 @@ la página principal, es posible que hayas notado que también agregué esta lí
 <Code
     language="php"
     children={`<?php do_action( 'mdm_display_messages' ); ?>
+
 `}
 />
 
@@ -240,6 +239,7 @@ sencillo agregar mensajes. Ahora enganchemos algo a él.
     }
 
     echo '
+
 ‘ . $text . ‘
 
 ';
@@ -249,8 +249,8 @@ sencillo agregar mensajes. Ahora enganchemos algo a él.
 Y agregamos el hook a la función `__construct`.
 
 <Code
-    language="php"
-    children={`add_action( 'mdm_display_messages', array( $this, 'display_messages' ) );
+  language='php'
+  children={`add_action( 'mdm_display_messages', array( $this, 'display_messages' ) );
 `}
 />
 
@@ -277,8 +277,8 @@ al proceso de activación del plugin, este hook se ve un poco diferente al resto
 pero confía en mí, es el correcto.
 
 <Code
-    language="php"
-    children={`register_activation_hook( __FILE__, array( $this, 'install' ) );
+  language='php'
+  children={`register_activation_hook( __FILE__, array( $this, 'install' ) );
 `}
 />
 
@@ -289,8 +289,8 @@ agregando una **variable de versión de la base de datos**, de esa manera seguir
 útil en caso de que necesitemos actualizarla más adelante.
 
 <Code
-    language="php"
-    children={`
+  language='php'
+  children={`
 function __construct() {
     $this->mdb_db_version = 1;
 ...`}
@@ -333,28 +333,29 @@ Ahora nuestro método de instalación.
     } elseif ( $current_db_version < $this->mdb_db_version ) {
         $this->upgrade( $current_db_version );
     }
+
 }`}
 />
 
 Esta función hace varias cosas, así que desglosemos los pasos:
 
 1. Intentamos recuperar el número de versión de la base de datos de las opciones
-de WordPress, en caso de que sea la primera vez que activamos el plugin, **esto no
-existirá**, lo que significa que podemos instalar el plugin sin preocupaciones.
+   de WordPress, en caso de que sea la primera vez que activamos el plugin, **esto no
+   existirá**, lo que significa que podemos instalar el plugin sin preocupaciones.
 2. Luego llamamos a `$wpdb`, la **API de la base de datos**, y configuramos la estructura
-básica de nuestra tabla. `$wpdb->prefix` es el prefijo actualmente utilizado por nuestra
-instalación, y se define en el archivo wp-config.
+   básica de nuestra tabla. `$wpdb->prefix` es el prefijo actualmente utilizado por nuestra
+   instalación, y se define en el archivo wp-config.
 3. Después de eso necesitamos definir manualmente nuestra consulta SQL, con los campos
-que necesitaremos, en este caso elegí almacenar **la fecha, el nombre del archivo y
-la URL en el servidor**.
+   que necesitaremos, en este caso elegí almacenar **la fecha, el nombre del archivo y
+   la URL en el servidor**.
 4. `dbDelta()` es la función que usaremos para ejecutar esta consulta, como no se
-carga por defecto, **necesitamos incluir las funciones de actualización** y ejecutar
-la consulta.
+   carga por defecto, **necesitamos incluir las funciones de actualización** y ejecutar
+   la consulta.
 5. Configuramos una opción en WordPress, esto almacenará **la versión actual del plugin**,
-que se comprobará la próxima vez que se active el plugin.
+   que se comprobará la próxima vez que se active el plugin.
 6. Si la opción de versión está presente en WordPress, pero es diferente a la versión
-que establecimos en el plugin, esto significa que **necesitamos actualizar nuestra
-base de datos**, así que ejecutamos el script de actualización.
+   que establecimos en el plugin, esto significa que **necesitamos actualizar nuestra
+   base de datos**, así que ejecutamos el script de actualización.
 
 El script de actualización está vacío por ahora, pero será útil en el futuro:
 
@@ -392,6 +393,7 @@ _uninstall.php_
     $table_name = $wpdb->prefix . "mah_download_manager";
 
     $wpdb->query( "DROP TABLE IF EXISTS {$table_name}" );`}
+
 />
 
 **Quitamos las opciones que agregamos**, y **eliminamos la tabla** que creamos, asegurándonos
@@ -412,6 +414,7 @@ de una carga exitosa**, esperamos esa respuesta y _luego_ redirigimos al usuario
     } else {
         wp_die( 'Hubo un error guardando el archivo en la base de datos' );
     }
+
 }`}
 />
 
@@ -433,6 +436,7 @@ Nuestra función `store_data` se ve así:
     );
 
     return $wpdb->insert( $this->table_name, $data );
+
 }`}
 />
 
@@ -479,6 +483,7 @@ _class-mah-download-manager-list.php_
     class Mah_Download_Manager_List extends WP_List_Table {
 
     }`}
+
 />
 
 Necesitamos sobrescribir un par de métodos aquí, comenzando con `prepare_items`,
@@ -511,7 +516,7 @@ porque necesitamos tener datos para mostrar.
     $this->extra_items = array_slice( $items, $number );
 
     $total = count( $items );
-    
+
     $this->set_pagination_args( array(
         'total_items' => $total,
         'per_page' => $per_page
@@ -529,30 +534,30 @@ porque necesitamos tener datos para mostrar.
 Ok hay muchas cosas pasando aquí, vamos a desglosarlo:
 
 1. Primero **llamamos a la API de la base de datos** (como hicimos cuando almacenamos
-los datos) y especificamos la tabla de la que solicitaremos los datos.
+   los datos) y especificamos la tabla de la que solicitaremos los datos.
 2. Configuramos el número de elementos que mostraremos en cada página, `get_items_per_page`
-es un método integrado en la API de listas, en este caso devolverá el mismo número
-que hemos almacenado en la opción `posts_per_page`, que se puede cambiar en las **opciones
-de "Lectura"** del lado de la administración.
+   es un método integrado en la API de listas, en este caso devolverá el mismo número
+   que hemos almacenado en la opción `posts_per_page`, que se puede cambiar en las **opciones
+   de "Lectura"** del lado de la administración.
 3. Luego verificamos en qué página estamos ahora, y configuramos el límite y el
-desplazamiento para nuestra consulta, **esto solo devolverá los elementos que necesitamos**.
+   desplazamiento para nuestra consulta, **esto solo devolverá los elementos que necesitamos**.
 4. Ahora que hemos definido el inicio y el final de nuestra consulta, es hora de
-ejecutarla con `get_results`.
+   ejecutarla con `get_results`.
 5. Cortamos el resultado y almacenamos los elementos en las propiedades de la clase,
-también almacenamos el número de resultados. Y configuramos los argumentos de paginación
-con él.
+   también almacenamos el número de resultados. Y configuramos los argumentos de paginación
+   con él.
 6. Por último, pero no menos importante, necesitamos configurar los encabezados
-de nuestras columnas, `_column_headers` acepta una matriz, esta debe contener los
-**encabezados visibles**, los **encabezados ocultos** y los encabezados ordenables
-(en este caso no agregaré propiedades ordenables, pero es necesario).
+   de nuestras columnas, `_column_headers` acepta una matriz, esta debe contener los
+   **encabezados visibles**, los **encabezados ocultos** y los encabezados ordenables
+   (en este caso no agregaré propiedades ordenables, pero es necesario).
 
 Si intentamos ejecutar el código ahora, obtendremos un mensaje de error, eso es
 porque `get_columns` es otro método **que debemos definir nosotros mismos**, afortunadamente,
 es muy simple.
 
 <Code
-    language="php"
-    children={`function get_columns() {
+  language='php'
+  children={`function get_columns() {
     return array(
         'file' => __( 'Atchivo', 'mah_download_manager' ),
         'type' => __( 'Tipo', 'mah_download_manager' ),
@@ -573,8 +578,8 @@ que manejen una columna específica**.
 Para los propósitos de este artículo, usaré ambos.
 
 <Code
-    language="php"
-    children={`function column_default( $item, $column_name ) {
+  language='php'
+  children={`function column_default( $item, $column_name ) {
     switch ( $column_name ) {
         case 'file':
             echo '<a href="' . $item->url . '">' . $item->name . '</a>';
@@ -591,8 +596,8 @@ columna específica, ¿cómo lo encuentra WordPress? Usando la sintaxis `column_
 así que si quiero un método específico que maneje la columna `date`, hago esto:
 
 <Code
-    language="php"
-    children={`function column_date( $item ) {
+  language='php'
+  children={`function column_date( $item ) {
     $m_time = $item->date;
     $time = strtotime( $m_time );
     $time_diff = time() - $time;
@@ -629,8 +634,8 @@ necesitamos editar nuestro método `column_default` y llamar a otro método: `ro
 _class-mah-download-manager-list.php_
 
 <Code
-    language="php"
-    children={`function column_default( $item, $column_name ) {
+  language='php'
+  children={`function column_default( $item, $column_name ) {
 ...
     case 'file':
 ...
@@ -659,8 +664,8 @@ caso el slug es `mah-download-manager` así que agregamos la acción:
 _mah-download-manager.php_
 
 <Code
-    language="php"
-    children={`function __construct() {
+  language='php'
+  children={`function __construct() {
 ...
     add_action( 'toplevel_page_mah-download-manager', array( $this, 'custom_action' ) );
 ...`}
@@ -710,6 +715,7 @@ Y agregamos la funcionalidad:
             wp_die( __( '¡Esa acción no es válida!' ) );
             break;
     }
+
 }`}
 />
 
@@ -717,18 +723,16 @@ Parece que hay mucho código aquí, pero no te preocupes, la mayoría de esto ya
 hemos visto antes, así que déjame explicar los pasos que seguimos:
 
 1. Primero **nos aseguramos de que haya una acción definida**, si no simplemente
-detenemos la ejecución del código.
+   detenemos la ejecución del código.
 2. Luego nos aseguramos de que **se haya seleccionado un archivo**, si no, no tiene
-sentido intentar hacer algo.
+   sentido intentar hacer algo.
 3. Luego verificamos qué acción estamos tratando de ejecutar, si no está en la lista,
-detenemos todo. Escribí esto pensando que en el futuro podríamos querer agregar
-más acciones.
-    - 1 Dentro de la acción `delete`, necesitamos **asegurarnos de que el usuario
-    no haya hecho clic por accidente**, así que mostramos un mensaje preguntando
-    si realmente quiere hacerlo.
-    - Una vez que hemos confirmado que el usuario realmente quiere eliminar el archivo,
-    **necesitamos activar la API del sistema de archivos nuevamente**, y luego llamar
-    al nuevo método `delete_file`.
+   detenemos todo. Escribí esto pensando que en el futuro podríamos querer agregar
+   más acciones. - 1 Dentro de la acción `delete`, necesitamos **asegurarnos de que el usuario
+   no haya hecho clic por accidente**, así que mostramos un mensaje preguntando
+   si realmente quiere hacerlo. - Una vez que hemos confirmado que el usuario realmente quiere eliminar el archivo,
+   **necesitamos activar la API del sistema de archivos nuevamente**, y luego llamar
+   al nuevo método `delete_file`.
 
 <Code
     language="php"
@@ -748,6 +752,7 @@ más acciones.
     } else {
         wp_die( __( 'Hubieron errores al eliminar el archivo.', 'mah_download_manager' ) );
     }
+
 }`}
 />
 
@@ -755,29 +760,29 @@ Este método **eliminará el archivo del servidor y de la base de datos**, aquí
 el desglose:
 
 1. Primero llamamos a las API `$wpdb` para manejar la base de datos y `$wp_filesystem`
-para manejar los archivos (este último solo está disponible después de activarlo
-previamente).
+   para manejar los archivos (este último solo está disponible después de activarlo
+   previamente).
 2. Luego recuperamos la ruta del archivo de la base de datos, ¡recuerda hacer esto
-_antes_ de eliminar los datos!
+   _antes_ de eliminar los datos!
 3. Ahora que tenemos la ruta, **eliminamos el archivo del servidor**, y verificamos
-si hay errores en el camino.
+   si hay errores en el camino.
 4. Después de eliminar el archivo, **es seguro eliminar los datos de la base de datos**,
-una vez más, verificamos si hay errores.
+   una vez más, verificamos si hay errores.
 5. Si no hubo errores al eliminar los datos, entonces **redirigimos al usuario de
-vuelta a la página principal**, y agregamos un nuevo mensaje.
+   vuelta a la página principal**, y agregamos un nuevo mensaje.
 
 Ahora volvamos a `display_messages` y agreguemos el nuevo mensaje:
 
 <Code
-    language="php"
-    children={`function display_messages() {
+  language='php'
+  children={`function display_messages() {
 ...
     case 2:
         $class = 'updated';
         $text = __( 'El archivo seleccionado ha sido eliminado.', 'mah-download-manager' );
         break;
 ...`}
-/> 
+/>{' '}
 
 ### El camino hasta ahora…
 

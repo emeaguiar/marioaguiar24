@@ -1,7 +1,7 @@
 ---
 title: First steps with Vue.js
 publishedOn: '2018-11-20'
-updatedOn: '2024-07-21T03:38:38.753Z'
+updatedOn: '2024-07-21T22:44:57.011Z'
 description: A quick exercise to start working with Vue.js
 published: true
 readingTime: 420
@@ -34,7 +34,7 @@ on the [official Vue site](https://vuejs.org/v2/guide/comparison.html).
 If Vue and React are so similar, _why would I want to use Que instead of going straight to React?_
 
 The simplest answer is: it's your decision, I'm not going to tell you to change everything
-your ecosystem to use Vue simply because it's the trendy library in the community 
+your ecosystem to use Vue simply because it's the trendy library in the community
 (or the second trendy library). The reality is that it doesn't hurt to try
 new tools, and thus be able to make an informed decision about which one is the one
 best suits your needs.
@@ -63,9 +63,9 @@ line before our `</body>`.
 <head>
 	<meta charset="utf-8">
 
-	<title>Hello, World! - Vue.js</title>
-	<meta name="description" content="First steps with Vue">
-	<meta name="author" content="Mario Aguiar">
+    <title>Hello, World! - Vue.js</title>
+    <meta name="description" content="First steps with Vue">
+    <meta name="author" content="Mario Aguiar">
 
 </head>
 
@@ -88,8 +88,8 @@ As you can see, it is a quite simple structure, we have our `head`, our
 What follows now, is to initialize our application with Vue, in our `hello-world.vue.js`
 
 <Code
-    language="js"
-    children={`const app = new Vue( {
+  language='js'
+  children={`const app = new Vue( {
 	el: '#app'
 } );`}
 />
@@ -119,9 +119,9 @@ First let's modify our HTML to look like this:
 <head>
 	<meta charset="utf-8">
 
-	<title>Hello World! - Vue.js</title>
-	<meta name="description" content="First steps in Vue">
-	<meta name="author" content="Mario Aguiar">
+    <title>Hello World! - Vue.js</title>
+    <meta name="description" content="First steps in Vue">
+    <meta name="author" content="Mario Aguiar">
 
 </head>
 
@@ -146,8 +146,8 @@ will be replaced by our... message.
 Now we simply tell Vue what that message is that we want to replace:
 
 <Code
-    language="jsx"
-    children={`const app = new Vue( {
+  language='jsx'
+  children={`const app = new Vue( {
 	el: '#app',
 	data: {
 		mensaje: 'Hello World!'
@@ -158,8 +158,8 @@ Now we simply tell Vue what that message is that we want to replace:
 [View Gist on GitHub](https://gist.github.com/emeaguiar/3fa91a278976eda148a448d494ad680b)
 
 Inside the Vue ecosystem, we can add an object called `data`, Vue will take
-everything inside this object as application data, and will keep an eye on them 
-while the application is running, this means that any change made in `data.message` 
+everything inside this object as application data, and will keep an eye on them
+while the application is running, this means that any change made in `data.message`
 will be reflected in our markup instantly.
 
 Ready! If we now reload our application we will be able to see Hello World! reflected in it, our first application with Vue.

@@ -1,7 +1,7 @@
 ---
 title: Cómo manejar WordPress utilizando Git
 publishedOn: '2019-01-18'
-updatedOn: '2024-07-21T04:45:11.783Z'
+updatedOn: '2024-07-21T22:44:57.023Z'
 description: Aprende a manejar tu instalación de WordPress utilizando Git.
 published: true
 readingTime: 720
@@ -9,108 +9,105 @@ readingTime: 720
 
 import Code from '@/components/code/code';
 
-La semana pasada publicaba un artículo sobre el [por qué es una muy mala idea 
-utilizar FTP](/blog/the-importance-of-not-using-ftp) para manejar nuestro sitio. 
-Aunque el tema es muy general y no aplica únicamente para WordPress, 
-ésta vez quiero explicar un poco más sobre el proceso que uso personalmente para 
+La semana pasada publicaba un artículo sobre el [por qué es una muy mala idea
+utilizar FTP](/blog/the-importance-of-not-using-ftp) para manejar nuestro sitio.
+Aunque el tema es muy general y no aplica únicamente para WordPress,
+ésta vez quiero explicar un poco más sobre el proceso que uso personalmente para
 **combinar WordPress con Git**.
 
 ## ¿Qué es Git?
 
-Si ésta es tu primera pregunta, mi pequeño saltamontes, tienes un _gran camino por 
+Si ésta es tu primera pregunta, mi pequeño saltamontes, tienes un _gran camino por
 recorrer_. Pero no te preocupes, todos lo tenemos.
 
-Para empezar, Git es un **sistema de versión de archivos**, algo parecido a SVN, 
-pero generalmente más apreciado. Git _permite guardar versiones en el tiempo de 
-cada archivo que modificamos_, de ésta forma podemos regresar fácilmente a una versión 
-anterior, o tener un registro de exactamente que ha cambiado, cuando cambió, y quién 
+Para empezar, Git es un **sistema de versión de archivos**, algo parecido a SVN,
+pero generalmente más apreciado. Git _permite guardar versiones en el tiempo de
+cada archivo que modificamos_, de ésta forma podemos regresar fácilmente a una versión
+anterior, o tener un registro de exactamente que ha cambiado, cuando cambió, y quién
 fue quién lo cambió.
 
 ## ¿Por qué usar Git?
 
-Como mencioné antes, _Git guarda versiones de cada archivo de nuestro sitio_ para 
+Como mencioné antes, _Git guarda versiones de cada archivo de nuestro sitio_ para
 que podamos regresar a cualquiera de ellas fácilmente.
 
-¿Alguna vez has hecho una modificación a un archivo, y lo único que lograste fue 
-una pantalla blanca? Con Git, fácilmente podrías _regresar a una versión anterior 
+¿Alguna vez has hecho una modificación a un archivo, y lo único que lograste fue
+una pantalla blanca? Con Git, fácilmente podrías _regresar a una versión anterior
 de tu sitio_, para poder encontrar el problema **sin afectar tus visitas**.
 
-Git también es muy útil cuando nos encontramos trabajando en un _equipo de gran 
-tamaño_, o cuando muchas personas pueden llegar a tocar el código, ya que guarda 
-un historial de quién, y cuándo se ha hecho cada cosa. Y _muchas personas pueden 
+Git también es muy útil cuando nos encontramos trabajando en un _equipo de gran
+tamaño_, o cuando muchas personas pueden llegar a tocar el código, ya que guarda
+un historial de quién, y cuándo se ha hecho cada cosa. Y _muchas personas pueden
 trabajar en el mismo sitio al mismo tiempo sin pasar unas encima de otras_.
 
 ¿Convencido?
 
 ## ¿Cómo utilizar Git en nuestro sitio?
 
-Ya casi llegamos a la parte importante, ahora que sabemos qué es, y para qué lo 
+Ya casi llegamos a la parte importante, ahora que sabemos qué es, y para qué lo
 necesitamos, veamos algunas de **las formas más comunes en las que podemos utilizar Git**.
 
 ### Como versión de archivos únicamente
 
-Si únicamente necesitamos tener un _historial de los cambios_ en nuestro sitio, y no 
-necesitamos nada muy complejo, podemos únicamente crear un repositorio, ya sea en 
+Si únicamente necesitamos tener un _historial de los cambios_ en nuestro sitio, y no
+necesitamos nada muy complejo, podemos únicamente crear un repositorio, ya sea en
 [Gtihub](https://github.com/), [Gitlab](https://gitlab.com/), o [Bitbucket](https://bitbucket.org/).
 
-Teniendo nuestro repositorio, podemos agregar o modificar cualquier cosa de nuestro 
-sitio en **una versión de archivos completamente distinta a lo que tengamos en producción**, 
-de esta forma podemos seguir guardándolos en la nube sin peligro de que nuestros archivos 
-en producción sean modificados. También podemos compartir nuestro código con otros miembros 
+Teniendo nuestro repositorio, podemos agregar o modificar cualquier cosa de nuestro
+sitio en **una versión de archivos completamente distinta a lo que tengamos en producción**,
+de esta forma podemos seguir guardándolos en la nube sin peligro de que nuestros archivos
+en producción sean modificados. También podemos compartir nuestro código con otros miembros
 de nuestro equipo, quienes podrán seguir haciendo modificaciones en sus propias versiones.
 
 ### Como herramienta para deployment
 
-Una de las mayores ventajas que le veo al uso de Git + WordPress es, además del 
-versionamiento de archivos. La posibilidad de **mover nuestro flujo de deployment 
-a Git** (para finalmente olvidarnos de FTP). Éstos métodos son un poco más avanzados, 
+Una de las mayores ventajas que le veo al uso de Git + WordPress es, además del
+versionamiento de archivos. La posibilidad de **mover nuestro flujo de deployment
+a Git** (para finalmente olvidarnos de FTP). Éstos métodos son un poco más avanzados,
 pero sin duda, hacen nuestra existencia mucho más fácil una vez que han sido dominados.
 
-La idea principal es, _tener una copia del repositorio en tu máquina de desarrollo, 
-y tener una copia del repositorio en el servidor_. Lo recomendado es, tener en el 
-repositorio únicamente cosas de las cuales no nos preocupemos por qué alguna actualización 
+La idea principal es, _tener una copia del repositorio en tu máquina de desarrollo,
+y tener una copia del repositorio en el servidor_. Lo recomendado es, tener en el
+repositorio únicamente cosas de las cuales no nos preocupemos por qué alguna actualización
 vaya a sobreescribir. Como por ejemplo:
 
 - Nuestros themes personalizados
 - Nuestros plugins personalizados
 
-Por lo tanto, la mayoría de las veces, el repositorio estará conformado por nuestra 
-carpeta de `wp-content`. En el caso de que tengamos más plugins, hechos por otras 
-personas o que están disponibles en el repositorio oficial de WordPress, lo recomendable 
-es ignorarlos en el repositorio, y manejarlos utilizando Composer (de lo que hablaré 
+Por lo tanto, la mayoría de las veces, el repositorio estará conformado por nuestra
+carpeta de `wp-content`. En el caso de que tengamos más plugins, hechos por otras
+personas o que están disponibles en el repositorio oficial de WordPress, lo recomendable
+es ignorarlos en el repositorio, y manejarlos utilizando Composer (de lo que hablaré
 en un artículo en el futuro).
 
-Digamos que ya hemos creado nuestro repositorio en Github, y que hemos agregado 
-el contenido de nuestra carpeta `wp-content` a él, entonces tendríamos un repositorio 
+Digamos que ya hemos creado nuestro repositorio en Github, y que hemos agregado
+el contenido de nuestra carpeta `wp-content` a él, entonces tendríamos un repositorio
 más o menos así:
 
-<Code
-    language="bash"
-    children={`git@github.com:usuario/sitio.git`}
-/>
+<Code language='bash' children={`git@github.com:usuario/sitio.git`} />
 
-Una vez teniendo nuestro repositorio, ya podemos preocuparnos por **sincronizarlo 
+Una vez teniendo nuestro repositorio, ya podemos preocuparnos por **sincronizarlo
 con nuestro servidor**.
 
 ### Deployment a través de SSH
 
-Como mencionaba en mi artículo pasado, **SSH es mucho más seguro que FTP**, y si 
-necesitamos ingresar a nuestro servidor a mover archivos o hacer configuraciones, 
+Como mencionaba en mi artículo pasado, **SSH es mucho más seguro que FTP**, y si
+necesitamos ingresar a nuestro servidor a mover archivos o hacer configuraciones,
 es también mucho más recomendado.
 
-Para empezar, necesitamos conectarnos a nuestro servidor a traves de SSH 
+Para empezar, necesitamos conectarnos a nuestro servidor a traves de SSH
 (puede variar dependiendo de tu empresa de hosting, asegúrate de tener acceso).
 
 > [!NOTE]
-> Éste proceso puede variar mucho dependiendo de qué persona lo use, algunas urls 
-> y procedimientos dependen mucho de cuestiones personales, toma la idea básica 
+> Éste proceso puede variar mucho dependiendo de qué persona lo use, algunas urls
+> y procedimientos dependen mucho de cuestiones personales, toma la idea básica
 > y ajusta a tus gustos.
 
 Digamos que nuestro repositorio está conformado por la carpeta `wp-content`, y que éste se ve así:
 
 <Code
-    language="plain"
-    children={`- sitio
+  language='plain'
+  children={`- sitio
 --	.gitignore
 --	themes
 ---		nuestro-theme
@@ -122,7 +119,7 @@ Digamos que nuestro repositorio está conformado por la carpeta `wp-content`, y 
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/bb2d0e00d955b4777e7cd91d47459d07)
 
-Para poder reemplazar nuestra carpeta por defecto con nuestro nuevo repositorio, 
+Para poder reemplazar nuestra carpeta por defecto con nuestro nuevo repositorio,
 necesitamos entrar al servidor y crear una copia del repositorio:
 
 <Code
@@ -137,25 +134,25 @@ $ git clone git@github.com:usuario/sitio.git wp-content # Crea una copia del rep
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/33a7b4b7bc526e442e634b47e72297b2)
 
-!Y eso es todo! Ahora tenemos en sincronía nuestro repositorio local, con nuestro 
-repositorio en el servidor, y podemos **compartir archivos entre ambos de una manera 
+!Y eso es todo! Ahora tenemos en sincronía nuestro repositorio local, con nuestro
+repositorio en el servidor, y podemos **compartir archivos entre ambos de una manera
 muy fácil**.
 
 Yo recomiendo, tener al menos tres branches en el repositorio:
 
-- `master`, que usaremos como **producción**, todo lo que está aquí es la versión final 
-del sitio y debe estar 100% probada antes de llegar. También sirve como la base 
-de nuestras ramas “feature”
-- `staging`, que será **la versión de pruebas** de nuestro sitio, una versión “beta” 
-por así decirlo, una vez demostrado que la nueva funcionalidad funciona aquí, 
-podemos enviarla a `master`
-- `feature/*` Nuestras ramas “feature” son **trabajo en desarrollo**, no están 
-listas para ver producción y sólo deben ser unidas a `master` una vez que se ha 
-comprobado al 100% que funciona en `staging`. Una vez que han sido unidas a master, 
-serán eliminadas del repositorio
+- `master`, que usaremos como **producción**, todo lo que está aquí es la versión final
+  del sitio y debe estar 100% probada antes de llegar. También sirve como la base
+  de nuestras ramas “feature”
+- `staging`, que será **la versión de pruebas** de nuestro sitio, una versión “beta”
+  por así decirlo, una vez demostrado que la nueva funcionalidad funciona aquí,
+  podemos enviarla a `master`
+- `feature/*` Nuestras ramas “feature” son **trabajo en desarrollo**, no están
+  listas para ver producción y sólo deben ser unidas a `master` una vez que se ha
+  comprobado al 100% que funciona en `staging`. Una vez que han sido unidas a master,
+  serán eliminadas del repositorio
 
-El procedimiento de desarrollo es bastante sencillo una vez que se domina, digamos 
-que hemos creado un `feature/slideshow` y que estamos listo para probarlo en `staging`, 
+El procedimiento de desarrollo es bastante sencillo una vez que se domina, digamos
+que hemos creado un `feature/slideshow` y que estamos listo para probarlo en `staging`,
 entonces haríamos algo como esto:
 
 <Code
@@ -179,25 +176,25 @@ $ git push origin staging # Enviar la nueva versión de staging al repositorio r
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/e96d07e040e292e0d563e03a2ea19ecf)
 
-Ahora ya tenemos nuestra nueva funcionalidad en el repositorio, pero aún necesitamos 
+Ahora ya tenemos nuestra nueva funcionalidad en el repositorio, pero aún necesitamos
 algún lugar para probarla ¿cierto?
 
-Para esto yo recomiendo **tener un nuevo ambiente de pruebas en el servidor** (algo cómo staging.sitio.com). 
-Con una completamente distinta instalación de WordPress, su propia base de datos, etc. 
-En la cual repetiremos los mismos pasos que hicimos anteriormente para crear una copia 
+Para esto yo recomiendo **tener un nuevo ambiente de pruebas en el servidor** (algo cómo staging.sitio.com).
+Con una completamente distinta instalación de WordPress, su propia base de datos, etc.
+En la cual repetiremos los mismos pasos que hicimos anteriormente para crear una copia
 del repositorio en el servidor, con dos diferencias:
 
-1. Crearemos la copia del repositorio dentro de la carpeta de nuestro sitio de pruebas 
-(ejemplo: `/staging.sitio.com/public_html` en lugar de `/public_html`)
-2. La base de éste repositorio será un branch llamado `staging` en lugar de `master`, 
-así nos aseguramos de probar las cosas en el lugar correcto.
+1. Crearemos la copia del repositorio dentro de la carpeta de nuestro sitio de pruebas
+   (ejemplo: `/staging.sitio.com/public_html` en lugar de `/public_html`)
+2. La base de éste repositorio será un branch llamado `staging` en lugar de `master`,
+   así nos aseguramos de probar las cosas en el lugar correcto.
 
-Para hacer nuestro deploy y probar en staging, nos movemos a la carpeta donde 
+Para hacer nuestro deploy y probar en staging, nos movemos a la carpeta donde
 tenemos la copia del repositorio (`wp-content`), y hacemos lo siguiente:
 
 <Code
-    language="bash"
-    children={`$ ssh usuario@dominio.com // Entrar al servidor
+  language='bash'
+  children={`$ ssh usuario@dominio.com // Entrar al servidor
 # cd /staging.sitio.com/public_html/wp-content // Asegurarnos de estar en el sitio de pruebas
 # git checkout staging // Asegurarnos de estar en el branch de pruebas
 # git merge --no-ff feature/slideshow // Unir nuestro nuevo trabajo a nuestra rama de staging`}
@@ -205,29 +202,29 @@ tenemos la copia del repositorio (`wp-content`), y hacemos lo siguiente:
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/bf9283c6a2c5afd64ab7130d2759fbac)
 
-Y eso es todo, ahora si entramos a staging.sitio.com veremos la versión más reciente 
-de nuestro branch `staging`, que ahora ya tiene los cambios hechos en `feature/slideshow`. 
-Así, una vez que ya hemos probado el sitio de pruebas (aún no hemos tocado producción) 
-y estamos seguros de que funcionará correctamente en producción, podemos **unir nuestros 
+Y eso es todo, ahora si entramos a staging.sitio.com veremos la versión más reciente
+de nuestro branch `staging`, que ahora ya tiene los cambios hechos en `feature/slideshow`.
+Así, una vez que ya hemos probado el sitio de pruebas (aún no hemos tocado producción)
+y estamos seguros de que funcionará correctamente en producción, podemos **unir nuestros
 nuevos cambios**:
 
 <Code
-    language="bash"
-    children={`$ git checkout master # Asegurarnos de tener la versión más reciente de master
+  language='bash'
+  children={`$ git checkout master # Asegurarnos de tener la versión más reciente de master
 $ git merge --no-ff feature/slideshow # Unir nuestra nueva funcionalidad a master
 $ git push origin master # Enviar la versión más reciente al repositorio (en Github)`}
 />
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/3c37d519608d9ce5c8a7dd946c5b7391)
 
-Ahora que tenemos la versión más reciente en el repositorio de Github, nos hemos 
-asegurado de que todo funciona como queremos, y estamos listos para el **deploy a 
-producción**. Podemos entrar a nuestro servidor y bajar los cambios más recientes a 
+Ahora que tenemos la versión más reciente en el repositorio de Github, nos hemos
+asegurado de que todo funciona como queremos, y estamos listos para el **deploy a
+producción**. Podemos entrar a nuestro servidor y bajar los cambios más recientes a
 producción:
 
 <Code
-    language="bash"
-    children={`
+  language='bash'
+  children={`
 $ ssh usuario@sitio.com
 $ cd /public_html # Asegurarnos de estar en producción
 $ git checkout master
@@ -236,20 +233,20 @@ $ git pull origin master # Descargar los cambios más recientes del repositiorio
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/e229444097d1aaba4a87431ba71fddad)
 
-¡Y listo! **Ya tenemos la versión más reciente de nuestro sitio en producción**, ahora 
+¡Y listo! **Ya tenemos la versión más reciente de nuestro sitio en producción**, ahora
 podemos hacer una última prueba sólo para confirmar y nuestro deployment está completo.
 
 ### ¿Qué pasa si algo salió mal?
 
-En el dudoso caso de que no probaramos como deberíamos la nueva funcionalidad y 
-por alguna razón nuestro sitio en _producción se vino abajo_, no hay razón para alarmarse, 
-la prioridad ahora es **regresar producción a una versión anterior** que si funcionaba, 
-que en éste caso, sería justo antes de unir el carrusel a producción, es decir, 
+En el dudoso caso de que no probaramos como deberíamos la nueva funcionalidad y
+por alguna razón nuestro sitio en _producción se vino abajo_, no hay razón para alarmarse,
+la prioridad ahora es **regresar producción a una versión anterior** que si funcionaba,
+que en éste caso, sería justo antes de unir el carrusel a producción, es decir,
 justo una versión antes, entramos a la terminal y hacemos algo como esto:
 
 <Code
-    language="bash"
-    children={`$ ssh usuario@sitio.com
+  language='bash'
+  children={`$ ssh usuario@sitio.com
 $ cd /public_html # Asegurarnos de estar en producción
 $ git checkout master
 $ git revert HEAD # Revierte el último commit, regresa a una versión anterior`}
@@ -257,13 +254,13 @@ $ git revert HEAD # Revierte el último commit, regresa a una versión anterior`
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/f84ed7fda024f8b43e1c3b9382337050)
 
-Ésto nos regresará exactamente una versión atrás, que en este caso, justo antes 
-de nuestro carrusel, **levantando nuestro sitio en producción** y dándonos tiempo de 
+Ésto nos regresará exactamente una versión atrás, que en este caso, justo antes
+de nuestro carrusel, **levantando nuestro sitio en producción** y dándonos tiempo de
 buscar y solucionar el error localmente sin que producción se vuelva a ver afectado.
 
 ## Siguientes pasos
 
-Éste resultó un articulo más grande de lo que esperaba, pero éste no es el flujo 
-ideal que inspiró éste articulo, en el siguiente, explicaré como **poder automatizar 
-el proceso** en staging para reducir la cantidad de veces que entramos al servidor, 
+Éste resultó un articulo más grande de lo que esperaba, pero éste no es el flujo
+ideal que inspiró éste articulo, en el siguiente, explicaré como **poder automatizar
+el proceso** en staging para reducir la cantidad de veces que entramos al servidor,
 y explicaré qué herramientas pueden hacer este proceso aún más sencillo.

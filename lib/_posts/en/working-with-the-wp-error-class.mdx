@@ -1,7 +1,7 @@
 ---
 title: Working with the WP_Error class
 publishedOn: '2014-08-25'
-updatedOn: '2024-07-21T03:13:45.417Z'
+updatedOn: '2024-07-21T22:44:57.018Z'
 description: Simple tutorial on how to use the WP_Error class in WordPress.
 published: true
 readingTime: 420
@@ -9,30 +9,30 @@ readingTime: 420
 
 import Code from '@/components/code/code';
 
-Sometimes when we are coding a new feature… Actually, _every_ time we are coding a 
-new feature we need to know what it's happening, specifically if something it's 
-not working the way we want to. That's the reason I tend to display lots of messages 
+Sometimes when we are coding a new feature… Actually, _every_ time we are coding a
+new feature we need to know what it's happening, specifically if something it's
+not working the way we want to. That's the reason I tend to display lots of messages
 in my development environments. Even if it's not an error.
 
-But sometimes _it is an error_, and when that happens it's always better to treat 
-it like one. A simple message might not be enough, maybe we need to log it, maybe 
+But sometimes _it is an error_, and when that happens it's always better to treat
+it like one. A simple message might not be enough, maybe we need to log it, maybe
 we need to stop the execution of the page. Maybe we need to use **WP_Error**.
 
-In WordPress, we have a special class to work with errors, `WP_Error`. it is a 
-pretty simple class that helps us track and log error messages, let's say we have 
-a contact form with two fields, Name and Email, of course we want to make sure our 
-visitors enter only valid email addresses and if they don't, we use `WP_Error` to 
+In WordPress, we have a special class to work with errors, `WP_Error`. it is a
+pretty simple class that helps us track and log error messages, let's say we have
+a contact form with two fields, Name and Email, of course we want to make sure our
+visitors enter only valid email addresses and if they don't, we use `WP_Error` to
 let them know.
 
 ## The setup
 
-I have a simple form with only two fields, when the user submits that form, 
-the data will be sent through `$_POST`, I will attach an action to process the form 
+I have a simple form with only two fields, when the user submits that form,
+the data will be sent through `$_POST`, I will attach an action to process the form
 and validate the data, like this:
 
 <Code
-    language="php"
-    children={`function mah_custom_shortcode( $atts, $content = null ) {
+  language='php'
+  children={`function mah_custom_shortcode( $atts, $content = null ) {
     ob_start();
 ?>
     <form action="" id="mah_custom_form" method="post">
@@ -53,7 +53,7 @@ and validate the data, like this:
 add_shortcode( 'mah_custom_form', 'mah_custom_shortcode' );`}
 />
 
-This is pretty straightforward, I'm just creating a shortcode to use in my posts, 
+This is pretty straightforward, I'm just creating a shortcode to use in my posts,
 that shortcode will display the form, now let's see the process function:
 
 <Code
@@ -70,34 +70,33 @@ that shortcode will display the form, now let's see the process function:
             wp_die( $email->get_error_message(), 'mah_form_error' );
         }
     }
+
 }
 add_action( 'init', 'mah_process_function' );`}
 />
 
-- First we check if the value for `mah_submit` is set, that means the form has been 
-submitted, then we verify the nonce field to make sure it is still valid.
-- We use `is_email` to validate the email address, this function is provided by wordpress 
-and returns `true` if it's valid.
-- If the email was valid, we assign that value to the `$email` variable, after 
-using `sanitize_email` to clean the address just in case.
-- If the email was **not** valid, the value we assign to the `$email` variable will be 
-a new error object.
-    - `mah_email_error` is the code we use for this specific error, when we work with multiple errors it's a good idea to give them a code.
-    - Then we can give specify the message that will be use when we display this error to the user.
+- First we check if the value for `mah_submit` is set, that means the form has been
+  submitted, then we verify the nonce field to make sure it is still valid.
+- We use `is_email` to validate the email address, this function is provided by wordpress
+  and returns `true` if it's valid.
+- If the email was valid, we assign that value to the `$email` variable, after
+  using `sanitize_email` to clean the address just in case.
+- If the email was **not** valid, the value we assign to the `$email` variable will be
+  a new error object. - `mah_email_error` is the code we use for this specific error, when we work with multiple errors it's a good idea to give them a code. - Then we can give specify the message that will be use when we display this error to the user.
 
 Now, we have created our error, but we still need to display it to the user.
 
-Luckily, the `WP_Error` class also provides a function for this: `is_wp_error`. 
-This function checks the data passed and if it's an error object it returns `true`. 
+Luckily, the `WP_Error` class also provides a function for this: `is_wp_error`.
+This function checks the data passed and if it's an error object it returns `true`.
 After that, it's easy to use `wp_die` to display the error message.
 
 ## Working with several error messages
 
-This piece of code was useful if we only need to display one error message at a time, 
-but what if I wanted to validate the Name field as well and display both messages 
+This piece of code was useful if we only need to display one error message at a time,
+but what if I wanted to validate the Name field as well and display both messages
 in the same screen?
 
-I could use the same approach, but then I would have two different error objects, 
+I could use the same approach, but then I would have two different error objects,
 I just want one, so I need to have ready _before_ validating the data.
 
 <Code
@@ -128,21 +127,22 @@ I just want one, so I need to have ready _before_ validating the data.
             wp_die( $mah_error, __( 'Form Error' ) );
         }
     }
+
 }`}
 />
 
 While it's pretty similar, id does have a few differences, let's break it down:
 
-- Now I declare `$mah_error` at the beginning, this will be empty since I haven't 
-added any errors yet.
-- `$mah_error->add`: Instead of returning `new WP_Error` I simply use the add 
-method to insert a new error to the list, I do the same thing with the next field.
-- Even if I declared `$mah_error` as a `WP_Error` object at the beginning, 
-it **will not be treated as an error** until I add at least one error to the list, 
-so is_wp_error will still be valid if empty.
-- `wp_die` can except either a string like in the previous example, or the full 
-`WP_Error` object, if I send the object it will display **all the errors in the list**.
+- Now I declare `$mah_error` at the beginning, this will be empty since I haven't
+  added any errors yet.
+- `$mah_error->add`: Instead of returning `new WP_Error` I simply use the add
+  method to insert a new error to the list, I do the same thing with the next field.
+- Even if I declared `$mah_error` as a `WP_Error` object at the beginning,
+  it **will not be treated as an error** until I add at least one error to the list,
+  so is_wp_error will still be valid if empty.
+- `wp_die` can except either a string like in the previous example, or the full
+  `WP_Error` object, if I send the object it will display **all the errors in the list**.
 
-This was just a simple introduction to the `WP_Error` class, I recommend reading 
-through the codex and try to use it as often as possible and check out the rest 
+This was just a simple introduction to the `WP_Error` class, I recommend reading
+through the codex and try to use it as often as possible and check out the rest
 of methods, there's really useful stuff in there.

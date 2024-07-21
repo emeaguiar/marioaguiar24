@@ -1,7 +1,7 @@
 ---
 title: Mostrar un feed RSS en WordPress
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-07-20T22:58:10.940Z'
+updatedOn: '2024-07-21T22:44:57.022Z'
 description: >-
   Mostrar un feed RSS en WordPress es bastante simple, puedes usar el widget RSS
   integrado o puedes usar un plugin. Pero ¿qué pasa si quieres mostrar un feed
@@ -40,16 +40,16 @@ La forma básica (que Ozh explica en su artículo), se hace haciendo una llamada
 Primero incluimos la clase (desde WP 3.x)
 
 <Code
-    language="php"
-    children={`if( !class_exists( 'WP_Http' ) )
+  language='php'
+  children={`if( !class_exists( 'WP_Http' ) )
         include_once( ABSPATH . WPINC. '/class-http.php' );`}
 />
 
 Luego hacemos la llamada y probamos la conexión:
 
 <Code
-    language="php"
-    children={`$request = new WP_Http;
+  language='php'
+  children={`$request = new WP_Http;
     $result = $request->request( 'http://feed.url' );`}
 />
 
@@ -63,8 +63,8 @@ Si tiene éxito, entonces `$result` será un array con los siguientes datos:
 Ahora a lo bueno, la implementación:
 
 <Code
-    language="php"
-    children={`function fetchFeed2($strFeedURL) { // Función del feed
+  language='php'
+  children={`function fetchFeed2($strFeedURL) { // Función del feed
     if( !class_exists( 'WP_Http' ) ) // Clase WP_Http
         include_once( ABSPATH . WPINC. '/class-http.php' ); // Incluir clase
         
@@ -89,8 +89,8 @@ Ahora a lo bueno, la implementación:
 Ahora solo tenemos que agregar esto donde queremos que se muestre el feed.
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
     $strFeedURL = "http://feed.url";
     echo fetchFeed2($strFeedURL);
 ?>
@@ -107,8 +107,8 @@ es usar las funciones (en lugar de la clase en sí), en este caso `wp_remote_get
 Podríamos decir que esta es la forma más rápida de usar la clase, solo necesitamos este código:
 
 <Code
-    language="php"
-    children={`$response = wp_remote_get( 'http://feed.url' );
+  language='php'
+  children={`$response = wp_remote_get( 'http://feed.url' );
 if( is_wp_error( $response ) ) { // error
     echo 'Algo salió mal!';
     $error_string = $response->get_error_message(); // ¿qué error fue?
@@ -127,8 +127,8 @@ Mi solución final fue usar otro método, afortunadamente ya tenemos [Simplepie]
 ahora solo tenemos que llamar a la función `fetch_feed()`.
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 $rss = fetch_feed('http://feed.url');
 if (!is_wp_error( $rss ) ) : // ¿Se creó el objeto?
     // ¿Cuántos elementos tenemos? (Máximo 5)
@@ -142,8 +142,8 @@ if (!is_wp_error( $rss ) ) : // ¿Se creó el objeto?
 Ahora solo tenemos que mostrar los elementos, al igual que un loop de WordPress
 
 <Code
-    language="php"
-    children={`<ul>
+  language='php'
+  children={`<ul>
 <?php if ($maxitems == 0) echo '<li>No hay elementos.</li>';
 else
 // Recorrer cada elemento del feed y mostrar cada elemento como un hipervínculo.
@@ -158,7 +158,7 @@ foreach ( $rss_items as $item ) : ?>
 `}
 />
 
-Esta fue sin dudas la forma más fácil y rápida ya que **me permite personalizar 
-casi en su totalidad la forma en que se muestran los elementos**, el uso es muy 
-similar al loop de WordPress y soporta una serie de etiquetas, 
+Esta fue sin dudas la forma más fácil y rápida ya que **me permite personalizar
+casi en su totalidad la forma en que se muestran los elementos**, el uso es muy
+similar al loop de WordPress y soporta una serie de etiquetas,
 cada una listada en la [documentación de Simplepie](http://simplepie.org/wiki/reference/simplepie_item/start).

@@ -7,11 +7,11 @@ description: |-
     cuando se usan correctamente, ¡puedes convertir tu sidebar aburrida en una
     sidebar increíble!
 published: true
-updatedOn: '2024-07-20T22:25:59.120Z'
+updatedOn: '2024-07-21T22:44:57.024Z'
 readingTime: 1620
 ---
 
-import Code from '@/components/code/code'
+import Code from '@/components/code/code';
 
 > [!WARNING]
 > Este artículo fue escrito en **2010** 👴🏼. La mayoría de los consejos aquí no son válidos y
@@ -68,14 +68,15 @@ encuentra la línea donde se llama la sidebar:
 
 Y cámbiala por esto:
 
-<Code language='php' children={`<?php
+<Code
+  language='php'
+  children={`<?php
   if( is_single() ) {
       get_sidebar( 'single' );
   } else {
       get_sidebar();
   }`}
 />
-
 
 Ese código mostrará nuestra **sidebar única** SOLO si estamos en una entrada individual. Si no,
 mostrará nuestra **sidebar predeterminada**.
@@ -299,8 +300,7 @@ si es así, solo agrega el siguiente código dependiendo del método de acortami
 
 Eso mostrará algo como esto:
 
-> [!CAUTION]
-> **Tienes** que usar el mismo método de acortamiento que usaste antes si quieres que esto funcione.
+> [!CAUTION] > **Tienes** que usar el mismo método de acortamiento que usaste antes si quieres que esto funcione.
 
 ## Agregando más entradas en la misma categoría
 

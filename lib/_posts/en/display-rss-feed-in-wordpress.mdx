@@ -1,7 +1,7 @@
 ---
 title: Display RSS Feed in WordPress
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-07-20T22:58:10.935Z'
+updatedOn: '2024-07-21T22:44:57.011Z'
 description: >-
   Displaying an RSS feed in WordPress is pretty simple, you can use the built-in
   RSS widget or you can use a plugin. But what if you want to display an RSS
@@ -22,15 +22,15 @@ import Code from '@/components/code/code';
 >
 > _Only cosmetic changes were made to this article._
 
-One of the things I love about **WordPress** is being able to do pretty much anything, 
-and its built-in functions make this even easier. A few days ago I had the need to create a 
-template to **fetch and display posts from a feed**. Despite being my first time doing something 
+One of the things I love about **WordPress** is being able to do pretty much anything,
+and its built-in functions make this even easier. A few days ago I had the need to create a
+template to **fetch and display posts from a feed**. Despite being my first time doing something
 like this I got it working in a very short time. even more, I found a couple of ways to do this.
 
 ## Option 1: WP_Http
 
-The person who asked me to do the template left me a link to [Ozh's](http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/) 
-blog, where he explains how to use the `WP_Http` class to fetch content from external 
+The person who asked me to do the template left me a link to [Ozh's](http://planetozh.com/blog/2009/08/how-to-make-http-requests-with-wordpress/)
+blog, where he explains how to use the `WP_Http` class to fetch content from external
 sites, a simple, well explained way. Once again, there's more than one way to do this.
 
 ### Using the class
@@ -40,16 +40,16 @@ The basic form (which Ozh explains in his article), is done by making a call to 
 First we include the class (since WP 3.x)
 
 <Code
-    language="php"
-    children={`if( !class_exists( 'WP_Http' ) )
+  language='php'
+  children={`if( !class_exists( 'WP_Http' ) )
         include_once( ABSPATH . WPINC. '/class-http.php' );`}
 />
 
 Then we make the call and test the conection:
 
 <Code
-    language="php"
-    children={`$request = new WP_Http;
+  language='php'
+  children={`$request = new WP_Http;
     $result = $request->request( 'http://feed.url' );`}
 />
 
@@ -63,8 +63,8 @@ If succesful, then $`result` will be an array with the following data:
 Now the good stuff, the implementation:
 
 <Code
-    language="php"
-    children={`function fetchFeed2($strFeedURL) { // Feed function
+  language='php'
+  children={`function fetchFeed2($strFeedURL) { // Feed function
     if( !class_exists( 'WP_Http' ) ) // WP_Http Class
         include_once( ABSPATH . WPINC. '/class-http.php' ); // Include class
  
@@ -89,8 +89,8 @@ Now the good stuff, the implementation:
 Now we just have to add this where we want the feed to display.
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
     $strFeedURL = "http://feed.url";
     echo fetchFeed2($strFeedURL);
 ?>
@@ -101,14 +101,14 @@ Easy right? [source](http://planetozh.com/blog/2009/08/how-to-make-http-requests
 
 ### Using functions
 
-As I mentioned before, there's more than one way to use this class, the other way 
+As I mentioned before, there's more than one way to use this class, the other way
 is to use the functions (instead of the class itself), in this case `wp_remote_get()`.
 
 We could say this is the fastest way to use the class, we just need this code:
 
 <Code
-    language="php"
-    children={`$response = wp_remote_get( 'http://feed.url' );
+  language='php'
+  children={`$response = wp_remote_get( 'http://feed.url' );
 if( is_wp_error( $response ) ) { // error
     echo 'Something went wrong!';
     $error_string = $response->get_error_message(); // which error was it?
@@ -118,17 +118,17 @@ if( is_wp_error( $response ) ) { // error
 }`}
 />
 
-The problem here is that (at least in my case) it returned the content in **XML**, 
+The problem here is that (at least in my case) it returned the content in **XML**,
 and I'm not really good with that, how to turn it into simple html?
 
 ## Option 2: Simplepie
 
-Mi ultimate solution was to use other method, luckily we have [Simplepie](http://simplepie.org/) already 
+Mi ultimate solution was to use other method, luckily we have [Simplepie](http://simplepie.org/) already
 integrated to WordPress, now we just have to call the function `fetch_feed()`.
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 $rss = fetch_feed('http://feed.url');
 if (!is_wp_error( $rss ) ) : // Was the object created?
     // How many items we got? (Max 5)
@@ -142,8 +142,8 @@ if (!is_wp_error( $rss ) ) : // Was the object created?
 Let's show the items, just like a WordPress loop
 
 <Code
-    language="php"
-    children={`<ul>
+  language='php'
+  children={`<ul>
 <?php if ($maxitems == 0) echo '<li>No items.</li>';
 else
 // Loop through each feed item and display each item as a hyperlink.
@@ -158,6 +158,6 @@ foreach ( $rss_items as $item ) : ?>
 `}
 />
 
-This was with no doubts the easiest and fastest way since **it allows me to customize 
-almost entirely the way the items are displayed**, the use is very similar to the 
+This was with no doubts the easiest and fastest way since **it allows me to customize
+almost entirely the way the items are displayed**, the use is very similar to the
 WordPress loop and it supports a number of tags, every one listed in [Simplepie's documentation](http://simplepie.org/wiki/reference/simplepie_item/start).

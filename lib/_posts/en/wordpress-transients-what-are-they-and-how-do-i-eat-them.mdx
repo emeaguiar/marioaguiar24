@@ -1,7 +1,7 @@
 ---
 title: 'WordPress Transients: What are they and how do I eat them'
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-07-20T23:21:20.246Z'
+updatedOn: '2024-07-21T22:44:57.017Z'
 description: >-
   WordPress, despite being my favorite daily work tool and the one I know the
   most,  has still several options and functions I've never used. Not too long
@@ -21,49 +21,49 @@ import Code from '@/components/code/code';
 >
 > _Only cosmetic changes were made to this article._
 
-WordPress, despite being my favorite daily work tool and the one I know the most, 
-has still several options and functions I've never used. Not too long ago, 
-one of them was the [Transients API](https://marioaguiar.net/web/20120430100255/http://codex.wordpress.org/Transients_API). 
+WordPress, despite being my favorite daily work tool and the one I know the most,
+has still several options and functions I've never used. Not too long ago,
+one of them was the [Transients API](https://marioaguiar.net/web/20120430100255/http://codex.wordpress.org/Transients_API).
 Really useful functions to **store temporary data in the database**.
 
 ## What are Transients?
 
-In WordPress language, a transient is any piece of temporary data, that means we 
-**expect it to be deleted**. This is useful if we have information we're going to use 
+In WordPress language, a transient is any piece of temporary data, that means we
+**expect it to be deleted**. This is useful if we have information we're going to use
 for just a small amount of time and we don't want to fill the database.
 
-Lets say we have a contact form (or comments) where the user will type the name, 
-email, website and comment, once they're typed the form is sent, 5 minutes later 
-the user finds an error in our site and wants to get in touch again, does he have 
-to fill ALL the fields over again? Usually, yes, but using **Transients** we can spare 
+Lets say we have a contact form (or comments) where the user will type the name,
+email, website and comment, once they're typed the form is sent, 5 minutes later
+the user finds an error in our site and wants to get in touch again, does he have
+to fill ALL the fields over again? Usually, yes, but using **Transients** we can spare
 him the trouble.
 
 ## The Code
 
-The Transients API and the Options API are a lot alike, and also really easy to use, 
+The Transients API and the Options API are a lot alike, and also really easy to use,
 in fact, it's conformed by only three functions:
 
-- `set_transient( $transient, $value, $expiration)`: The function that creates 
-our transient, where:
-- `$transient` is the transient's **unique name**, this is important since it's 
-the key to find the transient later.
+- `set_transient( $transient, $value, $expiration)`: The function that creates
+  our transient, where:
+- `$transient` is the transient's **unique name**, this is important since it's
+  the key to find the transient later.
 - `$value` is the transient content, it can be a string or an array.
-- `$expiration` is the important part here, it's the time (in seconds) our data 
-will stay in our database, once time's up, the transient will be deleted.
-- `get_transient( $transient )`: The function we use to call our transient, where 
-`$transient` is the **unique name** we set before.
-- `delete_transient( $transient )`: Even though transients are deleted automatically 
-when they're out of time, it might be the case we want to delete them manually, 
-where $transient is still the **unique name** I talk so much about.
+- `$expiration` is the important part here, it's the time (in seconds) our data
+  will stay in our database, once time's up, the transient will be deleted.
+- `get_transient( $transient )`: The function we use to call our transient, where
+  `$transient` is the **unique name** we set before.
+- `delete_transient( $transient )`: Even though transients are deleted automatically
+  when they're out of time, it might be the case we want to delete them manually,
+  where $transient is still the **unique name** I talk so much about.
 
 ## How are they used?
 
-Following the previous situation (the contact form), I'll show a little example 
+Following the previous situation (the contact form), I'll show a little example
 of transients use, nothing to be worried about, we start with the form:
 
 <Code
-    language="php"
-    children={`<form id="transient_test" action="process.php" method="post">
+  language='php'
+  children={`<form id="transient_test" action="process.php" method="post">
     <fieldset>
         <label for="name">Name:</label>
         <input id="name" type="text" name="name" />
@@ -78,15 +78,15 @@ of transients use, nothing to be worried about, we start with the form:
 </form>`}
 />
 
-This will give us a fairly simple form, we take **Name**, **Email**, **URL** and **Comment**. 
+This will give us a fairly simple form, we take **Name**, **Email**, **URL** and **Comment**.
 Also note I'm using HTML5 attributes, don't worry, I'm no hipster.
 
-Once we have the data we must of course process it, to do that we'll need a php 
+Once we have the data we must of course process it, to do that we'll need a php
 file I've called `process.php`, this one will work more or less like this.
 
 <Code
-    language="php"
-    children={`<?php 
+  language='php'
+  children={`<?php 
     if ( isset( $_POST['submit'] ) ) { // Make sure the form was submitted
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -106,23 +106,22 @@ file I've called `process.php`, this one will work more or less like this.
 ?>`}
 />
 
-Ok, now this code will take the data we send through the form and search the 
-database for the key value (our mail), if it doesn’t exist it will create new 
-transients with names like **name_me@me.com** using the data, these will expire in 
+Ok, now this code will take the data we send through the form and search the
+database for the key value (our mail), if it doesn’t exist it will create new
+transients with names like **name_me@me.com** using the data, these will expire in
 24 hours. After that it will send an email with the comment.
 
-> [!NOTE]
-> `$time` must be a time value in seconds, since I have no idea how many seconds 
-> are in a day** it's easier to let PHP itself to do the math, this is **60 seconds 
-> × 60 minutes × 24 hours**, even easier: **60″ × 60′ = 1 hour × 24 = 24 hours**.
+> [!NOTE] > `$time` must be a time value in seconds, since I have no idea how many seconds
+> are in a day** it's easier to let PHP itself to do the math, this is **60 seconds
+> × 60 minutes × 24 hours**, even easier: **60″ × 60′ = 1 hour × 24 = 24 hours\*\*.
 
-All right, we have the code to store the transients, now what? Right, we needed 
-them so the user doesn't have to type them over and over again in the form, in 
+All right, we have the code to store the transients, now what? Right, we needed
+them so the user doesn't have to type them over and over again in the form, in
 order to do that we have to modify our form and add a `cookie`:
 
 <Code
-    language="php"
-    children={`$cookie = $_COOKIE['transients_test'];
+  language='php'
+  children={`$cookie = $_COOKIE['transients_test'];
 <form id="transient_test" action="process.php" method="post">
     <fieldset>
         <label for="name">Name:</label>
@@ -138,27 +137,27 @@ order to do that we have to modify our form and add a `cookie`:
 </form>`}
 />
 
-Now the form will check the existence of the cookie called transients_test, which 
+Now the form will check the existence of the cookie called transients_test, which
 doesn't exist right now, to create it we have to add the following to the `process.php` file:
 
 <Code
-    language="php"
-    children={`setcookie('transients_test', $_POST['email'], time()+86400, '/', $_SERVER['HTTP_HOST'], 0, 0 );
+  language='php'
+  children={`setcookie('transients_test', $_POST['email'], time()+86400, '/', $_SERVER['HTTP_HOST'], 0, 0 );
 `}
 />
 
-That will create the cookie called `transients_test`, with the user's email, will 
-expire in **86400 seconds** (total seconds in one day) and will be valid for our 
+That will create the cookie called `transients_test`, with the user's email, will
+expire in **86400 seconds** (total seconds in one day) and will be valid for our
 entire site.
 
-That's it, we have our contact form which remembers our visitors for one whole day, 
-after that their data will be erased from our database until the next time they 
+That's it, we have our contact form which remembers our visitors for one whole day,
+after that their data will be erased from our database until the next time they
 fill and send the form.
 
 ## Notes
 
-Usually the transients are stored in our database table wp_options, but they might 
-not, some plugins may change they location, that's why it's recommended to use 
+Usually the transients are stored in our database table wp_options, but they might
+not, some plugins may change they location, that's why it's recommended to use
 transients **only with data expected to be erased**. If you want to keep it, use other method.
 
 ## Further reading

@@ -1,7 +1,7 @@
 ---
 title: Usar arrays en SASS
 publishedOn: '2024-01-09'
-updatedOn: '2024-07-21T21:40:32.267Z'
+updatedOn: '2024-07-21T22:44:57.025Z'
 description: >-
   A pesar de ser una herramienta mas o menos vieja, desde hace más de 10 años
   SASS es uno de mis mejores amigos en el desarrollo web, sigue siendo
@@ -14,51 +14,48 @@ readingTime: 360
 
 import Code from '@/components/code/code';
 
-A pesar de ser una herramienta mas o menos vieja, desde hace más de 10 años 
-[SASS](https://sass-lang.com/) es uno de mis mejores amigos en el desarrollo web, 
-sigue siendo extremadamente poderoso aún con los numerosos avances de CSS en los 
-últimos años, porque aún posee varias herramientas que CSS no, y siguen siendo útiles, 
+A pesar de ser una herramienta mas o menos vieja, desde hace más de 10 años
+[SASS](https://sass-lang.com/) es uno de mis mejores amigos en el desarrollo web,
+sigue siendo extremadamente poderoso aún con los numerosos avances de CSS en los
+últimos años, porque aún posee varias herramientas que CSS no, y siguen siendo útiles,
 como por ejemplo la habilidad de **usar arrays en sass**.
 
 > [!NOTE]
 > ¿SASS?
 >
-> SASS es un pre-procesador de CSS, piénsalo como un compilador en el sentido un 
-poco más técnico (ojo, no es en realidad un compilador). Lo que hace es brindarnos 
-un nuevo set de herramientas que son transformadas en CSS real al momento de correr 
-el procesador, esto nos da herramientas como mix-ins, nesting, inheritance, etc.
+> SASS es un pre-procesador de CSS, piénsalo como un compilador en el sentido un
+> poco más técnico (ojo, no es en realidad un compilador). Lo que hace es brindarnos
+> un nuevo set de herramientas que son transformadas en CSS real al momento de correr
+> el procesador, esto nos da herramientas como mix-ins, nesting, inheritance, etc.
 
-Uno de los ejemplos más utilizados de éstas herramientas es la habilidad de usar 
-arrays en sass (o vectores, como decían mis maestros en la escuela). Esto nos 
-permite _crear loops, mapas_, etc. Así podemos compartir información entre nuestros 
+Uno de los ejemplos más utilizados de éstas herramientas es la habilidad de usar
+arrays en sass (o vectores, como decían mis maestros en la escuela). Esto nos
+permite _crear loops, mapas_, etc. Así podemos compartir información entre nuestros
 archivos y hasta ahorrarnos varias lineas de código.
 
-En SASS, los arrays son conocidos como **listas**, en su versión más básica, una 
+En SASS, los arrays son conocidos como **listas**, en su versión más básica, una
 lista es declarada de la siguiente forma:
 
-<Code
-    language="scss"
-    children={`$colores: amarillo, azul, rojo, verde;`}
-/>
+<Code language='scss' children={`$colores: amarillo, azul, rojo, verde;`} />
 
 De ésta forma, podemos acceder a cualquier elemento en el array con la función `nth`:
 
 <Code
-    language="scss"
-    children={`$colores: amarillo, azul, rojo, verde;
+  language='scss'
+  children={`$colores: amarillo, azul, rojo, verde;
 @debug nth($colores, 2);
 // style.scss:3 Debug: azul`}
 />
 
 ## Usos
 
-Ahora que tenemos nuestra lista declarada, podemos comenzar a dale uso como se 
-debe, el uso más común que me he encontrado es el de la impresión de utility 
+Ahora que tenemos nuestra lista declarada, podemos comenzar a dale uso como se
+debe, el uso más común que me he encontrado es el de la impresión de utility
 classes, como por ejemplo al crear un loop con `@each`:
 
 <Code
-    language="scss"
-    children={`$colores: amarillo, azul, rojo, verde;
+  language='scss'
+  children={`$colores: amarillo, azul, rojo, verde;
 @each $color in $colores {
     .texto-#{$color} {
         color: $color;
@@ -82,23 +79,23 @@ classes, como por ejemplo al crear un loop con `@each`:
 > [!TIP]
 > Mezclando SASS con CSS
 >
-> Si te das cuenta, para imprimir el nombre de la clase estamos envoliendo la 
-variable dentro de unos extraños símbolos #{}. Esto lo necesitamos para que SASS 
-reconozca que lo que ésta dentro de ellos debe ser convertido a su verdadero valor 
-en lugar de imprimir la variable como tal.
-> 
+> Si te das cuenta, para imprimir el nombre de la clase estamos envoliendo la
+> variable dentro de unos extraños símbolos #{}. Esto lo necesitamos para que SASS
+> reconozca que lo que ésta dentro de ellos debe ser convertido a su verdadero valor
+> en lugar de imprimir la variable como tal.
+>
 > `.texto-#{$color} // .texto-amarillo`
 >
 > `.texto-$color // .texto-$color`
 >
-> En cambio, al utilizar variales como valor de la propiedad, esto no es necesario 
-a menos que tambien la mezclemos con texto regular, si no, SASS lo hará automáticamente.
+> En cambio, al utilizar variales como valor de la propiedad, esto no es necesario
+> a menos que tambien la mezclemos con texto regular, si no, SASS lo hará automáticamente.
 >
 > `color: $color; // color: amarillo`
 
 ## Expandiendo
 
-¡Listo! Esa es una manera simple de crear y utilzar arrays (o listas) en SASS, 
-como puedes ver es muy sencilla, pero ahora ¿Qué sigue? ¿Qué otros usos crees 
-que se le puedan dar? No dudes en contactarme para cualquier pregunta o dejar un 
+¡Listo! Esa es una manera simple de crear y utilzar arrays (o listas) en SASS,
+como puedes ver es muy sencilla, pero ahora ¿Qué sigue? ¿Qué otros usos crees
+que se le puedan dar? No dudes en contactarme para cualquier pregunta o dejar un
 comentario con otros usos que se le puedan dar. ¡Nos vemos!

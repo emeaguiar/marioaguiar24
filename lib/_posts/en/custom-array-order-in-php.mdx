@@ -1,7 +1,7 @@
 ---
 title: Custom array order in PHP
 publishedOn: '2023-07-21'
-updatedOn: '2024-07-21T21:16:13.974Z'
+updatedOn: '2024-07-21T22:44:57.010Z'
 description: 'Next, I will mention how to achieve a custom order of arrays in PHP'
 published: true
 readingTime: 360
@@ -10,7 +10,7 @@ readingTime: 360
 import Code from '@/components/code/code';
 
 Recently I found myself in the need to **create a list of elements in a very specific order**
-while working with an array in PHP, fortunately it turns out that the way to achieve 
+while working with an array in PHP, fortunately it turns out that the way to achieve
 it is very simple, thanks to PHP offering us the `usort` function.
 Next, I will mention how to achieve a custom order of arrays in PHP.
 
@@ -35,36 +35,38 @@ $my_array = [
     'SOL',
 ];
 
-/**
- * Order we want, where we have control.
- */
-$custom_order = [
-    'DO',
-    'RE',
-    'MI',
-    'FA',
-    'SOL',
-    'LA',
-    'SI',
-];
+/\*\*
 
-/**
- * We order the array.
- */
-usort(
-    $my_array,
-    function( $a, $b ) use ( $custom_order ) {
-        $a_order = array_search( $a, $custom_order );
-        $b_order = array_search( $b, $custom_order );
-        if ( false === $a_order ) {
-            $a_order = 999;
-        }
-        if ( false === $b_order ) {
-            $b_order = 999;
-        }
-        return $a_order - $b_order;
-    }
-);
+- Order we want, where we have control.
+  \*/
+  $custom_order = [
+  'DO',
+  'RE',
+  'MI',
+  'FA',
+  'SOL',
+  'LA',
+  'SI',
+  ];
+
+/\*\*
+
+- We order the array.
+  \*/
+  usort(
+  $my_array,
+  function( $a, $b ) use ( $custom_order ) {
+  $a_order = array_search( $a, $custom_order );
+  $b_order = array_search( $b, $custom_order );
+  if ( false === $a_order ) {
+  $a_order = 999;
+  }
+  if ( false === $b_order ) {
+  $b_order = 999;
+  }
+  return $a_order - $b_order;
+  }
+  );
 
 var_export( $my_array );
 ?>
@@ -79,8 +81,8 @@ which returns the index of the element within the array. **The lower the assigne
 the higher priority is given in the order**.
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Array with emphasized indices:
  */
 $custom_order = [
@@ -98,8 +100,8 @@ For example, when our algorithm compares `DO` vs `MI`, it is comparing `[0]` vs 
 which are the indices of those elements in the array:
 
 <Code
-    language="php"
-    children={`if ( false === $a_order ) {    
+  language='php'
+  children={`if ( false === $a_order ) {    
     $a_order = 999;
 }
 if ( false === $b_order ) {
@@ -115,7 +117,7 @@ a value of _999_, which would place them at the end of priorities.
     children={`return $a_order - $b_order;`}
 
 />
-    
+
 Finally, it returns the result of `0 - 2`, or `-2`, which would place `DO`
 above `MI`, at the moment when `MI` vs `DO` is compared, the operation would be `2 - 0`,
 with a result of `2` which would keep `MI` below `DO` in priority.
@@ -128,16 +130,16 @@ In this way, when the comparisons are finished, we will have our custom order of
 > **If I already have the order I want defined, why do I need to sort another array?**
 >
 > After my original publication, I realized that it doesn't make much sense
-to use an example of a single-level array, since immediately after
-the same array is being placed but sorted, so what's the point of this?.
+> to use an example of a single-level array, since immediately after
+> the same array is being placed but sorted, so what's the point of this?.
 >
 > The real utility comes when we have to sort multidimensional arrays,
-in this way, **based on the value of the array, we can define in what place
-we want to show it**, for example:
+> in this way, **based on the value of the array, we can define in what place
+> we want to show it**, for example:
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Array of teams received from an API
  */
 $teams = [
@@ -192,4 +194,5 @@ var_export( $teams );
 />
 
 ## Further reading
+
 - [Sorting a php array of arrays by custom order – Stack Overflow](https://stackoverflow.com/questions/11145393/sorting-a-php-array-of-arrays-by-custom-order)

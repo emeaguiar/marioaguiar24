@@ -1,7 +1,7 @@
 ---
 title: Production images in local environment with nginx
 publishedOn: '2019-01-25'
-updatedOn: '2024-07-21T20:35:11.746Z'
+updatedOn: '2024-07-21T22:44:57.013Z'
 description: Quick tutorial to serve production images in a local environment with nginx
 published: true
 readingTime: 180
@@ -47,23 +47,25 @@ server {
 }
 
 # Custom conf
+
 server {
-	server_name ~^(.*)\.mysite\.test$ mysite.test;
-	root /app/public/;
+server_name ~^(.\*)\.mysite\.test$ mysite.test;
+root /app/public/;
 
-	# If file ends with these extensions
-	location ~* ^.+\.(svg|svgz|jpg|jpeg|gif|png|ico|bmp|webp)$ {
-		try_files $uri @image_fallback; # Try this address (defined below)
-	}
+    # If file ends with these extensions
+    location ~* ^.+\.(svg|svgz|jpg|jpeg|gif|png|ico|bmp|webp)$ {
+    	try_files $uri @image_fallback; # Try this address (defined below)
+    }
 
-	# Define URL to try (prod url)
-	location @image_fallback {
-		proxy_pass https://mysite.com;
-	}
+    # Define URL to try (prod url)
+    location @image_fallback {
+    	proxy_pass https://mysite.com;
+    }
 
-	# More default conf...
-	index index.php index.html index.htm;
-	include do-not-modify/*.conf;
+    # More default conf...
+    index index.php index.html index.htm;
+    include do-not-modify/*.conf;
+
 }`}
 />
 

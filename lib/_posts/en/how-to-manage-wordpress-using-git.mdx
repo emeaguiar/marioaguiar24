@@ -1,7 +1,7 @@
 ---
 title: How to manage WordPress using Git
 publishedOn: '2019-01-18'
-updatedOn: '2024-07-21T04:45:11.774Z'
+updatedOn: '2024-07-21T22:44:57.012Z'
 description: Learn how to manage your WordPress installation using Git.
 published: true
 readingTime: 720
@@ -9,9 +9,9 @@ readingTime: 720
 
 import Code from '@/components/code/code';
 
-Last week I published an article about [why it's a very bad idea to use FTP](/blog/the-importance-of-not-using-ftp) 
-to manage our site. Although the topic is very general and not only applies to 
-WordPress, this time I want to explain a little more about the process I personally 
+Last week I published an article about [why it's a very bad idea to use FTP](/blog/the-importance-of-not-using-ftp)
+to manage our site. Although the topic is very general and not only applies to
+WordPress, this time I want to explain a little more about the process I personally
 use to **combine WordPress with Git**.
 
 ## What is Git?
@@ -80,10 +80,7 @@ Let's say we have already created our repository on Github, and we have added th
 contents of our `wp-content` folder to it, then we would have a repository more or
 less like this:
 
-<Code
-    language="bash"
-    children={`git@github.com:user/site.git`}
-/>
+<Code language='bash' children={`git@github.com:user/site.git`} />
 
 Once we have our repository, we can now worry about **synchronizing it with our server**.
 
@@ -104,8 +101,8 @@ Let's say our repository is made up of the `wp-content` folder, and that it look
 like this:
 
 <Code
-    language="plain"
-    children={`- site
+  language='plain'
+  children={`- site
 --	.gitignore
 --	themes
 ---		our-theme
@@ -121,8 +118,8 @@ To be able to replace our default folder with our new repository, we need to ent
 the server and create a copy of the repository:
 
 <Code
-    language="bash"
-    children={`# Assuming that our wp-content folder is in /public_html/wp-content
+  language='bash'
+  children={`# Assuming that our wp-content folder is in /public_html/wp-content
 $ ssh user@domain.com
 $ cd /public_html
 $ mv wp-content wp-content.bk # Create a backup of the current wp-content folder in case we need it in the future
@@ -137,15 +134,15 @@ server, and we can **share files between them very easily**.
 I recommend having at least three branches in the repository:
 
 - `master`, which we will use as **production**, everything here is the final version
-of the site and must be 100% tested before it arrives. It also serves as the base
-of our “feature” branches
+  of the site and must be 100% tested before it arrives. It also serves as the base
+  of our “feature” branches
 - `staging`, which will be **the test version** of our site, a “beta” version so to
-speak, once it has been proven that the new functionality works here, we can send
-it to `master`
+  speak, once it has been proven that the new functionality works here, we can send
+  it to `master`
 - `feature/*` Our “feature” branches are **work in progress**, they are not ready
-to see production and should only be merged into `master` once it has been 100%
-proven to work in `staging`. Once they have been merged into master, they will be
-deleted from the repository
+  to see production and should only be merged into `master` once it has been 100%
+  proven to work in `staging`. Once they have been merged into master, they will be
+  deleted from the repository
 
 The development process is quite simple once you master it, let's say we have created
 a `feature/slideshow` and we are ready to test it in `staging`, then we would do
@@ -181,16 +178,16 @@ etc. In which we will repeat the same steps we did before to create a copy of th
 repository on the server, with two differences:
 
 1. We will create the copy of the repository within the folder of our test site
-(example: `/staging.site.com/public_html`) instead of `/public_html`)
+   (example: `/staging.site.com/public_html`) instead of `/public_html`)
 2. The base of this repository will be a branch called `staging` instead of `master`,
-so we make sure to test things in the right place.
+   so we make sure to test things in the right place.
 
 To make our deploy and test in staging, we move to the folder where we have the copy
 of the repository (`wp-content`), and do the following:
 
 <Code
-    language="bash"
-    children={`$ ssh user@domain.com # Enter the server
+  language='bash'
+  children={`$ ssh user@domain.com # Enter the server
 $ cd /staging.site.com/public_html/wp-content # Make sure we are in the test site
 $ git checkout staging # Make sure we are in the staging branch
 $ git merge --no-ff feature/slideshow # Merge our new work into our staging branch`}
@@ -204,8 +201,8 @@ So, once we have tested the test site (we have not touched production yet) and w
 are sure that it will work correctly in production, we can **merge our new changes**:
 
 <Code
-    language="bash"
-    children={`$ git checkout master # Make sure we have the latest version of master
+  language='bash'
+  children={`$ git checkout master # Make sure we have the latest version of master
 $ git merge --no-ff feature/slideshow # Merge our new functionality into master
 $ git push origin master # Send the latest version to the repository (on Github)`}
 />
@@ -217,8 +214,8 @@ everything works as we want, and we are ready for **deployment to production**. 
 can enter our server and download the latest changes to production:
 
 <Code
-    language="bash"
-    children={`$ ssh usuario@sitio.com
+  language='bash'
+  children={`$ ssh usuario@sitio.com
 $ cd /public_html # Make sure we are in production
 $ git checkout master
 $ git pull origin master # Download the latest changes from the repository`}
@@ -238,8 +235,8 @@ which in this case, would be just before we joined the carousel to production, t
 is, just one version before, we enter the terminal and do something like this:
 
 <Code
-    language="bash"
-    children={`$ ssh user@domain.com
+  language='bash'
+  children={`$ ssh user@domain.com
 $ cd /public_html # Make sure we are in production
 $ git checkout master
 $ git revert HEAD # Revert the last commit, return to a previous version`}

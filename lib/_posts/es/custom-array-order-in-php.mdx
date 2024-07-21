@@ -1,7 +1,7 @@
 ---
 title: Orden personalizado de arrays en PHP
 publishedOn: '2023-07-21'
-updatedOn: '2024-07-21T21:16:13.977Z'
+updatedOn: '2024-07-21T22:44:57.022Z'
 description: A continuación mencionaré como lograr un orden personalizado de arrays en PHP
 published: true
 readingTime: 360
@@ -9,9 +9,9 @@ readingTime: 360
 
 import Code from '@/components/code/code';
 
-Recientemente me vi en la necesidad de **crear una lista de elementos en un orden 
-muy específico** mientras trabajaba con un array en PHP, afortunadamente resulta que 
-la forma de lograrlo es muy sencilla, gracias a que PHP nos ofrece la función `usort`. 
+Recientemente me vi en la necesidad de **crear una lista de elementos en un orden
+muy específico** mientras trabajaba con un array en PHP, afortunadamente resulta que
+la forma de lograrlo es muy sencilla, gracias a que PHP nos ofrece la función `usort`.
 A continuación mencionaré como lograr un orden personalizado de arrays en PHP.
 
 ## El código
@@ -19,8 +19,8 @@ A continuación mencionaré como lograr un orden personalizado de arrays en PHP.
 Tomando el siguiente ejemplo, explicaré en que consiste:
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 /**
  * Array para ordernar.
  * Asumamos que recibimos este array de un API donde no tenemos control.
@@ -68,15 +68,15 @@ var_export( $my_array );`}
 
 ### ¿Que está pasando?
 
-Lo que la función hace no es muy complejo de digamos, simplemente es un loop 
-que itera sobre cada elemento en el array, y los compara entre si, finalmente 
-asignándoles un valor temporal. La magia aquí sucede al utilizar [array_search](https://www.php.net/manual/en/function.array-search.php), 
-que regresa el índice del elemento dentro del array. **A menor valor asignado, 
+Lo que la función hace no es muy complejo de digamos, simplemente es un loop
+que itera sobre cada elemento en el array, y los compara entre si, finalmente
+asignándoles un valor temporal. La magia aquí sucede al utilizar [array_search](https://www.php.net/manual/en/function.array-search.php),
+que regresa el índice del elemento dentro del array. **A menor valor asignado,
 mayor prioridad se le da en el orden**.
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Array con indices enfatizados:
  */
 $custom_order = [
@@ -90,12 +90,12 @@ $custom_order = [
 ];`}
 />
 
-Por ejemplo, cuando nuestro algoritmo compara `DO` vs `MI`, está comparando `[0]` vs `[2]`, 
+Por ejemplo, cuando nuestro algoritmo compara `DO` vs `MI`, está comparando `[0]` vs `[2]`,
 que son los índices de esos elementos en el array:
 
 <Code
-    language="php"
-    children={`if ( false === $a_order ) {    
+  language='php'
+  children={`if ( false === $a_order ) {    
     $a_order = 999;
 }
 if ( false === $b_order ) {
@@ -103,16 +103,13 @@ if ( false === $b_order ) {
 }`}
 />
 
-Si **no encuentra los valores** dentro del array `(false === $a_order)` les asigna 
+Si **no encuentra los valores** dentro del array `(false === $a_order)` les asigna
 automaticamente un valor de _999_, lo que los colocaría al final de prioridades.
 
-<Code
-    language="php"
-    children={`return $a_order - $b_order;`}
-/>
+<Code language='php' children={`return $a_order - $b_order;`} />
 
-Finalmente regresa el resultado de `0 - 2`, o sea `-2`, lo que colocaría a `DO` 
-por encima de `MI`, en el momento en que se compare `MI` vs `DO`, la operación 
+Finalmente regresa el resultado de `0 - 2`, o sea `-2`, lo que colocaría a `DO`
+por encima de `MI`, en el momento en que se compare `MI` vs `DO`, la operación
 sería `2 - 0`, con resultado de `2` lo que mantendría a `MI` por debajo de `DO` en prioridad.
 
 De esta forma al terminar las comparaciones, tendremos nuestro orden personalizado de arrays en PHP listo.
@@ -122,17 +119,17 @@ De esta forma al terminar las comparaciones, tendremos nuestro orden personaliza
 >
 > **Si ya tengo el orden que quiero definido, ¿Por qué necesito ordenar otro array?**
 >
-> Después de mi publicación original, me di cuenta de que no tiene mucho sentido 
-poner como ejemplo un array de un sólo nivel, ya que immediatamente después se 
-está colocando el mismo array pero ordenado, entonces, ¿De qué nos sirve esto?.
+> Después de mi publicación original, me di cuenta de que no tiene mucho sentido
+> poner como ejemplo un array de un sólo nivel, ya que immediatamente después se
+> está colocando el mismo array pero ordenado, entonces, ¿De qué nos sirve esto?.
 >
-> La verdadera utilidad viene cuando tenemos que ordenar arrays multidimensionales, 
-de esta forma, **en base al valor del array, podemos definir en que lugar 
-lo queremos mostrar**, por ejemplo:
+> La verdadera utilidad viene cuando tenemos que ordenar arrays multidimensionales,
+> de esta forma, **en base al valor del array, podemos definir en que lugar
+> lo queremos mostrar**, por ejemplo:
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Array de equipos recibidos de una API
  */
 $teams = [
@@ -186,6 +183,6 @@ var_export( $teams );
 */`}
 />
 
-
 ## Leer más
+
 - [Sorting a php array of arrays by custom order – Stack Overflow](https://stackoverflow.com/questions/11145393/sorting-a-php-array-of-arrays-by-custom-order)

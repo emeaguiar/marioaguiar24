@@ -1,94 +1,94 @@
 ---
 title: La importancia de NO usar FTP
 publishedOn: '2019-01-11'
-updatedOn: '2024-07-21T04:05:14.028Z'
+updatedOn: '2024-07-21T22:44:57.024Z'
 description: Por qué no deberías usar FTP para subir archivos a tu servidor.
 published: true
 readingTime: 360
 ---
 
-Cuando uno comienza en el mundo de desarrollo en WordPress, una de las primeras 
-y más básicas cosas que nos encontramos es: **la instalación de nuestro sitio**. 
-Ya sea de manera local para poder subirlo después a nuestro servidor, o directamente 
+Cuando uno comienza en el mundo de desarrollo en WordPress, una de las primeras
+y más básicas cosas que nos encontramos es: **la instalación de nuestro sitio**.
+Ya sea de manera local para poder subirlo después a nuestro servidor, o directamente
 a nuestro servidor (no recomendable).
 
-El sitio necesita ser hospedado en algún lugar para que pueda ser visitado por 
-los usuarios. Obviamente, ya que el usuario final no puede ver nuestro sitio si 
-se mantiene en nuestra computadora, a menos que la convirtamos en un servidor 
+El sitio necesita ser hospedado en algún lugar para que pueda ser visitado por
+los usuarios. Obviamente, ya que el usuario final no puede ver nuestro sitio si
+se mantiene en nuestra computadora, a menos que la convirtamos en un servidor
 personal, que no es muy recomendable.
 
-Sea como sea la forma en que comencemos, al final siempre será necesario mover 
-nuestra instalación a nuestro servidor, la pregunta es: ¿Cómo hacemos eso? La 
+Sea como sea la forma en que comencemos, al final siempre será necesario mover
+nuestra instalación a nuestro servidor, la pregunta es: ¿Cómo hacemos eso? La
 respuesta más común (y en casi todos los casos errónea) es: _usar FTP_.
 
 ## ¿Qué es el FTP?
 
-FTP son las siglas de _File Transfer Protocol_ ó en Español _Protocolo de Transferencia de Archivos_. 
-Sirve básicamente para mover archivos entre computadoras (nuestra computadora → el servidor y viceversa). 
+FTP son las siglas de _File Transfer Protocol_ ó en Español _Protocolo de Transferencia de Archivos_.
+Sirve básicamente para mover archivos entre computadoras (nuestra computadora → el servidor y viceversa).
 Es una de las formas más básicas para conseguirlo.
 
 ## ¿Por qué no utilizar FTP?
 
-FTP es popular por su facilidad para utilizarse. Hay un sin fin de clientes FTP 
-que únicamente requieren que arrastremos nuestros archivos de un lado del cliente 
-(nuestra PC) hacia el otro (el servidor) y listo, nuestro archivo ha sido subido 
+FTP es popular por su facilidad para utilizarse. Hay un sin fin de clientes FTP
+que únicamente requieren que arrastremos nuestros archivos de un lado del cliente
+(nuestra PC) hacia el otro (el servidor) y listo, nuestro archivo ha sido subido
 a la nube.
 
-Sin embargo, hay muchas, _muchas_ razones por las que utilizar FTP hoy en día es 
+Sin embargo, hay muchas, _muchas_ razones por las que utilizar FTP hoy en día es
 una _muy mala_ idea.
 
 ## 1. Es antiguo
 
-FTP existe desde los comienzos del internet. La primera especificación del protocolo 
-se escribió en _1971_, y su última actualización sucedió en 1998, _hace 20 años_. Dato curioso, 
-¿conocen el HTTP? pues cuando la primer versión de HTTP fue lanzada _ya superaba en 
+FTP existe desde los comienzos del internet. La primera especificación del protocolo
+se escribió en _1971_, y su última actualización sucedió en 1998, _hace 20 años_. Dato curioso,
+¿conocen el HTTP? pues cuando la primer versión de HTTP fue lanzada _ya superaba en
 todo sentido al FTP_.
 
 ## 2. Problemas con Firewalls
 
-No estoy 100% seguro que tan común sea esto, pero uno de los problemas con los que 
-me he encontrado haciendo ésta investigación, es que el FTP no se lleva bien con Firewalls, 
+No estoy 100% seguro que tan común sea esto, pero uno de los problemas con los que
+me he encontrado haciendo ésta investigación, es que el FTP no se lleva bien con Firewalls,
 por razones que van directo a la forma en que FTP funciona.
 
-El problema es que durante la transferencia FTP abre conexiones simultáneas. Una 
-de ellas en un puerto seleccionado al azar, lo que termina provocando que el Firewall 
-bloquee esa conexión (ya que no sabemos en que puerto vendrá). Muchas veces obligándonos 
+El problema es que durante la transferencia FTP abre conexiones simultáneas. Una
+de ellas en un puerto seleccionado al azar, lo que termina provocando que el Firewall
+bloquee esa conexión (ya que no sabemos en que puerto vendrá). Muchas veces obligándonos
 a desactivar el Firewall, mala idea.
 
 ## 3. No es seguro
 
-Tal vez el punto más importante que quiero tocar, es que, FTP es probablemente _la 
+Tal vez el punto más importante que quiero tocar, es que, FTP es probablemente _la
 herramienta más insegura que puedes utilizar_ por un par de razones:
 
-- No soporta archivos encriptados. Esto significa que cualquier cosa que envíes 
-utilizando FTP puede ser vista y tomada por cualquier posible personaje que esté 
-espiando tu conexión. _Riesgo de seguridad_.
-- Así mismo, aún cuando utilizas usuario y contraseña para proteger tu conexión, 
-_no están encriptados_. Cualquier persona que esté espiando tu conexión podrá ver 
-claramente tu nombre de usuario y tu contraseña, y ahora ya tiene _acceso a tu servidor_. 
-Es como enviar un maletín cerrado con candado, y enviar la llave del candado pegada 
-al maletín.
+- No soporta archivos encriptados. Esto significa que cualquier cosa que envíes
+  utilizando FTP puede ser vista y tomada por cualquier posible personaje que esté
+  espiando tu conexión. _Riesgo de seguridad_.
+- Así mismo, aún cuando utilizas usuario y contraseña para proteger tu conexión,
+  _no están encriptados_. Cualquier persona que esté espiando tu conexión podrá ver
+  claramente tu nombre de usuario y tu contraseña, y ahora ya tiene _acceso a tu servidor_.
+  Es como enviar un maletín cerrado con candado, y enviar la llave del candado pegada
+  al maletín.
 
 ## Versiones seguras de FTP
 
-Debido a los multiples problemas que tiene el FTP, no es de extrañarse que se hayan 
-intentado solucionar en el pasado. El más importante por supuesto es **la seguridad**. 
+Debido a los multiples problemas que tiene el FTP, no es de extrañarse que se hayan
+intentado solucionar en el pasado. El más importante por supuesto es **la seguridad**.
 Y para ello se han dado muchas respuestas, como por ejemplo _sFTP_.
 
-sFTP es una versión de FTP que corre a través de _SSH_, lo que hace que la conexión 
+sFTP es una versión de FTP que corre a través de _SSH_, lo que hace que la conexión
 esté por fin encriptada. Resolviendo uno de los problemas más grandes de FTP, ¿o no?
 
-sFTP **proteje los archivos mientras están en camino**. Sin embargo, hay un pequeño 
-(o mayor, dependiendo de qué tanto tiempo dure la transferencia) momento en el 
+sFTP **proteje los archivos mientras están en camino**. Sin embargo, hay un pequeño
+(o mayor, dependiendo de qué tanto tiempo dure la transferencia) momento en el
 que nuestros archivos están expuestos: _Al momento de recibirlos_.
 
-El sistema necesita descargar el archivo antes de poder encriptarlo. Mientras 
-mayor es el archivo, o más tiempo dure la conexión, _más tiempo se le dará a un atacante para que pueda 
-ver el archivo_. Pero, tomando en cuenta que un atacante debe ya tener acceso al sistema 
+El sistema necesita descargar el archivo antes de poder encriptarlo. Mientras
+mayor es el archivo, o más tiempo dure la conexión, _más tiempo se le dará a un atacante para que pueda
+ver el archivo_. Pero, tomando en cuenta que un atacante debe ya tener acceso al sistema
 para lograr esto, creo que ese archivo sería el menor de nuestros problemas.
 
 ## Entonces, ¿qué puedo utilizar?
 
-Por ahora sugiero que se muevan _inmediatamente_ a sFTP, por lo menos. 
-Yo recomendaría utilizar **una combinación de SSH y Git** para manejar sus sitios 
+Por ahora sugiero que se muevan _inmediatamente_ a sFTP, por lo menos.
+Yo recomendaría utilizar **una combinación de SSH y Git** para manejar sus sitios
 ¿quieren saber cómo hacerlo? Espérenlo pronto 😉
