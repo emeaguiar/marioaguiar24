@@ -25,6 +25,7 @@ export default function Code({
         import('prismjs/components/prism-php-extras'),
         import('prismjs/components/prism-bash'),
         import('prismjs/components/prism-json'),
+        import('prismjs/components/prism-scss'),
       ]);
     };
 

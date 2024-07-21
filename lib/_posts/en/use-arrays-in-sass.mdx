@@ -1,0 +1,101 @@
+---
+title: Use arrays in SASS
+publishedOn: '2024-01-09'
+updatedOn: '2024-07-21T21:40:32.262Z'
+description: >-
+  Even though it is a somewhat old tool, for more than 10 years SASS has been
+  one of my best friends in web development, it remains extremely powerful even
+  with the numerous advances in CSS in recent years, because it still has
+  several tools that CSS does not, and they are still useful, such as the
+  ability to use arrays in sass.
+published: true
+readingTime: 360
+---
+
+import Code from '@/components/code/code';
+
+Even though it is a somewhat old tool, for more than 10 years SASS has been one 
+of my best friends in web development, it remains extremely powerful even with the 
+numerous advances in CSS in recent years, because it still has several tools that 
+CSS does not, and they are still useful, such as the ability to use arrays in sass.
+
+> [!NOTE]
+> SASS?
+>
+> SASS is a CSS preprocessor, think of it as a compiler in a slightly more technical
+sense (note, it is not actually a compiler). What it does is give us a new set of
+tools that are transformed into real CSS when the processor runs, this gives us
+tools like mix-ins, nesting, inheritance, etc.
+
+One of the most used examples of these tools is the ability to use arrays in sass
+(or vectors, as my teachers used to say in school). This allows us to _create loops,
+maps_, etc. This way we can share information between our files and even save several
+lines of code.
+
+In SASS, arrays are known as **lists**, in their most basic version, a list is declared
+as follows:
+
+<Code
+    language="scss"
+    children={`$colors: yellow, blue, red, green;`}
+/>
+
+This way, we can access any element in the array with the `nth` function:
+
+<Code
+    language="scss"
+    children={`$colors: yellow, blue, red, green;
+@debug nth($colors, 2);
+// style.scss:3 Debug: blue`}
+/>
+
+## Uses
+
+Now that we have our list declared, we can start using it as it should, the most
+common use I have found is the printing of utility classes, such as when creating
+a loop with `@each`:
+
+<Code
+    language="scss"
+    children={`$colors: yellow, blue, red, green;
+@each $color in $colors {
+    .text-#{$color} {
+        color: $color;
+    }
+}
+// Output:
+.text-yellow {
+    color: yellow;
+}
+.text-blue {
+    color: blue;
+}
+.text-red {
+    color: red;
+}
+.text-green {
+    color: green;
+}`}
+/>
+
+> [!TIP]
+> Mixing SASS with CSS
+>
+> If you notice, to print the class name we are wrapping the variable inside some
+strange symbols #{}. This is necessary for SASS to recognize that what is inside
+them should be converted to its true value instead of printing the variable as is.
+>
+> `.text-#{$color} // .text-yellow`
+> `.text-$color // .text-$color`
+>
+> On the other hand, when using variables as the value of the property, this is not
+necessary unless we also mix it with regular text, if not, SASS will do it automatically.
+>
+> `color: $color; // color: yellow`
+
+## Expanding
+
+Ready! That is a simple way to create and use arrays (or lists) in SASS, as you can
+see it is very simple, but now what's next? What other uses do you think can be
+given to it? Do not hesitate to contact me for any questions or leave a comment
+with other uses that can be given to it. See you!
