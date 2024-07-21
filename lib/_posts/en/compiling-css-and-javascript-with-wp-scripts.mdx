@@ -1,0 +1,148 @@
+---
+title: Compiling CSS and Javascript with wp-scripts
+publishedOn: '2022-01-14'
+updatedOn: '2024-07-21T21:00:32.368Z'
+description: Quick tutorial to compile CSS and Javascript with `wp-scripts`
+published: true
+readingTime: 180
+---
+
+import Code from '@/components/code/code';
+
+Ever since the appearance of Gutenberg, or probably before, several **official WordPress
+packages** have been implemented to make our lives as developers easier, so to speak.
+
+One of them, and probably one of the most used by us as Frontend Developers is
+`@wordpress/wp-scripts` which serves us to **compile Javascript and CSS**
+within our project, and in this small tutorial I will cover the basics to be able
+to use it quickly.
+
+## What is `wp-scripts`?
+
+In basic terms, it is nothing more than **a collection of resources specifically designed
+for frontend development**, each with its recommended configuration,
+contains among other things:
+
+- Compiler
+- Linter
+- Format
+- Packer
+- Tests
+- Local environment
+
+## Installation
+
+To start, we require a simple ppm type package in which **we will define
+our application**, for the purposes of this tutorial we don't need much, we can simply run
+`npm init` and follow the instructions in the terminal.
+
+`package.json`
+
+<Code
+    language="json"
+    children={`{
+    "name": "scripts",
+    "version": "1.0.0",
+    "description": "Simple @wordpress/scripts tutorial",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Mario Aguiar",
+    "license": "ISC",
+    "devDependencies": {
+        "@wordpress/scripts": "^18.0.1"
+    }
+}`}
+/>
+
+> [!NOTE]
+> Why `--save-dev`?
+>
+> By using that flag we are implying that **the installed dependency should be saved**
+as such in the `package.json` file in that way we make sure that any other member of our team
+who wants to install this application receives all the dependencies when running `npm install`.
+
+## Hello World
+
+Before we start creating and compiling our files it is necessary that we have
+an **environment from which to run our application**, fortunately, the scripts package
+already comes with one, to use it we just need to
+add it to our list of scripts in our `package.json`, like this:
+
+`package.json`
+
+<Code
+    language="json"
+    children={`{
+    "name": "scripts",
+    "version": "1.0.0",
+    "description": "Simple @wordpress/scripts tutorial",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "wp-scripts start"
+    },
+    "author": "Mario Aguiar",
+    "license": "ISC",
+    "devDependencies": {
+        "@wordpress/scripts": "^18.0.1"
+    }
+}`}
+/>
+
+Now we just need to run it with `npm run start` or `npm start`
+
+This will create an observer in our terminal, which **will update and collect
+all our files** when a change is detected, now we can start with our application.
+
+The default configuration will look for our files within `src/index.js`,
+so we can start there.
+
+`index.js`
+
+<Code
+    language="js"
+    children={`import { __ } from '@wordpress/i18n';
+const init = () => {
+    console.log( __( 'Hello World' ) );
+};
+init();`}
+/>
+
+Now when we look inside our `build` directory we can see the compiled files,
+along with their `sourcemap`. The `index.asset.php` file is a very useful file that is
+created every time any of the dependencies change, **they are listed in it so that
+our application can easily list them within our plugin**, for example:
+
+`plugin.php`
+
+<Code
+    language="php"
+    children={`/**
+ * Include scripts and dependencies in our plugin
+ *
+ * @return void
+ */
+function enqueue_scripts() {
+    $asset = include get_stylesheet_directory() . '/build/index.asset.php';
+    wp_enqueue_script(
+        'mah-scripts',
+        get_stylesheet_directory_uri() . '/build/index.js',
+        $asset['dependencies'],
+        $asset['version'],
+        true
+    );
+}`}
+/>
+
+## Conclusion
+
+At a time when project configuration is probably one of the most complicated things
+and the most important at the same time, it is good to know that
+**we have tools that make our lives a little easier**, at least
+for now.
+
+## Resources
+
+- [Official Docs](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/)

@@ -1,0 +1,151 @@
+---
+title: Compilando CSS y Javascript con wp-scripts
+publishedOn: '2022-01-14'
+updatedOn: '2024-07-21T21:00:32.371Z'
+description: Tutorial rápido para compilar CSS y Javascript con `wp-scripts`
+published: true
+readingTime: 180
+---
+
+import Code from '@/components/code/code';
+
+Desde la aparición de Gutenberg, o probablemente antes, se han estado implementando 
+varios **paquetes oficiales** de WordPress para hacer nuestras vidas como desarrolladores 
+más sencillas, por así decirlo.
+
+Uno de ellos, y probablemente uno de los más utilizados por nosotros como Frontend 
+Developers es `@wordpress/wp-scripts` que nos sirve para **compilar Javascript y CSS** 
+dentro de nuestro proyecto, y en este pequeño tutorial cubriré las bases para poder 
+utilizarlo de manera rápida.
+
+## ¿Qué es `wp-scripts`?
+
+En palabras básicas, no es más que **una colección de recursos pensados específicamente 
+para el desarrollo de frontend**, cada uno con su configuración recomendada, 
+contiene entre otras cosas:
+
+- Compilador
+- Linter
+- Formato
+- Empaquetador
+- Tests
+- Ambiante local
+
+## Instalación
+
+Para comenzar, requerimos de un simple paquete tipo ppm en el que **definiremos 
+nuestra aplicación**, para propósitos de este tutorial no necesitamos la gran cosa, 
+simplemente podemos correr `npm init` y seguir las indicaciones de la terminal.
+
+`package.json`
+
+<Code
+    language="json"
+    children={`{
+    "name": "scripts",
+    "version": "1.0.0",
+    "description": "Simple @wordpress/scripts tutorial",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo 'Error: no test specified' && exit 1"
+    },
+    "author": "Mario Aguiar",
+    "license": "ISC",
+    "devDependencies": {
+        "@wordpress/scripts": "^18.0.1"
+    }
+}`}
+/>
+
+> [!NOTE]
+> ¿Por qué –save-dev?
+>
+> Al utilizar esa bandera estamos dando a entender que **la dependencia instalada 
+debe guardarse** como tal en el archivo `package.json` de esa forma nos aseguramos 
+que cualquier otro miembro de nuestro equipo que quiera instalar esta aplicación 
+reciba todas las dependencias al ejecutar `npm install`.
+
+## Hola Mundo
+
+Antes de comenzar a crear y compilar nuestros archivos es necesario que tengamos 
+un **ambiente desde donde poder ejecutar nuestra aplicación**, por fortuna, el paquete 
+scripts ya viene con uno, para poder utilizarlo no basta otra cosa más que 
+agregarlo a nuestra lista de scripts en nuestro `package.json`, así:
+
+`package.json`
+
+<Code
+    language="json"
+    children={`{
+    "name": "scripts",
+    "version": "1.0.0",
+    "description": "Simple @wordpress/scripts tutorial",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo 'Error: no test specified' && exit 1",
+        "start": "wp-scripts start"
+    },
+    "author": "Mario Aguiar",
+    "license": "ISC",
+    "devDependencies": {
+        "@wordpress/scripts": "^18.0.1"
+    }
+}`}
+/>
+
+Ahora sólo debemos ejecutarlo con `npm run start` o `npm start`
+
+Esto creará un observador en nuestra terminal, que **actualizará y recopilará 
+todos nuestros archivos** en el momento en que se detecte un cambio, ahora sí, 
+podemos comenzar con nuestra aplicación.
+
+La configuración por defecto buscará nuestros archivos dentro de `src/index.js`, 
+así que podemos comenzar por ahí.
+
+`index.js`
+
+<Code
+    language="js"
+    children={`import { __ } from '@wordpress/i18n';
+const init = () => {
+    console.log( __( 'Hello World' ) );
+};
+init();`}
+/>
+
+Ahora al ver dentro de nuestro directorio `build` podemos ver los archivos compilados, 
+junto con su `sourcemap`. El archivo `index.asset.php` es un archivo muy útil que se 
+crea cada vez que alguna de las dependencias cambia, **son listadas en él para que 
+nuestra aplicación pueda fácilmente listarlas dentro de nuestro plugin**, por ejemplo:
+
+`plugin.php`
+
+<Code
+    language="php"
+    children={`/**
+ * Include scripts and dependencies in our plugin
+ *
+ * @return void
+ */
+function enqueue_scripts() {
+    $asset = include get_stylesheet_directory() . '/build/index.asset.php';
+    wp_enqueue_script(
+        'mah-scripts',
+        get_stylesheet_directory_uri() . '/build/index.js',
+        $asset['dependencies'],
+        $asset['version'],
+        true
+    );
+}`}
+/>
+
+## Conclusión
+
+En un momento en el que la configuración del proyecto es probablemente una de 
+las cosas más complicadas y la más importante al mismo tiempo, es bueno saber que 
+**contamos con herramientas que nos hacen la vida un poco más sencilla**, al menos 
+por ahora.
+
+## Recursos
+
+- [Documentación Oficial](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/)
