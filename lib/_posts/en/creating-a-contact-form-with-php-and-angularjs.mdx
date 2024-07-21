@@ -1,0 +1,331 @@
+---
+title: Creating a contact form with PHP and AngularJS
+publishedOn: '2014-07-08'
+updatedOn: '2024-07-21T01:36:58.795Z'
+description: >-
+  AngularJS seems to be the sensation these days, that's why I decided to try 
+  and learn the basics of it. In fact, this very website is built using
+  AngularJS,  however, I did find a couple of issues while working with it,
+  nothing serious,  but one of them that surprised me was the contact form,
+  since it took me a while  to get the hang of it, I decided to share what I
+  learned with a small tutorial.
+published: true
+readingTime: 660
+---
+
+import Code from '@/components/code/code';
+
+[AngularJS](http://angularjs.org/) seems to be the sensation these days, that's why I decided to try and 
+learn the basics of it. In fact, this very website is built using AngularJS, however, 
+I did find a couple of issues while working with it, nothing serious, but one of 
+them that surprised me was the **contact form**, since it took me a while to get the 
+hang of it, I decided to share what I learned with a small tutorial.
+
+## The markup
+For this tutorial I'm going to use a very basic setup, just a couple fields and 
+a submit button, so lets get started.
+
+<Code
+    language="jsx"
+    children={`<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <title>Contact Form using AngularJS :: Mario Aguiar demo</title>
+    </head>
+    <body>
+       
+                            Contact                                    
+                        Name:                                            
+                   
+                        Email:                                            
+                   
+                        Message:                                            
+                   
+                        I promise I'm not a bot                                            
+                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>     </body> </html>`}
+/>
+
+Alright, I'd say that's pretty simple, we have a form, with three input fields, 
+**name, email, and message**, we also have a fourth field used only to catch spam bots, 
+this will be hidden from our human visitors and in fact we need it to be empty, 
+we'll hide it using css.
+
+### The jQuery way
+
+Before I start with AngularJS, let's have a look at how we would do this using 
+jQuery, like in the good old days:
+
+<Code
+    language="js"
+    children={`(function($) {
+  var contactForm = {
+    $form: $( 'form' ),
+    init: function() {
+      this.$form.on( 'submit', this.validateForm );
+    },
+    validateField: function( $field ) {
+      if ( $field.val() === '' ) {
+        return false;
+      }
+      if ( $field.attr( 'type' ) === 'email' ) {
+        var emailRegex = /^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
+        if ( ! emailRegex.test( $field.val() ) ) {
+          return false;
+        }
+      }
+      return true;
+    },
+    validateForm: function(e) {
+      e.preventDefault();
+      var $form = $(this);
+      var fields = $form.find( 'input, textarea' ),
+          hasError = false;
+      fields.each(function() {
+        var $field = $(this);
+        if ( $field.attr('required') ) {
+          if ( ! contactForm.validateField( $field ) ) {
+            console.log('error');
+            hasError = true;
+          }
+        }
+      });
+      if ( ! hasError ) {
+        contactForm.processForm( $form );
+      } else {
+        contactForm.errorFn();
+      }
+    },
+    processForm: function( $form ) {
+      var formData = $form.serialize();
+      $.ajax({
+        url: 'processForm.php',
+        type: 'POST',
+        dataType: 'json',
+        data: formData + '&submit=' + $form.find('button').val(),
+      })
+      .done( contactForm.successFn )
+      .fail( contactForm.errorFn );
+    },
+    successFn: function(data) {
+      if ( data.success === true ) {
+        contactForm.$form.prepend('<p>Thanks for getting in touch!</p>');
+      } else {
+        contactForm.errorFn();
+      }
+    },
+    errorFn: function() {
+      contactForm.$form.prepend('<p>Something wrong happened!, please try again.</p>');
+    }
+  }
+  contactForm.init();
+})(jQuery);`}
+/>
+
+
+
+I set up some basic code, we select the form, add a callback to the submit process, 
+validate the fields, make the AJAX request and wait for the result, however simple it is, 
+it **takes a few lines of code**.
+
+Now let's see how we could achieve the same using AngularJS.
+
+### The AngularJS way
+
+First of all, one of the things I like the most about Angular is **the way it 
+integrates with our html code**, did you notice how when using jQuery we did almost 
+everything in our js file? the html code remained pretty much unchanged.
+
+AngularJS requires a bit more configuration on the markup side, so let's change 
+it to this:
+
+<Code
+    language="js"
+    children={`<!DOCTYPE html>
+<html ng-app="contact">
+    <head>
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <title>Contact Form using AngularJS :: Mario Aguiar demo</title>
+    </head>
+    <body>
+       
+                           
+Thanks for getting in touch!
+
+               
+Something wrong happened!, please try again.
+
+                Contact                                    
+                        Name:                                            
+                   
+                        Email:                                            
+                   
+                        Message:                                            
+                   
+                        I promise I'm not a bot                                            
+                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>          //ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js          http://angularForm.js     </body> </html>`}
+/>
+
+A few directives here and there and our markup is ready to be integrated with 
+AngularJS, let's break it down a bit:
+
+- `ng-app="contact"`: This is the start of our AngularJS application, it tells 
+AngularJS that **everything inside** this tag is part of the contact application.
+- `ng-controller="contactForm"`: This is the start of our controller, 
+controllers in AngularJS are basically functions that control the behavior of 
+different features in our website.
+- `ng-submit="form.$valid && sendMessage(input)`: This tag binds a function to 
+our onSubmit event, additionally, it only runs when the form [with name] “form” 
+is **valid**.
+- `ng-show="success"`: This attribute reads the value of “success” sent by 
+AngularJS and only displays the tag if the condition is valid, in this case, 
+if “success” or “error” are true.
+- `ng-model`: This one is what AnguarJS calls a “two-way binding”, it means that 
+anything that's written in it can be used by AngularJS, and everything AngularJS 
+sends to it will be displayed in the field. Awesome isn't it?
+
+Now let's look at our js file:
+
+<Code
+    language="js"
+    children={`(function(angular) {
+  var app = angular.module("contact", []);
+  app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
+    $scope.success = false;
+    $scope.error = false;
+    $scope.sendMessage = function( input ) {
+      $http({
+          method: 'POST',
+          url: '/processForm.php',
+          data: input,
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+      .success( function(data) {
+        if ( data.success ) {
+          $scope.success = true;
+        } else {
+          $scope.error = true;
+        }
+      } );
+    }
+  }]);
+})(angular);`}
+/>
+
+So much smaller than our jQuery counterpart, this is because we don't have any 
+validation functions going on in here, why's that? Simple, because **AngularJS by 
+default validates the form before submitting it**. Not only that, but it automatically 
+adds css classes for valid and invalid fields, thanks Angular.
+
+So the only thing we need to do is make the AJAX request using the `$http` 
+component, and keep an eye open for the result, let's break it down:
+
+- `angular.module("contact", []):` First we define our module, or our app, and 
+all it's external dependencies, in this case there's none. I will also store this 
+in the app variable.
+- `app.controller("contactForm", ["$scope", "$http", function...`: Then we 
+define our `contactForm` controller to handle our form, and it's dependencies, 
+$scope is pretty standard but not necessary, you can learn about $`scope` in [here](https://docs.angularjs.org/guide/scope). 
+`$http` is the module we'll use to make AJAX request, since AngularJS works 
+with **dependency injection**, we need to let it know that we need it.
+- `$scope.success`: we define defaults for our response objects, these might be 
+changed later depending of the AJAX response.
+- `$scope.sendMessage( input )`: This is the function we'll use to make the AJAX 
+request, **it'll take all the input data that we defined in our form**. Then it will 
+make a `POST` request to `processForm.php` and set the success or error variables 
+depending on the response.
+
+## The problem
+
+At this point, our contact form should be working, but if you try to submit it, 
+you'll find that **it always returns an error**, why's that?
+
+AngularJS send the data as JSON.
+
+To be fair, the problem **is not caused by AngularJS**. The problem really is that 
+**PHP does not unserialize this format**. We were able to get around this with jQuery 
+by making use of the `.serialize()` method, but AngularJS does not provide an 
+equivalent for this, so what can we do?
+
+## The solution
+
+There's always a couple of ways to almost everything, and this is not the exception, 
+here I give you two suggestions, you can choose the one that best fit your needs.
+
+### The “save me jQuery” way
+
+We can use jQuery to get around this problem. Although AngularJS already has a 
+tiny version of jQuery in it, it does not provide the method we need, this of 
+course means that we **need to include jQuery along AngularJS**.  That doesn't make 
+me very happy, but it _is_ a workaround. Thanks to the `$.param` method.
+
+<Code
+    language="js"
+    children={`(function(angular) {
+  var app = angular.module("contact", []);
+  app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
+    $scope.success = false;
+    $scope.error = false;
+    $scope.sendMessage = function( input ) {
+      input.submit = true;
+      $http({
+          method: 'POST',
+          url: 'processForm.php',
+          data: angular.element.param(input),
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+      .success( function(data) {
+        if ( data.success ) {
+          $scope.success = true;
+        } else {
+          $scope.error = true;
+        }
+      } );
+    }
+  }]);
+})(angular);`}
+/>
+
+Inside AngularJS, jQuery is known as `angular.element`, so in order to use the 
+method we need, **we need to include jQuery in our HTML**, and call it using 
+`angular.element`. Now we test our form again, and it works!
+
+### The “fix it PHP” way
+
+As I said before, this is more of a problem with PHP, so why not let it fix it? 
+It's actually really simple, we can't access our `$_POST` variables the usual way, 
+but we can access them using `file_get_contents`, so we'll change our PHP to this:
+
+<Code
+    language="php"
+    children={`<?php
+    $response = array( 'success' => false );
+    $formData = file_get_contents( 'php://input' );
+    $data = json_decode( $formData );
+    if ( $data->submit && empty( $data->honeypot ) ) {
+        $name = $data->name;
+        $email = $data->email;
+        $message = $data->message;
+        if ( $name != '' && $email != '' && $message != '' ) {
+            $mailTo = 'example@mydomain.com';
+            $subject = 'New contact form submission';
+            $body  = 'From: ' . $name . "n";
+            $body .= 'Email: ' . $email . "n";
+            $body .= "Message:n" . $message . "nn";
+            $success = mail( $mailTo, $subject, $body );
+            if ( $success ) {
+                $response[ 'success' ] = true;
+            }
+        }
+    }
+    echo json_encode( $response );
+?>`}
+/>
+
+And there! Now we can access our data, and our AngularJS code wasn't changed.
+
+## Conclusion
+
+Forms in AngularJS can be a little tricky, or perhaps it's time to move on to 
+newer technologies, I'm pretty sure this kind of problem wouldn't happen if I 
+were to use NodeJS instead of PHP.
