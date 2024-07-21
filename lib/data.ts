@@ -7,10 +7,6 @@ export const MENU_ITEMS = [
     key: 'blog',
     href: '/blog',
   },
-  {
-    key: 'contact',
-    href: '?modal=1',
-  },
 ];
 
 export const BLOG_PREFIX = '/blog';

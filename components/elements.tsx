@@ -127,8 +127,16 @@ export function A({ children, href }: any) {
 
 export function UL({ children }: { children?: React.ReactNode }) {
   return (
-    <ul className='w-full max-w-screen-sm list-inside list-disc pl-8'>
+    <ul className='w-full max-w-screen-sm list-outside list-disc pl-8'>
       {children}
     </ul>
+  );
+}
+
+export function OL({ children }: { children?: React.ReactNode }) {
+  return (
+    <ol className='w-full max-w-screen-sm list-outside list-decimal pl-8'>
+      {children}
+    </ol>
   );
 }

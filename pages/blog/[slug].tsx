@@ -11,7 +11,7 @@ import { NextSeo } from 'next-seo';
 /**
  * Internal dependencies
  */
-import { A, H1, H2, H3, P, UL } from '@/components/elements';
+import { A, H1, H2, H3, P, OL, UL } from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
@@ -60,6 +60,7 @@ export default function PostPage({
               return <H2 {...props} className={classes} />;
             },
             h3: H3,
+            ol: OL,
             p: P,
             ul: UL,
             div: (props: any) => {
