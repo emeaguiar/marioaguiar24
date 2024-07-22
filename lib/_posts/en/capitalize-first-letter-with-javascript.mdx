@@ -1,0 +1,96 @@
+---
+title: Capitalize first letter with Javascript
+publishedOn: '2023-08-11'
+updatedOn: '2024-07-22T23:34:19.229Z'
+description: >-
+  In this quick tutorial we will learn how to make the first letter of a string
+  uppercase
+published: true
+readingTime: 300
+---
+
+import Code from '@/components/code/code';
+
+In this quick tutorial we will learn how to make the first letter of a
+`string` uppercase
+
+## The easy way
+
+To begin with, why would we need to do this in Javascript? Isn't it easier with
+CSS? Well, yes, it is easier to do this in CSS, but if for some reason we can't
+do it that way, we lose nothing by knowing how it's done, but just in case, to
+do all this in css we only need:
+
+<Code
+    language="scss"
+    children={`.test {
+    text-transform: capitalize;
+}`}
+/>
+
+> [!WARNING]
+> `text-transform: capitalize` will be applied to all words within the element
+
+## In Javascript
+
+To achieve this result using javascript, what we need are 3 steps:
+
+1. Find the first letter
+2. Convert it to uppercase
+3. Join it with the others
+
+Translated to code it would be something like this:
+
+### `charAt`
+
+`charAt( pos )` returns the character that is at the `pos` (position) indicated,
+we know that `array` start at position zero, therefore, to find the first character
+of our string, we use `charAt( 0 )`.
+
+<Code
+    language="js"
+    children={`const str = 'foo';
+const firstLetter = str.charAt( 0 );
+console.log( firstLetter ); // f `}
+/>
+
+### `toUpperCase`
+
+Now, `toUpperCase` converts **all** the characters sent to uppercase,
+that's why it's important that we first find the first letter, so that it only
+affects it:
+
+<Code
+    language="js"
+    children={`const str = 'foo';
+const uppercaseStr = str.toUpperCase();
+console.log( uppercaseStr ); // FOO `}
+/>
+
+### `slice`
+
+`slice( start. end )` what it does is **cut a string**, starting from the
+character specified in `start`, and ending at the character specified by `end`,
+if `end` is not specified, it will simply take the total number of characters of
+the string, reaching the end.
+
+<Code
+    language="js"
+    children={`const str = 'foo';
+const latterStr = str.slice( 1 );
+console.log( latterStr ); // oo `}
+/>
+
+Now we have all the necessary parts, we just have to put them together:
+
+<Code
+    language="js"
+    children={`const str = 'foo';
+const firstLetter = str.charAt( 0 );
+const upperCaseStr = firstLetter.toUpperCase();
+const latterStr = str.slice( 1 );
+const result = upperCaseStr + latterStr;
+console.log( result ); // Foo
+// Short version
+console.log( str.charAt( 0 ).toUpperCase() + str.slice( 1 ) ); // Foo  `}
+/>
