@@ -5,11 +5,13 @@ import Footer from '@/components/footer';
 import Header from '@/components/header';
 import ContactModal from '@/components/contact/modal';
 import SkipNavigation from '@/components/skip-navigation';
+import BackToTop from '@/components/back-to-top';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SkipNavigation />
+      <BackToTop />
 
       <div className='mb-6 flex flex-col items-center lg:mb-20'>
         <Header />
