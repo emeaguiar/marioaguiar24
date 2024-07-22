@@ -114,6 +114,11 @@ const nextConfig = {
         destination: '/blog/implementing-throttle-in-vanilla-javascript',
         permanent: true,
       },
+      {
+        source: '/reiniciando-el-blog',
+        destination: '/blog/restarting-the-blog',
+        permanent: true,
+      },
     ];
   },
 };
