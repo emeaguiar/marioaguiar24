@@ -8,6 +8,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/conferencias',
+        destination: '/conferences',
+        permanent: true,
+      },
+      {
         source: '/how-to-take-full-advantage-of-your-wordpress-sidebar',
         destination:
           '/blog/how-to-take-full-advantage-of-your-wordpress-sidebar',
@@ -102,6 +107,11 @@ const nextConfig = {
       {
         source: '/crear-enlaces-simbolicos-en-osx',
         destination: '/blog/create-symbolic-links-in-osx',
+        permanent: true,
+      },
+      {
+        source: '/implementando-throttle-en-vanilla-javascript',
+        destination: '/blog/implementing-throttle-in-vanilla-javascript',
         permanent: true,
       },
     ];

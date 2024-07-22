@@ -1,0 +1,136 @@
+---
+title: Implementing throttle in Vanilla JavaScript
+publishedOn: '2021-09-24'
+updatedOn: '2024-07-22T23:10:07.916Z'
+description: >-
+  This time I will be showing how to create a simple throttle function using
+  only Vanilla JavaScript.
+published: true
+readingTime: 360
+---
+
+import Codepen from 'react-codepen-embed';
+import Code from '@/components/code/code';
+
+Hi, welcome to this video tutorial, this time I will be showing how to create a 
+simple throttle function using only Vanilla JavaScript.
+
+## What is Vanilla JavaScript?
+
+Vanilla JavaScript, or Vanilla JS is nothing more than simple and pure JavaScript,
+that's what we call it when we don't use libraries like Underscore, or frameworks
+like React.
+
+## What is “throttle”?
+
+I assume that if you are watching this tutorial you already know what it means,
+or at least you have an idea, so I won't delve much into the subject, but I will
+leave an article that explains it in the references section in the description
+and post that accompany this video.
+
+Basically throttle is known as the practice where a function is executed only once
+during a certain interval of time. For example, the user clicks a button that
+executes a function, the function is executed once.
+
+### What would happen if the user clicks a hundred times on the same button?
+
+**A**: _The function would be executed a hundred times, bad for performance_.
+
+Let's consider that we have HTML code, in which this button is included:
+
+<Code
+    language="js"
+    children={`<button id="js-say-hello">Say Hello</button>
+`}
+/>
+
+And we anchor an event like this, which logs “Hello world!” in the console:
+
+<Code
+    language="js"
+    children={`const button = document.querySelector( '#js-say-hello' );
+const sayHello = () => {
+    console.log( 'Hello World!' );
+}
+if ( button ) {
+    button.addEventListener( 'click', sayHello );
+}`}
+/>
+
+If we open this code in the browser, we can see that each time we click, a new
+entry is recorded in the console.
+
+To avoid this, we define a time interval (for example one second) during which
+no matter how many clicks the user gives, the function will be executed only once.
+Once this interval ends, we can execute it only once more during another second,
+and so on. It will only be executed once per second.
+
+## How is throttle implemented?
+
+In the following example we will implement a simple version of Throttle, taking
+as reference the previous code, we will implement the following:
+
+<Code
+    language="js"
+    children={`const throttle = ( callback, delay ) => {
+    // We start a variable to know when the function was last called
+    let lastCalled = 0;
+    return ( ...args ) => {
+        // We save a reference to this moment.
+        const now = new Date().getTime();
+        // We check if the defined delay time has passed
+        if ( delay > ( now - lastCalled ) ) {
+            return;
+        }
+        // We save this moment as the last time the function was called
+        lastCalled = now;
+        // We execute the function
+        return callback( ...args );
+    }
+}
+export default throttle;`}
+/>
+
+Now, since we have implemented our function, all we have to do is replace in our
+original code, the call to the function by wrapping it in our Throttle.
+
+<Code
+    language="js"
+    children={`// Import our function
+import throttle from './throttle.js';
+const button = document.querySelector( '#js-say-hello' );
+// Wrap our message in a new function
+const printMessage = () => {
+    console.log( 'Hello World!' );
+}
+// Run Throttle
+const sayHello = throttle( printMessage, 1000 );
+if ( button ) {
+    button.addEventListener( 'click', sayHello );
+}`}
+/>
+
+Now, when we click on our button, we can see that no matter how many times we click,
+it will only be executed once per second, if we increase the delay time, we can
+see a clearer example, this time I am using three seconds:
+
+## Additional notes
+
+A very important point that we must take into account is that when using this method,
+the clicks are not added to a queue, this means that they are not saved to be executed
+later, simply if you click while the established time has not passed, that click
+would be lost.
+
+You can see this code working on Codepen (it is recommended to open the link to
+see the console).
+
+<Codepen
+    user="emeaguiar"
+    hash="oNWaOWg"
+    loading={ () => <div>Loading...</div> }
+/>
+
+## References
+
+- [Debouncing and Throttling Explained Through Examples | CSS-Tricks](https://css-tricks.com/debouncing-throttling-explained-examples/)
+- [Throttle Function in JavaScript | CodeForGeek](https://codeforgeek.com/throttle-function-javascript/)

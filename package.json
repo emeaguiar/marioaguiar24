@@ -26,6 +26,7 @@
     "next-translate": "^2.6.2",
     "next-translate-plugin": "^2.6.2",
     "prism-react-renderer": "^2.3.1",
+    "react-codepen-embed": "^1.1.0",
     "react-dom": "^18",
     "rehype-github-alerts": "^3.0.0",
     "remark-gfm": "^4.0.0",
