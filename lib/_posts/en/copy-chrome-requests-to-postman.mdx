@@ -1,0 +1,41 @@
+---
+title: Copy Chrome requests to Postman
+publishedOn: '2023-11-08'
+updatedOn: '2024-07-22T23:45:16.639Z'
+description: >-
+  Recently I have been working on a project that uses GraphQL as a language for
+  requests. It is an interesting project because it is what is called a headless
+  CMS, in which the backend is managed with WordPress and the frontend with
+  React, therefore, it is necessary to debug APIs very often; for this I use
+  Postman. But since I have to move between applications, sometimes I need to
+  copy requests from Chrome to Postman.
+published: true
+readingTime: 180
+---
+
+Recently I have been working on a project that uses [GraphQL](https://graphql.org/) as a language
+for requests. It is an interesting project because it is what is called a
+**headless CMS**, in which the backend is managed with WordPress and the frontend with
+React, therefore, it is necessary to debug APIs very often; for this I use
+[Postman](https://www.postman.com/). But since I have to move between applications, sometimes I need to **copy requests from Chrome to Postman**.
+
+Fortunately, I found a very simple way to do it, and it is that Postman supports
+importing via cURL, while Chrome supports exporting in the same way.
+
+To achieve this, we only need to execute a request in Chrome,
+then it will appear in our Network window in Chrome tools. Now that we have it,
+we just have to right-click and select `Copy→Copy as cURL`
+
+![Copy as cURL](/posts/copy-chrome-requests-to-postman/copy-as-curl.webp)
+
+Pretty simple, now we can open Postman and select the **import** option,
+then we can copy the cURL command that we just copied from Chrome.
+
+![Import in Postman](/posts/copy-chrome-requests-to-postman/import.webp)
+
+Done! Now **we can see our request working in Postman** with all the
+necessary headers. That's how easy it is to copy requests from Chrome to Postman.
+
+## Read more
+
+- [How to replicate requests from the Chrome Network Tab into Postman?](https://medium.com/@tiboprea/how-to-replicate-requests-from-the-chrome-network-tab-into-postman-4ec6016ee18c)

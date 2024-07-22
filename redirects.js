@@ -115,4 +115,9 @@ module.exports = [
     destination: '/blog/capitalize-first-letter-with-javascript',
     permanent: true,
   },
+  {
+    source: '/copiar-peticiones-de-chrome-a-postman',
+    destination: '/blog/copy-chrome-requests-to-postman',
+    permanent: true,
+  },
 ];
