@@ -99,6 +99,11 @@ const nextConfig = {
         destination: '/blog/change-repo-origin-git',
         permanent: true,
       },
+      {
+        source: '/crear-enlaces-simbolicos-en-osx',
+        destination: '/blog/create-symbolic-links-in-osx',
+        permanent: true,
+      },
     ];
   },
 };
