@@ -94,6 +94,11 @@ const nextConfig = {
         destination: '/blog/use-arrays-in-sass',
         permanent: true,
       },
+      {
+        source: '/cambiar-el-origin-de-un-repositorio-en-git',
+        destination: '/blog/change-repo-origin-git',
+        permanent: true,
+      },
     ];
   },
 };
