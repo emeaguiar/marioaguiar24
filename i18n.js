@@ -6,5 +6,6 @@ module.exports = {
     '/': ['home'],
     '/blog': ['blog'],
     '/blog/[slug]': ['blog'],
+    '/conferences': ['conferences'],
   },
 };
