@@ -1,0 +1,68 @@
+---
+title: Create symbolic links in OSX
+publishedOn: '2020-09-27'
+updatedOn: '2024-07-22T22:42:28.518Z'
+description: >-
+  Symbolic links, or symlinks as they are also known. They can be seen as an
+  alias, they are nothing more than "symbolic" paths that can point to any
+  location on your computer, they are useful when you want to keep directories
+  separate, but at the same time one inside the other. For example, if I have a
+  repository with these files
+published: true
+readingTime: 120
+---
+
+import Code from '@/components/code/code';
+
+Symbolic links, or symlinks as they are also known. They can be seen as an alias, 
+they are nothing more than "symbolic" paths that can point to any location on 
+your computer, they are useful when you want to keep directories separate, but 
+at the same time one inside the other. For example, if I have a repository 
+with these files:
+
+<Code
+    language="plain"
+    children={`- public
+-- wp-content
+-- .gitignore
+-- composer.json
+-- README.md`}
+/>
+
+And I want the `wp-content` directory, within an installation with existing files:
+
+<Code
+    language="plain"
+    children={`- public
+-- wp-admin
+-- wp-includes
+-- wp-config.php
+...`}
+/>
+
+I couldn't just clone the repository, since the directory wouldn't be empty,
+then, the solution would be to create a symbolic path with the `ln` command.
+Its syntax is as follows:
+
+<Code
+    language="bash"
+    children={`ln -s path/original path/symbolic
+`}
+/>
+
+The `-s` parameter is what specifies that it is a symbolic link, in most cases
+you won't need anything else. Now my installation would look like this:
+
+<Code
+    language="plain"
+    children={`- public
+-- wp-admin
+-- wp-content
+-- wp-includes
+-- wp-config.php
+...`}
+/>
+
+Where `wp-content` is a **reference to the original path**, and by entering that
+directory I will simply enter the original, so every time I update the
+repository I will get the updates also in my installation.
