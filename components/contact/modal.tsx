@@ -53,8 +53,6 @@ export default function Modal() {
               </P>
 
               <ContactForm />
-
-              <SocialLinks className='mb-8 mt-auto text-white lg:mt-8' />
             </div>
           </div>
         </dialog>
