@@ -48,14 +48,19 @@ export function H2({
   const H2Element = () => (
     <h2
       className={clsx(
-        `${merriweather.className} -ml-8 max-w-screen-sm text-2xl font-bold transition-opacity`,
+        `${merriweather.className} max-w-screen-sm text-2xl font-bold`,
         className
       )}
       id={id}
     >
-      <span className='pr-4 opacity-0 transition-opacity group-hover:opacity-100'>
-        #
-      </span>
+      {id && (
+        <span
+          className='pr-4 opacity-0 transition-opacity group-hover:opacity-100'
+          aria-hidden
+        >
+          #
+        </span>
+      )}
 
       {children}
     </h2>

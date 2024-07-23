@@ -46,7 +46,9 @@ export default function Modal() {
             </Link>
 
             <div className='flex h-max flex-col items-center'>
-              <H2 className='mb-4 max-w-screen-xl'>{t('contactModalTitle')}</H2>
+              <H2 className='mb-4 max-w-screen-xl self-start'>
+                {t('contactModalTitle')}
+              </H2>
 
               <P className='max-w-screen-xl lg:max-w-screen-md'>
                 {t('contactModalMessage')}
