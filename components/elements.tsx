@@ -45,17 +45,34 @@ export function H2({
   className?: string;
   id?: string;
 }) {
-  return (
+  const H2Element = () => (
     <h2
       className={clsx(
-        `${merriweather.className} w-full max-w-screen-sm text-2xl font-bold`,
+        `${merriweather.className} -ml-8 max-w-screen-sm text-2xl font-bold transition-opacity`,
         className
       )}
       id={id}
     >
+      <span className='pr-4 opacity-0 transition-opacity group-hover:opacity-100'>
+        #
+      </span>
+
       {children}
     </h2>
   );
+
+  if (id) {
+    return (
+      <Link
+        href={`#${id}`}
+        className='group block w-full max-w-screen-md self-start text-start'
+      >
+        <H2Element />
+      </Link>
+    );
+  }
+
+  return <H2Element />;
 }
 
 export function H3({
