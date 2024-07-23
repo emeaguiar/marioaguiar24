@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 3
 publishedOn: '2024-01-29'
-updatedOn: '2024-07-23T02:34:11.486Z'
+updatedOn: '2024-07-23T02:47:47.194Z'
 description: >-
   Part three of a series of tutorials where we will learn how to create a
   settings page in WordPress using React and the WordPress API. Now we need to
@@ -115,7 +115,8 @@ Now we need to **save our data** once the save button is pressed, for this we ne
 replace the `saveSettings` function with a call to the functions available in the
 `@wordpress/core-data`, and `@wordpress/data` packages
 
-> [!WARNING] > **What is the difference?**
+> [!WARNING] 
+> **What is the difference?**
 >
 > If the question is why some functions are in core-data while others are in data?
 > unfortunately I don't have the answer, we only know that the team that added them
@@ -287,7 +288,8 @@ Let's see what we did:
    we tell the browser to **wait for the result** of the function with `await`, before disabling our flag again
 5. Finally, we indicate the conditions so that **if the flag is enabled show our spinner**, otherwise, show our text
 
-> [!NOTE] > **Extra!**
+> [!NOTE] 
+> **Extra!**
 >
 > In addition to our spinner, it is often good to **disable** the button so that it cannot be used while our function loads. Can you figure out how to do this?
 >
@@ -376,7 +378,8 @@ And now when we save our options, we will have a nice **success message** like t
 
 ![Success message in WordPress](/posts/create-a-settings-page-in-wordpress-with-react-part-3/success.webp)
 
-> [!CAUTION] > **What if something goes wrong?**
+> [!CAUTION] 
+> **What if something goes wrong?**
 >
 > In this example, I have only added a success message, but, in case we also want to know if something has failed (recommended) we could log it with the following modifications.
 >

@@ -1,7 +1,7 @@
 ---
 title: Crear una página de opciones en WordPress con React – Parte 3
 publishedOn: '2024-01-29'
-updatedOn: '2024-07-23T02:34:11.493Z'
+updatedOn: '2024-07-23T02:45:14.897Z'
 description: |-
   Parte tres de una serie de tutoriales donde aprenderemos a crear una página de
     opciones en WordPress utilizando React y el API de WordPress. Ahora lo que resta es guardar los datos dentro de nuestra base de datos y leerla dentro de nuestra página de opciones para asegurarnos de no sobre-escribir los datos.
@@ -113,7 +113,8 @@ Ahora necesitamos **guardar nuestros datos** una vez que se presiona el botón d
 guardar, para ello necesitamos reemplazar la función de `saveSettings` por una llamada
 a las funciones disponibles en los paquetes `@wordpress/core-data`, y `@wordpress/data`
 
-> [!WARNING] > **¿Cual es la diferencia?**
+> [!WARNING] 
+> **¿Cual es la diferencia?**
 >
 > Si la pregunta es el ¿por qué algunas funciones estan en core-data mientras
 > que otras están en data? desafortunadamente no tengo la respuesta,
@@ -289,7 +290,8 @@ Veamos que hicimos:
 5. Finalmente, indicamos las condiciones para que **si la bandera esta habilitada
    muestre nuestro spinner**, de lo contrario, que muestre nuestro texto
 
-> [!NOTE] > **¡Extra!**
+> [!NOTE]
+> **¡Extra!**
 >
 > Además de nuestro spinner, muchas veces también es bueno **deshabilitar** el botón
 > para que no pueda ser utilizado mientras nuestra función carga ¿Puedes descubrir cómo hacer esto?
@@ -382,7 +384,8 @@ Y ahora cuando guardemos nuestras opciones, tendremos un bonito **mensaje de éx
 
 ![Mensaje de éxito en WordPress](/posts/create-a-settings-page-in-wordpress-with-react-part-3/success.webp)
 
-> [!CAUTION] > **¿Y si algo falla?**
+> [!CAUTION]
+> **¿Y si algo falla?**
 >
 > En éste ejemplo, sólo he agregado un mensaje de éxito, pero, en caso de que
 > queramos también saber si algo ha fallado (recomendado) podríamos logarlo con las siguientes modificaciones.
