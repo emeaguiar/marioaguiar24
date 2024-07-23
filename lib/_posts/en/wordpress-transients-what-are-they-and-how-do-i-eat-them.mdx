@@ -1,7 +1,7 @@
 ---
 title: 'WordPress Transients: What are they and how do I eat them'
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-07-21T22:44:57.017Z'
+updatedOn: '2024-07-23T02:49:31.698Z'
 description: >-
   WordPress, despite being my favorite daily work tool and the one I know the
   most,  has still several options and functions I've never used. Not too long
@@ -111,7 +111,8 @@ database for the key value (our mail), if it doesn’t exist it will create new
 transients with names like **name_me@me.com** using the data, these will expire in
 24 hours. After that it will send an email with the comment.
 
-> [!NOTE] > `$time` must be a time value in seconds, since I have no idea how many seconds
+> [!NOTE] 
+> `$time` must be a time value in seconds, since I have no idea how many seconds
 > are in a day** it's easier to let PHP itself to do the math, this is **60 seconds
 > × 60 minutes × 24 hours**, even easier: **60″ × 60′ = 1 hour × 24 = 24 hours\*\*.
 
