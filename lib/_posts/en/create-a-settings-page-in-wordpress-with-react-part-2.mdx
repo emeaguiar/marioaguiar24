@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 2
 publishedOn: '2024-01-22'
-updatedOn: '2024-07-23T02:33:19.286Z'
+updatedOn: '2024-07-23T02:34:11.485Z'
 description: >-
   Part two of a series of tutorials where we will learn how to create a settings
   page in WordPress using React and the WordPress API. I will show you how to
@@ -16,7 +16,7 @@ import Code from '@/components/code/code';
 In the [first part of this tutorial](/blog/create-a-settings-page-in-wordpress-with-react),
 I showed the basic principles to **create a settings page in WordPress**, in
 this second part, I will show you how to use the components included in WordPress
-to __add text fields, and save the options__.
+to **add text fields, and save the options**.
 
 ## Table of Contents
 
@@ -45,8 +45,8 @@ To create a settings page, we need to **add some fields**. To start, we must ope
 `settings.js`
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import { createRoot } from '@wordpress/element';
@@ -63,8 +63,8 @@ if ( rootElement ) {
 `components/settings.js`
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -79,14 +79,13 @@ export default Settings;`}
 Among the things we can observe in this piece of code are:
 
 1. The use of `createRoot` with which we start our applications in React, but
-unlike how it is normally used, this time we take it from `@wordpress/element`.
-This is because **WordPress already comes with its own copy of React** that ensures that
-its components will work.
+   unlike how it is normally used, this time we take it from `@wordpress/element`.
+   This is because **WordPress already comes with its own copy of React** that ensures that
+   its components will work.
 2. Likewise, it comes with a javascript version of the `__` function for translations,
-unlike PHP **there is no version of** `esc_html__` so we use the normal version.
+   unlike PHP **there is no version of** `esc_html__` so we use the normal version.
 
-> [!CAUTION]
-> **Using React**
+> [!CAUTION] > **Using React**
 >
 > As you can see from this small piece of code (and the title of the post...).
 > This tutorial assumes that you have at least a basic knowledge of ReactJS, if
@@ -97,8 +96,8 @@ unlike PHP **there is no version of** `esc_html__` so we use the normal version.
 Now that we have our application running we can start to **add options to our page**, one of the most common I come across is text fields, perhaps for an API, for example:
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import {
@@ -133,16 +132,15 @@ After reloading the page, we can see that **our options page** takes shape!
 although we can add some flavor, but we will do that later, now that we have our field, let's explain what happens here:
 
 1. Some more WordPress components are added, this time they are `Card`, `CardBody`, and `TextControl`.
-In reality the important one is TextControl since it is the one we will use to enter our options
+   In reality the important one is TextControl since it is the one we will use to enter our options
 2. We import `useState` from `@wordpress/element` (once again, React comes included)
 3. We add an empty state that will be updated when we change something in `TextControl`
 4. The use of React fragments, only that we use its shortened version, instead
-of `import { Fragment } from '@wordpress/element'` we simply use `<></>`
+   of `import { Fragment } from '@wordpress/element'` we simply use `<></>`
 
 ![Options page with text field](/posts/create-a-settings-page-in-wordpress-with-react-part-2/settings-field.webp)
 
-> [!TIP]
-> `@wordpress/components` comes with many components available, I suggest
+> [!TIP] > `@wordpress/components` comes with many components available, I suggest
 > checking the [Storybook](https://wordpress.github.io/gutenberg/?path=/docs/docs-introduction--page)
 > to see a demonstration of what we have at our disposal
 
@@ -164,21 +162,21 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const Settings = () => {
-    const [ apiKey, setApiKey ] = useState( '' );
-    const [ toggled, setToggled ] = useState( false );
-    return (
-        <>
-            <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
-            <Card>
-                <CardBody>
-                    <TextControl
-                        help={ __( 'Enter your API key', 'mah-settings' ) }
-                        label={ __( 'API Key', 'mah-settings' ) }
-                        onChange={ setApiKey }
-                        value={ apiKey }
-                    />
-                </CardBody>
-                
+const [ apiKey, setApiKey ] = useState( '' );
+const [ toggled, setToggled ] = useState( false );
+return (
+<>
+<h1>{ **( 'Select the desired options', 'mah-settings' ) }</h1>
+<Card>
+<CardBody>
+<TextControl
+help={ **( 'Enter your API key', 'mah-settings' ) }
+label={ \_\_( 'API Key', 'mah-settings' ) }
+onChange={ setApiKey }
+value={ apiKey }
+/>
+</CardBody>
+
                 <CardDivider />
                 <CardBody>
                     <ToggleControl
@@ -190,6 +188,7 @@ const Settings = () => {
             </Card>
         </>
     );
+
 }
 export default Settings;`}
 />
@@ -207,8 +206,8 @@ the same does not happen with our **style dependencies**. So it may be necessary
 `class-mah-settings.php`
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Registra los scripts y estilos.
  * 
  * @return void 
@@ -251,8 +250,8 @@ In php, we can register them like this:
 `php/class-mah-settings.php`
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Registra los hooks.
  * 
  * @return void 
@@ -268,8 +267,8 @@ public function init(): void {
 `php/class-mah-settings.php`
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Registra las opciones.
  * 
  * @return void 
@@ -306,8 +305,8 @@ public function register_settings(): void {
 Now we just need to **save our options** from the React side, for which we need to add a save button to our application, and add an event when it is pressed:
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import {
@@ -367,9 +366,9 @@ A brief explanation of what we just added:
 
 1. We bring a new component `CardFooter`, which will help us **maintain the style** of our card
 2. We bring the `Button` component that comes with WordPress, this gives us some
-advantages over using regular buttons, such as the fact that it **already comes with styles**
-for example, this time we use the `primary` variant. And we make sure
-that it remains disabled if the API key field has not been filled
+   advantages over using regular buttons, such as the fact that it **already comes with styles**
+   for example, this time we use the `primary` variant. And we make sure
+   that it remains disabled if the API key field has not been filled
 3. We add the `saveSettings` function that will be in charge of **saving our options**
 
 So when we click the button we will see how our action is registered in the console,
@@ -395,5 +394,7 @@ As always your comments and suggestions on what you would like to see explained 
 - [Docs / Introduction – page ⋅ Storybook](https://wordpress.github.io/gutenberg/?path=/docs/docs-introduction--page)
 
 [^1]: Very popular in the days of customizer, theme mods are tied to the theme used on our site, if the theme changes, the mods also disappear, but they return when the theme they are tied to is selected again. But with the arrival of FSE, these begin to be irrelevant in my opinion ↩︎
+
 [^2]: Post meta, are basically the attributes that are tied to a specific post, these can change from post to post ↩︎
+
 [^3]: Used for global options that can be used by either a theme or a plugin, regardless of which post or theme is selected on the site ↩︎

@@ -1,7 +1,7 @@
 ---
 title: Implementando throttle en Vanilla JavaScript
 publishedOn: '2021-09-24'
-updatedOn: '2024-07-22T23:10:07.926Z'
+updatedOn: '2024-07-23T02:34:11.496Z'
 description: >-
   En esta ocasión estaré mostrando cómo crear una simple función de throttle
   utilizando únicamente Vanilla JavaScript.
@@ -12,23 +12,23 @@ readingTime: 360
 import Codepen from 'react-codepen-embed';
 import Code from '@/components/code/code';
 
-Hola, sean bienvenidos a éste video tutorial, en esta ocasión estaré mostrando 
+Hola, sean bienvenidos a éste video tutorial, en esta ocasión estaré mostrando
 cómo crear una simple función de throttle utilizando únicamente Vanilla JavaScript.
 
 ## ¿Qué es Vanilla JavaScript?
 
-Vanilla JavaScript, o Vanilla JS no es más que simple y puro JavaScript, así le 
+Vanilla JavaScript, o Vanilla JS no es más que simple y puro JavaScript, así le
 llamamos cuando no utilizamos librerías como Underscore, o frameworks como React.
 
 ## ¿Qué es “throttle”?
 
-Asumo que si estás viendo éste tutorial ya sabes lo que significa, o al menos 
-tienes una idea, así que no indagaré mucho en el tema, pero dejaré un articulo 
-que lo explica en la sección de referencias en la descripción y post que 
+Asumo que si estás viendo éste tutorial ya sabes lo que significa, o al menos
+tienes una idea, así que no indagaré mucho en el tema, pero dejaré un articulo
+que lo explica en la sección de referencias en la descripción y post que
 acompañan a este video.
 
-Básicamente se le conoce como throttle a la práctica en dónde se ejecuta una 
-función únicamente una vez durante cierto intervalo de tiempo. Por ejemplo, 
+Básicamente se le conoce como throttle a la práctica en dónde se ejecuta una
+función únicamente una vez durante cierto intervalo de tiempo. Por ejemplo,
 el usuario da click a un botón que ejecuta una función, la función se ejecuta una vez.
 
 ### ¿Qué pasaría si el usuario da cien clicks al mismo botón?
@@ -38,16 +38,16 @@ el usuario da click a un botón que ejecuta una función, la función se ejecuta
 Consideremos que tenemos código html, en él que se incluye éste botón:
 
 <Code
-    language="js"
-    children={`<button id="js-say-hello">Salúdame</button>
+  language='js'
+  children={`<button id="js-say-hello">Salúdame</button>
 `}
-/> 
+/>{' '}
 
 Y le anclamos un evento como éste, el cual graba “Hola mundo!” In la consola:
 
 <Code
-    language="js"
-    children={`const button = document.querySelector( '#js-say-hello' );
+  language='js'
+  children={`const button = document.querySelector( '#js-say-hello' );
 const sayHello = () => {
     console.log( 'Hola Mundo!' );
 }
@@ -56,22 +56,22 @@ if ( button ) {
 }`}
 />
 
-Si abrimos este código en el navegador, podemos ver que cada vez que se da click, 
+Si abrimos este código en el navegador, podemos ver que cada vez que se da click,
 se registra una nueva entrada en la consola.
 
-Para evitar esto, definimos un intervalo de tiempo (por ejemplo un segundo) durante 
-el cual no importa cuántos clicks el usuario de, la función se ejecutará una 
-sola vez. Una vez termine este intervalo, podemos ejecutarla una sola vez mas 
+Para evitar esto, definimos un intervalo de tiempo (por ejemplo un segundo) durante
+el cual no importa cuántos clicks el usuario de, la función se ejecutará una
+sola vez. Una vez termine este intervalo, podemos ejecutarla una sola vez mas
 durante otro segundo, y así sucesivamente. Sólo se ejecutará una vez por segundo.
 
 ## ¿Cómo se implementa throttle?
 
-En el siguiente ejemplo implementaremos una versión simple de Throttle, tomando 
+En el siguiente ejemplo implementaremos una versión simple de Throttle, tomando
 como referencia el código anterior, implementaremos lo siguiente:
 
 <Code
-    language="js"
-    children={`const throttle = ( callback, delay ) => {
+  language='js'
+  children={`const throttle = ( callback, delay ) => {
     // Comenzamos variable para saber cuando se llamó por ultima vez a la función
     let lastCalled = 0;
     return ( ...args ) => {
@@ -90,13 +90,13 @@ como referencia el código anterior, implementaremos lo siguiente:
 export default throttle;`}
 />
 
-Ahora, ya que tenemos implementada nuestra función, lo único que debemos hacer 
-es reemplazar en nuestro código original, la llamada a la función envolviéndola 
+Ahora, ya que tenemos implementada nuestra función, lo único que debemos hacer
+es reemplazar en nuestro código original, la llamada a la función envolviéndola
 en nuestro Throttle.
 
 <Code
-    language="js"
-    children={`// Importamos nuestra función
+  language='js'
+  children={`// Importamos nuestra función
 import throttle from './throttle.js';
 const button = document.querySelector( '#js-say-hello' );
 // Envolmemos nuestro mensaje en una función nueva
@@ -110,25 +110,25 @@ if ( button ) {
 }`}
 />
 
-Ahora, cuando demos click en nuestro botón, podemos ver que sin importar cuantas 
-veces demos click, sólo se ejecutará una vez por segundo, si aumentamos el tiempo 
-de delay, podremos ver una ejemplo más claro, en ésta ocasión estoy utilizando 
+Ahora, cuando demos click en nuestro botón, podemos ver que sin importar cuantas
+veces demos click, sólo se ejecutará una vez por segundo, si aumentamos el tiempo
+de delay, podremos ver una ejemplo más claro, en ésta ocasión estoy utilizando
 tres segundos:
 
 ## Notas adicionales
 
-Un punto muy importante que debemos tomar en cuenta, es que al utilizar éste método, 
-los clicks no se agregan a una cola, esto significa que no se van guardando para 
-ser ejecutados más adelante, simplemente si se da click mientras aún no pasa el 
+Un punto muy importante que debemos tomar en cuenta, es que al utilizar éste método,
+los clicks no se agregan a una cola, esto significa que no se van guardando para
+ser ejecutados más adelante, simplemente si se da click mientras aún no pasa el
 tiempo establecido, ese click se perdería.
 
-Se puede ver éste código funcionando en Codepen (se recomienda abrir el enlace 
+Se puede ver éste código funcionando en Codepen (se recomienda abrir el enlace
 para ver la consola).
 
 <Codepen
-    user="emeaguiar"
-    hash="oNWaOWg"
-    loading={ () => <div>Loading...</div> }
+  user='emeaguiar'
+  hash='oNWaOWg'
+  loading={() => <div>Loading...</div>}
 />
 
 ## Referencias

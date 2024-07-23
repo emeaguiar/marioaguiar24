@@ -1,7 +1,7 @@
 ---
 title: Implementing throttle in Vanilla JavaScript
 publishedOn: '2021-09-24'
-updatedOn: '2024-07-22T23:10:07.916Z'
+updatedOn: '2024-07-23T02:34:11.488Z'
 description: >-
   This time I will be showing how to create a simple throttle function using
   only Vanilla JavaScript.
@@ -12,7 +12,7 @@ readingTime: 360
 import Codepen from 'react-codepen-embed';
 import Code from '@/components/code/code';
 
-Hi, welcome to this video tutorial, this time I will be showing how to create a 
+Hi, welcome to this video tutorial, this time I will be showing how to create a
 simple throttle function using only Vanilla JavaScript.
 
 ## What is Vanilla JavaScript?
@@ -39,16 +39,16 @@ executes a function, the function is executed once.
 Let's consider that we have HTML code, in which this button is included:
 
 <Code
-    language="js"
-    children={`<button id="js-say-hello">Say Hello</button>
+  language='js'
+  children={`<button id="js-say-hello">Say Hello</button>
 `}
 />
 
 And we anchor an event like this, which logs “Hello world!” in the console:
 
 <Code
-    language="js"
-    children={`const button = document.querySelector( '#js-say-hello' );
+  language='js'
+  children={`const button = document.querySelector( '#js-say-hello' );
 const sayHello = () => {
     console.log( 'Hello World!' );
 }
@@ -71,8 +71,8 @@ In the following example we will implement a simple version of Throttle, taking
 as reference the previous code, we will implement the following:
 
 <Code
-    language="js"
-    children={`const throttle = ( callback, delay ) => {
+  language='js'
+  children={`const throttle = ( callback, delay ) => {
     // We start a variable to know when the function was last called
     let lastCalled = 0;
     return ( ...args ) => {
@@ -95,8 +95,8 @@ Now, since we have implemented our function, all we have to do is replace in our
 original code, the call to the function by wrapping it in our Throttle.
 
 <Code
-    language="js"
-    children={`// Import our function
+  language='js'
+  children={`// Import our function
 import throttle from './throttle.js';
 const button = document.querySelector( '#js-say-hello' );
 // Wrap our message in a new function
@@ -125,9 +125,9 @@ You can see this code working on Codepen (it is recommended to open the link to
 see the console).
 
 <Codepen
-    user="emeaguiar"
-    hash="oNWaOWg"
-    loading={ () => <div>Loading...</div> }
+  user='emeaguiar'
+  hash='oNWaOWg'
+  loading={() => <div>Loading...</div>}
 />
 
 ## References

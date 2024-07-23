@@ -1,7 +1,7 @@
 ---
 title: Copiar peticiones de Chrome a Postman
 publishedOn: '2023-11-08'
-updatedOn: '2024-07-22T23:45:16.648Z'
+updatedOn: '2024-07-23T02:34:11.490Z'
 description: >-
   Recientemente he estado trabajando en un proyecto que utiliza GraphQL como
   lenguaje para peticiones. Es un proyecto interesante debido a que es lo que se
@@ -13,28 +13,28 @@ published: true
 readingTime: 180
 ---
 
-Recientemente he estado trabajando en un proyecto que utiliza [GraphQL](https://graphql.org/) como lenguaje 
-para peticiones. Es un proyecto interesante debido a que es lo que se llama un 
-**headless CMS**, en el que el backend es manejado con WordPress y el frontend con 
-React, por lo tanto, es necesario debuggear APIs muy seguido; para ello utilizo 
-[Postman](https://www.postman.com/). Pero como debo moverme entre aplicaciones, a 
+Recientemente he estado trabajando en un proyecto que utiliza [GraphQL](https://graphql.org/) como lenguaje
+para peticiones. Es un proyecto interesante debido a que es lo que se llama un
+**headless CMS**, en el que el backend es manejado con WordPress y el frontend con
+React, por lo tanto, es necesario debuggear APIs muy seguido; para ello utilizo
+[Postman](https://www.postman.com/). Pero como debo moverme entre aplicaciones, a
 veces necesito **copiar peticiones de Chrome a Postman**.
 
-Por suerte encontré una manera muy sencilla lograrlo, y es que Postman soporta 
+Por suerte encontré una manera muy sencilla lograrlo, y es que Postman soporta
 importación por medio de cURL, mientras que Chrome soporta exportación de la misma manera.
 
-Para conseguirlo, sólo debemos ejecutar una petición en Chrome, 
-entonces nos aparecerá en nuestra ventana de Red en Chrome tools. Ahora que la tenemos, 
+Para conseguirlo, sólo debemos ejecutar una petición en Chrome,
+entonces nos aparecerá en nuestra ventana de Red en Chrome tools. Ahora que la tenemos,
 sólo hay que darle click derecho y seleccionar `Copiar→Copiar como cURL`
 
 ![Copiar como cURL](/posts/copy-chrome-requests-to-postman/copy-as-curl.webp)
 
-Bastante sencillo, ahora podemos abrir Postman y seleccionar la opción de **importar**, 
+Bastante sencillo, ahora podemos abrir Postman y seleccionar la opción de **importar**,
 entonces podremos copiar el comando cURL que acabamos de copiar de Chrome.
 
 ![Importar en Postman](/posts/copy-chrome-requests-to-postman/import.webp)
 
-¡Listo! Ahora **podremos ver nuestra petición funcionando en Postman** con todos los 
+¡Listo! Ahora **podremos ver nuestra petición funcionando en Postman** con todos los
 headers necesarios. Así de fácil es copiar peticiones de Chrome a Postman.
 
 ## Leer más

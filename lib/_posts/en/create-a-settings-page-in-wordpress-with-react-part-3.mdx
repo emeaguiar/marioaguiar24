@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 3
 publishedOn: '2024-01-29'
-updatedOn: '2024-07-23T02:33:19.297Z'
+updatedOn: '2024-07-23T02:34:11.486Z'
 description: >-
   Part three of a series of tutorials where we will learn how to create a
   settings page in WordPress using React and the WordPress API. Now we need to
@@ -34,8 +34,8 @@ part we registered our option using `register_setting`, we can use the ID we gav
 it to load the saved options in our database like this:
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import {
@@ -103,28 +103,27 @@ With this, we are **reading the value of our option saved earlier**, let's expla
 little how it works:
 
 - We load the `useEntityProp` hook that helps us read properties either from the site
-or from specific posts
+  or from specific posts
 - This is evident in **line 18** where we replace `useState` with `useEntityProp`,
-the _hook_ keeps track of our value to maintain a record while it is saved
+  the _hook_ keeps track of our value to maintain a record while it is saved
 - Finally, we add a condition to the value of our `TextControl` where we basically say
-that if this value is empty (`null`) then return an empty string instead (`''`)
+  that if this value is empty (`null`) then return an empty string instead (`''`)
 - We do the same with our _Toggle_, this is **to maintain the same type of data** even
-when nothing is saved earlier
+  when nothing is saved earlier
 
 Now we need to **save our data** once the save button is pressed, for this we need to
 replace the `saveSettings` function with a call to the functions available in the
 `@wordpress/core-data`, and `@wordpress/data` packages
 
-> [!WARNING]
-> **What is the difference?**
+> [!WARNING] > **What is the difference?**
 >
 > If the question is why some functions are in core-data while others are in data?
 > unfortunately I don't have the answer, we only know that the team that added them
 > assumed that those were the best places to put them 🤷‍♂
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import {
@@ -168,7 +167,7 @@ const Settings = () => {
 I have added only the important parts of our modifications, to understand a little more
 
 - We must import `store`, and give it the alias `coreStore` (this is a good practice
-when working with several) where the function we need is stored[^1]
+  when working with several) where the function we need is stored[^1]
 - We load the `saveEditedEntityRecord` option from the **store** using the `useDispatch` hook
 - We replace our save function so that **it saves the content of our options** with the function we just loaded
 
@@ -189,8 +188,8 @@ With a few modifications and with the help of the `@wordpress/components` packag
 `src/components/settings.js`
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import {
@@ -239,8 +238,8 @@ const Settings = () => {
 `src/components/settings.js#49-85`
 
 <Code
-    language="jsx"
-    children={`return (
+  language='jsx'
+  children={`return (
     <>
         <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
         <Card>
@@ -285,11 +284,10 @@ Let's see what we did:
 2. We brought back `useState`, we will use it to create a loading flag, which is disabled by default
 3. We added the `async` condition to our save function, this tells the browser that an `await` is coming
 4. We changed our loading flag to enabled (this will show the Spinner), and
-we tell the browser to **wait for the result** of the function with `await`, before disabling our flag again
+   we tell the browser to **wait for the result** of the function with `await`, before disabling our flag again
 5. Finally, we indicate the conditions so that **if the flag is enabled show our spinner**, otherwise, show our text
 
-> [!NOTE]
-> **Extra!**
+> [!NOTE] > **Extra!**
 >
 > In addition to our spinner, it is often good to **disable** the button so that it cannot be used while our function loads. Can you figure out how to do this?
 >
@@ -302,8 +300,8 @@ Another simple thing we can do is provide a **success message** (or error) when 
 We make some modifications to the first part of our file:
 
 <Code
-    language="jsx"
-    children={`/**
+  language='jsx'
+  children={`/**
  * WordPress dependencies
  */
 import {
@@ -378,8 +376,7 @@ And now when we save our options, we will have a nice **success message** like t
 
 ![Success message in WordPress](/posts/create-a-settings-page-in-wordpress-with-react-part-3/success.webp)
 
-> [!CAUTION]
-> **What if something goes wrong?**
+> [!CAUTION] > **What if something goes wrong?**
 >
 > In this example, I have only added a success message, but, in case we also want to know if something has failed (recommended) we could log it with the following modifications.
 >
@@ -406,4 +403,5 @@ Finally, if you want to see the complete project you can do it in my [repository
 - [Using promises – JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 
 [^1]: `Stores` are where the application logic lives, in a Redux format; it is where the application `state` and `reducers` are stored.
+
 [^2]: Inside the editor we would use `createNotice` that would show our message along with the others in the editor, but here there is no editor so we have to improvise.

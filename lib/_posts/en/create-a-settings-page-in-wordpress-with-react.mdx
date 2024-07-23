@@ -1,7 +1,7 @@
 ---
 title: Create a options page in WordPress with React – Part 1
 publishedOn: '2024-01-15'
-updatedOn: '2024-07-23T01:16:22.619Z'
+updatedOn: '2024-07-23T02:34:11.487Z'
 description: >-
   Part one of a series of tutorials where we will learn how to create an options
   page in WordPress using React and the WordPress API
@@ -70,8 +70,7 @@ For the purposes of this tutorial, I will use option two, but with an important
 difference. I will not use the mentioned _Settings API_, but instead I will use
 **React**, with the help of the existing components in Gutenberg.
 
-> [!NOTE]
-> **Why React?**
+> [!NOTE] > **Why React?**
 >
 > Throughout my career, I have created countless options pages, each one different
 > from the last, but one thing that almost all have in common is the need to add
@@ -88,13 +87,12 @@ environment you want, and I still say it, I will only ask that **it is capable o
 using node** and that you install the package `@wordpress/scripts` (as in my tutorial
 [Compiling CSS and Javascript with wp-scripts](/compiling-css-and-javascript-with-wp-scripts)).
 
-> [!NOTE]
-> **Using wp-env**
+> [!NOTE] > **Using wp-env**
 >
 > If you are not very familiar with local environments, I invite you to watch my
 > video [Creating a local environment for WordPress with WP-ENV](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1) on youtube where I explain an easy way to achieve it with the tools that WordPress offers.
 >
-> <YouTubeEmbed videoid="K5Uxc3H-kaU"/>
+> <YouTubeEmbed videoid='K5Uxc3H-kaU' />
 
 After having our local environment, we can **create our plugin**, in this case we
 need a very simple one, just a class that we will start to be able to register our
@@ -103,8 +101,8 @@ page:
 `mah-settings.php`
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 /**
  * Plugin Name: Mah Settings
  * Description: Tutorial to create an options page with React
@@ -128,8 +126,8 @@ $settings->init();`}
 `php/class-mah-settings.php`
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 /**
  * @package Mah_Settings
  */
@@ -152,8 +150,7 @@ class Settings {
 Once these files are created, we can enter our site and see `My page` at the top, this
 means that our plugin is working.
 
-> [!NOTE]
-> **Why a class?**
+> [!NOTE] > **Why a class?**
 >
 > While all this code could go only in the file where we register our plugin, it is
 > a good practice to separate each component into its own class, it helps us to have
@@ -165,8 +162,8 @@ Once we have our plugin working, we will replace the content of the `init` funct
 with the `admin_menu` hook, which helps us to register our page in the menu:
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * @var string
  */
 private $plugin_path = '';
@@ -227,18 +224,15 @@ There are a couple of important things happening here, I will try to explain the
 
 To be able to register our scripts within the page, first we need to create them, so we will start by using the package `@wordpress/scripts` that we talked about earlier, so in a terminal we run:
 
-<Code
-    language="bash"
-    children={`npm install --save-dev @wordpress/scripts`}
-/>
+<Code language='bash' children={`npm install --save-dev @wordpress/scripts`} />
 
 After this we can update the configuration to compile our new files, either within the same `package.json` or with a simple webpack configuration file, so we create a file called `webpack.config.js` and place the following:
 
 `webpack.config.js`
 
 <Code
-    language="js"
-    children={`const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+  language='js'
+  children={`const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 module.exports = {
     ...defaultConfig,
     entry: {
@@ -251,8 +245,8 @@ module.exports = {
 `package.json`
 
 <Code
-    language="json"
-    children={`"scripts": {
+  language='json'
+  children={`"scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
   "start": "wp-env start",
   "stop": "wp-env stop",
@@ -263,10 +257,7 @@ module.exports = {
 
 `js/src/settings.js`
 
-<Code
-    language="js"
-    children={`console.log( 'Hello settings' );`}
-/>
+<Code language='js' children={`console.log( 'Hello settings' );`} />
 
 Basically we are **extending the default configuration provided by WordPress** to add a new file: `settings.js`, after this we can run `npm run dev` so that our file is watched and each new change is compiled.
 
@@ -275,16 +266,16 @@ Basically we are **extending the default configuration provided by WordPress** t
 After having our files created, we can register them with the `admin_enqueue_scripts` hook
 
 <Code
-    language="php"
-    children={`public static function init(): void {
+  language='php'
+  children={`public static function init(): void {
     add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
     add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 }`}
 />
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Registers the scripts and styles.
  * 
  * @return void 
@@ -317,9 +308,9 @@ If everything went well, we will have our file working on the page:
 
 ## What's next?
 
-In part 2 of this tutorial, I will explain how we can add the React part to our site 
-using the components of `@wordpress/components`. For now, I hope this introduction 
-has been useful for creating an options page in WordPress with React and please let 
+In part 2 of this tutorial, I will explain how we can add the React part to our site
+using the components of `@wordpress/components`. For now, I hope this introduction
+has been useful for creating an options page in WordPress with React and please let
 me know if you have any questions. If you want to see the source code I used in this tutorial you can do it [my repository](https://github.com/emeaguiar/mah-settings-react/tree/parte-1)
 
 ## Read more…

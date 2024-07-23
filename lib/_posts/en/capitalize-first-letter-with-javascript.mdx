@@ -1,7 +1,7 @@
 ---
 title: Capitalize first letter with Javascript
 publishedOn: '2023-08-11'
-updatedOn: '2024-07-22T23:34:19.229Z'
+updatedOn: '2024-07-23T02:34:11.479Z'
 description: >-
   In this quick tutorial we will learn how to make the first letter of a string
   uppercase
@@ -22,14 +22,13 @@ do it that way, we lose nothing by knowing how it's done, but just in case, to
 do all this in css we only need:
 
 <Code
-    language="scss"
-    children={`.test {
+  language='scss'
+  children={`.test {
     text-transform: capitalize;
 }`}
 />
 
-> [!WARNING]
-> `text-transform: capitalize` will be applied to all words within the element
+> [!WARNING] > `text-transform: capitalize` will be applied to all words within the element
 
 ## In Javascript
 
@@ -48,8 +47,8 @@ we know that `array` start at position zero, therefore, to find the first charac
 of our string, we use `charAt( 0 )`.
 
 <Code
-    language="js"
-    children={`const str = 'foo';
+  language='js'
+  children={`const str = 'foo';
 const firstLetter = str.charAt( 0 );
 console.log( firstLetter ); // f `}
 />
@@ -61,8 +60,8 @@ that's why it's important that we first find the first letter, so that it only
 affects it:
 
 <Code
-    language="js"
-    children={`const str = 'foo';
+  language='js'
+  children={`const str = 'foo';
 const uppercaseStr = str.toUpperCase();
 console.log( uppercaseStr ); // FOO `}
 />
@@ -75,8 +74,8 @@ if `end` is not specified, it will simply take the total number of characters of
 the string, reaching the end.
 
 <Code
-    language="js"
-    children={`const str = 'foo';
+  language='js'
+  children={`const str = 'foo';
 const latterStr = str.slice( 1 );
 console.log( latterStr ); // oo `}
 />
@@ -84,8 +83,8 @@ console.log( latterStr ); // oo `}
 Now we have all the necessary parts, we just have to put them together:
 
 <Code
-    language="js"
-    children={`const str = 'foo';
+  language='js'
+  children={`const str = 'foo';
 const firstLetter = str.charAt( 0 );
 const upperCaseStr = firstLetter.toUpperCase();
 const latterStr = str.slice( 1 );

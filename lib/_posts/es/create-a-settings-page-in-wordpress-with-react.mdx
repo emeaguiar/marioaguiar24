@@ -1,7 +1,7 @@
 ---
 title: Crear una página de opciones en WordPress con React – Parte 1
 publishedOn: '2024-01-15'
-updatedOn: '2024-07-23T01:16:22.629Z'
+updatedOn: '2024-07-23T02:34:11.494Z'
 description: |-
   Parte uno de una serie de tutoriales donde aprenderemos a crear una página de
     opciones en WordPress utilizando React y el API de WordPress
@@ -11,11 +11,11 @@ readingTime: 840
 
 import Code from '@/components/code/code';
 
-A pesar de los avances en _Gutenberg_ que hemos visto los últimos años, con la 
-idea de que las opciones de un post (o una página) deben ser manejadas **dentro 
-del propio editor de WordPress** (a.k.a Gutenberg). Muchas veces aún nos vemos en 
-la necesidad de tener una página en donde podamos manejar todas nuestras opciones 
-globales, fuera de cada post en específico. A continuación mostraré como **crear 
+A pesar de los avances en _Gutenberg_ que hemos visto los últimos años, con la
+idea de que las opciones de un post (o una página) deben ser manejadas **dentro
+del propio editor de WordPress** (a.k.a Gutenberg). Muchas veces aún nos vemos en
+la necesidad de tener una página en donde podamos manejar todas nuestras opciones
+globales, fuera de cada post en específico. A continuación mostraré como **crear
 una página de opciones en WordPress con React**.
 
 ## Tabla de Contenido
@@ -28,14 +28,14 @@ una página de opciones en WordPress con React**.
 
 ## Decisiones, decisiones…
 
-Como todo en WordPress (y en desarrollo en general), tenemos varias opciones, 
-una de ellas es utilizar _Customizer_, o utilizamos una página de opciones. 
+Como todo en WordPress (y en desarrollo en general), tenemos varias opciones,
+una de ellas es utilizar _Customizer_, o utilizamos una página de opciones.
 ¿Cuáles son las diferencias entre estas?
 
 ### Opción 1: Customizer
 
-Customizer es la parte de WordPress que ha sido creada para _personalizar_ nuestro 
-sitio (“customise”), fue creada precisamente para ello, y con ello tienes sus pros 
+Customizer es la parte de WordPress que ha sido creada para _personalizar_ nuestro
+sitio (“customise”), fue creada precisamente para ello, y con ello tienes sus pros
 y sus contras:
 
 #### Pros
@@ -53,7 +53,7 @@ y sus contras:
 
 ### Opción 2: Página de opciones
 
-En cambio, si creamos nuestra propia página de opciones, tenemos más control sobre 
+En cambio, si creamos nuestra propia página de opciones, tenemos más control sobre
 nuestro resultado; sin embargo, al mismo tiempo, tenemos que crear todo nosotros mismos[^1].
 
 #### Pros
@@ -66,46 +66,44 @@ nuestro resultado; sin embargo, al mismo tiempo, tenemos que crear todo nosotros
 
 - Requiere más código
 
-Para propositos de este tutorial, utilizaré la opción dos, pero con una diferencia 
-importante. No utilizaré la mencionada _Settings API_, si no que en su lugar utilizaré 
+Para propositos de este tutorial, utilizaré la opción dos, pero con una diferencia
+importante. No utilizaré la mencionada _Settings API_, si no que en su lugar utilizaré
 **React**, con ayuda de los componentes existentes en Gutenberg.
 
-> [!NOTE]
-> **¿Por qué React?**
+> [!NOTE] > **¿Por qué React?**
 >
-> A lo largo de mis años de carrera, he creado un sin fin de páginas de opciones, 
-> cada una diferente a la anterior, pero algo que casi todas tienen en común es la 
-> necesidad de agregar Javascript a las opciones, es por eso que en éste tutorial 
-> me brincaré esa realización y en su lugar comenzaré haciéndolo con React desde 
+> A lo largo de mis años de carrera, he creado un sin fin de páginas de opciones,
+> cada una diferente a la anterior, pero algo que casi todas tienen en común es la
+> necesidad de agregar Javascript a las opciones, es por eso que en éste tutorial
+> me brincaré esa realización y en su lugar comenzaré haciéndolo con React desde
 > el inicio.
 
 Ahora si, después de esta _enorme_ introducción (¡lo siento!) podemos comenzar con el tutorial.
 
 ## Paso 1: Creando el ambiente local
 
-Debido a que este es un tutorial técnico, asumiré que tienes cierto conocimiento 
-sobre como iniciar un proyecto local, normalmente diría que puedes usar cualquier 
-ambiente que desees, y sigo diciéndolo, unicamente pediré que **sea capaz de utilizar 
+Debido a que este es un tutorial técnico, asumiré que tienes cierto conocimiento
+sobre como iniciar un proyecto local, normalmente diría que puedes usar cualquier
+ambiente que desees, y sigo diciéndolo, unicamente pediré que **sea capaz de utilizar
 node** e instales el paquete `@wordpress/scripts` (como en mi tutorial [Compilando CSS y Javascript con wp-scripts](/compiling-css-and-javascript-with-wp-scripts)).
 
-> [!NOTE]
-> **Utilizando wp-env**
+> [!NOTE] > **Utilizando wp-env**
 >
-> Si no eres muy familiar con ambientes locales te invito a ver mi video 
-> [Creando un ambiente local para WordPress con WP-ENV](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1) en youtube donde explico 
+> Si no eres muy familiar con ambientes locales te invito a ver mi video
+> [Creando un ambiente local para WordPress con WP-ENV](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1) en youtube donde explico
 > una manera fácil de lograrlo con las herramientas que ofrece WordPress.
 >
-> <YouTubeEmbed videoid="K5Uxc3H-kaU"/> 
+> <YouTubeEmbed videoid='K5Uxc3H-kaU' />{' '}
 
-Después de tener nuestro ambiente local, podemos **crear nuestro plugin**, en 
-éste caso necesitamos uno muy sencillo, simplemente una clase que iniciaremos 
+Después de tener nuestro ambiente local, podemos **crear nuestro plugin**, en
+éste caso necesitamos uno muy sencillo, simplemente una clase que iniciaremos
 para poder registrar nuestra página:
 
 `mah-settings.php`
 
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 /**
  * Plugin Name: Mah Settings
  * Description: Tutorial para crear una página de opciones con React
@@ -127,9 +125,10 @@ $settings->init();`}
 />
 
 `php/class-mah-settings.php`
+
 <Code
-    language="php"
-    children={`<?php
+  language='php'
+  children={`<?php
 /**
  * @package Mah_Settings
  */
@@ -149,26 +148,25 @@ class Settings {
 }`}
 />
 
-Una vez creados estos archivos podremos entrar en nuestro sitio y ver `Mi página` 
+Una vez creados estos archivos podremos entrar en nuestro sitio y ver `Mi página`
 en la parte superior, esto significa que nuestro plugin está funcionando.
 
-> [!NOTE]
-> **¿Por qué una clase?**
+> [!NOTE] > **¿Por qué una clase?**
 >
-> Si bien todo este código podría ir únicamente en el archivo donde registramos 
-> nuestro plugin, es una buena práctica el separar cada componente en su propia clase, 
-> nos ayuda a tener las cosas más organizadas y a prevenir conflictos con otro tipo 
+> Si bien todo este código podría ir únicamente en el archivo donde registramos
+> nuestro plugin, es una buena práctica el separar cada componente en su propia clase,
+> nos ayuda a tener las cosas más organizadas y a prevenir conflictos con otro tipo
 > de código que utilizemos.
 
 ## Paso 2: Crear una página de opciones en WordPress
 
-Una vez que tenemos nuestro plugin functionando, reemplazaremos el contenido de 
-la función `init` por el hook `admin_menu`, que nos ayuda a registrar nuestra página 
+Una vez que tenemos nuestro plugin functionando, reemplazaremos el contenido de
+la función `init` por el hook `admin_menu`, que nos ayuda a registrar nuestra página
 en el menú:
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * @var string
  */
 private $plugin_path = '';
@@ -222,36 +220,33 @@ public function render_settings_page(): void {
 
 Hay un par de cosas importantes sucediendo aquí, trataré de explicarlas brevemente:
 
-1. La función `add_menu_page` simplemente registra un enlace en el menu izquierdo 
-de la administración, en ella agregamos el título, las capabilidades (o permisos) 
-requeridos para ver ese menú, y **especificamos que función debe ser ejecutada cuando 
-se accede a ese menú**, que en este caso será `render_settings_page`. Esta función 
-regresa el _hook_ de esta nueva página, el cual guardaremos para después.
-2. En la función `render_settings_page`, que será mostrada cuando se acceda a esta 
-página, simplemente agregamos un título (opcional) y un _contenedor vacío_. ¿Por 
-qué agregamos esto? **Porque será llenado con React**.
+1. La función `add_menu_page` simplemente registra un enlace en el menu izquierdo
+   de la administración, en ella agregamos el título, las capabilidades (o permisos)
+   requeridos para ver ese menú, y **especificamos que función debe ser ejecutada cuando
+   se accede a ese menú**, que en este caso será `render_settings_page`. Esta función
+   regresa el _hook_ de esta nueva página, el cual guardaremos para después.
+2. En la función `render_settings_page`, que será mostrada cuando se acceda a esta
+   página, simplemente agregamos un título (opcional) y un _contenedor vacío_. ¿Por
+   qué agregamos esto? **Porque será llenado con React**.
 
 ## Paso 3: Registrar nuestros scripts
 
-Para poder registrar nuestros scripts dentro de la página, primero necesitamos 
-crearlos, para ello comenzaremos con utilizar el paquete `@wordpress/scripts` del 
+Para poder registrar nuestros scripts dentro de la página, primero necesitamos
+crearlos, para ello comenzaremos con utilizar el paquete `@wordpress/scripts` del
 que hablamos anteriormente, así que, en una terminal corremos:
 
-<Code
-    language="bash"
-    children={`npm install --save-dev @wordpress/scripts`}
-/>
+<Code language='bash' children={`npm install --save-dev @wordpress/scripts`} />
 
-Después de esto podemos actualizar la configuración para que compile nuestros 
-nuevos archivos, ya sea dentro el mismo `package.json` o con un simple archivo de 
-configuración de webpack, así que creamos un archivo llamado `webpack.config.js` 
+Después de esto podemos actualizar la configuración para que compile nuestros
+nuevos archivos, ya sea dentro el mismo `package.json` o con un simple archivo de
+configuración de webpack, así que creamos un archivo llamado `webpack.config.js`
 y colocamos lo siguiente:
 
 `webpack.config.js`
 
 <Code
-    language="js"
-    children={`const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+  language='js'
+  children={`const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 module.exports = {
     ...defaultConfig,
     entry: {
@@ -264,8 +259,8 @@ module.exports = {
 `package.json`
 
 <Code
-    language="json"
-    children={`"scripts": {
+  language='json'
+  children={`"scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
   "start": "wp-env start",
   "stop": "wp-env stop",
@@ -276,13 +271,10 @@ module.exports = {
 
 `js/src/settings.js`
 
-<Code
-    language="js"
-    children={`console.log( 'Hello settings' );`}
-/>
+<Code language='js' children={`console.log( 'Hello settings' );`} />
 
-Básicamente estamos **extendiendo la configuración por defecto que provee WordPress** 
-para agregar un nuevo archivo: `settings.js`, después de esto podemos correr `npm run dev` 
+Básicamente estamos **extendiendo la configuración por defecto que provee WordPress**
+para agregar un nuevo archivo: `settings.js`, después de esto podemos correr `npm run dev`
 para que nuestro archivo sea vigilado y cada nuevo cambio sea compilado.
 
 ![Vista del editor con los archivos creados](/posts/create-an-options-page-in-wordpress-with-react/editor-config.webp)
@@ -290,16 +282,16 @@ para que nuestro archivo sea vigilado y cada nuevo cambio sea compilado.
 Después de tener nuestros archivos creados, podemos registrarlos con el hook `admin_enqueue_scripts`
 
 <Code
-    language="php"
-    children={`public static function init(): void {
+  language='php'
+  children={`public static function init(): void {
     add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
     add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 }`}
 />
 
 <Code
-    language="php"
-    children={`/**
+  language='php'
+  children={`/**
  * Registra los scripts y estilos.
  * 
  * @return void 
@@ -323,10 +315,10 @@ public function enqueue_scripts(): void {
 Ahora explicaré un poco lo que sucede aquí:
 
 1. Conseguimos la información de la página actual utilizando `get_current_screen`
-2. Comparamos el ID de la página actual con el hook que guardamos cuando creamos la 
-página, si es el mismo, continuamos; si no, aquí terminamos.
-3. Finalmente registramos nuestro nuevo script utilizando las dependencias que se 
-agregan al archivo (gracias a `@wordpress/scripts`)
+2. Comparamos el ID de la página actual con el hook que guardamos cuando creamos la
+   página, si es el mismo, continuamos; si no, aquí terminamos.
+3. Finalmente registramos nuestro nuevo script utilizando las dependencias que se
+   agregan al archivo (gracias a `@wordpress/scripts`)
 
 Si todo salió bien, tendremos nuestro archivo funcionando en la página:
 
@@ -334,11 +326,11 @@ Si todo salió bien, tendremos nuestro archivo funcionando en la página:
 
 ## ¿Qué sigue?
 
-En la parte 2 de este tutorial, explicaré como podemos agregar la parte React a 
-nuestro sitio utilizando los componentes de `@wordpress/components`. Por ahora, 
-espero que esta introducción haya sido útil para crear una página de opciones 
-en WordPress con React y por favor hazme saber cualquier duda que tengas. Si 
-quieres ver el código fuente que utilicé en este tutorial puedes hacerlo [mi 
+En la parte 2 de este tutorial, explicaré como podemos agregar la parte React a
+nuestro sitio utilizando los componentes de `@wordpress/components`. Por ahora,
+espero que esta introducción haya sido útil para crear una página de opciones
+en WordPress con React y por favor hazme saber cualquier duda que tengas. Si
+quieres ver el código fuente que utilicé en este tutorial puedes hacerlo [mi
 repositorio](https://github.com/emeaguiar/mah-settings-react/tree/parte-1):
 
 ## Leer más…

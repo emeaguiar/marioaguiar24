@@ -1,7 +1,7 @@
 ---
 title: Crear enlaces simbólicos en OSX
 publishedOn: '2020-09-27'
-updatedOn: '2024-07-22T22:42:28.527Z'
+updatedOn: '2024-07-23T02:34:11.494Z'
 description: >-
   Los enlaces simbólicos, o como también se les conoce symlinks. Pueden ser
   vistos como un alias, no son más que rutas “simbolicas” que pueden señalar a
@@ -14,15 +14,15 @@ readingTime: 120
 
 import Code from '@/components/code/code';
 
-Los **enlaces simbólicos**, o como también se les conoce _symlinks_. Pueden ser 
-vistos como un alias, no son más que rutas “simbolicas” que pueden señalar a 
-cualquier ubicación de tu computadora, son útiles cuando quieres mantener 
-directorios separados, **pero al mismo tiempo uno dentro de otro**. Por ejemplo, 
+Los **enlaces simbólicos**, o como también se les conoce _symlinks_. Pueden ser
+vistos como un alias, no son más que rutas “simbolicas” que pueden señalar a
+cualquier ubicación de tu computadora, son útiles cuando quieres mantener
+directorios separados, **pero al mismo tiempo uno dentro de otro**. Por ejemplo,
 si tengo un repositorio con estos archivos:
 
 <Code
-    language="plain"
-    children={`- public
+  language='plain'
+  children={`- public
 -- wp-content
 -- .gitignore
 -- composer.json
@@ -32,31 +32,31 @@ si tengo un repositorio con estos archivos:
 Y quiero el directorio `wp-content`, dentro de alguna instalación con archivos existentes:
 
 <Code
-    language="plain"
-    children={`- public
+  language='plain'
+  children={`- public
 -- wp-admin
 -- wp-includes
 -- wp-config.php
 ...`}
 />
 
-No podría simplemente clonar el repositorio, ya que el directorio no estaría 
-vacío, entonces, la solución sería crear una ruta simbólica con el comando `ln`. 
+No podría simplemente clonar el repositorio, ya que el directorio no estaría
+vacío, entonces, la solución sería crear una ruta simbólica con el comando `ln`.
 Su sintaxis es la siguiente:
 
 <Code
-    language="bash"
-    children={`ln -s ruta/original ruta/simbolica
+  language='bash'
+  children={`ln -s ruta/original ruta/simbolica
 `}
 />
 
-El parámetro `-s` es lo que especifica que se trata de un enlace simbólico, 
-en la mayoría de los casos no necesitarás nada más. Ahora mi instalación se 
+El parámetro `-s` es lo que especifica que se trata de un enlace simbólico,
+en la mayoría de los casos no necesitarás nada más. Ahora mi instalación se
 vería así:
 
 <Code
-    language="plain"
-    children={`- public
+  language='plain'
+  children={`- public
 -- wp-admin
 -- wp-content
 -- wp-includes
@@ -64,6 +64,6 @@ vería así:
 ...`}
 />
 
-En donde `wp-content` es una **referencia a la ruta original**, y al entrar a ese 
-directorio simplemente entraré al original, asi cada que actualice el 
+En donde `wp-content` es una **referencia a la ruta original**, y al entrar a ese
+directorio simplemente entraré al original, asi cada que actualice el
 repositorio obtendré las actualizaciones también en mi instalación.
