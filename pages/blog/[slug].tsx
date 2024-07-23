@@ -52,7 +52,7 @@ export default function PostPage({
         />
       </div>
 
-      <div className='flex flex-col items-center gap-6 px-4 text-xl/9'>
+      <div className='flex flex-col items-center gap-6 px-4 text-xl/9 lg:w-[736px]'>
         <Component
           components={{
             a: A,

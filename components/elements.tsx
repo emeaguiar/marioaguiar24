@@ -55,7 +55,7 @@ export function H2({
     >
       {id && (
         <span
-          className='pr-4 opacity-0 transition-opacity group-hover:opacity-100'
+          className='pr-4 transition-opacity lg:opacity-0 group-hover:lg:opacity-100'
           aria-hidden
         >
           #
