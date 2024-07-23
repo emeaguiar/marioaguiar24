@@ -62,7 +62,13 @@ export function H2({
         </span>
       )}
 
-      <span className='pl-4'>{children}</span>
+      <span
+        className={clsx({
+          'pl-4': id,
+        })}
+      >
+        {children}
+      </span>
     </h2>
   );
 
