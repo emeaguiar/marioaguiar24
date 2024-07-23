@@ -1,0 +1,422 @@
+---
+title: Crear una página de opciones en WordPress con React – Parte 3
+publishedOn: '2024-01-29'
+updatedOn: '2024-07-23T02:33:19.298Z'
+description: |-
+  Parte tres de una serie de tutoriales donde aprenderemos a crear una página de
+    opciones en WordPress utilizando React y el API de WordPress. Ahora lo que resta es guardar los datos dentro de nuestra base de datos y leerla dentro de nuestra página de opciones para asegurarnos de no sobre-escribir los datos.
+published: true
+readingTime: 900
+---
+
+import Code from '@/components/code/code';
+
+Durante la [segunda parte](/blog/create-a-settings-page-in-wordpress-with-react-part-2) 
+de este tutorial para **crear una página de opciones en WordPress**, mostré como crear 
+una pequeña aplicación en React que sea mostrada dentro de nuestra página de 
+opciones, agregamos un par de campos y estilos; y preparamos el botón de guardado 
+para que ésta funcione. Ahora lo que resta es **guardar los datos** dentro de nuestra 
+base de datos y leerla dentro de nuestra página de opciones para asegurarnos de 
+no sobre-escribir los datos.
+
+## Tabla de Contenido
+
+- [Paso 1: Guardando nuestros datos](#paso-1-guardando-nuestros-datos)
+- [Paso 2: Mejorando la experiencia](#paso-2-mejorando-la-experiencia)
+- [Conclusión](#conclusi%C3%B3n)
+
+## Paso 1: Guardando nuestros datos
+
+Comenzando desde donde nos quedamos la última vez, afortunadamente WordPress ya 
+viene con sus utilidades para hacernos la vida más fácil, y, si recordamos que 
+en la segunda parte registramos nuestra opción utilizando `register_setting`, podemos 
+utilizar el ID que le dimos para cargar las opciones guardadas en nuestra base de 
+datos de esta forma:
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import {
+    Button,
+    Card,
+    CardBody,
+    CardDivider,
+    CardFooter,
+    TextControl,
+    ToggleControl,
+} from '@wordpress/components';
+import { useEntityProp } from '@wordpress/core-data';
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    const [ apiKey, setApiKey ] = useEntityProp(
+        'root',
+        'site',
+        'mah_api_key'
+    );
+    const [ toggled, setToggled ] = useEntityProp(
+        'root',
+        'site',
+        'mah_function'
+    );
+    const saveSettings = () => {
+        console.log( 'Guardar' );
+    };
+    return (
+        <>
+            <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
+            <Card>
+                <CardBody>
+                    <TextControl
+                        help={ __( 'Ingresa tu API key', 'mah-settings' ) }
+                        label={ __( 'API Key', 'mah-settings' ) }
+                        onChange={ setApiKey }
+                        value={ apiKey || '' }
+                    />
+                </CardBody>
+                <CardDivider />
+                <CardBody>
+                    <ToggleControl
+                        label={ __( 'Activar funcionalidad', 'mah-settings' ) }
+                        onChange={ setToggled }
+                        checked={ toggled || false }
+                    />
+                </CardBody>
+                <CardFooter>
+                    <Button
+                        disabled={ ! apiKey }
+                        onClick={ saveSettings }
+                        variant="primary"
+                    >
+                        { __( 'Guardar', 'mah-settings' ) }
+                    </Button>
+                </CardFooter>
+            </Card>
+        </>
+    );
+}
+export default Settings;`}
+/>
+
+Con esto ya estamos **leyendo el valor de nuestra opción guardado anteriormente**, expliquemos un poco como funciona:
+
+- Cargamos el hook `useEntityProp` que nos ayuda a leer propiedades ya sea del sitio, o de posts en particular
+- Esto es evidente en la **linea 18** donde reemplazamos `useState` por `useEntityProp`, 
+el _hook_ mantiene en observación a nuestro valor para mantener un registro mientras se guarda
+- Por último agregamos una condición al valor de nuestro `TextControl` en donde 
+básicamente decimos que is este valor está vacío (`null`) entonces regrese una cadena vacía en su lugar (`''`).
+- Hacemos lo mismo con nuestro _Toggle_, esto es **para mantener el mismo tipo de 
+datos** aún cuando no haya nada guardado anteriormente
+
+Ahora necesitamos **guardar nuestros datos** una vez que se presiona el botón de 
+guardar, para ello necesitamos reemplazar la función de `saveSettings` por una llamada 
+a las funciones disponibles en los paquetes `@wordpress/core-data`, y `@wordpress/data`
+
+> [!WARNING]
+> **¿Cual es la diferencia?**
+>
+> Si la pregunta es el ¿por qué algunas funciones estan en core-data mientras 
+> que otras están en data? desafortunadamente no tengo la respuesta, 
+> sólo sabemos que el equipo que las agregó supuso que esos eran los mejores 
+> lugares para colocarlas 🤷‍♂️
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import {
+    Button,
+    Card,
+    CardBody,
+    CardDivider,
+    CardFooter,
+    TextControl,
+    ToggleControl,
+} from '@wordpress/components';
+import { store as coreStore, useEntityProp } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    const [ apiKey, setApiKey ] = useEntityProp(
+        'root',
+        'site',
+        'mah_api_key'
+    );
+    const [ toggled, setToggled ] = useState( false );
+    const { saveEditedEntityRecord } = useDispatch( coreStore );
+    const saveSettings = () => {
+        saveEditedEntityRecord(
+            'root',
+            'site',
+            undefined,
+            {
+                mah_api_key: apiKey,
+                mah_function: toggled,
+            }
+        );
+    };
+[…]`}
+/>
+
+He agregado solo las partes importantes de nuestras modificaciones, para entender un poco más expliquemos por partes:
+
+- Debemos importar `store`, y le damos el alias `coreStore` (esto es una buena práctica 
+cuando se trabaja con varios) que es en donde está guardada la función que necesitamos[^1]
+- Cargamos la opción `saveEditedEntityRecord` del **store** utilizando el hook `useDispatch`
+- Reemplazamos nuestra función de guardado para que **guarde el contenido de nuestras opciones** 
+con la función que acabamos de cargar
+
+Y eso es todo, ahora una vez hagamos cambios a nuestros controles podremos ver como 
+su valor persiste al recargar la página, y podemos utilizarlos en el resto de nuestro sitio:
+
+![Guardando datos en WordPress](/posts/create-a-settings-page-in-wordpress-with-react-part-3/field-state.webp)
+
+## Paso 2: Mejorando la experiencia
+
+A pesar de que ya esté guardando nuestros datos, aún no hemos terminado ¿Cierto? 
+_¿Puedes ver que manera sencilla tenemos de mejorar la experiencia?_
+
+### Paso 2.1: Indicador de carga (Spinner)
+
+Lo más lógico que se me ocurre: **no sabemos cuando ni como se han guardado nuestras opciones**. 
+No hay **ningún indicador** que nos diga que el botón funcionó hasta que recargamos 
+la página y las vemos ser cargadas en los campos, por lo tanto, podemos comenzar con un simple _Spinner_.
+
+Con unas pocas modificaciones y con la ayuda de nuevo del paquete `@wordpress/components` podemos colocarlo facilmente:
+
+`src/components/settings.js`
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import {
+    Button,
+    Card,
+    CardBody,
+    CardDivider,
+    CardFooter,
+    Spinner,
+    TextControl,
+    ToggleControl,
+} from '@wordpress/components';
+import { store as coreStore, useEntityProp } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    const [ isLoading, setIsLoading ] = useState( false );
+    const [ apiKey, setApiKey ] = useEntityProp(
+        'root',
+        'site',
+        'mah_api_key'
+    );
+    const [ toggled, setToggled ] = useEntityProp(
+        'root',
+        'site',
+        'mah_function'
+    );
+    const { saveEditedEntityRecord } = useDispatch( coreStore );
+    const saveSettings = async () => {
+        setIsLoading( true );
+        await saveEditedEntityRecord(
+            'root',
+            'site',
+            undefined,
+            {
+                mah_api_key: apiKey,
+                mah_function: toggled,
+            }
+        );
+        setIsLoading( false );
+    };
+[…]`}
+/>
+
+`src/components/settings.js#49-85`
+
+<Code
+    language="jsx"
+    children={`return (
+    <>
+        <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
+        <Card>
+            <CardBody>
+                <TextControl
+                    help={ __( 'Ingresa tu API key', 'mah-settings' ) }
+                    label={ __( 'API Key', 'mah-settings' ) }
+                    onChange={ setApiKey }
+                    value={ apiKey || '' }
+                />
+            </CardBody>
+            <CardDivider />
+            <CardBody>
+                <ToggleControl
+                    label={ __( 'Activar funcionalidad', 'mah-settings' ) }
+                    onChange={ setToggled }
+                    checked={ toggled || false }
+                />
+            </CardBody>
+            <CardFooter>
+                <Button
+                    disabled={ ! apiKey }
+                    onClick={ saveSettings }
+                    variant="primary"
+                >
+                    { isLoading && <Spinner /> }
+                    { ! isLoading && __( 'Guardar', 'mah-settings' ) }
+                </Button>
+            </CardFooter>
+        </Card>
+    </>
+);`}
+/>
+
+Y el resultado sería:
+
+![Spinner en WordPress](/posts/create-a-settings-page-in-wordpress-with-react-part-3/spinner.webp)
+
+
+Veamos que hicimos:
+
+1. Importamos `Spinner` de nuestros componentes de WordPress, **esto es lo que nos dará el indicador de carga**
+2. Regresamos `useState`, lo utilizaremos para crear una bandera de carga, que está deshabilitada por defecto
+3. Agregamos la condición `async` a nuestra función de guardado, esto indica al navegador que un `await` esta por venir
+4. Cambiamos nuestra bandera de carga a habilitada (esto mostrará el Spinner), y 
+le indicamos al navegador que **debe esperar el resultado** de la función con `await`, 
+antes de volver a deshabilitar nuestra bandera
+5. Finalmente, indicamos las condiciones para que **si la bandera esta habilitada 
+muestre nuestro spinner**, de lo contrario, que muestre nuestro texto
+
+> [!NOTE]
+> **¡Extra!**
+>
+> Además de nuestro spinner, muchas veces también es bueno **deshabilitar** el botón 
+> para que no pueda ser utilizado mientras nuestra función carga ¿Puedes descubrir cómo hacer esto?
+> 
+> _Tip: Estará incluido en los demás ejemplos y el repositorio al final del artículo._
+
+### Paso 2.2: Mensaje de éxito (o de error)
+
+Otra cosa sencilla que podemos hacer es brindar un **mensaje de éxito** (o error) al 
+terminar el proceso, este será un poco diferente de lo que hace el editor de WordPress 
+por defecto[^2], pero aún así tenemos un componente que podemos utilizar.
+
+Hacemos unas modificaciones la la primera parte de nuestro archivo:
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import {
+    Button,
+    Card,
+    CardBody,
+    CardDivider,
+    CardFooter,
+    Notice,
+    Spinner,
+    TextControl,
+    ToggleControl,
+} from '@wordpress/components';
+import { store as coreStore, useEntityProp } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    const [ isLoading, setIsLoading ] = useState( false );
+    const [ showNotice, setShowNotice ] = useState( false );
+    const [ apiKey, setApiKey ] = useEntityProp(
+        'root',
+        'site',
+        'mah_api_key'
+    );
+    const [ toggled, setToggled ] = useEntityProp(
+        'root',
+        'site',
+        'mah_function'
+    );
+    const { saveEditedEntityRecord } = useDispatch( coreStore );
+    const saveSettings = async () => {
+        setIsLoading( true );
+        await saveEditedEntityRecord(
+            'root',
+            'site',
+            undefined,
+            {
+                mah_api_key: apiKey,
+                mah_function: toggled,
+            }
+        );
+        setShowNotice( true );
+        setIsLoading( false );
+    };
+    return (
+        <>
+            <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
+            <Card>
+                { showNotice && (
+                    <CardBody>
+                        <Notice
+                            isDismissible
+                            onDismiss={ () => setShowNotice( false ) }
+                            status="success"
+                        >
+                            { __( 'Guardado con éxito', 'mah-settings' ) }
+                        </Notice>
+                    </CardBody>
+                ) }`}
+/>
+
+Básicamente lo que estamos haciendo es:
+
+1. Importamos el componente Notice de `@wordpress/components`
+2. Creamos una bandera que nos ayude a saber **cuando mostrar el mensaje** utilizando de nuevo `useState`
+3. Cuando termine el proceso de guardado, habilitamos la bandera para mostrar el mensaje
+4. Por encima de nuestras opciones, **preparamos el lugar en donde se mostrará el mensaje** y especificamos que sólo se muestre cuando la bandera esté habilitada
+5. Dentro del componente `Notice` especificamos cuál será el mensaje y agregamos 
+una función que **deshabilite nuestra bandera** cuando se de click al botón de cerrar
+
+Y ahora cuando guardemos nuestras opciones, tendremos un bonito **mensaje de éxito** igual a este:
+
+![Mensaje de éxito en WordPress](/posts/create-a-settings-page-in-wordpress-with-react-part-3/success.webp)
+
+> [!CAUTION]
+> **¿Y si algo falla?**
+>
+> En éste ejemplo, sólo he agregado un mensaje de éxito, pero, en caso de que 
+> queramos también saber si algo ha fallado (recomendado) podríamos logarlo con las siguientes modificaciones.
+>
+> - Crear un state que guarde el mensaje que necesitemos, así como su `status`
+> - Reemplazar nuestra función async await for una promesa de formato `.then().catch()`
+> - Guardar el mensaje de error en nuestra variable dentro de la función `catch`
+> - Mostrar nuestro mensaje cambiando el `status` dependiendo de si fue éxito o error
+
+## Conclusión
+
+Creo que nuestra página de opciones se encuentra ahora en un bien lugar, no 
+esperaba que éste tutorial se extendiera tanto pero espero que haya sido útil 
+para alguien. Finalmente logramos **crear nuestra página de opciones**, para recapitular, 
+ésto es lo que hemos hecho hasta ahora:
+
+- Creamos nuestro ambiente, y nuestro plugin
+- Creamos nuestra página de opciones, y registramos un _script_ que se ejecute sólo en ella
+- Registramos nuestras opciones globales, y agregamos nuestros controles en React
+- Guardamos nuestras opciones en React, y agregamos mejoras en UX
+
+Finalmente, si quieres ver el proyecto completo puedes hacerlo en mi [repositoro en Github](https://github.com/emeaguiar/mah-settings-react/tree/parte-3). Una vez más, todos los comentarios son bienvenidos y cualquier sugerencia sobre qué escribir después también. ¡Hasta la próxima!
+
+## Leer más…
+
+- [@wordpress/data – Block Editor Handbook | Developer.WordPress.org](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-data/)
+- [@wordpress/core-data – Block Editor Handbook | Developer.WordPress.org](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-core-data/)
+- [Usar promesas – JavaScript | MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises)
+
+[^1]: Los `stores` son el lugar en dónde la lógica de la applicación vive, en 
+un formato de Redux; es dónde se guarda el `state` y los `reducers` de la aplicación.
+[^2]: Dentro del editor utilizariamos `createNotice` que mostraría nuestro mensaje junto a los 
+demás de editor, pero aquí no hay editor así que hay que improvisar.
