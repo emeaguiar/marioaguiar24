@@ -1,0 +1,406 @@
+---
+title: Crear una página de opciones en WordPress con React – Parte 2
+publishedOn: '2024-01-22'
+updatedOn: '2024-07-23T01:54:24.009Z'
+description: |-
+  Parte dos de una serie de tutoriales donde aprenderemos a crear una página de
+    opciones en WordPress utilizando React y el API de WordPress. mostraré como utilizar los componentes incluidos en WordPress para agregar campos de texto, y guardar las opciones.
+published: true
+readingTime: 900
+---
+
+import Code from '@/components/code/code';
+
+En la [primera parte de este tutorial](/create-a-settings-page-in-wordpress-with-react), 
+mostré los principios básicos para **crear una página de opciones en WordPress**, en 
+esta segunda parte, mostraré como utilizar los componentes incluidos en WordPress 
+para __agregar campos de texto, y guardar las opciones__.
+
+## Tabla de Contenido
+
+- [Paso 1: Creando nuestra aplicación](#paso-1-creando-nuestra-aplicaci%C3%B3n)
+- [Paso 2: Agrega algunas opciones](#paso-2-agrega-algunas-opciones)
+- [Paso 3: Crear opciones en el backend](paso-3-registrar-las-opciones-en-el-backend)
+- [Paso 4: Agregar botón de guardado con React](paso-4-agregar-bot%C3%B3n-de-guardado-con-react)
+
+> [!WARNING]
+> Es posible que necesites instalar algunos paquetes para este tutorial. 
+> Aunque gracias a nuestro compilador en @wordpress/scripts que automáticamente 
+> los agrega a las dependencias del script podría no ser necesario, yo prefiero 
+> instalarlos simplemente para tener un registro de ellos.
+>
+> Si llegas a tener algún error simplemente ejecuta `npm install --save-dev {paquete}` con los siguientes paquetes:
+>
+> – `@wordpress/components`
+> – `@wordpress/element`
+> – `@wordpress/i18n`
+
+## Paso 1: Creando nuestra aplicación
+
+Para crear una página de opciones, necesitamos **agregar algunos campos**. 
+Para comenzar, debemos abrir el archivo `settings.js` que es donde iniciaremos 
+nuestra aplicación, y creamos una sencilla:
+
+`settings.js`
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import { createRoot } from '@wordpress/element';
+/**
+ * Internal dependencies
+ */
+import Settings from './components/settings';
+const rootElement = document.querySelector( '#mah-settings' );
+if ( rootElement ) {
+    createRoot( rootElement ).render( <Settings /> );
+}`}
+/>
+
+`components/settings.js`
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    return (
+        <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
+    );
+}
+export default Settings;`}
+/>
+
+Entre las cosas que ponemos observar en este pedazo de código están:
+
+1. El uso de createRoot con el que iniciamos nuestras aplicaciones en React, pero 
+a diferencia de como normalmente se usa, ésta vez lo tomamos de `@wordpress/element`. 
+Esto es porque **WordPress ya viene con su propia copia de React** que nos asegura que 
+sus componentes funcionarán.
+2. Así mismo, viene con una versión en javascript de la función `__` para traducciones, 
+a diferencia de PHP **no hay versión de** `esc_html__` así que utilizamos la versión normal.
+
+> [!CAUTION]
+> **Uso de React**
+>
+> Como te puedes dar cuenta por este pequeño código (y el título del post…). 
+> Éste tutorial asume que tienes al menos un conocimiento básico de ReactJS, si 
+> no es así; te invito a estudiarlo un poco para que no pierdas el hilo de este tema.
+
+## Paso 2: Agrega algunas opciones
+
+Ahora que tenemos nuestra aplicación corriendo podemos comenzar a **agregar opciones 
+a nuestra página**, una de las más comunes que me encuentro es la de campos de texto, 
+tal vez para algún API, por ejemplo:
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import {
+    Card,
+    CardBody,
+    TextControl,
+} from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    const [ apiKey, setApiKey ] = useState( '' );
+    return (
+        <>
+            <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
+            <Card>
+                <CardBody>
+                    <TextControl
+                        help={ __( 'Ingresa tu API key', 'mah-settings' ) }
+                        label={ __( 'API Key', 'mah-settings' ) }
+                        onChange={ setApiKey }
+                        value={ apiKey }
+                    />
+                </CardBody>
+            </Card>
+        </>
+    );
+}
+export default Settings;`}
+/>
+
+Al volver a recargar la página, podremos ver que ¡nuestra **página de opciones** toma forma! 
+aunque podemos agregar algo de sabor, pero eso lo haremos más adelante, ahora que 
+tenemos nuestro campo, expliquemos que pasa aquí:
+
+1. Se agregan algunos componentes más de WordPress, esta vez son `Card`, `CardBody`, y `TextControl`. 
+En realidad el importante es TextControl ya que es el que utilizaremos para ingresar nuestras opciones
+2. Importamos `useState` de `@wordpress/element` (una vez más, React viene incluido)
+3. Agregamos un estado vacío que se actualizará cuando cambiemos algo en `TextControl`
+4. El uso de fragmentos de React, solo que utilizamos su versión recortada, en lugar 
+de `import { Fragment } from '@wordpress/element'` simplemente utilizamos `<></>`
+
+![Página de opciones con campo de texto](/posts/create-a-settings-page-in-wordpress-with-react-part-2/settings-field.webp)
+
+> [!TIP]
+> `@wordpress/components` viene con muchos componentes disponibles, sugiero 
+> revisar el [Storybook](https://wordpress.github.io/gutenberg/?path=/docs/docs-introduction--page) 
+> para ver una demostración que los que tenemos a nuestra disposición
+
+Como bonus, agreguemos un `toggle` simplemente porque me gusta como funcionan:
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import {
+    Card,
+    CardBody,
+    CardDivider,
+    TextControl,
+    ToggleControl,
+} from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    const [ apiKey, setApiKey ] = useState( '' );
+    const [ toggled, setToggled ] = useState( false );
+    return (
+        <>
+            <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
+            <Card>
+                <CardBody>
+                    <TextControl
+                        help={ __( 'Ingresa tu API key', 'mah-settings' ) }
+                        label={ __( 'API Key', 'mah-settings' ) }
+                        onChange={ setApiKey }
+                        value={ apiKey }
+                    />
+                </CardBody>
+                
+                <CardDivider />
+                <CardBody>
+                    <ToggleControl
+                        label={ __( 'Activar funcionalidad', 'mah-settings' ) }
+                        onChange={ setToggled }
+                        checked={ toggled }
+                    />
+                </CardBody>
+            </Card>
+        </>
+    );
+}
+export default Settings;`}
+/>
+
+### ¿Qué pasó?
+
+Si recargamos la página, nos damos cuenta de que nuestro `toggle` se ve más bien como un checkbox, ¿qué pasó?
+
+![Toggle como checkbox](/posts/create-a-settings-page-in-wordpress-with-react-part-2/plain-toggle.webp)
+
+Lo que sucede es que a pesar de que nuestras dependencias de javascript se agregan 
+automáticamente a nuestro script, no sucede lo mismo con nuestras **dependencias de estilos**. 
+Por lo que puede ser necesario que las agreguemos nosotros mismos al archivo 
+`class-mah-settings.php` de una forma similar a lo que hicimos con el script de javascript:
+
+`class-mah-settings.php`
+
+<Code
+    language="php"
+    children={`/**
+ * Registra los scripts y estilos.
+ * 
+ * @return void 
+ */
+public function enqueue_scripts(): void {
+    $screen = get_current_screen();
+    if ( $screen->id !== $this->menu_slug ) {
+        return;
+    }
+    $asset = include $this->plugin_path . '/build/settings.asset.php';
+    wp_enqueue_script(
+        'mah-settings',
+        plugins_url() . '/mah-settings-react/build/settings.js',
+        $asset['dependencies'],
+        $asset['version'],
+        true
+    );
+    wp_enqueue_style( 'wp-components' );
+}`}
+/>
+
+Al volver a recargar la página veremos el resultado deseado, y si nos fijamos bien, 
+**también nuestro campo de texto mejoró en apariencia**:
+
+![Página de opciones con campo de texto y toggle](/posts/create-a-settings-page-in-wordpress-with-react-part-2/fancy-toggle.webp)
+
+## Paso 3: Registrar las opciones en el backend
+
+Para poder guardar nuestras opciones, necesitamos tener valores en la base de 
+datos a donde guardarlos, WordPress se maneja básicamente con los siguientes tipos:
+
+- Theme mods[^1]
+- Post meta2[^2]
+- Site Options3[^3]
+
+En nuestro caso utilizaremos las **opciones globales**, debido a la naturaleza de nuestra página de opciones.
+
+En php, podemos registrarlas de esta forma:
+
+`php/class-mah-settings.php`
+
+<Code
+    language="php"
+    children={`/**
+ * Registra los hooks.
+ * 
+ * @return void 
+ */
+public function init(): void {
+    add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+    add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+    add_action( 'admin_init', [ $this, 'register_settings' ] );
+    add_action( 'rest_api_init', [ $this, 'register_settings' ] );
+}`}
+/>
+
+`php/class-mah-settings.php`
+
+<Code
+    language="php"
+    children={`/**
+ * Registra las opciones.
+ * 
+ * @return void 
+ */
+public function register_settings(): void {
+    register_setting(
+        'mah_settings',
+        'mah_api_key',
+        [
+            'description'       => __( 'API Key', 'mah-settings' ),
+            'sanitize_callback' => 'sanitize_text_field',
+            'show_in_rest'      => true,
+            'type'              => 'string',
+        ]
+    );
+    register_setting(
+        'mah_settings',
+        'mah_function',
+        [
+            'description'       => __( 'Funcion X', 'mah-settings' ),
+            'show_in_rest'      => true,
+            'type'              => 'boolean',
+        ]
+    );
+}`}
+/>
+
+> [!WARNING]
+> El segundo hook rest_api_init es necesario para poder utilizar nuestras 
+> opciones en React, de lo contrario `show_in_rest` no tendría ningún efecto
+
+## Paso 4: Agregar botón de guardado con React
+
+Ahora sólo necesitamos **guardar nuestras opciones** desde el lado de React, para 
+lo cual necesitamos agregar un botón de guardado a nuestra aplicación, y agregar un evento cuando éste sea presionado:
+
+<Code
+    language="jsx"
+    children={`/**
+ * WordPress dependencies
+ */
+import {
+    Button,
+    Card,
+    CardBody,
+    CardDivider,
+    CardFooter,
+    TextControl,
+    ToggleControl,
+} from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+const Settings = () => {
+    const [ apiKey, setApiKey ] = useState( '' );
+    const [ toggled, setToggled ] = useState( false );
+    const saveSettings = () => {
+        console.log( 'Guardar' );
+    };
+    return (
+        <>
+            <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
+            <Card>
+                <CardBody>
+                    <TextControl
+                        help={ __( 'Ingresa tu API key', 'mah-settings' ) }
+                        label={ __( 'API Key', 'mah-settings' ) }
+                        onChange={ setApiKey }
+                        value={ apiKey }
+                    />
+                </CardBody>
+                <CardDivider />
+                <CardBody>
+                    <ToggleControl
+                        label={ __( 'Activar funcionalidad', 'mah-settings' ) }
+                        onChange={ setToggled }
+                        checked={ toggled }
+                    />
+                </CardBody>
+                <CardFooter>
+                    <Button
+                        disabled={ ! apiKey }
+                        onClick={ saveSettings }
+                        variant="primary"
+                    >
+                        { __( 'Guardar', 'mah-settings' ) }
+                    </Button>
+                </CardFooter>
+            </Card>
+        </>
+    );
+}
+export default Settings;`}
+/>
+
+Una breve explicación de lo que acabamos de agregar:
+
+1. Traemos un nuevo componente `CardFooter`, que nos ayudará a **mantener el estilo** de nuestra tarjeta
+2. Traemos el componente `Button` que viene con WordPress, esto nos brinda unas 
+ventajas más sobre utilizar botones regulares, como el que **ya viene con estilos** 
+por ejemplo, en esta ocasión utilizamos la variante `primary`. Y nos aseguramos 
+de que se mantenga deshabilitado si el campo de API key no ha sido llenado
+3. Agregamos la función saveSettings que se encargará de **guardar nuestras opciones**
+
+Así al dar click al botón veremos como en la consola se registra nuestra acción, 
+ahora sólo debemos **reemplazarla por la verdadera función de guardado**.
+
+![Página de opciones con campo de texto, toggle y botón de guardado](/posts/create-a-settings-page-in-wordpress-with-react-part-2/full-settings.webp)
+
+## Próximamente…
+
+Mi idea original era terminar el tutorial en esta parte, pero me di cuenta de lo 
+largo que se está volviendo el post y **aún quedan bastantes conceptos** que quiero 
+tocar, así que he decidido que éste es un buen momento para terminar este post 
+y regresar la próxima semana con una tercera parte en donde guardaremos nuestras 
+opciones, terminaremos de crear una página de opciones; y veremos conceptos como:
+
+- El uso de `useDispatch`, `useEntityProp`, y `saveEditedEntityRecord`
+- Mejoras de UX para nuestra página
+- Introducción general al paquete `@wordpress/data` y el uso de _stores_.
+
+Mientras tanto puedes revisar el código de ésta segunda parte en [mi repositorio](https://github.com/emeaguiar/mah-settings-react/tree/parte-2).
+
+Como siempre son bienvenidos tus comentarios y sugerencias sobre que cosas te gustaría ver explicadas en este humilde blog. ¡Hasta la próxima!
+
+## Leer más
+
+- [register_setting_args – Hook | Developer.WordPress.org](https://developer.wordpress.org/reference/hooks/register_setting_args/)
+- [Docs / Introduction – page ⋅ Storybook](https://wordpress.github.io/gutenberg/?path=/docs/docs-introduction--page)
+
+[^1]: Muy populares en los días de auje de customizer, los theme mods están ligados al tema que se usa en nuestro sitio, en caso de que el tema cambie, los mods también desaparecen, pero regresan cuando el tema al que están ligados vuelva a seleccionarse. Pero con la llegada de FSE, estos comienzan a ser irrelevantes en mi opinión ↩︎
+[^2]: Los post meta, son básicamente los attributos que están ligados a un post en específico, estos pueden cambiar de post a post ↩︎
+[^3]: Utilizados para opciones globales que pueden ser utilizadas ya sea por un tema o por un plugin, sin importar que post o tema esté seleccionado en el sitio ↩︎

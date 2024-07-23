@@ -146,7 +146,7 @@ export function P({
   );
 }
 
-export function A({ children, href }: any) {
+export function A({ children, href, id }: any) {
   const isExternal = href.startsWith('http');
 
   return (
@@ -156,6 +156,7 @@ export function A({ children, href }: any) {
       })}
       href={href}
       passHref={isExternal}
+      id={id}
     >
       {children}
 

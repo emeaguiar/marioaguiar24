@@ -125,4 +125,9 @@ module.exports = [
     destination: '/blog/create-a-settings-page-in-wordpress-with-react',
     permanent: true,
   },
+  {
+    source: '/crear-una-pagina-de-opciones-en-wordpress-con-react-parte-2',
+    destination: '/blog/create-a-settings-page-in-wordpress-with-react-part-2',
+    permanent: true,
+  },
 ];
