@@ -48,21 +48,21 @@ export function H2({
   const H2Element = () => (
     <h2
       className={clsx(
-        `${merriweather.className} max-w-screen-sm text-2xl font-bold`,
+        `${merriweather.className} flex max-w-screen-sm text-2xl font-bold`,
         className
       )}
       id={id}
     >
       {id && (
         <span
-          className='pr-4 transition-opacity lg:opacity-0 group-hover:lg:opacity-100'
+          className='transition-opacity lg:opacity-0 group-hover:lg:opacity-100'
           aria-hidden
         >
           #
         </span>
       )}
 
-      {children}
+      <span className='pl-4'>{children}</span>
     </h2>
   );
 
@@ -99,6 +99,28 @@ export function H3({
     >
       {children}
     </h3>
+  );
+}
+
+export function H4({
+  children,
+  className,
+  id,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+  id?: string;
+}) {
+  return (
+    <h4
+      className={clsx(
+        `w-full max-w-screen-sm text-lg font-bold text-gray-600 dark:text-gray-300`,
+        className
+      )}
+      id={id}
+    >
+      {children}
+    </h4>
   );
 }
 

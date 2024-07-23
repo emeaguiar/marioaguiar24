@@ -13,11 +13,12 @@ import { NextSeo } from 'next-seo';
  * Next dependencies
  */
 import Image from 'next/image';
+import { YouTubeEmbed } from '@next/third-parties/google';
 
 /**
  * Internal dependencies
  */
-import { A, H1, H2, H3, P, OL, UL } from '@/components/elements';
+import { A, H1, H2, H3, H4, P, OL, UL } from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
@@ -55,6 +56,7 @@ export default function PostPage({
       <div className='flex flex-col items-center gap-6 px-4 text-xl/9 lg:w-[736px]'>
         <Component
           components={{
+            YouTubeEmbed,
             a: A,
             h1: H1,
             h2: (props: any) => {
@@ -66,6 +68,7 @@ export default function PostPage({
               return <H2 {...props} className={classes} />;
             },
             h3: H3,
+            h4: H4,
             img: (props: any) => {
               const { src, alt } = props;
 

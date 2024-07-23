@@ -1,0 +1,331 @@
+---
+title: Create a options page in WordPress with React – Part 1
+publishedOn: '2024-01-15'
+updatedOn: '2024-07-23T01:16:22.619Z'
+description: >-
+  Part one of a series of tutorials where we will learn how to create an options
+  page in WordPress using React and the WordPress API
+published: true
+readingTime: 840
+---
+
+import Code from '@/components/code/code';
+
+Despite the advances in _Gutenberg_ that we have seen in recent years, with the idea
+that the options of a post (or a page) should be managed **within the WordPress
+editor** (a.k.a Gutenberg). Many times we still find ourselves in the need to have
+a page where we can manage all our global options, outside of each post in
+particular. Next, I will show you how to **create an options page in WordPress with
+React**.
+
+## Table of Contents
+
+- Introduction
+- Step 1: Creating the local environment
+- Step 2: Create an options page in WordPress
+- Step 3: Register our scripts
+- Conclusion
+
+## Decisions, decisions…
+
+Like everything in WordPress (and in development in general), we have several options,
+one of them is to use _Customizer_, or we use an options page. What are the differences
+between these?
+
+### Option 1: Customizer
+
+Customizer is the part of WordPress that has been created to _customize_ our site
+(“customise”), it was created precisely for this, and with it you have its pros and
+cons:
+
+#### Pros
+
+- It was designed specifically for this purpose
+- Each option can be added to your custom panel, or to a general one
+- It offers live preview to see the changes immediately
+- It offers a range of existing controls to make the job easier
+
+#### Cons
+
+- It will be discontinued in the not too distant future
+- Its library of controls is not very wide
+- The most custom controls can be difficult to implement
+
+### Option 2: Options page
+
+On the other hand, if we create our own options page, we have more control over our
+result; however, at the same time, we have to create everything ourselves[^1].
+
+#### Pros
+
+- Total control over what we do
+- Can live anywhere in the administration
+- We can use the [Settings API](https://developer.wordpress.org/plugins/settings/settings-api/) to make the job easier
+
+#### Cons
+
+- Requires more code
+
+For the purposes of this tutorial, I will use option two, but with an important
+difference. I will not use the mentioned _Settings API_, but instead I will use
+**React**, with the help of the existing components in Gutenberg.
+
+> [!NOTE]
+> **Why React?**
+>
+> Throughout my career, I have created countless options pages, each one different
+> from the last, but one thing that almost all have in common is the need to add
+> Javascript to the options, that's why in this tutorial I will skip that realization
+> and instead start doing it with React from the beginning.
+
+Now, after this _huge_ introduction (I'm sorry!) we can start with the tutorial.
+
+## Step 1: Creating the local environment
+
+Since this is a technical tutorial, I will assume that you have some knowledge
+about how to start a local project, I would normally say that you can use any
+environment you want, and I still say it, I will only ask that **it is capable of
+using node** and that you install the package `@wordpress/scripts` (as in my tutorial
+[Compiling CSS and Javascript with wp-scripts](/compiling-css-and-javascript-with-wp-scripts)).
+
+> [!NOTE]
+> **Using wp-env**
+>
+> If you are not very familiar with local environments, I invite you to watch my
+> video [Creating a local environment for WordPress with WP-ENV](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1) on youtube where I explain an easy way to achieve it with the tools that WordPress offers.
+>
+> <YouTubeEmbed videoid="K5Uxc3H-kaU"/>
+
+After having our local environment, we can **create our plugin**, in this case we
+need a very simple one, just a class that we will start to be able to register our
+page:
+
+`mah-settings.php`
+
+<Code
+    language="php"
+    children={`<?php
+/**
+ * Plugin Name: Mah Settings
+ * Description: Tutorial to create an options page with React
+ * Version: 1.0.0
+ * Author: Mario Aguiar
+ * Author URI: https://marioaguiar.net
+ * License: GPLv2 or later
+ * Text Domain: mah-settings
+ */
+namespace Mah_Settings;
+require_once __DIR__ . '/php/class-mah-settings.php';
+use Mah_Settings\Settings;
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+$settings = new Settings();
+$settings->init();`}
+/>
+
+`php/class-mah-settings.php`
+
+<Code
+    language="php"
+    children={`<?php
+/**
+ * @package Mah_Settings
+ */
+namespace Mah_Settings;
+/**
+ * Handles the options page
+ */
+class Settings {
+    /**
+     * Registers the hooks.
+     * 
+     * @return void 
+     */
+    public function init(): void {
+        var_dump( 'My page' );
+    }
+}`}
+/>
+
+Once these files are created, we can enter our site and see `My page` at the top, this
+means that our plugin is working.
+
+> [!NOTE]
+> **Why a class?**
+>
+> While all this code could go only in the file where we register our plugin, it is
+> a good practice to separate each component into its own class, it helps us to have
+> things more organized and to prevent conflicts with other types of code that we use.
+
+## Step 2: Create an options page in WordPress
+
+Once we have our plugin working, we will replace the content of the `init` function
+with the `admin_menu` hook, which helps us to register our page in the menu:
+
+<Code
+    language="php"
+    children={`/**
+ * @var string
+ */
+private $plugin_path = '';
+/**
+ * Menu slug.
+ * 
+ * @var string
+ */
+private $menu_slug = '';
+public function __construct( string $plugin_file ) {
+    $this->plugin_path = plugin_dir_path( $plugin_file );
+}
+/**
+ * Registers the hooks.
+ * 
+ * @return void 
+ */
+public function init(): void {
+    add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+}
+/**
+ * Registers the options page.
+ * 
+ * @return void 
+ */
+ public function add_menu_page(): void {
+    $this->menu_slug = add_menu_page(
+        __( 'Mah Settings', 'mah-settings' ),
+        __( 'Mah Settings', 'mah-settings' ),
+        'manage_options',
+        'mah-settings',
+        [ $this, 'render_settings_page' ],
+        'dashicons-admin-generic',
+        99
+    );
+ }
+/**
+ * Renders the options page.
+ * 
+ * @return void 
+ */
+public function render_settings_page(): void {
+    ?>
+    <div class="wrap">
+        <h1><?php esc_html_e( 'Mah Settings', 'mah-settings' ); ?></h1>
+        <div id="mah-settings"></div>
+    </div>
+    <?php
+}`}
+/>
+
+There are a couple of important things happening here, I will try to explain them briefly:
+
+1. The `add_menu_page` function simply registers a link in the left menu of the administration, in it we add the title, the capabilities (or permissions) required to see that menu, and **specify which function should be executed when that menu is accessed**, which in this case will be `render_settings_page`. This function returns the _hook_ of this new page, which we will save for later.
+2. In the `render_settings_page` function, which will be shown when this page is accessed, we simply add a title (optional) and an _empty container_. **Why do we add this? Because it will be filled with React**.
+
+## Step 3: Register our scripts
+
+To be able to register our scripts within the page, first we need to create them, so we will start by using the package `@wordpress/scripts` that we talked about earlier, so in a terminal we run:
+
+<Code
+    language="bash"
+    children={`npm install --save-dev @wordpress/scripts`}
+/>
+
+After this we can update the configuration to compile our new files, either within the same `package.json` or with a simple webpack configuration file, so we create a file called `webpack.config.js` and place the following:
+
+`webpack.config.js`
+
+<Code
+    language="js"
+    children={`const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+module.exports = {
+    ...defaultConfig,
+    entry: {
+        ...defaultConfig.entry(),
+        settings: './js/src/settings.js',
+    },
+};`}
+/>
+
+`package.json`
+
+<Code
+    language="json"
+    children={`"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "wp-env start",
+  "stop": "wp-env stop",
+  "build": "wp-scripts build",
+  "dev": "wp-scripts start"
+},`}
+/>
+
+`js/src/settings.js`
+
+<Code
+    language="js"
+    children={`console.log( 'Hello settings' );`}
+/>
+
+Basically we are **extending the default configuration provided by WordPress** to add a new file: `settings.js`, after this we can run `npm run dev` so that our file is watched and each new change is compiled.
+
+![Editor view with the created files](/posts/create-an-options-page-in-wordpress-with-react/editor-config.webp)
+
+After having our files created, we can register them with the `admin_enqueue_scripts` hook
+
+<Code
+    language="php"
+    children={`public static function init(): void {
+    add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+    add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+}`}
+/>
+
+<Code
+    language="php"
+    children={`/**
+ * Registers the scripts and styles.
+ * 
+ * @return void 
+ */
+public function enqueue_scripts(): void {
+    $screen = get_current_screen();
+    if ( $screen->id !== $this->menu_slug ) {
+        return;
+    }
+    $asset = include $this->plugin_path . '/build/settings.asset.php';
+    wp_enqueue_script(
+        'mah-settings',
+        plugins_url() . '/mah-settings-react/build/settings.js',
+        $asset['dependencies'],
+        $asset['version'],
+        true
+    );
+}`}
+/>
+
+Now I will explain a little what happens here:
+
+1. We get the information of the current page using `get_current_screen`
+2. We compare the ID of the current page with the hook we saved when we created the page, if it is the same, we continue; if not, we end here.
+3. Finally we register our new script using the dependencies that are added to the file (thanks to `@wordpress/scripts`)
+
+If everything went well, we will have our file working on the page:
+
+![WordPress options page with React printing "Hello Settings" in the console](/posts/create-an-options-page-in-wordpress-with-react/settings-page.webp)
+
+## What's next?
+
+In part 2 of this tutorial, I will explain how we can add the React part to our site 
+using the components of `@wordpress/components`. For now, I hope this introduction 
+has been useful for creating an options page in WordPress with React and please let 
+me know if you have any questions. If you want to see the source code I used in this tutorial you can do it [my repository](https://github.com/emeaguiar/mah-settings-react/tree/parte-1)
+
+## Read more…
+
+- [Creating a WordPress options page using React and Gutenberg](https://danielpost.com/part-1-creating-a-wordpress-options-page-using-react-and-gutenberg/)
+- [@wordpress/scripts](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/)
+- [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/)
+
+[^1]: Or not?

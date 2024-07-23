@@ -120,4 +120,9 @@ module.exports = [
     destination: '/blog/copy-chrome-requests-to-postman',
     permanent: true,
   },
+  {
+    source: '/crear-una-pagina-de-opciones-en-wordpress-con-react',
+    destination: '/blog/create-a-settings-page-in-wordpress-with-react',
+    permanent: true,
+  },
 ];
