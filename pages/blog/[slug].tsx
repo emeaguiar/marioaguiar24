@@ -6,6 +6,7 @@ import { bundleMDX } from 'mdx-bundler';
 import remarkGfm from 'remark-gfm';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import { getMDXComponent } from 'mdx-bundler/client';
+import rehypeSlug from 'rehype-slug';
 import { NextSeo } from 'next-seo';
 
 /**
@@ -128,6 +129,7 @@ export async function getStaticProps({
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         rehypeGithubAlerts,
+        rehypeSlug,
       ];
 
       return options;
