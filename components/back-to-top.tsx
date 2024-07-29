@@ -37,8 +37,8 @@ export default function BackToTop() {
         'transform-gpu transition-transform hover:scale-105',
         'dark:bg-slate-700 dark:ring-slate-900',
         {
-          'translate-y-16 opacity-0': !isVisible,
-          'translate-y-0 opacity-100': isVisible,
+          'translate-y-18': !isVisible,
+          'translate-y-0': isVisible,
         }
       )}
     >
