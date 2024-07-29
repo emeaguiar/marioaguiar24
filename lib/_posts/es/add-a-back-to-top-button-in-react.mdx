@@ -1,0 +1,335 @@
+---
+title: Agregar un botón de “volver arriba” en React
+publishedOn: '2024-07-28'
+updatedOn: '2024-07-29T03:13:41.284Z'
+description: En este tutorial aprenderás a crear un botón de regreso al inicio en React.
+published: true
+readingTime: 360
+---
+
+import AlignWide from '@/components/blog/align-wide';
+import Code from '@/components/code/code';
+import { SampleButton } from '@/examples/add-a-back-to-top-button-in-react/es';
+
+Una de las funcionalidades más comunes hoy en día (y más útiles la verdad), es 
+la de **agregar un botón para “volver arriba”** en nuestras páginas, especialmente 
+cuando nuestro contenido tiende a ser largo.
+
+Y la verdad es que no es algo muy difícil de lograr, con unas pocas líneas de 
+código puedes lograr algo muy vistoso, como lo que tengo en este blog (que me 
+gustó mucho el resultado).
+
+Así que a continuación dejaré los pasos que tomé para añadir un botón de “volver 
+arriba” en React a este blog, que aunque está hecho con _Next.js_, al final sigue 
+siendo React. Comencemos:
+
+## Paso 1: Agregar el botón
+
+Para motivos prácticos, en este tutorial yo utilizaré [Tailwind CSS](https://tailwindcss.com/) 
+(ya que es lo que utilizo en el blog). Pero **explicaré el razonamiento** en términos 
+de **CSS** para que sea fácilmente transportable a cualquier otro sistema.
+
+### Paso 1.1 Creando el botón
+
+El funcionamiento básico de un botón para volver arriba no es más que un _anchor_ 
+en la página, el cual enlazaremos en nuestro botón para dar un “salto” hasta la 
+parte superior de la página. Por ejemplo:
+
+<Code
+    language="jsx"
+    children={`<main id=“content”>
+	[…nuestro contenido]
+</main>`}
+/>
+
+Y al fondo de nuestro sitio agregamos nuestro botón:
+
+<Code
+    language="jsx"
+    children={`<a href=“#main”>Volver arriba</a>`}
+/>
+
+En teoría **eso es todo lo que necesitamos**, pero honestamente es algo anticuado, 
+y el salto puede parecer repentino para muchas personas, por lo tanto la mayoría
+de las veces agregamos un poco de Javascript para hacer el salto más suave.
+
+Comencemos creando el botón en React:
+
+## Paso 2: Agregar el código para “volver arriba”
+
+Para crear un botón en React, lo primero que necesitamos es un componente que
+nos permita hacer el salto. En este caso, yo lo llamaré `BackToTopButton`.
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+
+export default function BackToTopButton() {
+    return (
+        <a href="#main">Volver arriba</a>
+    );
+}`}
+/>
+
+Y luego, en nuestro componente principal, lo importamos y lo agregamos al final
+
+<Code
+    language="jsx"
+    children={`import BackToTopButton from './BackToTopButton';
+
+export default function Main() {
+    return (
+        <main id="main">
+            […nuestro contenido]
+            <BackToTopButton />
+        </main>
+    );
+}`}
+/>
+
+Eso agregará el botón al final de nuestra página, ahora, para hacer el salto más 
+suave, lo que necesitamos es agregar un poco de Javascript, para ello debemos 
+utilizar la función `scrollTo` de Javascript. Además, ya que estamos usando Javascript 
+para manejar el salto, lo más óptimo es no utilizar un `anchor` en el botón, si no que 
+utilizaremos un `button` en su lugar.
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+
+export default function BackToTopButton() {
+    // Función para hacer el salto al dar click.
+    const handleClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth', // Hace el salto más suave.
+        });
+    };
+
+    return (
+        <button onClick={handleClick}>Volver arriba</button>
+    );
+}`}
+/>
+
+> [!NOTE]
+> **¿Por qué no usamos un `anchor`?**
+>
+> Cuando utilizamos la etiqueta `a` con un `href` que apunta a un `id` en la página,
+> efectivamente estamos creando un _enlace_ a alguna parte de nuestra página. Pero 
+> en este caso, en lugar de un enlace, estamos creando **una interacción del usuario**.
+> Por lo tanto, es más semántico utilizar un `button` en lugar de un `anchor`.
+>
+> Además, al utilizar un botón no tenemos que preocuparnos por prevenir el comportamiento
+> por defecto del navegador, ya que los botones no tienen un comportamiento por defecto.
+> En otras palabras, no necesitamos agregar `e.preventDefault()` en el manejador de eventos.
+
+### 2.1 ¿Como funciona `scrollTo`?
+
+La forma en que funciona `scrollTo` es bastante sencilla, simplemente le pasamos
+un objeto con las propiedades `top` y `behavior`. La propiedad `top` es la posición 
+(en pixeles) a la que queremos hacer el salto, en este caso `0` para ir al inicio de la página.
+
+La propiedad `behavior` es la que **hace que el salto sea más suave**, ya que le estamos
+diciendo que lo haga de forma `smooth`. Si no le pasamos esta propiedad, el salto será
+instantáneo.
+
+También podemos pasar otras propiedades como `left` para hacer un _salto horizontal_, pero
+en este caso no lo necesitamos.
+
+## Paso 3: Estilizar el botón
+
+Ahora que tenemos nuestro botón, necesitamos darle un poco de estilo. En mi caso,
+utilizaré [Tailwind CSS](https://tailwindcss.com/) como lo mencioné anteriormente, 
+pero puedes utilizar cualquier sistema de estilos que prefieras.
+
+Básicamente lo que haremos será hacer un **botón circular que contenga una flecha
+apuntando hacia arriba**. Para ello, necesitamos agregar un poco de CSS a nuestro
+componente.
+
+> [!TIP]
+> Tailwind utiliza _clases de CSS en línea_, por lo que no necesitamos importar un
+> archivo de estilos, simplemente agregamos las clases directamente en el componente.
+>
+> Debajo de este ejemplo te mostraré cómo hacerlo con CSS normal.
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+
+export default function BackToTopButton() {
+    const handleClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
+    return (
+        <button
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
+        >
+          Volver arriba
+        </button>
+    );
+}`}
+/>
+
+### 3.1 ¿Cómo hacerlo con CSS normal?
+
+Si prefieres utilizar CSS normal, puedes hacerlo de la siguiente manera:
+
+<Code
+    language="scss"
+    children={`button {
+    background-color: var(--color--primary); // O nuestro color primario
+    border: 1px solid var(--color--secondary); // O nuestro color secundario.
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); // Definida por Tailwind.
+    color: white;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    margin: 1rem; // 16px o "4" en términos de Tailwind.
+    padding: 0.5rem; // 8px o "2" en términos de Tailwind.
+    position: fixed;
+    z-index: 50;
+}`}
+/>
+
+Básicamente, lo que estamos haciendo es crear un botón circular con un color de fondo
+primario, un borde secundario, una sombra y un color de texto blanco. Además, lo estamos
+posicionando en la esquina inferior derecha de la página. Y especificamos que _siempre_ 
+se mantenga ahí.
+
+Para nuestro ícono de flecha, podemos utilizar un ícono de [Heroicons](https://heroicons.com/),
+que es una librería de íconos de código abierto, creado por el equipo de Tailwind.
+En este caso, utilizaremos el ícono `arrow-up`:
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+import { ArrowUpIcon } from '@heroicons/react/24/solid';
+
+export default function BackToTopButton() {
+    const handleClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
+    return (
+        <button
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
+        >
+          <ArrowUpIcon className="h-6 w-6" />
+
+          <span className="sr-only">Volver arriba</span>
+        </button>
+    );
+}`}
+/>
+
+Esto nos dará un resultado similar al siguiente (dale click 😉):
+
+<AlignWide>
+  <SampleButton />
+</AlignWide>
+
+> [!TIP]
+> **¿Qué es `sr-only`?**
+>
+> `sr-only` es una clase de Tailwind que oculta un elemento visualmente, pero lo mantiene
+> accesible para lectores de pantalla. En este caso, estamos utilizando un `span` con el
+> texto “Volver arriba” para que los lectores de pantalla sepan lo que hace el botón.
+
+## Paso 4: Mostrar el botón cuando bajamos la página
+
+Ahora tenemos nuestro botón en la página, sin embargo hay varios ajustes que podemos 
+hacer, por ejemplo, **no necesitamos agregar un botón de "Volver arriba" si estamos
+en la parte superior de la página**. Por lo tanto sólo deberíamos mostrar el botón
+cuando el usuario haya bajado un poco, para que tenga sentido.
+
+Como estamos utilizando React, podemos utilizar el _hook_ `useState` para manejar
+el _estado_ de nuestro botón. Por ejemplo, podemos crear un estado llamado `showButton`
+que sea `true` cuando el usuario haya bajado más de `100px` en la página:
+
+Para saber en que posición de la página se encuentra el usuario, podemos utilizar
+la propiedad `window.scrollY` de Javascript, que nos dará la cantidad de pixeles que
+el usuario ha bajado en la página. Esto justo con el evento `scroll`, 
+que hará el chequeo cada vez que el usuario haga _scroll_ en la página.
+
+Por último, para hacer el chequeo más eficiente, podemos utilizar el _hook_ `useEffect`
+que guarde una referencia al evento `scroll` **y lo quite cuando el componente se desmonte**.
+Siempre hay que pensar en la _limpieza_ de nuestros componentes.
+
+<Code
+    language="jsx"
+    children={`import React, { useState, useEffect } from 'react';
+import { ArrowUpIcon } from '@heroicons/react/24/solid';
+
+export default function BackToTop() {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    // Función para mostrar el botón cuando el usuario haya bajado más de 100px.
+    const toggleVisibility = () => {
+      if (window.scrollY > 100) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    // Agregamos el evento scroll.
+    window.addEventListener('scroll', toggleVisibility);
+
+    // Limpiamos el evento cuando el componente se desmonte.
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+    };
+  }, []);
+
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return showButton && (
+    <button
+      onClick={handleClick}
+      className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
+    >
+      <ArrowUpIcon className="h-6 w-6" />
+
+      <span className="sr-only">Volver arriba</span>
+    </button>
+  );
+}`}
+/>
+
+Con esto, ya tenemos un botón de “volver arriba” que se muestra cuando el usuario
+ha bajado más de `100px` en la página. Y que además hace un **salto suave** al inicio
+de la página.
+
+## Mejoras para el futuro
+
+Este es un botón de “volver arriba” bastante básico, pero hay muchas mejoras que
+podemos hacerle, por ejemplo:
+
+- **Animaciones**: Podemos agregar animaciones al botón para que aparezca y desaparezca
+  de forma más suave (como en este blog).
+- **Estilos personalizados**: Podemos personalizar el botón con estilos más acordes
+  a nuestro sitio.
+
+¡Y muchas otras mejoras que podemos hacer! Pero por ahora, este botón es un buen
+comienzo para añadir una funcionalidad muy útil a nuestro sitio.
+
+Espero que este tutorial te haya sido de ayuda, y si tienes alguna duda, no dudes
+en contactarme en [X](https://x.com/emeaguiar) o [enviarme un correo](mailto:me@marioaguiar.net), 
+o el [formulario de contacto](/?modal=1).
