@@ -90,3 +90,34 @@ function getPostDataBySlug(
 
   return items;
 }
+
+export function generateSiteMap() {
+  const enPosts = getPosts('en');
+  const esPosts = getPosts('es');
+
+  const siteMap = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${enPosts
+        .map((post, index) => {
+          return `
+            <url>
+              <loc>${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}</loc>
+              <lastmod>${post.updatedOn}</lastmod>
+              <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="${process.env.NEXT_PUBLIC_SITE_URL}/blog/${esPosts[index].slug}"
+              />
+              <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="${process.env.NEXT_PUBLIC_SITE_URL}/en/blog/${post.slug}"
+              />
+            </url>
+          `;
+        })
+        .join('')}
+    </urlset>`;
+
+  return siteMap;
+}
