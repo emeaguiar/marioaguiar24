@@ -1,0 +1,338 @@
+---
+title: Add a "Back to top" button in React
+publishedOn: '2024-07-28'
+updatedOn: '2024-07-29T03:16:53.810Z'
+description: En este tutorial aprenderás a crear un botón de regreso al inicio en React.
+published: true
+readingTime: 360
+---
+
+import AlignWide from '@/components/blog/align-wide';
+import Code from '@/components/code/code';
+import { SampleButton } from '@/examples/add-a-back-to-top-button-in-react/en';
+
+One of the most common (and useful) functionalities today is to **add a “back to 
+top” button** to our pages, especially when our content tends to be long.
+
+And the truth is that it is not very difficult to achieve, with a few lines of
+code you can achieve something very flashy, like what I have on this blog (which
+I really liked the result).
+
+So below I will leave the steps I took to add a “back to top” button in React to
+this blog, which although it is made with _Next.js_, in the end it is still React.
+Let's get started:
+
+## Table of contents
+
+- [Step 1: Add the button](#step-1-add-the-button)
+- [Step 2: Add the code for “back to top”](#step-2-add-the-code-for-back-to-top)
+- [Step 3: Style the button](#step-3-style-the-button)
+- [Step 4: Show the button when we scroll down the page](#step-4-show-the-button-when-we-scroll-down-the-page)
+
+## Step 1: Add the button
+
+For practical purposes, in this tutorial I will use [Tailwind CSS](https://tailwindcss.com/)
+(since it is what I use on the blog). But **I will explain the reasoning** in terms
+of **CSS** so that it is easily transportable to any other system.
+
+### Step 1.1 Creating the button
+
+The basic functionality of a back-to-top button is nothing more than an _anchor_
+on the page, which we will link in our button to make a “jump” to the top of the page.
+For example:
+
+<Code
+    language="jsx"
+    children={`<main id=“content”>
+    […our content]
+</main>`}
+/>
+
+And at the bottom of our site we add our button:
+
+<Code
+    language="jsx"
+    children={`<a href=“#main”>Back to top</a>`}
+/>
+
+In theory **that's all we need**, but honestly it is a bit outdated, and the jump
+can seem sudden to many people, so most of the time we add a little Javascript to
+make the jump smoother.
+
+Let's start by creating the button in React:
+
+## Step 2: Add the code for “back to top”
+
+To create a button in React, the first thing we need is a component that allows us
+to make the jump. In this case, I will call it `BackToTopButton`.
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+
+export default function BackToTopButton() {
+    return (
+        <a href="#main">Back to top</a>
+    );
+}`}
+/>
+
+And then, in our main component, we import it and add it at the end
+
+<Code
+    language="jsx"
+    children={`import BackToTopButton from './BackToTopButton';
+
+export default function Main() {
+    return (
+        <main id="main">
+            […our content]
+            <BackToTopButton />
+        </main>
+    );
+}`}
+/>
+
+That will add the button to the end of our page, now, to make the jump smoother,
+what we need is to add a little Javascript, to use the `scrollTo` function of Javascript.
+Also, since we are using Javascript to handle the jump, it is more optimal not to use
+an `anchor` in the button, but to use a `button` instead.
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+
+export default function BackToTopButton() {
+    // Function to make the jump when clicked.
+    const handleClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth', // Makes the jump smoother.
+        });
+    };
+
+    return (
+        <button onClick={handleClick}>Back to top</button>
+    );
+}`}
+/>
+
+> [!NOTE]
+> **Why don't we use an `anchor`?**
+>
+> When we use the `a` tag with an `href` pointing to an `id` on the page,
+> we are effectively creating a _link_ to some part of our page. But
+> in this case, instead of a link, we are creating **a user interaction**.
+> Therefore, it is more semantic to use a `button` instead of an `anchor`.
+>
+> Also, when using a button we don't have to worry about preventing the default
+> behavior of the browser, since buttons don't have a default behavior.
+> In other words, we don't need to add `e.preventDefault()` in the event handler.
+
+### 2.1 How does `scrollTo` work?
+
+The way `scrollTo` works is quite simple, we simply pass it an object with the
+properties `top` and `behavior`. The `top` property is the position (in pixels)
+we want to jump to, in this case `0` to go to the top of the page.
+
+The `behavior` property is what **makes the jump smoother**, since we are
+telling it to do it `smoothly`. If we don't pass this property, the jump will be
+instantaneous.
+
+We can also pass other properties like `left` to make a _horizontal jump_, but
+in this case we don't need it.
+
+## Step 3: Style the button
+
+Now that we have our button, we need to give it a little style. In my case,
+I will use [Tailwind CSS](https://tailwindcss.com/) as I mentioned earlier,
+but you can use any style system you prefer.
+
+Basically what we will do is make a **circular button that contains an arrow
+pointing upwards**. To do this, we need to add a little CSS to our component.
+
+> [!TIP]
+> Tailwind uses _inline CSS classes_, so we don't need to import a styles file,
+> we simply add the classes directly in the component.
+>
+> Below this example I will show you how to do it with normal CSS.
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+
+export default function BackToTopButton() {
+    const handleClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
+    return (
+        <button
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
+        >
+          Back to top
+        </button>
+    );
+}`}
+/>
+
+### 3.1 How to do it with normal CSS?
+
+If you prefer to use normal CSS, you can do it like this:
+
+<Code
+    language="scss"
+    children={`button {
+    background-color: var(--color--primary); // Or our primary color.
+    border: 1px solid var(--color--secondary); // Or our secondary color.
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); // Defined by Tailwind.
+    color: white;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    margin: 1rem; // 16px or "4" in Tailwind terms.
+    padding: 0.5rem; // 8px or "2" in Tailwind terms.
+    position: fixed;
+    z-index: 50;
+}`}
+/>
+
+Basically, what we are doing is creating a circular button with a primary background
+color, a secondary border, a shadow, and white text color. Also, we are positioning
+it in the bottom right corner of the page. And specifying that it should _always_
+stay there.
+
+For our arrow icon, we can use an icon from [Heroicons](https://heroicons.com/),
+which is an open-source icon library, created by the Tailwind team.
+In this case, we will use the `arrow-up` icon:
+
+<Code
+    language="jsx"
+    children={`import React from 'react';
+import { ArrowUpIcon } from '@heroicons/react/24/solid';
+
+export default function BackToTopButton() {
+    const handleClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
+    return (
+        <button
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
+        >
+          <ArrowUpIcon className="h-6 w-6" />
+
+          <span className="sr-only">Back to top</span>
+        </button>
+    );
+}`}
+/>
+
+This will give us a result similar to the following (try clicking it 😉):
+
+<AlignWide>
+  <SampleButton />
+</AlignWide>
+
+> [!TIP]
+> **What is `sr-only`?**
+>
+> `sr-only` is a Tailwind class that hides an element visually, but keeps it
+> accessible to screen readers. In this case, we are using a `span` with the
+> text “Back to top” so that screen readers know what the button does.
+
+## Step 4: Show the button when we scroll down the page
+
+Now we have our button on the page, however there are several adjustments we can
+make, for example, **we don't need to add a “back to top” button if we are at the
+top of the page**. Therefore we should only show the button when the user has
+scrolled down a bit, so that it makes sense.
+
+Since we are using React, we can use the `useState` hook to handle the _state_ of
+our button. For example, we can create a state called `showButton` that is `true`
+when the user has scrolled more than `100px` on the page.
+
+To know where the user is on the page, we can use the `window.scrollY` property of
+Javascript, which will give us the number of pixels the user has scrolled down the
+page. This together with the `scroll` event, which will check every time the user
+scrolls.
+
+Finally, to make the check more efficient, we can use the `useEffect` hook that
+saves a reference to the `scroll` event **and removes it when the component is unmounted**.
+We always have to think about the _cleaning_ of our components.
+
+<Code
+    language="jsx"
+    children={`import React, { useState, useEffect } from 'react';
+import { ArrowUpIcon } from '@heroicons/react/24/solid';
+
+export default function BackToTop() {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    // Function to show the button when the user has scrolled more than 100px.
+    const toggleVisibility = () => {
+      if (window.scrollY > 100) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    // Add the scroll event.
+    window.addEventListener('scroll', toggleVisibility);
+
+    // Clean the event when the component is unmounted.
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+    };
+  }, []);
+
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return showButton && (
+    <button
+      onClick={handleClick}
+      className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
+    >
+      <ArrowUpIcon className="h-6 w-6" />
+
+      <span className="sr-only">Back to top</span>
+    </button>
+  );
+}`}
+/>
+
+With this, we already have a “back to top” button that is displayed when the user
+has scrolled more than `100px` on the page. And that also makes a **smooth jump**
+to the top of the page.
+
+## Improvements for the future
+
+This is a fairly basic “back to top” button, but there are many improvements we can
+make, for example:
+
+- **Animations**: We can add animations to the button to make it appear and disappear
+  more smoothly (as on this blog).
+- **Custom styles**: We can customize the button with styles more in line with our site.
+
+And many other improvements we can make! But for now, this button is a good start
+to add a very useful functionality to our site.
+
+I hope this tutorial has been helpful to you, and if you have any questions, don't
+hesitate to contact me at [X](https://x.com/emeaguiar) or [send me an email](mailto:me@marioaguiar.net),
+or the [contact form](/?modal=1).
