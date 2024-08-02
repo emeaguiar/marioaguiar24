@@ -17,8 +17,10 @@ export const metadata = {
 };
 
 export default function Page({
+  locale,
   posts,
 }: {
+  locale: string;
   posts: {
     [key: string]: any;
   };
@@ -27,7 +29,11 @@ export default function Page({
 
   return (
     <>
-      <NextSeo title={t('title')} description={t('description')} />
+      <NextSeo
+        title={t('title')}
+        description={t('description')}
+        canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/blog`}
+      />
 
       <div className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'>
         <h1
@@ -51,6 +57,7 @@ export async function getStaticProps({ locale }: { locale: 'es' | 'en' }) {
 
   return {
     props: {
+      locale,
       posts,
     },
   };

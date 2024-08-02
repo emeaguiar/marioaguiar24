@@ -4,6 +4,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import clsx from 'clsx';
+import { NextSeo } from 'next-seo';
 
 /**
  * Next dependencies
@@ -21,8 +22,10 @@ import ServicesCard from '@/components/services/card';
 import { getPosts } from '@/lib/posts';
 
 export default function Home({
+  locale,
   posts,
 }: {
+  locale: string;
   posts: {
     [key: string]: any;
   };
@@ -34,6 +37,8 @@ export default function Home({
       <Head>
         <link rel='shortcut icon' href='/favicon.png' />
       </Head>
+
+      <NextSeo canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}`} />
 
       <div
         className={`${merriweather.className} flex flex-col items-center gap-4 lg:gap-8`}
@@ -128,6 +133,7 @@ export async function getStaticProps({ locale }: { locale: 'es' | 'en' }) {
 
   return {
     props: {
+      locale,
       posts,
     },
   };

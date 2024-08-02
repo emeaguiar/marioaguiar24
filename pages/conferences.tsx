@@ -23,7 +23,7 @@ import Link from 'next/link';
 import { CONTACT_FORM_TO_EMAIL, CONFERENCES } from '@/lib/data';
 import { merriweather } from '@/components/fonts';
 
-export default function FirstPost({ locale }: { locale: 'es' | 'en' }) {
+export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
   const { t } = useTranslation('conferences');
 
   return (
@@ -32,7 +32,11 @@ export default function FirstPost({ locale }: { locale: 'es' | 'en' }) {
         <link rel='shortcut icon' href='/favicon.png' />
       </Head>
 
-      <NextSeo title={t('title')} description={t('description')} />
+      <NextSeo
+        title={t('title')}
+        description={t('description')}
+        canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/conferences`}
+      />
 
       <div className={`flex flex-col items-center gap-4 lg:gap-8`}>
         <h1
