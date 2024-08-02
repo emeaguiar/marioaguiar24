@@ -16,7 +16,6 @@ import Link from 'next/link';
  * Internal dependencies
  */
 import { H2, P } from '@/components/elements';
-import SocialLinks from '@/components/social/social-links';
 import ContactForm from '@/components/contact/form';
 import clsx from 'clsx';
 

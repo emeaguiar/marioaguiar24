@@ -8,6 +8,7 @@ import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import { getMDXComponent } from 'mdx-bundler/client';
 import rehypeSlug from 'rehype-slug';
 import { NextSeo } from 'next-seo';
+import { usePathname } from 'next/navigation';
 
 /**
  * Next dependencies
@@ -37,10 +38,15 @@ export default function PostPage({
   const Component = useMemo(() => getMDXComponent(code), [code]);
   const { publishedOn, updatedOn, title, description, readingTime } =
     frontmatter;
+  const pathname = usePathname();
 
   return (
     <>
-      <NextSeo title={title} description={description} />
+      <NextSeo
+        title={title}
+        description={description}
+        canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}${pathname}`}
+      />
 
       <div className='mt-4 flex flex-col items-center gap-6 px-4 text-xl/9 lg:my-16'>
         <H1>{title}</H1>
