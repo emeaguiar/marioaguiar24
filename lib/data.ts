@@ -73,6 +73,8 @@ export const CONFERENCES = [
     location: 'Montevideo, Uruguay',
     title: 'Regression Testing 2.0',
     href: 'https://2018.montevideo.wordcamp.org/',
+    video:
+      'https://wordpress.tv/2020/05/29/mario-aguiar-regression-testing-no-avances-hacia-atras/',
   },
   {
     name: 'WordCamp CDMX',
@@ -89,5 +91,7 @@ export const CONFERENCES = [
     location: 'Puebla, México',
     title: 'Desarrollando para Gutenberg, el nuevo paradigma',
     href: 'https://puebla.wordcamp.org/2019/',
+    video:
+      'https://wordpress.tv/2019/11/18/mario-aguiar-desarrollando-para-gutenberg-el-nuevo-paradigma/',
   },
 ];
