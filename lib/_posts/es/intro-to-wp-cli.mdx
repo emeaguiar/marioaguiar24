@@ -1,0 +1,62 @@
+---
+title: Introducción a WP-CLI
+publishedOn: '2024-08-04'
+updatedOn: '2024-08-06T22:28:32.645Z'
+description: >-
+  En este post mostraremos cómo instalar y usar WP-CLI, una herramienta de línea
+  de comandos para WordPress.
+published: true
+readingTime: 360
+---
+
+import Code from '@/components/code/code';
+
+Una de las cosas que más me gusta de WordPress, es definitivamente la enorme 
+comunidad que se ha generado con el paso de los años, gente muy capaz y tan 
+inteligente que cie que el enorme éxito de la herramienta simplemente no sería 
+posible sin ellos. Sin mencionar, que es gracias a esta enorme comunidad que muchas 
+(si no es que todas) las grandes funcionalidades de WordPress fueron creadas.
+
+Una de ellas, y una de las que utilizo más comúnmente, es [WP-CLI](https://wp-cli.org/).
+
+## ¿Qué es WP-CLI?
+
+En términos muy sencillos, no es más que una **linea de comandos** con los que 
+podemos controlar nuestro sitio, se basa en funciones PHP que son ejecutadas 
+dependiendo del comando que utilicemos, aceptando los parámetros que especifiquemos. 
+El ejemplo más simple que uso sería algo así:
+
+<Code
+    language="bash"
+    children={`wp plugin list`}
+/>
+
+Esto, algo fácil de entender, nos regresa una **lista con los plugins del sitio**, 
+si queremos activar alguno de ellos, simplemente podemos ejecutar:
+
+<Code
+    language="bash"
+    children={`wp plugin activate akismet`}
+/>
+
+Y ¡eso es todo! Así de simple es activar un plugin en nuestro sitio utilizando 
+WP-CLI, como pueden ver nos ahorra muchos clicks.
+
+## Instalación
+
+**WP-CLI** es soportado por defecto en WordPress, pero eso no quiere decir que 
+cualquier persona pueda utilizarlo sólo con tener WordPress, la linea de comandos 
+es una herramienta que _debe ser instalada en el servidor en donde nuestra 
+instalación de WordPress se encuentre_, afortunadamente, es muy sencillo instalarla. 
+Para este artículo, estaremos asumiendo que es una instalación local, por lo que 
+necesitaremos instalar la herramienta en nuestra computadora.
+
+> [!NOTE]
+> Muchos ambientes locales (como [wp-env](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1)). 
+> Ya vienen con la herramienta instalada y lista para usar, asegúrate de leer la 
+> documentación de tu sistema para saber si ya viene incluida, y como utilizarla.
+
+Para instalar la herramienta, simplemente es necesario descargar y ejecutar un archivo, 
+el sitio oficial de [wp-cli](https://wp-cli.org/#installing) tiene las instrucciones, 
+que copio a continuación:
+
