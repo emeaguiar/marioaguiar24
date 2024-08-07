@@ -32,6 +32,7 @@ import {
   Td,
   Th,
   Tr,
+  CodeElement,
 } from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
@@ -77,6 +78,7 @@ export default function PostPage({
           components={{
             YouTubeEmbed,
             a: A,
+            code: CodeElement,
             h1: H1,
             h2: (props: any) => {
               let classes;
