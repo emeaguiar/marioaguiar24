@@ -1,0 +1,187 @@
+---
+title: Introducción a WP-CLI
+publishedOn: '2024-08-04'
+updatedOn: '2024-08-07T17:29:46.277Z'
+description: >-
+  En este post mostraremos cómo instalar y usar WP-CLI, una herramienta de línea
+  de comandos para WordPress.
+published: true
+readingTime: 240
+---
+
+import Code from '@/components/code/code';
+
+Una de las cosas que más me gusta de WordPress, es definitivamente la e**norme 
+comunidad que se ha generado con el paso de los años**, gente muy capaz y tan 
+inteligente que el enorme éxito de la herramienta simplemente no sería 
+posible sin ellos. Sin mencionar, que es gracias a esta enorme comunidad que muchas 
+(si no es que todas) las grandes funcionalidades de WordPress fueron creadas.
+
+Una de ellas, y una de las que utilizo más comúnmente, es [WP-CLI](https://wp-cli.org/).
+
+## Tabla de contenidos
+
+- [¿Qué es WP-CLI?](#qué-es-wp-cli)
+- [Instalación](#instalación)
+- [Lo básico](#lo-básico)
+- [WP-CLI Cheat Sheet](#wp-cli-cheat-sheet)
+- [Conclusión](#conclusión)
+
+## ¿Qué es WP-CLI?
+
+En términos muy sencillos, no es más que una **linea de comandos** con los que 
+podemos controlar nuestro sitio, se basa en funciones PHP que son ejecutadas 
+dependiendo del comando que utilicemos, aceptando los parámetros que especifiquemos. 
+El ejemplo más simple que uso sería algo así:
+
+<Code
+    language="bash"
+    children={`wp plugin list`}
+/>
+
+Esto, algo fácil de entender, nos regresa una **lista con los plugins del sitio**, 
+si queremos activar alguno de ellos, simplemente podemos ejecutar:
+
+<Code
+    language="bash"
+    children={`wp plugin activate akismet`}
+/>
+
+Y ¡eso es todo! Así de simple es activar un plugin en nuestro sitio utilizando 
+WP-CLI, como pueden ver nos ahorra muchos clicks.
+
+## Instalación
+
+**WP-CLI** es soportado por defecto en WordPress, pero eso no quiere decir que 
+cualquier persona pueda utilizarlo sólo con tener WordPress, la linea de comandos 
+es una herramienta que _debe ser instalada en el servidor en donde nuestra 
+instalación de WordPress se encuentre_, afortunadamente, es muy sencillo instalarla. 
+Para este artículo, estaremos asumiendo que es una instalación local, por lo que 
+necesitaremos instalar la herramienta en nuestra computadora.
+
+> [!NOTE]
+> Muchos ambientes locales (como [wp-env](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1)). 
+> Ya vienen con la herramienta instalada y lista para usar, asegúrate de leer la 
+> documentación de tu sistema para saber si ya viene incluida, y como utilizarla.
+
+Para instalar la herramienta, simplemente es necesario descargar y ejecutar un archivo, 
+el sitio oficial de [wp-cli](https://wp-cli.org/#installing) tiene las instrucciones, 
+que copio a continuación:
+
+<Code
+    language="bash"
+    children={`# Descarga el archivo
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+# Nos aseguramos que funcione
+php wp-cli.phar --info
+
+# Lo movemos a nuestro path
+chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp`}
+/>
+
+Ahora sólo necesitamos ejecutar `wp` en nuestra terminal y tendremos algo similar a esto:
+
+<Code
+    language="bash"
+    children={`wp --info
+
+# Output
+
+OS:     Linux 5.10.60.1-microsoft-standard-WSL2 #1 SMP Wed Aug 25 23:20:18 UTC 2021 x86_64
+Shell:  /usr/bin/zsh
+PHP binary:     /usr/bin/php8.1
+PHP version:    8.1.0
+php.ini used:   /etc/php/8.1/cli/php.ini
+MySQL binary:   /usr/bin/mysql
+MySQL version:  mysql  Ver 8.0.27-0ubuntu0.20.04.1 for Linux on x86_64 ((Ubuntu))
+SQL modes:
+WP-CLI root dir:        /home/wp-cli/
+WP-CLI vendor dir:      /home/wp-cli/vendor
+WP_CLI phar path:
+WP-CLI packages dir:    /home/wp-cli/.wp-cli/packages/
+WP-CLI global config:
+WP-CLI project config:  /home/wp-cli/wp-cli.yml
+WP-CLI version: 2.10.0`}
+/>
+
+## Lo básico
+
+Una vez que tenemos la herramienta instalada, podemos empezar a utilizarla,
+como mencioné anteriormente, es muy sencillo, simplemente necesitamos ejecutar
+`wp` seguido del comando que queremos ejecutar, por ejemplo, si queremos ver la lista 
+de temas instalados en nuestro sitio, simplemente ejecutamos:
+
+<Code
+    language="bash"
+    children={`wp theme list`}
+/>
+
+Y si queremos activar un tema, simplementpodemos ejecutar:
+
+<Code
+    language="bash"
+    children={`wp theme activate twentytwentyfour`}
+/>
+
+Y así sucesivamente, la documentación oficial de [WP-CLI](https://developer.wordpress.org/cli/commands/)
+es muy completa y tiene ejemplos de todos los comandos que podemos utilizar.
+
+## WP-CLI Cheat Sheet
+
+Aquí les dejo una lista de comandos que utilizo con frecuencia, y que me han
+ayudado a ahorrar mucho tiempo:
+
+### WP Core
+
+| Comando | Descripción |
+|---------|-------------|
+| `wp core download` | Descarga la última versión de WordPress |
+| `wp core update` | Actualiza WordPress a la última versión |
+| `wp core install` | Instala la última versión de WordPress |
+
+### WP Config
+
+| Comando | Descripción |
+|---------|-------------|
+| `wp config create` | Crea un archivo de configuración de WordPress |
+| `wp config get` | Muestra la configuración actual de WordPress |
+| `wp config set` | Actualiza la configuración de WordPress |
+| `wp config edit` | Edita el archivo de configuración de WordPress |
+| `wp config list` | Muestra la lista de configuraciones de WordPress |
+
+### WP Plugin
+
+| Comando | Descripción |
+|---------|-------------|
+| `wp plugin list` | Muestra la lista de plugins instalados |
+| `wp plugin activate` | Activa un plugin |
+| `wp plugin deactivate` | Desactiva un plugin |
+| `wp plugin install` | Instala un plugin |
+| `wp plugin uninstall` | Desinstala un plugin |
+
+### WP Theme
+
+| Comando | Descripción |
+|---------|-------------|
+| `wp theme list` | Muestra la lista de temas instalados |
+| `wp theme activate` | Activa un tema |
+| `wp theme install` | Instala un tema |
+| `wp theme uninstall` | Desinstala un tema |
+
+## Conclusión
+
+**WP-CLI** es una herramienta que me ha ahorrado muchísimo tiempo, y que me ha
+permitido automatizar muchas tareas que antes tenía que hacer manualmente, si
+eres un desarrollador de WordPress, te recomiendo que le des una oportunidad,
+estoy seguro que no te arrepentirás.
+
+¡Hasta la próxima!
+
+## Leer más
+
+- [WP-CLI](https://wp-cli.org/)
+- [Documentación oficial](https://developer.wordpress.org/cli/commands/)
+- [Our Guide to WP-CLI Command Structure](https://deliciousbrains.com/wpcli-command-structure-guide/)
+

@@ -12,7 +12,7 @@ import Link from 'next/link';
 /**
  * Internal dependencies
  */
-import { merriweather } from '@/components/fonts';
+import { merriweather, notoSansMono } from '@/components/fonts';
 
 export function H1({
   children,
@@ -189,5 +189,37 @@ export function OL({ children }: { children?: React.ReactNode }) {
     <ol className='w-full max-w-screen-sm list-outside list-decimal pl-8'>
       {children}
     </ol>
+  );
+}
+
+export function Table({ children }: { children?: React.ReactNode }) {
+  return (
+    <table className='w-full max-w-screen-md table-auto p-4'>{children}</table>
+  );
+}
+
+export function Th({ children }: { children?: React.ReactNode }) {
+  return (
+    <th className='bg-primary px-4 py-2 text-start font-bold text-white ring-1 ring-primary first:rounded-tl-lg last:rounded-tr-lg'>
+      {children}
+    </th>
+  );
+}
+
+export function Tr({ children }: { children?: React.ReactNode }) {
+  return <tr className='even:bg-slate-100'>{children}</tr>;
+}
+
+export function Td({ children }: { children?: React.ReactNode }) {
+  return <td className='px-4 py-2 text-start'>{children}</td>;
+}
+
+export function CodeElement({ children }: { children?: React.ReactNode }) {
+  return (
+    <code
+      className={`rounded-md bg-slate-100 ${notoSansMono.className} px-1.5 py-1 text-sm`}
+    >
+      {children}
+    </code>
   );
 }
