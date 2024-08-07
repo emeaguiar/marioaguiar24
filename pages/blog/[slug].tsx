@@ -19,7 +19,20 @@ import { YouTubeEmbed } from '@next/third-parties/google';
 /**
  * Internal dependencies
  */
-import { A, H1, H2, H3, H4, P, OL, UL } from '@/components/elements';
+import {
+  A,
+  H1,
+  H2,
+  H3,
+  H4,
+  P,
+  OL,
+  UL,
+  Table,
+  Td,
+  Th,
+  Tr,
+} from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
@@ -92,6 +105,10 @@ export default function PostPage({
             ol: OL,
             p: P,
             ul: UL,
+            table: Table,
+            td: Td,
+            th: Th,
+            tr: Tr,
             div: (props: any) => {
               if (props.className.includes('markdown-alert')) {
                 const type = props.className.replace(
