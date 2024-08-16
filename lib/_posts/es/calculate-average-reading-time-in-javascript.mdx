@@ -1,0 +1,97 @@
+---
+title: Calcular tiempo de lectura promedio en JavaScript
+publishedOn: '2024-08-16'
+updatedOn: '2024-08-16T16:48:08.860Z'
+description: >-
+  En este post explicaré y compartiré un pequeño script que nos permitirá
+  calcular
+    el tiempo de lectura promedio de cualquier texto en JavaScript.
+published: true
+readingTime: 180
+---
+
+import Code from '@/components/code/code';
+
+Una de las funciones más utilizadas en estos tiempos es el **cálculo de tiempo de 
+lectura**. Incluso la utilizo en este blog.
+
+¿Por qué? Simplemente es una forma rápida de decirle al usuario _cuanto tiempo 
+puede pasar en el artículo_, tal vez sea muy rápido (como este) o tal vez tarde 
+un poco más de tiempo.
+
+Aquí enseñaré un truco rápido para conseguirlo:
+
+## El código
+
+Antes que nada, enseñaré cuál es **el código que yo utilizo** para esta funcionalidad, 
+y después lo explicaré: 
+
+<Code
+    language="ts"
+    children={`/**
+ * Calcula el tiempo de lectura promedio de un texto
+ */
+function readingTime( text: string ): number {
+    const WORDS_PER_MINUTE: number = 225;
+    const words: number = text.trim().split(/\s+/).length;
+
+    return Math.ceil(words / WORDS_PER_MINUTE);
+}
+
+readingTime( “Hola mundo” );`}
+/>
+
+## La explicación
+
+Como pueden ver es un pedazo de código bastante sencillo, básicamente lo que hacemos es:
+
+* Definimos una constante `WORDS_PER_MINUTE` que nos dará una base para nuestro 
+cálculo, normalmente _oscila entre 150 y 300_ (palabras por minuto) dependiendo 
+del nivel y edad de la persona, así que **utilizaremos 225**[^1]
+* `text.trim()` elimina los espacios al principio y final del text, para que 
+**siempre empiece y termine con una letra, número, o símbolo**
+* `.split(/\s+/)` “corta” todo el texto en cada espacio y lo guarda en un `array`
+* `.length` regresa **el total de elementos en el array**, nuestro número de palabras
+* `Math` es la librería de JavaScript que se encarga de brindar funciones para cálculos
+* `.ceil` es una **función de redondeo**, significa que redondeará _hacia arriba_
+al número entero más cercano (por ejemplo 52.2 se convertirá en 53)[^2]
+    * Viene de _ceiling_, techo en inglés
+* Por último, **dividimos nuestro total de palabras entre nuestra constante de 
+palabras por minuto** (`words / WORDS_PER_MINUTE`) , y tendremos como resultado 
+el número de minutos que se tardaría una persona promedio en leer el texto
+
+¡Eso es todo! Si queremos un paso más allá podemos **convertirlo a horas** o guardarlo 
+en segundos para tener un mejor control, pero básicamente esto es todo lo que necesitamos.
+
+## Más allá
+
+Como puedes ver la función toma un texto para calcular el tiempo, si queremos hacerlo un poco más
+_automático_ podemos hacer que tome el texto de un elemento HTML, o de un archivo, o de cualquier
+otra fuente que se nos ocurra.
+
+Por ejemplo:
+
+<Code
+    language="ts"
+    children={`const text = document.querySelector(".article").innerText; // Es importante usar \`innerText\`;
+
+readingTime( text );`}
+/>
+
+> [!NOTE]
+> **¿Por qué usamos `innerText` en lugar de `innerHTML`?**
+>
+> Porque `innerText` nos regresa el texto _sin etiquetas_,
+> mientras que `innerHTML` nos regresa el texto _con etiquetas_.
+>
+> Si utilizamos `innerHTML` estaríamos contando las etiquetas como palabras,
+> lo cual no es lo que queremos.
+
+Espero te sirva como me ha servido a mi, ¡saludos!
+
+## Leer más
+
+- [Calculate the estimated reading time of an article using JavaScript](https://dev.to/michaelburrows/calculate-the-estimated-reading-time-of-an-article-using-javascript-2k9l)
+
+[^1]: [Average Reading Speed by Age and Grade Level](https://scholarwithin.com/average-reading-speed#average-reading-speed-by-age-and-grade)
+[^2]: [Math.ceil() - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil)
