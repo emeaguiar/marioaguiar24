@@ -1,0 +1,148 @@
+---
+title: Como añadir un metabox en React a Gutenberg
+publishedOn: '2024-09-18'
+updatedOn: '2024-07-21T22:44:57.022Z'
+description: En este tutorial mostraré como agregar un componente de react al área de metaboxes de WordPress
+published: "true"
+readingtime: "240"
+---
+Recientemente me vi en la necesidad de agregar controles al **editor de bloques de WordPress**, o _Gutenberg_ como también se le llama al proyecto, esto normalmente es muy sencillo pero tenía un par de complejidades que bno había visto antes:
+
+1. Debía tener controles en React y
+2. Debía posicionarse en la parte inferior del editor
+
+Estos requisitos por si mismos no son mayor problema, pero **juntos** era algo que no se acostumbraba a hacer.
+
+## El problema
+
+El asunto aquí es que es sencillo hacer ambas cosas por separado, podemos agregar un nuevo plugin al editor y mostrarlo en **la parte lateral** (el sidebar), ó, podemos agregar un metabox con PHP y se mostrará automáticamente en la parte inferior del editor.
+
+¿Ven el problema? **No hay forma de agregar un plugin de Gutenberg en la parte inferior, y no podemos agregar controles React en PHP**.
+
+…¿O si?
+
+[Screenshot del editor]
+
+## La solución
+
+Resulta que la solución es mucho más simple de lo que pensaba, lo que necesitamos es **una combinación de ambas** para que esto funcione, básicamente, podemos hacer lo siguiente.
+
+1. Crear un *metabox* que aparezca en la parte inferior de la página, este **únicamente mostrará un contenedor**
+2. Creamos un plugin de Gutenberg con la funcionalidad react que necesitamos, este se mostrará en el sidebar por defecto
+3. **Creamos un *portal* que mueva nuestro componente en React a nuestro contenedor dentro del metabox**
+
+¡Esa es la magia! Ahora veamos como podemos hacerlo con código.
+
+> [!NOTE]
+> **¿Portal?**
+> 
+> Esto merece su propio post, pero a grandes rasgos los [portales](https://react.dev/reference/react-dom/createPortal) nos permiten **mover partes de nuestros componentes a cualquier sitio dentro del DOM**, pero mantienen su estructura dentro de nuestra aplicación en React.
+
+### Registrar un Metabox en WordPress
+
+Ahora, si queremos hacerlo con código, lo primero que debemos hacer es crear un Plugin que agregue nuestro metabox:
+
+```php
+<?php
+/**
+ * Plugin Name: Mah React metabox
+ * Author: Mario Aguiar
+ * Author URI: https://www.marioaguiar.net
+ * Plugin URI: https://www.marioaguiar.net
+ * Version: 1.0
+ */
+
+namespace Mah;
+
+/**
+ * Maneja las funcionalidades de metabox
+ */
+class Metabox {
+	/**
+	 * Agrega los hooks necesarios
+	 * 
+	 * @return void
+	 */
+	public function init(): void {
+		add_action( 'add_meta_boxes', [ $this, 'register_metabox' ] );
+	}
+
+	/**
+	 * Add custom metabox
+	 *
+	 * @return void
+	 */
+	 public function register_metabox(): void {
+		 add_meta_box(
+			'mah-metabox',
+			__( 'Mah metabox' ),
+			function () {
+				echo "<div id='mah-metabox'></div>";
+			},
+			null,
+			'normal',
+			'high'
+		);
+	 }
+}
+
+new Metabox()->init();
+```
+
+Esto lo que hará será agregar un nuevo metabox al editor de blocks, si no fijamos bien, podemos adivinar que esta vacío (aunque más bien simplemente no tiene texto), algo así:
+
+[Imagen del metabox vacío]
+
+### Registrar un Plugin en Gutenberg
+
+Esto nos servirá como **el contenedor de nuestro componente en React**, ahora, para nuestro componente podemos agregar un nuevo archivo, simplemente creamos un plugin de Gutenberg utilizando [registerPlugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-plugins/#:~:text=to%20be%20rendered.-,registerPlugin,-Registers%20a%20plugin):
+
+```jsx
+/**
+ * WordPress dependencies
+ */
+import { registerPlugin } from '@wordpress/plugins';
+
+registerPlugin( 'mah-metabox', {
+	render: () => {
+		return <h2>Mah Metabox</h2>
+	},
+} );
+```
+
+[Imagen del plugin en el sidebar]
+
+Ahora tenemos los dos componentes que necesitamos, y estamos preparados para juntarlos
+
+## Juntando el plugin de Gutenberg con nuestro Metabox
+
+Por fortuna, esto es increiblemente sencillo gracias al anteriormente mencionado `createPortal`, simplemente necesitamos modificar nuestro plugin para *crear un portal y enviar nuestro componente a través de ese portal*:
+
+```jsx
+/**
+ * WordPress dependencies
+ */
+import { createPortal } from '@wordpress/element';
+import { registerPlugin } from '@wordpress/plugins';
+
+const MetaboxPortal = () => (
+	createPortal(
+		() => <h2>Mah Metabox</h2>,
+		document.querySelector( '#mah-metabox' )
+	);
+);
+
+registerPlugin( 'mah-metabox', {
+	render: MetaboxPortal,
+} );
+
+```
+
+¡Listo! Eso es todo lo que necesitamos, lo que estamos haciendo es crear un portal hacia nuestro elemento con id `mah-metabox`, así, cuando React ejecute `MetaboxPortal` sabrá que tiene que enviar su contenido a través del portal, y terminará mostrando nuestro componente justo en el lugar que necesitamos, que es nuestro metabox:
+
+[Imagen del componente dentro de nuestro metabox]
+
+## Conclusión
+
+Esto resulta bastante útil cuando necesitamos más espacio del que nuestra sidebar puede darnos, un buen ejemplo es el plugin Yoast SEO que muestra la información del post debajo del editor, lo cual hace que editarlo sea mucho más sencillo.
+
