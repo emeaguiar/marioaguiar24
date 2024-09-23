@@ -217,7 +217,10 @@ export function Td({ children }: { children?: React.ReactNode }) {
 export function CodeElement({ children }: { children?: React.ReactNode }) {
   return (
     <code
-      className={`rounded-md bg-slate-100 ${notoSansMono.className} px-1.5 py-1 text-sm`}
+      className={clsx(
+        `rounded-md bg-slate-100 ${notoSansMono.className} px-1.5 py-1 text-sm`,
+        `dark:bg-slate-700`
+      )}
     >
       {children}
     </code>
