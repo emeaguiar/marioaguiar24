@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Layout>
       </ThemeProvider>
 
-      <GoogleAnalytics gaId='G-6MSTR35N5E' />
+      <GoogleAnalytics gaId='G-YRPBH5KSTQ' />
     </>
   );
 }
