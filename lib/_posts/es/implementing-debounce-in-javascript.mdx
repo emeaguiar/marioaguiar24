@@ -1,7 +1,7 @@
 ---
 title: Implementando Debounce en Vainilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-17T16:38:38.864Z'
+updatedOn: '2024-10-17T19:22:46.936Z'
 description: >-
   Un simple tutorial explicando el concepto de Debounce y el como implementarlo
   en vainilla Javascript
@@ -23,7 +23,7 @@ Es por eso que muchas veces puede ser más beneficioso **implementar nuestras pr
 > [!NOTE]
 > **¿Qué es `debounce`?**
 > 
-> Cuando hablamos de debounce, nos referimos a una técnica utilizada en programación (en Javascript principalmente) en la que **evitamos que un evento se ejecute hasta que cierto tiempo ha pasado desde la primera vez que se ejecutó**. Esto nos ayuda a prevenir eventos duplicados y efectos inesperados en nuestra aplicación.
+> Cuando hablamos de debounce, nos referimos a una técnica utilizada en programación (en Javascript principalmente) en la que **evitamos que un evento se ejecute hasta que cierto tiempo ha pasado**. Esto nos ayuda a prevenir que un evento se ejecute antes de que tengamos las herramientas que necesita.
 
 ## El Problema
 
@@ -98,17 +98,14 @@ La lógica de _debounce_ no es muy complicada, se basa en algunas pautas muy sim
 	* Un nuevo timer se inicia
 4. Si el timer logra llegar a `0`, la función finalmente se ejecuta
 
-> [!NOTE]
-> La magia consiste en que en lugar de ejecutar nuestra función inmediatamente, nos esperamos a que **el temporizador termine**, y cada vez que ese mismo evento es repetido el timer vuelve a reiniciarse. Así nunca se repite un evento ya que el timer no lo permitirá.
-
 Ya que tenemos la lógica que necesitamos, podemos pasar a la parte divertida.
 ## La implementación
 
-Ya que este es un tutorial para **mostrar el funcionamiento de debounce**, no recurriré a mi método habitual para utilizarlo (ya que mi método habitual es simplemente usar [lodash](https://lodash.com/docs/4.17.15#debounce)), en lugar de eso, tomaremos la lógica que escribimos en los párrafos anteriores y la traduciremos a Javascript.
+Ya que este es un tutorial para **mostrar el funcionamiento de debounce**, no recurriré a mi método habitual para utilizarlo (ya que mi método habitual es simplemente usar [lodash](https://lodash.com/docs/4.17.15#debounce)), en lugar de eso, tomaremos la lógica que escribimos en los párrafos anteriores y la _traduciremos a Javascript_.
 
 Comencemos con el primer paso
 
-> 1. Se ejecuta un evento (como presionar una tecla)
+> Se ejecuta un evento (como presionar una tecla)
 
 Por fortuna, en nuestro ejemplo estamos utilizando el evento `onChange`, así que esto ya se encarga de ese paso.
 
@@ -125,6 +122,48 @@ Por fortuna, en nuestro ejemplo estamos utilizando el evento `onChange`, así qu
 > ```
 
 Antes se acercarnos al evento de cambio, es una buena idea **guardar nuestra función para que podamos utilizarla en varios lugares**, así que crearemos la función:
+
+<Code
+	language="jsx"
+	children={`const debounce = () => {};`}
+/>
+
+Bastante simple, ahora veamos. 
+
+> Se inicia un _timer_
+
+Para crear el timer, primero necesitamos guardarlo en una referencia (así podemos limpiarlo si es necesario):
+
+<Code
+	language="jsx"
+	children={`const debounce = (callback, delay) => {
+    let timer;
+
+    return (...args) => {
+        // Creamos un nuevo timer.
+        timer = setTimeout( () => {
+            // Ejecutamos la función con los argumentos.
+            callback( ...args );
+        }, delay );
+    };
+};`}
+/>
+
+> [!NOTE]
+> ¿`return (...args)`?
+>
+> Si se te hace raro que creemos una función que _regresa otra función_, la razón es que necesitamos 
+> una función que **reciba los argumentos del evento, pero que se ejecute después de nuestro timer**.
+> Cuando vemos: `addEventListener('change', debounced)`, lo que sucede es que `debounced` se ejecuta primero,
+> y después `change` **envía los argumentos a la función que `debounced` regresa**.
+
+> Si el _mismo_ evento vuelve a ser ejecutado:
+> * El timer se elimina
+> * Un nuevo timer se inicia
+
+Hasta ahora ya tenemos nuestro timer, y hemos especificado que al terminar ejecute nuestra función, 
+(esto se encarga del punto 4), pero nos falta el punto 3, **limpiar el timer si el evento se repite**.
+Como ya tenemos una referencia a nuestro timer, podemos limpiarlo con `clearTimeout`:
 
 <Code
 	language="js"
@@ -145,17 +184,7 @@ Antes se acercarnos al evento de cambio, es una buena idea **guardar nuestra fun
 };`}
 />
 
-> [!TIP]
-> ¿`return (...args)`?
->
-> Si se te hace raro que creemos una función que _regresa otra función_, la razón es que necesitamos 
-> crear una referencia a `timer` que sólo sea accesible para nuestra función `debounce`, y no para el
-> resto de nuestro código. De esta forma, **podemos mantener el estado de nuestro timer entre llamadas**.
-> 
-> Además, usamos `(...args)` para decir que nuestra función `debounce` puede recibir **cualquier número de argumentos**,
-> y asi mismo los pasará a nuestra función `callback`.
-
-Para utilizarla con nuestro ejemplo, en lugar de iniciar nuestra función original, lo que hacemos es **envolverla en nuestra función de `debounce`**, de esta forma:
+¡Nuestra función está completa! Para utilizarla con nuestro ejemplo, en lugar de iniciar nuestra función original, lo que hacemos es **envolverla en nuestra función de `debounce`**, de esta forma:
 
 <Code
 	language="jsx"

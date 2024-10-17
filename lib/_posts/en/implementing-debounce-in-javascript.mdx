@@ -1,11 +1,247 @@
 ---
-title: Implementando Debounce en Vainilla Javascript
+title: Implementing Debounce in Vanilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-17T16:38:38.862Z'
+updatedOn: '2024-10-17T19:22:46.934Z'
 description: >-
-  Un simple tutorial explicando el concepto de Debounce y el como implementarlo
-  en vainilla Javascript
+  A simple tutorial explaining the concept of Debounce and how to implement it
+  in vanilla Javascript
 published: true
-readingTime: 60
+readingTime: 360
 ---
 
+import AlignWide from '@/components/blog/align-wide';
+import Code from '@/components/code/code';
+import {
+    ExampleOne,
+    ExampleTwo,
+} from '@/examples/implementing-debounce-in-javascript/en';
+
+Possibly one of the most used functions in the world of Javascript is (besides [throttle](/blog/implementing-throttle-in-vanilla-javascript)) **debounce**. So much so that many times it is the only function I end up importing from [lodash](https://lodash.com/), but, as small as the `lodash` library may be, **isn't it too much to import a new library just for one function?**
+
+That's why many times it can be more beneficial to **implement our own versions of these types of utilities**, and best of all, debounce is very simple to use.
+
+> [!NOTE]
+> **What is `debounce`?**
+>
+> When we talk about debounce, we refer to a technique used in programming (in Javascript mainly) in which **we prevent an event from being executed until
+> a certain time has passed**. This helps us prevent an event from being executed
+> before we have the tools it needs.
+
+## The Problem
+
+Before we start, let's imagine that we have a **search form** in our application, this will send a request to our _API_ to return results related to the keywords the user chooses. To help the user save precious milliseconds and a click, **we will not add a search button**, the form will do it automatically:
+
+<Code
+  language="jsx"
+  children={`<form>
+    <label
+        htmlFor='search1'
+        className='block text-sm font-medium text-gray-700'
+    >
+        Enter a keyword
+    </label>
+    <input
+        type='text'
+        id='search1'
+        name='search1'
+        className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+    />
+</form>`}
+/>
+
+This will result in:
+
+<AlignWide>
+    <ExampleOne />
+</AlignWide>
+
+Now, let's say that before connecting our form to our API, we want to make sure it works, so we want to print the value of this field in the console (you can open the browser console and try the field yourself 😉️)
+
+Simply add a `console.log` to the change function:
+
+<Code
+  language="jsx"
+  children={`<form>
+    <label
+        htmlFor='search1'
+        className='block text-sm font-medium text-gray-700'
+    >
+        Enter a keyword
+    </label>
+    <input
+        type='text'
+        id='search1'
+        name='search1'
+        className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+        onChange={(e) => {
+            console.log(e.target.value);
+        }}
+    />
+</form>`}
+/>
+
+![Console log of each change in the search field](/posts/implementing-debounce-in-javascript/no-debounce.gif)
+
+> [!WARNING]
+> Can you see the problem? Every time we press a key **our change function is executed**, imagine that we had connected our form to the API, each of those logs would be a request to the API, and just from one user!
+>
+> Now imagine that we had _10,000 users a day…_
+
+## The Solution
+
+This is where _debounce_ comes in, what we are going to do is **wait for the user to finish writing** before executing our change function, we don't need to wait long, just a few milliseconds. This way we make sure
+
+The logic of _debounce_ is not very complicated, it is based on some very simple guidelines, which are:
+
+1. An event is executed (such as pressing a key)
+2. A _timer_ is started
+3. If the _same_ event is executed again:
+  * The timer is cleared
+  * A new timer is started
+4. If the timer manages to reach `0`, the function is finally executed
+
+Now that we have the logic we need, we can move on to the fun part.
+
+## The Implementation
+
+Since this is a tutorial to **show the operation of debounce**, I will not resort to my usual method of using it (since my usual method is simply to use [lodash](https://lodash.com/docs/4.17.15#debounce)), instead, we will take the logic we wrote in the previous paragraphs and _translate it to Javascript_.
+
+Let's start with the first step:
+
+> An event is executed (such as pressing a key)
+
+Fortunately, in our example we are using the `onChange` event, so this already takes care of that step.
+
+> [!CAUTION]
+> This blog, and its examples, are written in _[React](https://react.dev/)_.
+>
+> `onChange` is an event that is automatically added to `input` elements when they are created in React, **this is not available in conventional Javascript**, but in that case we can use the equivalent:
+>
+> ```js
+> const input = document.querySelector('#search1');
+> input.addEventListener('change', (event) => {
+>     console.log(event.target.value); // Here goes our logic
+> });
+> ```
+
+Before we get to the change event, it's a good idea to **save our function so we can use it in multiple places**, so we'll create the function:
+
+<Code
+  language="jsx"
+  children={`const debounce = () => {};`}
+/>
+
+Pretty simple, now let's see.
+
+> A _timer_ is started
+
+To create the timer, first we need to save it in a reference (so we can clear it if necessary):
+
+<Code
+  language="jsx"
+  children={`const debounce = (callback, delay) => {
+    let timer;
+
+    return (...args) => {
+        // Create a new timer.
+        timer = setTimeout( () => {
+            // Execute the function with the arguments.
+            callback( ...args );
+        }, delay );
+    };
+};`}
+/>
+
+> [!NOTE]
+> `return (...args)`?
+>
+> If you find it strange that we create a function that _returns another function_, the reason is that we need
+> a function that **receives the arguments of the event, but that is executed after our timer**.
+> When we see: `addEventListener('change', debounced)`, what happens is that `debounced` is executed first,
+> and then `change` **sends the arguments to the function that `debounced` returns**.
+
+> If the _same_ event is executed again:
+> * The timer is cleared
+> * A new timer is started
+
+So far we already have our timer, and we have specified that when it finishes it will execute our function,
+(this takes care of point 4), but we are missing point 3, **clear the timer if the event is repeated**.
+Since we already have a reference to our timer, we can clear it with `clearTimeout`:
+
+<Code
+  language="js"
+  children={`const debounce = ( callback, delay ) => {
+    // Save reference to the timer.
+    let timer;
+
+    return (...args) => {
+        // Clear the timer if it exists.
+        clearTimeout( timer );
+
+        // Create a new timer.
+        timer = setTimeout( () => {
+            // Execute the function with the arguments.
+            callback( ...args );
+        }, delay );
+    };
+};`}
+/>
+
+Our function is complete! To use it with our example, instead of starting our original function, what we do is **wrap it in our `debounce` function**, like this:
+
+<Code
+  language="jsx"
+  children={`const debounced = debounce((e) => {
+    console.log(e.target.value);
+}, 500);`}
+/>
+
+> [!NOTE]
+> Translating this, it would look like this:
+>
+> ```js
+> (e) => {
+>    console.log(e.target.value);
+> }
+> ```
+>
+> This would be our `callback`, and `500` would be the waiting time in milliseconds, our `delay`.
+
+Now, instead of using our original function, **we pass our `debounced` function to the `onChange` event**:
+
+<Code
+  language="jsx"
+  children={`<input
+    type='text'
+    id='search1'
+    name='search1'
+    className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+    onChange={debounced}
+/>`}
+/>
+
+Or without using react:
+
+<Code
+  language="js"
+  children={`input.addEventListener('change', debounced)`}
+/>
+
+Now, if we try our search form again, we will have something similar to this:
+
+<AlignWide>
+    <ExampleTwo />
+</AlignWide>
+
+> [!TIP]
+> You can try the previous example in the browser console, 😉
+
+![Example with debounce](/posts/implementing-debounce-in-javascript/debounced.gif)
+
+After this, we can see a great improvement in our calls, it no longer records _each and every_ letter we put in the field, but **waits for the user to finish writing** before making the call, resulting in many **fewer and more complete calls to our API**.
+
+## Conclusion
+
+As we can see, this small function can be of great help, especially when we pay attention to the **user experience**, in many cases, it can benefit us to pause for a moment and wait for the user to give us some *feedback* before continuing with our calculations.
+
+If you have any questions or comments, don't hesitate to contact me, I would love to hear your opinion!
