@@ -1,3 +1,8 @@
+/**
+ * Internal dependencies
+ */
+import { DebounceFunction } from '@/examples/implementing-debounce-in-javascript/interfaces';
+
 export function ExampleOne() {
   return (
     <form className='bg-slate-200 p-8' onSubmit={(e) => e.preventDefault()}>
@@ -21,9 +26,9 @@ export function ExampleOne() {
 }
 
 export function ExampleTwo() {
-  const debounce = (callback, delay) => {
+  const debounce: DebounceFunction = (callback, delay) => {
     // Guardamos referencia al timer.
-    let timer;
+    let timer: NodeJS.Timeout;
 
     return (...args) => {
       // Limpiamos el timer si existe.
