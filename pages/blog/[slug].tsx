@@ -37,6 +37,7 @@ import {
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
+import Code from '@/components/code/code';
 
 export default function PostPage({
   code,
@@ -74,6 +75,7 @@ export default function PostPage({
       </div>
 
       <div className='flex flex-col items-center gap-6 px-4 text-xl/9 lg:w-[736px]'>
+        {/* @todo: Clean up this madness */}
         <Component
           components={{
             YouTubeEmbed,
@@ -130,6 +132,18 @@ export default function PostPage({
               }
 
               return <div {...props} className={classes} />;
+            },
+            pre: (props: any) => {
+              return (
+                <Code
+                  language={props.children.props.className.replace(
+                    'language-',
+                    ''
+                  )}
+                >
+                  {props.children.props.children}
+                </Code>
+              );
             },
           }}
         />
