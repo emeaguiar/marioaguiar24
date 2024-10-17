@@ -1,7 +1,7 @@
 ---
 title: Implementando Debounce en Vainilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-17T23:05:16.738Z'
+updatedOn: '2024-10-17T23:25:59.167Z'
 description: >-
   Un simple tutorial explicando el concepto de Debounce y el como implementarlo
   en vainilla Javascript
@@ -29,9 +29,8 @@ Es por eso que muchas veces puede ser más beneficioso **implementar nuestras pr
 
 Antes de comenzar, imaginemos que tenemos un **formulario de búsqueda** en nuestra aplicación, este enviará una petición a nuestra _API_ para regresar resultados relacionados con las palabras clave que el usuario elija. Para ayudar al usuario a ahorrar preciosos milisegundos y un click, **no agregaremos un botón de búsqueda**, el formulario lo hará automáticamente:
 
-<Code
-	language="jsx"
-	children={`<form>
+```jsx
+<form>
     <label
         htmlFor='search1'
         className='block text-sm font-medium text-gray-700'
@@ -44,8 +43,8 @@ Antes de comenzar, imaginemos que tenemos un **formulario de búsqueda** en nues
         name='search1'
         className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
     />
-</form>`}
-/>
+</form>
+```
 
 Esto resultará en:
 
@@ -57,9 +56,8 @@ Ahora, digamos que antes de conectar nuestro formulario a nuestra API, queremos 
 
 Simplemente agregamos un `console.log` a la función de cambio:
 
-<Code
-	language="jsx"
-	children={`<form>
+```jsx
+<form>
     <label
         htmlFor='search1'
         className='block text-sm font-medium text-gray-700'
@@ -75,8 +73,8 @@ Simplemente agregamos un `console.log` a la función de cambio:
 			console.log(e.target.value);
 		}}
     />
-</form>`}
-/>
+</form>
+```
 
 ![Console log de cada cambio en el campo de búsqueda](/posts/implementing-debounce-in-javascript/no-debounce.gif)
 
@@ -123,10 +121,9 @@ Por fortuna, en nuestro ejemplo estamos utilizando el evento `onChange`, así qu
 
 Antes se acercarnos al evento de cambio, es una buena idea **guardar nuestra función para que podamos utilizarla en varios lugares**, así que crearemos la función:
 
-<Code
-	language="jsx"
-	children={`const debounce = () => {};`}
-/>
+```jsx
+const debounce = () => {};
+```
 
 Bastante simple, ahora veamos. 
 
@@ -134,9 +131,8 @@ Bastante simple, ahora veamos.
 
 Para crear el timer, primero necesitamos guardarlo en una referencia (así podemos limpiarlo si es necesario):
 
-<Code
-	language="jsx"
-	children={`const debounce = (callback, delay) => {
+```jsx
+const debounce = (callback, delay) => {
     let timer;
 
     return (...args) => {
@@ -146,8 +142,8 @@ Para crear el timer, primero necesitamos guardarlo en una referencia (así podem
             callback( ...args );
         }, delay );
     };
-};`}
-/>
+};
+```
 
 > [!NOTE]
 > ¿`return (...args)`?
@@ -165,9 +161,8 @@ Hasta ahora ya tenemos nuestro timer, y hemos especificado que al terminar ejecu
 (esto se encarga del punto 4), pero nos falta el punto 3, **limpiar el timer si el evento se repite**.
 Como ya tenemos una referencia a nuestro timer, podemos limpiarlo con `clearTimeout`:
 
-<Code
-	language="js"
-	children={`const debounce = ( callback, delay ) => {
+```jsx
+const debounce = ( callback, delay ) => {
     // Guardamos referencia al timer.
     let timer;
 
@@ -181,17 +176,16 @@ Como ya tenemos una referencia a nuestro timer, podemos limpiarlo con `clearTime
             callback( ...args );
         }, delay );
     };
-};`}
-/>
+};
+```
 
 ¡Nuestra función está completa! Para utilizarla con nuestro ejemplo, en lugar de iniciar nuestra función original, lo que hacemos es **envolverla en nuestra función de `debounce`**, de esta forma:
 
-<Code
-	language="jsx"
-	children={`const debounced = debounce((e) => {
+```jsx
+const debounced = debounce((e) => {
     console.log(e.target.value);
-}, 500);`}
-/>
+}, 500);
+```
 
 > [!NOTE]
 > Traduciendo esto, quedaría de esta forma:
@@ -206,23 +200,21 @@ Como ya tenemos una referencia a nuestro timer, podemos limpiarlo con `clearTime
 
 Ahora, en lugar de utilizar nuestra función original, **pasamos nuestra función `debounced` al evento `onChange`**:
 
-<Code
-	language="jsx"
-	children={`<input
+```jsx
+<input
     type='text'
     id='search1'
     name='search1'
     className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
     onChange={debounced}
-/>`}
 />
+```
 
 O sin usar react:
 
-<Code
-	language="js"
-	children={`input.addEventListener('change', debounced)`}
-/>
+```jsx
+input.addEventListener('change', debounced);
+```
 
 Ahora, si volvemos a probar nuestra forma de búsqueda, tendremos algo similar a esto:
 

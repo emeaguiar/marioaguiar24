@@ -1,7 +1,7 @@
 ---
 title: Implementing Debounce in Vanilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-17T23:05:16.736Z'
+updatedOn: '2024-10-17T23:25:59.165Z'
 description: >-
   A simple tutorial explaining the concept of Debounce and how to implement it
   in vanilla Javascript
@@ -22,7 +22,7 @@ That's why many times it can be more beneficial to **implement our own versions 
 
 > [!NOTE]
 > **What is `debounce`?**
->
+> 
 > When we talk about debounce, we refer to a technique used in programming (in Javascript mainly) in which **we prevent an event from being executed until
 > a certain time has passed**. This helps us prevent an event from being executed
 > before we have the tools it needs.
@@ -31,9 +31,8 @@ That's why many times it can be more beneficial to **implement our own versions 
 
 Before we start, let's imagine that we have a **search form** in our application, this will send a request to our _API_ to return results related to the keywords the user chooses. To help the user save precious milliseconds and a click, **we will not add a search button**, the form will do it automatically:
 
-<Code
-  language="jsx"
-  children={`<form>
+```jsx
+<form>
     <label
         htmlFor='search1'
         className='block text-sm font-medium text-gray-700'
@@ -46,8 +45,8 @@ Before we start, let's imagine that we have a **search form** in our application
         name='search1'
         className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
     />
-</form>`}
-/>
+</form>
+```
 
 This will result in:
 
@@ -59,9 +58,8 @@ Now, let's say that before connecting our form to our API, we want to make sure 
 
 Simply add a `console.log` to the change function:
 
-<Code
-  language="jsx"
-  children={`<form>
+```jsx
+<form>
     <label
         htmlFor='search1'
         className='block text-sm font-medium text-gray-700'
@@ -77,8 +75,8 @@ Simply add a `console.log` to the change function:
             console.log(e.target.value);
         }}
     />
-</form>`}
-/>
+</form>
+```
 
 ![Console log of each change in the search field](/posts/implementing-debounce-in-javascript/no-debounce.gif)
 
@@ -126,10 +124,9 @@ Fortunately, in our example we are using the `onChange` event, so this already t
 
 Before we get to the change event, it's a good idea to **save our function so we can use it in multiple places**, so we'll create the function:
 
-<Code
-  language="jsx"
-  children={`const debounce = () => {};`}
-/>
+```jsx
+const debounce = () => {};
+```
 
 Pretty simple, now let's see.
 
@@ -137,9 +134,8 @@ Pretty simple, now let's see.
 
 To create the timer, first we need to save it in a reference (so we can clear it if necessary):
 
-<Code
-  language="jsx"
-  children={`const debounce = (callback, delay) => {
+```jsx
+const debounce = (callback, delay) => {
     let timer;
 
     return (...args) => {
@@ -149,8 +145,8 @@ To create the timer, first we need to save it in a reference (so we can clear it
             callback( ...args );
         }, delay );
     };
-};`}
-/>
+};
+```
 
 > [!NOTE]
 > `return (...args)`?
@@ -168,9 +164,8 @@ So far we already have our timer, and we have specified that when it finishes it
 (this takes care of point 4), but we are missing point 3, **clear the timer if the event is repeated**.
 Since we already have a reference to our timer, we can clear it with `clearTimeout`:
 
-<Code
-  language="js"
-  children={`const debounce = ( callback, delay ) => {
+```jsx
+const debounce = ( callback, delay ) => {
     // Save reference to the timer.
     let timer;
 
@@ -184,17 +179,16 @@ Since we already have a reference to our timer, we can clear it with `clearTimeo
             callback( ...args );
         }, delay );
     };
-};`}
-/>
+};
+```
 
 Our function is complete! To use it with our example, instead of starting our original function, what we do is **wrap it in our `debounce` function**, like this:
 
-<Code
-  language="jsx"
-  children={`const debounced = debounce((e) => {
+```jsx
+const debounced = debounce((e) => {
     console.log(e.target.value);
-}, 500);`}
-/>
+}, 500);
+```
 
 > [!NOTE]
 > Translating this, it would look like this:
@@ -209,23 +203,22 @@ Our function is complete! To use it with our example, instead of starting our or
 
 Now, instead of using our original function, **we pass our `debounced` function to the `onChange` event**:
 
-<Code
-  language="jsx"
-  children={`<input
+```jsx
+<input
     type='text'
     id='search1'
     name='search1'
     className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
     onChange={debounced}
-/>`}
 />
+```
 
 Or without using react:
 
-<Code
-  language="js"
-  children={`input.addEventListener('change', debounced)`}
+```jsx
+input.addEventListener('change', debounced)`}
 />
+```
 
 Now, if we try our search form again, we will have something similar to this:
 
