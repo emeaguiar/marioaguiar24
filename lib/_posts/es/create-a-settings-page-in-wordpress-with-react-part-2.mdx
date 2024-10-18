@@ -1,16 +1,13 @@
 ---
 title: Crear una página de opciones en WordPress con React – Parte 2
 publishedOn: '2024-01-22'
-updatedOn: '2024-07-23T02:47:47.197Z'
+updatedOn: '2024-10-18T04:06:55.852Z'
 description: |-
   Parte dos de una serie de tutoriales donde aprenderemos a crear una página de
     opciones en WordPress utilizando React y el API de WordPress. mostraré como utilizar los componentes incluidos en WordPress para agregar campos de texto, y guardar las opciones.
 published: true
 readingTime: 900
 ---
-
-import Code from '@/components/code/code';
-
 En la [primera parte de este tutorial](/blog/create-a-settings-page-in-wordpress-with-react),
 mostré los principios básicos para **crear una página de opciones en WordPress**, en
 esta segunda parte, mostraré como utilizar los componentes incluidos en WordPress
@@ -43,9 +40,8 @@ nuestra aplicación, y creamos una sencilla:
 
 `settings.js`
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import { createRoot } from '@wordpress/element';
@@ -56,14 +52,13 @@ import Settings from './components/settings';
 const rootElement = document.querySelector( '#mah-settings' );
 if ( rootElement ) {
     createRoot( rootElement ).render( <Settings /> );
-}`}
-/>
+}
+```
 
 `components/settings.js`
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -72,8 +67,8 @@ const Settings = () => {
         <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
     );
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 Entre las cosas que ponemos observar en este pedazo de código están:
 
@@ -97,9 +92,8 @@ Ahora que tenemos nuestra aplicación corriendo podemos comenzar a **agregar opc
 a nuestra página**, una de las más comunes que me encuentro es la de campos de texto,
 tal vez para algún API, por ejemplo:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -127,8 +121,8 @@ const Settings = () => {
         </>
     );
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 Al volver a recargar la página, podremos ver que ¡nuestra **página de opciones** toma forma!
 aunque podemos agregar algo de sabor, pero eso lo haremos más adelante, ahora que
@@ -150,9 +144,8 @@ tenemos nuestro campo, expliquemos que pasa aquí:
 
 Como bonus, agreguemos un `toggle` simplemente porque me gusta como funcionan:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -179,8 +172,9 @@ const Settings = () => {
                         value={ apiKey }
                     />
                 </CardBody>
-                
+
                 <CardDivider />
+
                 <CardBody>
                     <ToggleControl
                         label={ __( 'Activar funcionalidad', 'mah-settings' ) }
@@ -192,8 +186,8 @@ const Settings = () => {
         </>
     );
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 ### ¿Qué pasó?
 
@@ -208,9 +202,8 @@ Por lo que puede ser necesario que las agreguemos nosotros mismos al archivo
 
 `class-mah-settings.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Registra los scripts y estilos.
  * 
  * @return void 
@@ -229,8 +222,8 @@ public function enqueue_scripts(): void {
         true
     );
     wp_enqueue_style( 'wp-components' );
-}`}
-/>
+}
+```
 
 Al volver a recargar la página veremos el resultado deseado, y si nos fijamos bien,
 **también nuestro campo de texto mejoró en apariencia**:
@@ -252,9 +245,8 @@ En php, podemos registrarlas de esta forma:
 
 `php/class-mah-settings.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Registra los hooks.
  * 
  * @return void 
@@ -264,14 +256,13 @@ public function init(): void {
     add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
     add_action( 'admin_init', [ $this, 'register_settings' ] );
     add_action( 'rest_api_init', [ $this, 'register_settings' ] );
-}`}
-/>
+}
+```
 
 `php/class-mah-settings.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Registra las opciones.
  * 
  * @return void 
@@ -296,8 +287,8 @@ public function register_settings(): void {
             'type'              => 'boolean',
         ]
     );
-}`}
-/>
+}
+```
 
 > [!WARNING]
 > El segundo hook rest_api_init es necesario para poder utilizar nuestras
@@ -308,9 +299,8 @@ public function register_settings(): void {
 Ahora sólo necesitamos **guardar nuestras opciones** desde el lado de React, para
 lo cual necesitamos agregar un botón de guardado a nuestra aplicación, y agregar un evento cuando éste sea presionado:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -342,7 +332,9 @@ const Settings = () => {
                         value={ apiKey }
                     />
                 </CardBody>
+
                 <CardDivider />
+
                 <CardBody>
                     <ToggleControl
                         label={ __( 'Activar funcionalidad', 'mah-settings' ) }
@@ -350,6 +342,7 @@ const Settings = () => {
                         checked={ toggled }
                     />
                 </CardBody>
+
                 <CardFooter>
                     <Button
                         disabled={ ! apiKey }
@@ -363,8 +356,8 @@ const Settings = () => {
         </>
     );
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 Una breve explicación de lo que acabamos de agregar:
 

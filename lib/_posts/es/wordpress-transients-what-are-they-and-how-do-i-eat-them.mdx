@@ -1,7 +1,7 @@
 ---
 title: 'Transient de WordPress: ¿Qué son y cómo se comen?'
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-07-23T02:49:31.700Z'
+updatedOn: '2024-10-18T04:06:55.858Z'
 description: >-
   A pesar de ser mi herramienta de trabajo diario favorita y la que más conozco,
   WordPress todavía tiene varias opciones y funciones que nunca he usado. Hace
@@ -10,9 +10,6 @@ description: >-
 published: true
 readingTime: 480
 ---
-
-import Code from '@/components/code/code';
-
 > [!WARNING]
 > Este artículo fue escrito en **2011** 👴🏼. La mayoría de los consejos aquí pueden no ser válidos.
 >
@@ -23,7 +20,7 @@ import Code from '@/components/code/code';
 
 A pesar de ser mi herramienta de trabajo diario favorita y la que más conozco,
 WordPress todavía tiene varias opciones y funciones que nunca he usado. Hace no mucho tiempo,
-una de ellas fue la [API de Transientes](https://marioaguiar.net/web/20120430100255/http://codex.wordpress.org/Transients_API).
+una de ellas fue la [API de Transientes](http://codex.wordpress.org/Transients_API).
 Funciones realmente útiles para **almacenar datos temporales en la base de datos**.
 
 ## ¿Qué son los Transientes?
@@ -60,9 +57,8 @@ de hecho, está conformada por solo tres funciones:
 Siguiendo la situación anterior (el formulario de contacto), mostraré un pequeño ejemplo
 del uso de transientes, nada de qué preocuparse, comenzamos con el formulario:
 
-<Code
-  language='php'
-  children={`<form id="transient_test" action="process.php" method="post">
+```php
+<form id="transient_test" action="process.php" method="post">
     <fieldset>
         <label for="name">Nombre:</label>
         <input id="name" type="text" name="name" />
@@ -74,8 +70,8 @@ del uso de transientes, nada de qué preocuparse, comenzamos con el formulario:
         <textarea id="comment" name="comment"></textarea>
         <input id="submit" type="submit" name="submit" value="enviado" />
     </fieldset>
-</form>`}
-/>
+</form>
+```
 
 Esto nos dará un formulario bastante simple, tomamos **Nombre**, **Correo electrónico**,
 **URL** y **Comentario**. También note que estoy usando atributos HTML5, no se preocupen,
@@ -84,9 +80,8 @@ no soy un hipster.
 Una vez que tenemos los datos, por supuesto debemos procesarlos, para hacer eso necesitaremos
 un archivo php que he llamado `process.php`, este funcionará más o menos así.
 
-<Code
-  language='php'
-  children={`<?php 
+```php
+<?php 
     if ( isset( $_POST['submit'] ) ) { // Asegúrate de que el formulario fue enviado
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -103,8 +98,8 @@ un archivo php que he llamado `process.php`, este funcionará más o menos así.
         $headers = 'De: ' . $name;
         wp_mail("me@me.com", "Prueba de Transientes", $comment, $headers); // Enviar un correo
     }
-?>`}
-/>
+?>
+```
 
 Ok, ahora este código tomará los datos que enviamos a través del formulario y buscará la
 base de datos para el valor clave (nuestro correo), si no existe, creará nuevos
@@ -120,9 +115,8 @@ Bien, tenemos el código para almacenar los transientes, ¿y ahora qué? Correct
 para que el usuario no tenga que escribirlos una y otra vez en el formulario, para
 hacer eso tenemos que modificar nuestro formulario y agregar una `cookie`:
 
-<Code
-  language='php'
-  children={`$cookie = $_COOKIE['transients_test'];
+```php
+$cookie = $_COOKIE['transients_test'];
 <form id="transient_test" action="process.php" method="post">
     <fieldset>
         <label for="name">Nombre:</label>
@@ -135,17 +129,15 @@ hacer eso tenemos que modificar nuestro formulario y agregar una `cookie`:
         <textarea id="comment" name="comment"></textarea>
         <input id="submit" type="submit" name="submit" value="enviado" />
     </fieldset>
-</form>`}
-/>
+</form>
+```
 
 Ahora el formulario comprobará la existencia de la cookie llamada transients_test, que
 no existe en este momento, para crearla tenemos que agregar lo siguiente al archivo `process.php`:
 
-<Code
-  language='php'
-  children={`setcookie('transients_test', $_POST['email'], time()+86400, '/', $_SERVER['HTTP_HOST'], 0, 0 );
-`}
-/>
+```php
+setcookie('transients_test', $_POST['email'], time()+86400, '/', $_SERVER['HTTP_HOST'], 0, 0 );
+```
 
 Eso creará la cookie llamada `transients_test`, con el correo del usuario, expirará en
 **86400 segundos** (total de segundos en un día) y será válida para todo nuestro sitio.
@@ -162,4 +154,4 @@ transientes **solo con datos que se espera que se borren**. Si quieres mantenerl
 
 ## Leer más
 
-- [Transients API « WordPress Codex](https://marioaguiar.net/web/20120430100255/http://codex.wordpress.org/Transients_API)
+- [Transients API « WordPress Codex](http://codex.wordpress.org/Transients_API)

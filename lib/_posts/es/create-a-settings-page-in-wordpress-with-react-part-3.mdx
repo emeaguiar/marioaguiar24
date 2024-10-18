@@ -1,16 +1,13 @@
 ---
 title: Crear una página de opciones en WordPress con React – Parte 3
 publishedOn: '2024-01-29'
-updatedOn: '2024-07-23T02:45:14.897Z'
+updatedOn: '2024-10-18T04:06:55.852Z'
 description: |-
   Parte tres de una serie de tutoriales donde aprenderemos a crear una página de
     opciones en WordPress utilizando React y el API de WordPress. Ahora lo que resta es guardar los datos dentro de nuestra base de datos y leerla dentro de nuestra página de opciones para asegurarnos de no sobre-escribir los datos.
 published: true
 readingTime: 900
 ---
-
-import Code from '@/components/code/code';
-
 Durante la [segunda parte](/blog/create-a-settings-page-in-wordpress-with-react-part-2)
 de este tutorial para **crear una página de opciones en WordPress**, mostré como crear
 una pequeña aplicación en React que sea mostrada dentro de nuestra página de
@@ -33,9 +30,8 @@ en la segunda parte registramos nuestra opción utilizando `register_setting`, p
 utilizar el ID que le dimos para cargar las opciones guardadas en nuestra base de
 datos de esta forma:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -75,7 +71,9 @@ const Settings = () => {
                         value={ apiKey || '' }
                     />
                 </CardBody>
+
                 <CardDivider />
+
                 <CardBody>
                     <ToggleControl
                         label={ __( 'Activar funcionalidad', 'mah-settings' ) }
@@ -83,6 +81,7 @@ const Settings = () => {
                         checked={ toggled || false }
                     />
                 </CardBody>
+
                 <CardFooter>
                     <Button
                         disabled={ ! apiKey }
@@ -96,8 +95,8 @@ const Settings = () => {
         </>
     );
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 Con esto ya estamos **leyendo el valor de nuestra opción guardado anteriormente**, expliquemos un poco como funciona:
 
@@ -121,9 +120,8 @@ a las funciones disponibles en los paquetes `@wordpress/core-data`, y `@wordpres
 > sólo sabemos que el equipo que las agregó supuso que esos eran los mejores
 > lugares para colocarlas 🤷‍♂️
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -157,8 +155,8 @@ const Settings = () => {
             }
         );
     };
-[…]`}
-/>
+[…]
+```
 
 He agregado solo las partes importantes de nuestras modificaciones, para entender un poco más expliquemos por partes:
 
@@ -188,9 +186,8 @@ Con unas pocas modificaciones y con la ayuda de nuevo del paquete `@wordpress/co
 
 `src/components/settings.js`
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -233,14 +230,13 @@ const Settings = () => {
         );
         setIsLoading( false );
     };
-[…]`}
-/>
+[…]
+```
 
 `src/components/settings.js#49-85`
 
-<Code
-  language='jsx'
-  children={`return (
+```jsx
+return (
     <>
         <h1>{ __( 'Selecciona las opciones deseadas', 'mah-settings' ) }</h1>
         <Card>
@@ -252,7 +248,9 @@ const Settings = () => {
                     value={ apiKey || '' }
                 />
             </CardBody>
+
             <CardDivider />
+
             <CardBody>
                 <ToggleControl
                     label={ __( 'Activar funcionalidad', 'mah-settings' ) }
@@ -260,6 +258,7 @@ const Settings = () => {
                     checked={ toggled || false }
                 />
             </CardBody>
+
             <CardFooter>
                 <Button
                     disabled={ ! apiKey }
@@ -272,8 +271,8 @@ const Settings = () => {
             </CardFooter>
         </Card>
     </>
-);`}
-/>
+);
+```
 
 Y el resultado sería:
 
@@ -306,9 +305,8 @@ por defecto[^2], pero aún así tenemos un componente que podemos utilizar.
 
 Hacemos unas modificaciones la la primera parte de nuestro archivo:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -368,8 +366,9 @@ const Settings = () => {
                             { __( 'Guardado con éxito', 'mah-settings' ) }
                         </Notice>
                     </CardBody>
-                ) }`}
-/>
+                ) }
+[…]
+```
 
 Básicamente lo que estamos haciendo es:
 

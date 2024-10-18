@@ -1,16 +1,13 @@
 ---
 title: Capitalizar primera letra con Javascript
 publishedOn: '2023-08-11'
-updatedOn: '2024-07-23T02:49:31.699Z'
+updatedOn: '2024-10-18T04:06:55.851Z'
 description: >-
   En este rápido tutorial aprenderemos como hacer que la primer letra de un
   string sea mayúscula
 published: true
 readingTime: 300
 ---
-
-import Code from '@/components/code/code';
-
 En este rápido tutorial aprenderemos como hacer que la primer letra de un
 `string` sea mayúscula
 
@@ -21,12 +18,11 @@ CSS? Pues si, si es más fácil hacer esto en CSS, pero si por alguna circunstan
 no podemos hacerlo así, no perdemos nada con saber como se hace, pero por si las
 dudas, para hacer todo esto en css solo necesitamos:
 
-<Code
-  language='scss'
-  children={`.test {
+```scss
+.test {
     text-transform: capitalize;
-}`}
-/>
+}
+```
 
 > [!WARNING] 
 > `text-transform: capitalize` va a aplicarse a todas las palabras dentro del elemento
@@ -47,12 +43,11 @@ Traducido a código sería algo como esto:
 indicada, sabemos que los `array` empiezan en la posición cero, por lo tanto, para
 encontrar el primer carácter de nuestra cadena, usamos `charAt( 0 )`.
 
-<Code
-  language='js'
-  children={`const str = 'foo';
+```js
+const str = 'foo';
 const firstLetter = str.charAt( 0 );
-console.log( firstLetter ); // f `}
-/>
+console.log( firstLetter ); // f 
+```
 
 ### `toUpperCase`
 
@@ -60,12 +55,11 @@ Ahora, `toUpperCase` convierte **todos** los caracteres enviados a mayúsculas,
 por eso es importante que primero encontremos la primer letra, para que solo la
 afecte a ella:
 
-<Code
-  language='js'
-  children={`const str = 'foo';
+```js
+const str = 'foo';
 const uppercaseStr = str.toUpperCase();
-console.log( uppercaseStr ); // FOO `}
-/>
+console.log( uppercaseStr ); // FOO 
+```
 
 ### `slice`
 
@@ -74,23 +68,21 @@ carácter especificado en `start`, y terminando en el carácter especificado por
 si `end` no se especifica, simplemente tomará el numero total de caracteres de
 la cadena, llegando hasta el final.
 
-<Code
-  language='js'
-  children={`const str = 'foo';
+```js
+const str = 'foo';
 const latterStr = str.slice( 1 );
-console.log( latterStr ); // oo `}
-/>
+console.log( latterStr ); // oo 
+```
 
 Ahora ya tenemos todas las partes necesarias, solo nos queda unirlas:
 
-<Code
-  language='js'
-  children={`const str = 'foo';
+```js
+const str = 'foo';
 const firstLetter = str.charAt( 0 );
 const upperCaseStr = firstLetter.toUpperCase();
 const latterStr = str.slice( 1 );
 const result = upperCaseStr + latterStr;
 console.log( result ); // Foo
 // Versión corta
-console.log( str.charAt( 0 ).toUpperCase() + str.slice( 1 ) ); // Foo  `}
-/>
+console.log( str.charAt( 0 ).toUpperCase() + str.slice( 1 ) ); // Foo  
+```

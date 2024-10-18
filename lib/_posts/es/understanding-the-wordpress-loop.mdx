@@ -1,7 +1,7 @@
 ---
 title: Entendiendo el Loop de WordPress
 publishedOn: '2014-08-04'
-updatedOn: '2024-07-21T22:44:57.025Z'
+updatedOn: '2024-10-18T04:06:55.857Z'
 description: >-
   Una de las características más básicas (y poderosas) dentro de WordPress es
   The Loop, este pequeño fragmento de código que usamos una y otra vez. Y sin
@@ -10,9 +10,6 @@ description: >-
 published: true
 readingTime: 600
 ---
-
-import Code from '@/components/code/code';
-
 Una de las características más básicas (y poderosas) dentro de WordPress es _The Loop_,
 este pequeño fragmento de código que usamos una y otra vez. Y sin embargo, encuentro
 personas que se llaman a sí mismas expertas en WordPress y **no saben qué es**, eso es… triste.
@@ -33,9 +30,8 @@ podríamos simplemente escribir el mismo código una y otra vez, pero eso es sol
 tiempo, en esos casos usamos _un loop_, así que básicamente, un loop solo repite cosas. Por ejemplo,
 si queremos mostrar los números del uno al diez, podríamos hacer esto:
 
-<Code
-  language='php'
-  children={`echo "1n";
+```php
+echo "1n";
 echo "2n";
 echo "3n";
 echo "4n";
@@ -44,20 +40,22 @@ echo "6n";
 echo "7n";
 echo "8n";
 echo "9n";
-echo "10n";`}
-/>
+echo "10n";
+```
 
 Para que sepas, _yo escribí todo eso_, y fue cansado… En lugar de eso, debería haber hecho esto:
 
-<Code
-  language='php'
-  children={`for ( $number = 1; $number <= 10; $number++ ) {
+```php
+for ( $number = 1; $number <= 10; $number++ ) {
     echo $number . "n";
-}`}
-/>
+}
+```
 
-Mucho más fácil. Por cierto, usé un loop `for`, hay varios tipos de loops. WordPress,
-por ejemplo, usa un loop `while`.
+Mucho más fácil.
+
+> [!NOTE]
+> Por cierto, usé un loop `for`, hay varios tipos de loops. WordPress,
+> por ejemplo, usa un loop `while`.
 
 ## ¿Qué es "El Loop”?
 
@@ -69,9 +67,8 @@ The Loop realiza un montón de acciones bajo el capó para que solo nos preocupe
 **cómo mostrar nuestras publicaciones, y no de cómo recuperar nuestras publicaciones**.
 Un loop muy básico (tomado de Twentythirteen) se ve así:
 
-<Code
-  language='php'
-  children={`<?php if ( have_posts() ) : ?>
+```php
+<?php if ( have_posts() ) : ?>
     <?php /* El loop */ ?>
     <?php while ( have_posts() ) : the_post(); ?>
         <?php get_template_part( 'content', get_post_format() ); ?>
@@ -79,8 +76,8 @@ Un loop muy básico (tomado de Twentythirteen) se ve así:
     <?php twentythirteen_paging_nav(); ?>
 <?php else : ?>
     <?php get_template_part( 'content', 'none' ); ?>
-<?php endif; ?>`}
-/>
+<?php endif; ?>
+```
 
 Mantengamos en mente que cuando accedemos a cualquier página en WordPress, hay una consulta
 global en marcha, eso significa que **WordPress ya sabe qué página estamos visitando**
@@ -124,9 +121,8 @@ La función `get_posts` es una forma de crear **pequeños loops personalizados**
 todos los parámetros de `WP_Query` y devuelve un array con el resultado, de esa forma
 podemos usar un loop `foreach` para trabajar con las publicaciones:
 
-<Code
-  language='php'
-  children={`$posts = get_posts( $args );
+```php
+$posts = get_posts( $args );
 foreach ( $posts as $post ) :
     setup_postdata( $post );
 ?>
@@ -134,8 +130,8 @@ foreach ( $posts as $post ) :
     <?php the_content(); ?>
 <?php
 endforeach;
-wp_reset_postdata();`}
-/>{' '}
+wp_reset_postdata();
+```
 
 Nótece cómo **necesitamos ejecutar** `setup_postdata` manualmente? Eso es porque no
 usamos `the_post` en este loop.
@@ -147,9 +143,8 @@ grandes, por eso en esos casos prefiero usar un nuevo WP_Query. Esto crea una nu
 consulta **completamente independiente** de la consulta principal, y podemos usar el loop
 de WordPress sin preocupaciones.
 
-<Code
-  language='php'
-  children={`$my_query = new WP_Query( $args );
+```php
+$my_query = new WP_Query( $args );
 if ( $my_query->have_posts() ):
     while ( $my_query->have_posts() ) : $my_query->the_post();
 ?>
@@ -159,8 +154,8 @@ if ( $my_query->have_posts() ):
     endwhile;
     wp_reset_postdata();
 endif;
-?>`}
-/>
+?>
+```
 
 Como puedes ver, es prácticamente el mismo loop que usamos con la consulta principal,
 la diferencia es el uso constante de `$my_query`, esto es necesario porque las funciones
@@ -190,14 +185,13 @@ automáticamente**, recuerda, **cuando accedemos a cualquier página en WordPres
 consulta principal en marcha**, incluso si no tenemos un loop en la barra lateral, _sí tenemos_
 un `$wp_query` y un objeto `$post` _en algún lugar_, solo necesitamos llamarlos.
 
-<Code
-  language='php'
-  children={`<?php
+```php
+<?php
     global $post;
     $mood = get_post_meta( $post->ID, 'mood', true );
 ?>
-<p>Me siento <?php echo $mood; ?></p>`}
-/>
+<p>Me siento <?php echo $mood; ?></p>
+```
 
 Como `$post` es una **variable global**, eso significa que siempre está disponible para
 nosotros, solo necesitamos saber cómo llamarlo, como a un viejo amigo.

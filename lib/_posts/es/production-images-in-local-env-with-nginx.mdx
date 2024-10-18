@@ -1,16 +1,13 @@
 ---
 title: Imágenes de producción en ambiente local con nginx
 publishedOn: '2019-01-25'
-updatedOn: '2024-07-21T22:44:57.024Z'
+updatedOn: '2024-10-18T04:06:55.857Z'
 description: >-
   Rápido tutorial para servir imágenes de producción en un ambiente local con
   nginx
 published: true
 readingTime: 180
 ---
-
-import Code from '@/components/code/code';
-
 Uno de los procesos más comunes y más útiles a la hora de desarrollar un nuevo
 sitio web, es _la creación de multiples ambientes de trabajo_ para asegurarnos de
 que nuestros cambios o nuevas funcionalidades funcionen a la perfección _antes
@@ -43,9 +40,8 @@ y los pasos para esto son, encontrar el archivo de configuración (normalmente `
 ó `site.conf`) . Dentro de éste archivo agregaremos una etiqueta de `location`,
 para que se vea como éste ejemplo:
 
-<Code
-    language="plain"
-    children={`# Basic conf
+```plain
+# Basic conf
 server {
 	server_name  _;
 	return 302 $scheme://mysite.test$request_uri;
@@ -71,8 +67,8 @@ root /app/public/;
     index index.php index.html index.htm;
     include do-not-modify/*.conf;
 
-}`}
-/>
+}
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/aa8998e75094197f9a8197073ac936eb)
 

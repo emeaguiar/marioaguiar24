@@ -1,16 +1,13 @@
 ---
 title: Introducción a WP-CLI
 publishedOn: '2024-08-04'
-updatedOn: '2024-08-07T17:29:46.277Z'
+updatedOn: '2024-10-18T04:06:55.856Z'
 description: >-
   En este post mostraremos cómo instalar y usar WP-CLI, una herramienta de línea
   de comandos para WordPress.
 published: true
 readingTime: 240
 ---
-
-import Code from '@/components/code/code';
-
 Una de las cosas que más me gusta de WordPress, es definitivamente la e**norme 
 comunidad que se ha generado con el paso de los años**, gente muy capaz y tan 
 inteligente que el enorme éxito de la herramienta simplemente no sería 
@@ -34,18 +31,16 @@ podemos controlar nuestro sitio, se basa en funciones PHP que son ejecutadas
 dependiendo del comando que utilicemos, aceptando los parámetros que especifiquemos. 
 El ejemplo más simple que uso sería algo así:
 
-<Code
-    language="bash"
-    children={`wp plugin list`}
-/>
+```bash
+wp plugin list
+```
 
 Esto, algo fácil de entender, nos regresa una **lista con los plugins del sitio**, 
 si queremos activar alguno de ellos, simplemente podemos ejecutar:
 
-<Code
-    language="bash"
-    children={`wp plugin activate akismet`}
-/>
+```bash
+wp plugin activate akismet
+```
 
 Y ¡eso es todo! Así de simple es activar un plugin en nuestro sitio utilizando 
 WP-CLI, como pueden ver nos ahorra muchos clicks.
@@ -68,9 +63,8 @@ Para instalar la herramienta, simplemente es necesario descargar y ejecutar un a
 el sitio oficial de [wp-cli](https://wp-cli.org/#installing) tiene las instrucciones, 
 que copio a continuación:
 
-<Code
-    language="bash"
-    children={`# Descarga el archivo
+```bash
+# Descarga el archivo
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 # Nos aseguramos que funcione
@@ -78,14 +72,13 @@ php wp-cli.phar --info
 
 # Lo movemos a nuestro path
 chmod +x wp-cli.phar
-sudo mv wp-cli.phar /usr/local/bin/wp`}
-/>
+sudo mv wp-cli.phar /usr/local/bin/wp
+```
 
 Ahora sólo necesitamos ejecutar `wp` en nuestra terminal y tendremos algo similar a esto:
 
-<Code
-    language="bash"
-    children={`wp --info
+```bash
+wp --info
 
 # Output
 
@@ -103,8 +96,8 @@ WP_CLI phar path:
 WP-CLI packages dir:    /home/wp-cli/.wp-cli/packages/
 WP-CLI global config:
 WP-CLI project config:  /home/wp-cli/wp-cli.yml
-WP-CLI version: 2.10.0`}
-/>
+WP-CLI version: 2.10.0
+```
 
 ## Lo básico
 
@@ -113,17 +106,15 @@ como mencioné anteriormente, es muy sencillo, simplemente necesitamos ejecutar
 `wp` seguido del comando que queremos ejecutar, por ejemplo, si queremos ver la lista 
 de temas instalados en nuestro sitio, simplemente ejecutamos:
 
-<Code
-    language="bash"
-    children={`wp theme list`}
-/>
+```bash
+wp theme list
+```
 
 Y si queremos activar un tema, simplementpodemos ejecutar:
 
-<Code
-    language="bash"
-    children={`wp theme activate twentytwentyfour`}
-/>
+```bash
+wp theme activate twentytwentyfour
+```
 
 Y así sucesivamente, la documentación oficial de [WP-CLI](https://developer.wordpress.org/cli/commands/)
 es muy completa y tiene ejemplos de todos los comandos que podemos utilizar.
@@ -184,4 +175,3 @@ estoy seguro que no te arrepentirás.
 - [WP-CLI](https://wp-cli.org/)
 - [Documentación oficial](https://developer.wordpress.org/cli/commands/)
 - [Our Guide to WP-CLI Command Structure](https://deliciousbrains.com/wpcli-command-structure-guide/)
-

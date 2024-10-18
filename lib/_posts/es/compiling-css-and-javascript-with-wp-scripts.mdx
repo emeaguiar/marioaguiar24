@@ -1,14 +1,11 @@
 ---
 title: Compilando CSS y Javascript con wp-scripts
 publishedOn: '2022-01-14'
-updatedOn: '2024-07-21T22:44:57.019Z'
+updatedOn: '2024-10-18T04:06:55.851Z'
 description: Tutorial rápido para compilar CSS y Javascript con `wp-scripts`
 published: true
 readingTime: 180
 ---
-
-import Code from '@/components/code/code';
-
 Desde la aparición de Gutenberg, o probablemente antes, se han estado implementando
 varios **paquetes oficiales** de WordPress para hacer nuestras vidas como desarrolladores
 más sencillas, por así decirlo.
@@ -39,9 +36,8 @@ simplemente podemos correr `npm init` y seguir las indicaciones de la terminal.
 
 `package.json`
 
-<Code
-  language='json'
-  children={`{
+```json
+`{
     "name": "scripts",
     "version": "1.0.0",
     "description": "Simple @wordpress/scripts tutorial",
@@ -54,8 +50,8 @@ simplemente podemos correr `npm init` y seguir las indicaciones de la terminal.
     "devDependencies": {
         "@wordpress/scripts": "^18.0.1"
     }
-}`}
-/>
+}
+```
 
 > [!NOTE]
 > ¿Por qué –save-dev?
@@ -74,9 +70,8 @@ agregarlo a nuestra lista de scripts en nuestro `package.json`, así:
 
 `package.json`
 
-<Code
-  language='json'
-  children={`{
+```json
+`{
     "name": "scripts",
     "version": "1.0.0",
     "description": "Simple @wordpress/scripts tutorial",
@@ -90,8 +85,8 @@ agregarlo a nuestra lista de scripts en nuestro `package.json`, así:
     "devDependencies": {
         "@wordpress/scripts": "^18.0.1"
     }
-}`}
-/>
+}
+```
 
 Ahora sólo debemos ejecutarlo con `npm run start` o `npm start`
 
@@ -104,14 +99,13 @@ así que podemos comenzar por ahí.
 
 `index.js`
 
-<Code
-  language='js'
-  children={`import { __ } from '@wordpress/i18n';
+```js
+import { __ } from '@wordpress/i18n';
 const init = () => {
     console.log( __( 'Hello World' ) );
 };
-init();`}
-/>
+init();
+```
 
 Ahora al ver dentro de nuestro directorio `build` podemos ver los archivos compilados,
 junto con su `sourcemap`. El archivo `index.asset.php` es un archivo muy útil que se
@@ -120,9 +114,8 @@ nuestra aplicación pueda fácilmente listarlas dentro de nuestro plugin**, por 
 
 `plugin.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Include scripts and dependencies in our plugin
  *
  * @return void
@@ -136,8 +129,8 @@ function enqueue_scripts() {
         $asset['version'],
         true
     );
-}`}
-/>
+}
+```
 
 ## Conclusión
 
