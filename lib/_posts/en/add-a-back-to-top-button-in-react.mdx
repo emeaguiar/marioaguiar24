@@ -1,14 +1,13 @@
 ---
 title: Add a "Back to top" button in React
 publishedOn: '2024-07-28'
-updatedOn: '2024-07-29T03:16:53.810Z'
+updatedOn: '2024-10-18T02:33:51.412Z'
 description: En este tutorial aprenderás a crear un botón de regreso al inicio en React.
 published: true
 readingTime: 360
 ---
 
 import AlignWide from '@/components/blog/align-wide';
-import Code from '@/components/code/code';
 import { SampleButton } from '@/examples/add-a-back-to-top-button-in-react/en';
 
 One of the most common (and useful) functionalities today is to **add a “back to 
@@ -41,19 +40,17 @@ The basic functionality of a back-to-top button is nothing more than an _anchor_
 on the page, which we will link in our button to make a “jump” to the top of the page.
 For example:
 
-<Code
-    language="jsx"
-    children={`<main id=“content”>
+```jsx
+<main id=“content”>
     […our content]
-</main>`}
-/>
+</main>
+```
 
 And at the bottom of our site we add our button:
 
-<Code
-    language="jsx"
-    children={`<a href=“#main”>Back to top</a>`}
-/>
+```jsx
+<a href=“#main”>Back to top</a>
+```
 
 In theory **that's all we need**, but honestly it is a bit outdated, and the jump
 can seem sudden to many people, so most of the time we add a little Javascript to
@@ -66,22 +63,20 @@ Let's start by creating the button in React:
 To create a button in React, the first thing we need is a component that allows us
 to make the jump. In this case, I will call it `BackToTopButton`.
 
-<Code
-    language="jsx"
-    children={`import React from 'react';
+```jsx
+import React from 'react';
 
 export default function BackToTopButton() {
     return (
         <a href="#main">Back to top</a>
     );
-}`}
-/>
+}
+```
 
 And then, in our main component, we import it and add it at the end
 
-<Code
-    language="jsx"
-    children={`import BackToTopButton from './BackToTopButton';
+```jsx
+import BackToTopButton from './BackToTopButton';
 
 export default function Main() {
     return (
@@ -90,17 +85,16 @@ export default function Main() {
             <BackToTopButton />
         </main>
     );
-}`}
-/>
+}
+```
 
 That will add the button to the end of our page, now, to make the jump smoother,
 what we need is to add a little Javascript, to use the `scrollTo` function of Javascript.
 Also, since we are using Javascript to handle the jump, it is more optimal not to use
 an `anchor` in the button, but to use a `button` instead.
 
-<Code
-    language="jsx"
-    children={`import React from 'react';
+```jsx
+import React from 'react';
 
 export default function BackToTopButton() {
     // Function to make the jump when clicked.
@@ -114,8 +108,8 @@ export default function BackToTopButton() {
     return (
         <button onClick={handleClick}>Back to top</button>
     );
-}`}
-/>
+}
+```
 
 > [!NOTE]
 > **Why don't we use an `anchor`?**
@@ -157,9 +151,8 @@ pointing upwards**. To do this, we need to add a little CSS to our component.
 >
 > Below this example I will show you how to do it with normal CSS.
 
-<Code
-    language="jsx"
-    children={`import React from 'react';
+```jsx
+import React from 'react';
 
 export default function BackToTopButton() {
     const handleClick = () => {
@@ -179,16 +172,15 @@ export default function BackToTopButton() {
           Back to top
         </button>
     );
-}`}
-/>
+}
+```
 
 ### 3.1 How to do it with normal CSS?
 
 If you prefer to use normal CSS, you can do it like this:
 
-<Code
-    language="scss"
-    children={`button {
+```scss
+button {
     background-color: var(--color--primary); // Or our primary color.
     border: 1px solid var(--color--secondary); // Or our secondary color.
     border-radius: 50%;
@@ -200,8 +192,8 @@ If you prefer to use normal CSS, you can do it like this:
     padding: 0.5rem; // 8px or "2" in Tailwind terms.
     position: fixed;
     z-index: 50;
-}`}
-/>
+}
+```
 
 Basically, what we are doing is creating a circular button with a primary background
 color, a secondary border, a shadow, and white text color. Also, we are positioning
@@ -212,9 +204,8 @@ For our arrow icon, we can use an icon from [Heroicons](https://heroicons.com/),
 which is an open-source icon library, created by the Tailwind team.
 In this case, we will use the `arrow-up` icon:
 
-<Code
-    language="jsx"
-    children={`import React from 'react';
+```jsx
+import React from 'react';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 
 export default function BackToTopButton() {
@@ -237,8 +228,8 @@ export default function BackToTopButton() {
           <span className="sr-only">Back to top</span>
         </button>
     );
-}`}
-/>
+}
+```
 
 This will give us a result similar to the following (try clicking it 😉):
 
@@ -273,9 +264,8 @@ Finally, to make the check more efficient, we can use the `useEffect` hook that
 saves a reference to the `scroll` event **and removes it when the component is unmounted**.
 We always have to think about the _cleaning_ of our components.
 
-<Code
-    language="jsx"
-    children={`import React, { useState, useEffect } from 'react';
+```jsx
+import React, { useState, useEffect } from 'react';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 
 export default function BackToTop() {
@@ -314,8 +304,8 @@ export default function BackToTop() {
       <span className="sr-only">Back to top</span>
     </button>
   );
-}`}
-/>
+}
+```
 
 With this, we already have a “back to top” button that is displayed when the user
 has scrolled more than `100px` on the page. And that also makes a **smooth jump**

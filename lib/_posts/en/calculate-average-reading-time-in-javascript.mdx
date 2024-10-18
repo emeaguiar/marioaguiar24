@@ -1,7 +1,7 @@
 ---
 title: Calculate average reading time in JavaScript
 publishedOn: '2024-08-16'
-updatedOn: '2024-08-16T16:48:08.855Z'
+updatedOn: '2024-10-18T02:33:51.415Z'
 description: >-
   In this post I will explain and share a small script that will allow us to
   calculate
@@ -9,8 +9,6 @@ description: >-
 published: true
 readingTime: 180
 ---
-
-import Code from '@/components/code/code';
 
 One of the most used functions these days is the **calculation of reading time**.
 I even use it on this blog.
@@ -25,9 +23,8 @@ Here I will show you a quick trick to get it:
 First of all, I will show you **the code I use** for this functionality,
 and then I will explain it:
 
-<Code
-    language="ts"
-    children={`/**
+```ts
+/**
  * Calculate the average reading time of a text
  */
 function readingTime( text: string ): number {
@@ -35,7 +32,8 @@ function readingTime( text: string ): number {
     const words: number = text.trim().split(/\s+/).length;
 
     return Math.ceil(words / WORDS_PER_MINUTE);
-}`}/>
+}
+```
 
 ## The explanation
 
@@ -57,7 +55,7 @@ the number of minutes it would take an average person to read the text
 That's it! If we want to go a step further we can **convert it to hours** or save it
 in seconds to have better control, but basically this is all we need.
 
-## Beyond
+## Avobe and Beyond
 
 As you can see the function takes a text to calculate the time, if we want to make it a little more
 _automatic_ we can make it take the text from an HTML element, or from a file, or from any other
@@ -65,12 +63,11 @@ source we can think of.
 
 For example:
 
-<Code
-    language="ts"
-    children={`const text = document.querySelector(".article").innerText; // It is important to use \`innerText\`;
+```ts
+const text = document.querySelector(".article").innerText; // It is important to use \`innerText\`;
 
-readingTime( text );`}
-/>
+readingTime( text );
+```
 
 > [!NOTE]
 > **Why do we use `innerText` instead of `innerHTML`?**

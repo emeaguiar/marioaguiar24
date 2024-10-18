@@ -1,14 +1,11 @@
 ---
 title: Custom array order in PHP
 publishedOn: '2023-09-21'
-updatedOn: '2024-07-22T23:37:00.308Z'
+updatedOn: '2024-10-18T02:33:51.418Z'
 description: 'Next, I will mention how to achieve a custom order of arrays in PHP'
 published: true
 readingTime: 360
 ---
-
-import Code from '@/components/code/code';
-
 Recently I found myself in the need to **create a list of elements in a very specific order**
 while working with an array in PHP, fortunately it turns out that the way to achieve
 it is very simple, thanks to PHP offering us the `usort` function.
@@ -18,9 +15,8 @@ Next, I will mention how to achieve a custom order of arrays in PHP.
 
 Taking the following example, I will explain what it consists of:
 
-<Code
-    language="php"
-    children={`<?php
+```php
+<?php
 /**
  * Array to order.
  * Let's assume we receive this array from an API where we have no control.
@@ -35,10 +31,9 @@ $my_array = [
     'SOL',
 ];
 
-/\*\*
-
-- Order we want, where we have control.
-  \*/
+/**
+ * Order we want, where we have control.
+ */
   $custom_order = [
   'DO',
   'RE',
@@ -49,28 +44,29 @@ $my_array = [
   'SI',
   ];
 
-/\*\*
+/**
+ * We order the array.
+ */
+usort(
+    $my_array,
+    function( $a, $b ) use ( $custom_order ) {
+        $a_order = array_search( $a, $custom_order );
+        $b_order = array_search( $b, $custom_order );
 
-- We order the array.
-  \*/
-  usort(
-  $my_array,
-  function( $a, $b ) use ( $custom_order ) {
-  $a_order = array_search( $a, $custom_order );
-  $b_order = array_search( $b, $custom_order );
-  if ( false === $a_order ) {
-  $a_order = 999;
-  }
-  if ( false === $b_order ) {
-  $b_order = 999;
-  }
-  return $a_order - $b_order;
-  }
-  );
+        if ( false === $a_order ) {
+            $a_order = 999;
+        }
+
+        if ( false === $b_order ) {
+            $b_order = 999;
+        }
+
+        return $a_order - $b_order;
+    }
+);
 
 var_export( $my_array );
-?>
-`}/>
+```
 
 ### What is happening?
 
@@ -80,9 +76,8 @@ assigning them a temporary value. The magic happens here when using [array_searc
 which returns the index of the element within the array. **The lower the assigned value,
 the higher priority is given in the order**.
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Array with emphasized indices:
  */
 $custom_order = [
@@ -93,30 +88,28 @@ $custom_order = [
     [4] => 'SOL',
     [5] => 'LA',
     [6] => 'SI',
-];`}
-/>
+];
+```
 
 For example, when our algorithm compares `DO` vs `MI`, it is comparing `[0]` vs `[2]`,
 which are the indices of those elements in the array:
 
-<Code
-  language='php'
-  children={`if ( false === $a_order ) {    
+```php
+if ( false === $a_order ) {    
     $a_order = 999;
 }
+
 if ( false === $b_order ) {
     $b_order = 999;
-}`}
-/>
+}
+```
 
 If **it does not find the values** within the array `(false === $a_order)`, it automatically assigns
 a value of _999_, which would place them at the end of priorities.
 
-<Code
-    language="php"
-    children={`return $a_order - $b_order;`}
-
-/>
+```php
+return $a_order - $b_order;
+```
 
 Finally, it returns the result of `0 - 2`, or `-2`, which would place `DO`
 above `MI`, at the moment when `MI` vs `DO` is compared, the operation would be `2 - 0`,
@@ -137,9 +130,8 @@ In this way, when the comparisons are finished, we will have our custom order of
 > in this way, **based on the value of the array, we can define in what place
 > we want to show it**, for example:
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Array of teams received from an API
  */
 $teams = [
@@ -159,6 +151,7 @@ $teams = [
         'type'   => 'football',
     ],
 ];
+
 /**
  * Order by preference
  */
@@ -167,11 +160,14 @@ $custom_order = [
     'basketball',
     'baseball',
 ];
+
 /**
  * We order the array.
  */
 usort( $teams, ... ); // Same as we used before.
+
 var_export( $teams );
+
 /**
 [
     [
@@ -190,8 +186,8 @@ var_export( $teams );
         'type'   => 'baseball',
     ],
 ];
-*/`}
-/>
+*/
+```
 
 ## Further reading
 

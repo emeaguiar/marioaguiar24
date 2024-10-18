@@ -1,14 +1,11 @@
 ---
 title: Production images in local environment with nginx
 publishedOn: '2019-01-25'
-updatedOn: '2024-07-21T22:44:57.013Z'
+updatedOn: '2024-10-18T02:33:51.423Z'
 description: Quick tutorial to serve production images in a local environment with nginx
 published: true
 readingTime: 180
 ---
-
-import Code from '@/components/code/code';
-
 One of the most common and useful processes when developing a new website is _the
 creation of multiple work environments_ to ensure that our changes or new features
 work perfectly _before even approaching production_.
@@ -38,9 +35,8 @@ The steps for this may vary, but in my case, _I usually use nginx_, and the step
 for this are to find the configuration file (usually `default.conf` or `site.conf`).
 Within this file, we will add a `location` tag, so that it looks like this example:
 
-<Code
-    language="plain"
-    children={`# Basic conf
+```plain
+# Basic conf
 server {
 	server_name  _;
 	return 302 $scheme://mysite.test$request_uri;
@@ -66,8 +62,8 @@ root /app/public/;
     index index.php index.html index.htm;
     include do-not-modify/*.conf;
 
-}`}
-/>
+}
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/aa8998e75094197f9a8197073ac936eb)
 

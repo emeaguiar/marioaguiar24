@@ -1,14 +1,11 @@
 ---
 title: Primeros pasos con Vue.js
 publishedOn: '2018-11-20'
-updatedOn: '2024-07-21T22:44:57.023Z'
+updatedOn: '2024-10-18T04:06:55.855Z'
 description: Un rápido ejercicio para comenzar a trabajar con Vue.js
 published: true
 readingTime: 420
 ---
-
-import Code from '@/components/code/code';
-
 Hace algunos meses comencé a estudiar React.js, al ver que muy probablemente sería
 el próximo rey de los Frameworks y sería adoptado por WordPress.
 
@@ -55,9 +52,8 @@ el ¡Hola mundo!, en versión Vue, así que comencemos, lo primero que necesitam
 es agregar Vue a nuestro sitio, lo cual podemos hacer facilmente agregando esta
 línea antes de nuestro `</body>`.
 
-<Code
-    language="jsx"
-    children={`<!doctype html>
+```jsx
+<!doctype html>
 
 <html lang="es">
 <head>
@@ -76,8 +72,8 @@ línea antes de nuestro `</body>`.
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="hola-mundo.vue.js"></script>
 </body>
-</html>`}
-/>
+</html>
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/955748ddd6c3d3bfeafb5864bc3a49c1)
 
@@ -87,12 +83,11 @@ Cómo pueden ver es una estructura bastante simple, tenemos nuestro `head`, nues
 
 Lo que sigue ahora, es inicializar nuestra aplicación con Vue, en nuestro `hola-mundo.vue.js`
 
-<Code
-  language='js'
-  children={`const app = new Vue( {
+```js
+const app = new Vue( {
 	el: '#app'
-} );`}
-/>
+} );
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/80dd3310e5fe7df684d162563dfb9a6a)
 
@@ -111,9 +106,8 @@ utilizaremos lo que se conoce como _template syntax_.
 
 Primero modifiquemos nuestro HTML para que se vea así:
 
-<Code
-    language="jsx"
-    children={`<!doctype html>
+```jsx
+<!doctype html>
 
 <html lang="es">
 <head>
@@ -134,8 +128,8 @@ Primero modifiquemos nuestro HTML para que se vea así:
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="hola-mundo.vue.js"></script>
 </body>
-</html>`}
-/>
+</html>
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/a186ca9068e400268a5beababfea51c0)
 
@@ -145,15 +139,14 @@ será sustituido por nuestro… mensaje.
 
 Ahora simplemente le decimos a Vue cuál es ese mensaje que queremos que sustituya:
 
-<Code
-  language='jsx'
-  children={`const app = new Vue( {
+```js
+const app = new Vue( {
 	el: '#app',
 	data: {
 		mensaje: '¡Hola Mundo!'
 	}
-} );`}
-/>
+} );
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/3fa91a278976eda148a448d494ad680b)
 
@@ -163,6 +156,6 @@ un ojo en ellos mientras la aplicación esté funcionando, esto significa que
 cualquier cambio que se haga en `data.mensaje` se verá reflejado en nuestro markup
 de manera instantánea.
 
-¡Listo! SI ahora recargamos nuestra aplicación podremos ver ¡Hola Mundo! reflejado en ella, nuestra primer aplicación con Vue.
+¡Listo! Si ahora recargamos nuestra aplicación podremos ver ¡Hola Mundo! reflejado en ella, nuestra primer aplicación con Vue.
 
 [https://codepen.io/emeaguiar/pen/aQEpyb](https://codepen.io/emeaguiar/pen/aQEpyb)

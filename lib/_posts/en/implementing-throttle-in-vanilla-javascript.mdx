@@ -1,14 +1,13 @@
 ---
 title: Implementing throttle in Vanilla JavaScript
 publishedOn: '2021-09-24'
-updatedOn: '2024-07-23T02:34:11.488Z'
+updatedOn: '2024-10-18T02:33:51.422Z'
 description: >-
   This time I will be showing how to create a simple throttle function using
   only Vanilla JavaScript.
 published: true
 readingTime: 360
 ---
-
 import Codepen from 'react-codepen-embed';
 import Code from '@/components/code/code';
 
@@ -38,24 +37,21 @@ executes a function, the function is executed once.
 
 Let's consider that we have HTML code, in which this button is included:
 
-<Code
-  language='js'
-  children={`<button id="js-say-hello">Say Hello</button>
-`}
-/>
+```js
+<button id="js-say-hello">Say Hello</button>
+```
 
 And we anchor an event like this, which logs “Hello world!” in the console:
 
-<Code
-  language='js'
-  children={`const button = document.querySelector( '#js-say-hello' );
+```js
+const button = document.querySelector( '#js-say-hello' );
 const sayHello = () => {
     console.log( 'Hello World!' );
 }
 if ( button ) {
     button.addEventListener( 'click', sayHello );
-}`}
-/>
+}
+```
 
 If we open this code in the browser, we can see that each time we click, a new
 entry is recorded in the console.
@@ -70,9 +66,8 @@ and so on. It will only be executed once per second.
 In the following example we will implement a simple version of Throttle, taking
 as reference the previous code, we will implement the following:
 
-<Code
-  language='js'
-  children={`const throttle = ( callback, delay ) => {
+```js
+const throttle = ( callback, delay ) => {
     // We start a variable to know when the function was last called
     let lastCalled = 0;
     return ( ...args ) => {
@@ -88,15 +83,14 @@ as reference the previous code, we will implement the following:
         return callback( ...args );
     }
 }
-export default throttle;`}
-/>
+export default throttle;
+```
 
 Now, since we have implemented our function, all we have to do is replace in our
 original code, the call to the function by wrapping it in our Throttle.
 
-<Code
-  language='js'
-  children={`// Import our function
+```js
+// Import our function
 import throttle from './throttle.js';
 const button = document.querySelector( '#js-say-hello' );
 // Wrap our message in a new function
@@ -107,8 +101,8 @@ const printMessage = () => {
 const sayHello = throttle( printMessage, 1000 );
 if ( button ) {
     button.addEventListener( 'click', sayHello );
-}`}
-/>
+}
+```
 
 Now, when we click on our button, we can see that no matter how many times we click,
 it will only be executed once per second, if we increase the delay time, we can

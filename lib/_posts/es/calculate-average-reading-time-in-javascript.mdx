@@ -1,7 +1,7 @@
 ---
 title: Calcular tiempo de lectura promedio en JavaScript
 publishedOn: '2024-08-16'
-updatedOn: '2024-08-16T16:48:08.860Z'
+updatedOn: '2024-10-18T04:06:55.850Z'
 description: >-
   En este post explicaré y compartiré un pequeño script que nos permitirá
   calcular
@@ -9,9 +9,6 @@ description: >-
 published: true
 readingTime: 180
 ---
-
-import Code from '@/components/code/code';
-
 Una de las funciones más utilizadas en estos tiempos es el **cálculo de tiempo de 
 lectura**. Incluso la utilizo en este blog.
 
@@ -26,9 +23,8 @@ Aquí enseñaré un truco rápido para conseguirlo:
 Antes que nada, enseñaré cuál es **el código que yo utilizo** para esta funcionalidad, 
 y después lo explicaré: 
 
-<Code
-    language="ts"
-    children={`/**
+```ts
+/**
  * Calcula el tiempo de lectura promedio de un texto
  */
 function readingTime( text: string ): number {
@@ -38,8 +34,8 @@ function readingTime( text: string ): number {
     return Math.ceil(words / WORDS_PER_MINUTE);
 }
 
-readingTime( “Hola mundo” );`}
-/>
+readingTime( “Hola mundo” );
+```
 
 ## La explicación
 
@@ -71,12 +67,11 @@ otra fuente que se nos ocurra.
 
 Por ejemplo:
 
-<Code
-    language="ts"
-    children={`const text = document.querySelector(".article").innerText; // Es importante usar \`innerText\`;
+```ts
+const text = document.querySelector(".article").innerText; // Es importante usar \`innerText\`;
 
-readingTime( text );`}
-/>
+readingTime( text );
+```
 
 > [!NOTE]
 > **¿Por qué usamos `innerText` en lugar de `innerHTML`?**

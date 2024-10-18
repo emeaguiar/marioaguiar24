@@ -1,15 +1,13 @@
 ---
 title: How to add a metabox in React to Gutenberg
 publishedOn: '2024-09-18'
-updatedOn: '2024-09-23T18:09:45.375Z'
+updatedOn: '2024-10-18T02:33:51.414Z'
 description: >-
   In this tutorial I will show you how to add a react component to the metaboxes
   area of WordPress
 published: true
 readingTime: 240
 ---
-
-import Code from '@/components/code/code';
 
 Recently I found myself in the need to add controls to the **WordPress block editor**, or
 _Gutenberg_ as the project is also called, this is usually very simple but had a couple
@@ -53,9 +51,8 @@ That's the magic! Now let's see how we can do it with code.
 
 Now, if we want to do it with code, the first thing we need to do is create a Plugin that adds our metabox:
 
-<Code
-    language="php"
-    children={`<?php
+```php
+<?php
 
 /**
  * Plugin Name: Mah React metabox
@@ -103,8 +100,7 @@ class Metabox
 }
 
 (new Metabox())->init();
-`}
-/>
+```
 
 What this will do is **add a new metabox to the block editor**, if we don't look closely, we can guess
 that _it is empty_ (although it simply doesn't have text), something like this:
@@ -117,9 +113,8 @@ This will serve as **the container for our React component**, now, for our compo
 we can add a new file, simply create a Gutenberg plugin using
 [registerPlugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-plugins/#:~:text=to%20be%20rendered.-,registerPlugin,-Registers%20a%20plugin):
 
-<Code
-    language="jsx"
-    children={`/**
+```php
+/**
  * WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins';
@@ -137,14 +132,12 @@ registerPlugin( 'mah-metabox', {
         );
     },
 } );
-`}
-/>
+```
 
 Now we need to add our file to the editor:
 
-<Code
-	language="php"
-	children={`/**
+```php
+/**
  * Adds the necessary hooks
  * 
  * @return void
@@ -153,12 +146,11 @@ public function init(): void
 {
     // …
     add_action('enqueue_block_editor_assets', [$this, 'enqueue_assets']);
-}`}
-/>
+}
+```
 
-<Code
-	language="php"
-	children={`/**
+```php
+/**
 * Include scripts and dependencies in our plugin
  *
  * @return void
@@ -175,8 +167,8 @@ public function enqueue_assets(): void
         $asset_file['version'],
         true
     );
-}`}
-/>
+}
+```
 
 And the result would be something like this:
 
@@ -198,9 +190,8 @@ Now we have the two components we need, and **we are ready to put them together*
 Fortunately, this is incredibly simple thanks to the aforementioned `createPortal`,
 we just need to modify our plugin to **create a portal and send our component through that portal**:
 
-<Code
-    language="jsx"
-    children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import { createPortal } from '@wordpress/element';
@@ -219,8 +210,8 @@ const MetaboxPortal = () => (
 
 registerPlugin( 'mah-metabox', {
     render: MetaboxPortal,
-} );`}
-/>
+} );
+```
 
 Done! That's all we need, what we are doing is creating a portal to our element with id `mah-metabox`,
 so, when React runs `MetaboxPortal` it will know that **it has to send its content through the portal**,
