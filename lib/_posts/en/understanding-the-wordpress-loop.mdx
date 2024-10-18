@@ -1,7 +1,7 @@
 ---
 title: Understanding the WordPress Loop
 publishedOn: '2014-08-04'
-updatedOn: '2024-07-21T22:44:57.015Z'
+updatedOn: '2024-10-18T02:33:51.424Z'
 description: >-
   One of the most basic (and yet powerful) features inside WordPress is The
   Loop,  this small piece of code that we use over and over again. And yet, I
@@ -10,9 +10,6 @@ description: >-
 published: true
 readingTime: 600
 ---
-
-import Code from '@/components/code/code';
-
 One of the most basic (and yet powerful) features inside WordPress is _The Loop_,
 this small piece of code that we use over and over again. And yet, I find people
 who called themselves a WordPress expert and **don't know what it is**, that's… sad.
@@ -36,9 +33,8 @@ a waste of time, in those cases we use _a loop_, so basically, a loop only repea
 stuff. For example, if we want to display the numbers from one to ten, we could
 do this:
 
-<Code
-  language='php'
-  children={`echo "1n";
+```php
+echo "1n";
 echo "2n";
 echo "3n";
 echo "4n";
@@ -47,20 +43,22 @@ echo "6n";
 echo "7n";
 echo "8n";
 echo "9n";
-echo "10n";`}
-/>
+echo "10n";
+```
 
 Just so you know, _I wrote all that_, and it was tiring… Instead, I should have just done this:
 
-<Code
-  language='php'
-  children={`for ( $number = 1; $number <= 10; $number++ ) {
+```php
+for ( $number = 1; $number <= 10; $number++ ) {
     echo $number . "n";
-}`}
-/>
+}
+```
 
-So much easier. BTW I used a `for` loop, there are several types of loops. WordPress,
-for instance, uses a `while` loop.
+So much easier.
+
+> [!NOTE]
+> BTW I used a `for` loop, there are several types of loops. WordPress,
+> for instance, uses a `while` loop.
 
 ## What is “The Loop”?
 
@@ -72,9 +70,8 @@ The Loop performs a ton of actions under the hood so that we only worry about
 **how to display our posts, and not about how to retrieve our posts**. A very basic
 loop (taken from Twentythirteen) looks like this:
 
-<Code
-  language='php'
-  children={`<?php if ( have_posts() ) : ?>
+```php
+<?php if ( have_posts() ) : ?>
     <?php /* The loop */ ?>
     <?php while ( have_posts() ) : the_post(); ?>
         <?php get_template_part( 'content', get_post_format() ); ?>
@@ -82,8 +79,8 @@ loop (taken from Twentythirteen) looks like this:
     <?php twentythirteen_paging_nav(); ?>
 <?php else : ?>
     <?php get_template_part( 'content', 'none' ); ?>
-<?php endif; ?>`}
-/>
+<?php endif; ?>
+```
 
 Let's keep in mind that when we access any page in WordPress, there's a global
 query taking place, that means **WordPress already knows which page we are visiting**
@@ -126,9 +123,8 @@ The function `get_posts` is a way to create **small custom loops**, it accepts a
 the parameters of `WP_Query` and returns an array with the result, that way we
 can use a `foreach` loop to work with the posts:
 
-<Code
-  language='php'
-  children={`$posts = get_posts( $args );
+```php
+$posts = get_posts( $args );
 foreach ( $posts as $post ) :
     setup_postdata( $post );
 ?>
@@ -136,8 +132,8 @@ foreach ( $posts as $post ) :
     <?php the_content(); ?>
 <?php
 endforeach;
-wp_reset_postdata();`}
-/>{' '}
+wp_reset_postdata();
+```
 
 Notice how **we need to fire** `setup_postdata` manually? That is because we don't
 use `the_post` in this loop.
@@ -149,9 +145,8 @@ that is why in those cases I prefer to use a new WP_Query. This creates a new
 query **completely independent** of the main query, and we can use the WordPress loop
 without any worries.
 
-<Code
-  language='php'
-  children={`$my_query = new WP_Query( $args );
+```php
+$my_query = new WP_Query( $args );
 if ( $my_query->have_posts() ):
     while ( $my_query->have_posts() ) : $my_query->the_post();
 ?>
@@ -161,8 +156,8 @@ if ( $my_query->have_posts() ):
     endwhile;
     wp_reset_postdata();
 endif;
-?>`}
-/>
+?>
+```
 
 As you can see, it's pretty much the same loop as the one we use with the main
 query, the difference being the constant use of `$my_query`, this is necessary
@@ -191,14 +186,13 @@ available**, remember, **when we access any page in WordPress, there's a main qu
 taking place**. Even if we don't have a loop in the sidebar, _we do_ have a `$wp_query`
 and a `$post` object _somewhere_, we just need to call them.
 
-<Code
-  language='php'
-  children={`<?php
+```php
+<?php
     global $post;
     $mood = get_post_meta( $post->ID, 'mood', true );
 ?>
-<p>I'm feeling <?php echo $mood; ?></p>`}
-/>
+<p>I'm feeling <?php echo $mood; ?></p>
+```
 
 Since `$post` is a **global variable**, that means it's always available for us to
 use, we just need to know how to call it, just like an old partner.

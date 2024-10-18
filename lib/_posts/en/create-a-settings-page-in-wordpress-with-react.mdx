@@ -1,15 +1,13 @@
 ---
 title: Create a options page in WordPress with React – Part 1
 publishedOn: '2024-01-15'
-updatedOn: '2024-07-23T02:47:47.196Z'
+updatedOn: '2024-10-18T02:33:51.417Z'
 description: >-
   Part one of a series of tutorials where we will learn how to create an options
   page in WordPress using React and the WordPress API
 published: true
 readingTime: 840
 ---
-
-import Code from '@/components/code/code';
 
 Despite the advances in _Gutenberg_ that we have seen in recent years, with the idea
 that the options of a post (or a page) should be managed **within the WordPress
@@ -102,9 +100,8 @@ page:
 
 `mah-settings.php`
 
-<Code
-  language='php'
-  children={`<?php
+```php
+<?php
 /**
  * Plugin Name: Mah Settings
  * Description: Tutorial to create an options page with React
@@ -115,25 +112,29 @@ page:
  * Text Domain: mah-settings
  */
 namespace Mah_Settings;
+
 require_once __DIR__ . '/php/class-mah-settings.php';
+
 use Mah_Settings\Settings;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+
 $settings = new Settings();
-$settings->init();`}
-/>
+$settings->init();
+```
 
 `php/class-mah-settings.php`
 
-<Code
-  language='php'
-  children={`<?php
+```php
+<?php
 /**
  * @package Mah_Settings
  */
 namespace Mah_Settings;
+
 /**
  * Handles the options page
  */
@@ -146,8 +147,8 @@ class Settings {
     public function init(): void {
         var_dump( 'My page' );
     }
-}`}
-/>
+}
+```
 
 Once these files are created, we can enter our site and see `My page` at the top, this
 means that our plugin is working.
@@ -164,21 +165,23 @@ means that our plugin is working.
 Once we have our plugin working, we will replace the content of the `init` function
 with the `admin_menu` hook, which helps us to register our page in the menu:
 
-<Code
-  language='php'
-  children={`/**
+```jsx
+/**
  * @var string
  */
 private $plugin_path = '';
+
 /**
  * Menu slug.
  * 
  * @var string
  */
 private $menu_slug = '';
+
 public function __construct( string $plugin_file ) {
     $this->plugin_path = plugin_dir_path( $plugin_file );
 }
+
 /**
  * Registers the hooks.
  * 
@@ -187,6 +190,7 @@ public function __construct( string $plugin_file ) {
 public function init(): void {
     add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 }
+
 /**
  * Registers the options page.
  * 
@@ -203,6 +207,7 @@ public function init(): void {
         99
     );
  }
+ 
 /**
  * Renders the options page.
  * 
@@ -215,8 +220,8 @@ public function render_settings_page(): void {
         <div id="mah-settings"></div>
     </div>
     <?php
-}`}
-/>
+}
+```
 
 There are a couple of important things happening here, I will try to explain them briefly:
 
@@ -227,40 +232,43 @@ There are a couple of important things happening here, I will try to explain the
 
 To be able to register our scripts within the page, first we need to create them, so we will start by using the package `@wordpress/scripts` that we talked about earlier, so in a terminal we run:
 
-<Code language='bash' children={`npm install --save-dev @wordpress/scripts`} />
+```bash
+npm install --save-dev @wordpress/scripts
+```
 
 After this we can update the configuration to compile our new files, either within the same `package.json` or with a simple webpack configuration file, so we create a file called `webpack.config.js` and place the following:
 
 `webpack.config.js`
 
-<Code
-  language='js'
-  children={`const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+```js
+const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+
 module.exports = {
     ...defaultConfig,
     entry: {
         ...defaultConfig.entry(),
         settings: './js/src/settings.js',
     },
-};`}
-/>
+};
+```
 
 `package.json`
 
-<Code
-  language='json'
-  children={`"scripts": {
+```json
+"scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
   "start": "wp-env start",
   "stop": "wp-env stop",
   "build": "wp-scripts build",
   "dev": "wp-scripts start"
-},`}
-/>
+}
+```
 
 `js/src/settings.js`
 
-<Code language='js' children={`console.log( 'Hello settings' );`} />
+```js
+console.log( 'Hello settings' );
+```
 
 Basically we are **extending the default configuration provided by WordPress** to add a new file: `settings.js`, after this we can run `npm run dev` so that our file is watched and each new change is compiled.
 
@@ -268,27 +276,28 @@ Basically we are **extending the default configuration provided by WordPress** t
 
 After having our files created, we can register them with the `admin_enqueue_scripts` hook
 
-<Code
-  language='php'
-  children={`public static function init(): void {
+```php
+public static function init(): void {
     add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
     add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-}`}
-/>
+}
+```
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Registers the scripts and styles.
  * 
  * @return void 
  */
 public function enqueue_scripts(): void {
     $screen = get_current_screen();
+    
     if ( $screen->id !== $this->menu_slug ) {
         return;
     }
+    
     $asset = include $this->plugin_path . '/build/settings.asset.php';
+    
     wp_enqueue_script(
         'mah-settings',
         plugins_url() . '/mah-settings-react/build/settings.js',
@@ -296,8 +305,8 @@ public function enqueue_scripts(): void {
         $asset['version'],
         true
     );
-}`}
-/>
+}
+```
 
 Now I will explain a little what happens here:
 

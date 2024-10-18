@@ -1,7 +1,7 @@
 ---
 title: Writing a download manager plugin with WordPress
 publishedOn: '2014-08-13'
-updatedOn: '2024-07-21T22:44:57.018Z'
+updatedOn: '2024-10-18T02:33:51.426Z'
 description: >-
   I have always said that you can do almost anything using WordPress thanks to 
   all the built-in functions and APIs that we have at our disposal. However,
@@ -9,8 +9,14 @@ description: >-
 published: true
 readingTime: 1740
 ---
-
-import Code from '@/components/code/code';
+> [!WARNING]
+> This article was written in 2014 👴🏼. Most of the tips here are not valid anymore and
+I don't recommend using any of the snippets displayed here.
+> 
+> 
+> I'm keeping this article here for historical reasons and to remind myself how much I've improved over the years.
+>
+> Only cosmetic changes were made to this article.
 
 I have always said that you can do almost anything using WordPress thanks to all
 the built-in functions and **APIs** that we have at our disposal. However, seems like
@@ -35,9 +41,8 @@ that's why I won't get into specific details, let's just get started:
 
 _mah-plugin-manager.php_
 
-<Code
-    language="php"
-    children={`<?php
+```php
+<?php
 /**
  * Plugin Name: Mah Download Manager
  * Plugin URI: https://github.com/emeaguiar/mah-download-manager
@@ -69,25 +74,23 @@ This space will display a list of files…
     }
 }
 
-$mah_download_manager = new Mah_Download_Manager;`}
-/>
+$mah_download_manager = new Mah_Download_Manager;
+```
 
 Here I'm defining a very basic structure, I **add the meta data of the plugin**, and 
 **an admin page** where I will display a list of all our files later on. Right now 
 is empty, so let's setup another page to **add the files** and then we'll come back to this one.
 
-<Code
-    language="php"
-    children={`add_submenu_page( 'mah-download-manager', __( 'Add new file', 'mah-download-manager' ), __( 'Add new file', 'mah-download-manager' ), 'upload_files', 'mah-download-manager/new', array( $this, 'display_add_new_page' ) );`}
-/>
+```php
+add_submenu_page( 'mah-download-manager', __( 'Add new file', 'mah-download-manager' ), __( 'Add new file', 'mah-download-manager' ), 'upload_files', 'mah-download-manager/new', array( $this, 'display_add_new_page' ) );
+```
 
 First, we create a new submenu page where we will put our **upload form**, this new 
 page will only be visible to people who can upload files, and will display whatever 
 we put on the `display_add_new_page` function.
 
-<Code
-    language="php"
-    children={`function display_add_new_page() {
+```php
+function display_add_new_page() {
         if ( $this->form_is_submitted() ) {
             return;
         }
@@ -96,8 +99,8 @@ we put on the `display_add_new_page` function.
                                             :                                 ” name=”mdm-upload”>
 
 <?php
-    }`}
-/>
+    }
+```
 
 Simple form, we just added **one field to select our file**, a **submit button** and a 
 **nonce field** to make sure we are submitting the form from the right place, we also 
@@ -105,9 +108,8 @@ check whether or not our form is being processed, in case it is, do not display
 the form. Since we are leaving our `action` attribute empty, the form will be processed 
 in the same function, unless we perform this check.
 
-<Code
-    language="php"
-    children={`function form_is_submitted() {
+```php
+function form_is_submitted() {
         if ( empty( $_POST ) ) {
             return false;
         }
@@ -132,8 +134,8 @@ in the same function, unless we perform this check.
             $this->upload_file( $fileTempData );
         }
         return true;
-    }`}
-/>
+    }
+```
 
 Now, if the form is empty, **we don't need to continue in this function**, so return 
 `false`. `check_admin_referer` checks if the nonce field we added to the form is valid 
@@ -150,9 +152,8 @@ WordPress will display another screen asking for them.
 Once WordPress has confirmed **we can write in the server** we can save the file 
 temporary data in a variable and then go to our upload function.
 
-<Code
-    language="php"
-    children={`function upload_file( $file ) {
+```php
+function upload_file( $file ) {
     $file = ( ! empty( $file ) ) ? $file : new WP_Error( 'empty_file', __( "Seems like you didn't upload a file.", 'mah-download-manager' ) );
 
     if ( is_wp_error( $file ) ) {
@@ -170,8 +171,8 @@ temporary data in a variable and then go to our upload function.
 
     wp_redirect( admin_url( 'admin.php?page=mah-download-manager&message=1' ) );
     exit;
-}`}
-/>
+}
+```
 
 First I make sure our `$file` variable is not empty, if it is, something went wrong 
 in the process and i use `WP_Error` to let the user know about the issue.
@@ -184,17 +185,16 @@ for the response, if the response of our next function is successful, we'll redi
 the user back to the main screen and display him a success message, if not, we'll 
 display another error.
 
-<Code
-    language="php"
-    children={`function move_file( $from, $to ) {
+```php
+function move_file( $from, $to ) {
     global $wp_filesystem;
     if ( $wp_filesystem->move( $from, $to ) ) {
         return true;
     } else {
         return WP_Error( 'moving_error', __( "Error trying to move the file to the new location.", 'mah-download-manager' ) );
     }
-}`}
-/>
+}
+```
 
 This function is really simple, we just call the Filesystem API and **try to move 
 the file**, if it works then return `true`, if it doesn't work return an error.
@@ -202,21 +202,17 @@ the file**, if it works then return `true`, if it doesn't work return an error.
 Remember how earlier I redirected the user along with a success message? When I  
 registered the main page, you may have noticed I also added this line:
 
-<Code
-    language="php"
-    children={`<?php do_action( 'mdm_display_messages' ); ?>
-
-`}
-/>
+```php
+<?php do_action( 'mdm_display_messages' ); ?>
+```
 
 This is what we know as a **hook**, or to be more accurate, this is the place where
 our hook is going to be executed. The core of WordPress is filled with this beauties,
 and yes, **we can create our own**, just like I did here. I created this so it's simpler
 to add messages. Now let's hook something to it.
 
-<Code
-    language="php"
-    children={`function display_messages() {
+```php
+function display_messages() {
     if ( ! isset( $_GET[ 'message' ] || ! intval( $_GET[ 'message' ] ) ) ) {
         return;
     }
@@ -235,16 +231,14 @@ to add messages. Now let's hook something to it.
 ‘ . $text . ‘
 
 ';
-}`}
-/>
+}
+```
 
 And add the hook to the `__construct` function.
 
-<Code
-  language='php'
-  children={`add_action( 'mdm_display_messages', array( $this, 'display_messages' ) );
-`}
-/>
+```php
+add_action( 'mdm_display_messages', array( $this, 'display_messages' ) );
+```
 
 Now the page will check if a `$message` has been sent, if it has, then it will look
 in the list for a match and then **it will display the message**.
@@ -265,11 +259,9 @@ The best way to do this is by creating an **install function**, and hook it to t
 plugin activation process, this hook looks a little different to the rest, but trust me,
 it's the right one.
 
-<Code
-  language='php'
-  children={`register_activation_hook( __FILE__, array( $this, 'install' ) );
-`}
-/>
+```php
+register_activation_hook( __FILE__, array( $this, 'install' ) );
+```
 
 That will execute our `install()` method only when out plugin is activated, but
 will execute it _every_ time our plugin is activated, so let's make sure we only
@@ -277,19 +269,16 @@ run the installation process if we haven't done it before, I like to do that by
 adding a **database version** variable, that way it will still be useful in case we
 need to upgrade it later on.
 
-<Code
-  language='php'
-  children={`
+```php
 function __construct() {
     $this->mdb_db_version = 1;
-...`}
-/>
+...
+```
 
 Now our install method.
 
-<Code
-    language="php"
-    children={`function install() {
+```php
+function install() {
     $current_db_version = get_option( 'mdm_db_version' );
     if ( ! $current_db_version ) {
         global $wpdb;
@@ -323,8 +312,8 @@ Now our install method.
         $this->upgrade( $current_db_version );
     }
 
-}`}
-/>
+}
+```
 
 This function does several things, so let's break it down in steps:
 
@@ -346,15 +335,14 @@ This function does several things, so let's break it down in steps:
 
 The upgrade script is empty as for now, but it will be useful in the future:
 
-<Code
-    language="php"
-    children={`/**
+```php
+/**
  * Reserved for upgrading purposes
  */
 function upgrade( $current ) {
 
-}`}
-/>
+}
+```
 
 Don't forget, just like we create tables when installing the plugin, **we need to
 delete them when we uninstall it**. This is important because we don't want to have
@@ -362,9 +350,8 @@ lingering options in the website.
 
 _uninstall.php_
 
-<Code
-    language="php"
-    children={`<?php
+```php
+<?php
     if ( !defined( 'WP_UNINSTALL_PLUGIN' ) )
         exit();
 
@@ -379,9 +366,8 @@ _uninstall.php_
 
     $table_name = $wpdb->prefix . "mah_download_manager";
 
-    $wpdb->query( "DROP TABLE IF EXISTS {$table_name}" );`}
-
-/>
+    $wpdb->query( "DROP TABLE IF EXISTS {$table_name}" );
+```
 
 We **remove the options** we added, and **drop the database tables** we created, let's
 make sure everything is the way it was before we installed our plugin.
@@ -389,9 +375,8 @@ make sure everything is the way it was before we installed our plugin.
 Now we need to change our uploading function, so **it stores data after a successful
 upload**, we wait for that response and _then_ we redirect the user.
 
-<Code
-    language="php"
-    children={`function upload_file( $file ) {
+```php
+function upload_file( $file ) {
 ...
     $file_id = $this->store_data( $file );
 
@@ -402,14 +387,13 @@ upload**, we wait for that response and _then_ we redirect the user.
         wp_die( 'There was an error saving the data to the database' );
     }
 
-}`}
-/>
+}
+```
 
 Our store_data function looks like this:
 
-<Code
-    language="php"
-    children={`function store_data( $file ) {
+```php
+function store_data( $file ) {
     global $wpdb;
 
     $this->table_name = $wpdb->prefix . "mah_download_manager";
@@ -424,8 +408,8 @@ Our store_data function looks like this:
 
     return $wpdb->insert( $this->table_name, $data );
 
-}`}
-/>
+}
+```
 
 We set the table we are using to store the data, and we create the `$data` array
 to define what data are we going to save in the database. **Do NOT forget to sanitize
@@ -463,21 +447,18 @@ using another class**. So we need a new file.
 
 _class-mah-download-manager-list.php_
 
-<Code
-    language="php"
-    children={`<?php
+```php
+<?php
     class Mah_Download_Manager_List extends WP_List_Table {
 
-    }`}
-
-/>
+    }
+```
 
 We need to overwrite a couple methods in here, starting with `prepare_items`,
 because we need to have data to show.
 
-<Code
-    language="php"
-    children={`function prepare_items() {
+```php
+function prepare_items() {
     global $wpdb;
 
     $table_name = $wpdb->prefix . "mah_download_manager";
@@ -514,8 +495,8 @@ because we need to have data to show.
         $this->get_sortable_columns()
     );
 
-}`}
-/>
+}
+```
 
 Ok so there are lots of things going on in here, let's break it down:
 
@@ -537,17 +518,16 @@ Ok so there are lots of things going on in here, let's break it down:
 If we try to run the code now, we'll get an error message, that is because
 `get_columns` is another method **we must define ourselves**, luckily, it is very simple.
 
-<Code
-  language='php'
-  children={`function get_columns() {
+```php
+function get_columns() {
     return array(
         'file' => __( 'File', 'mah_download_manager' ),
         'type' => __( 'Type', 'mah_download_manager' ),
         'size' => __( 'Size', 'mah_download_manager' ),
         'date' => __( 'Date Added', 'mah_download_manager' )
     );
-}`}
-/>
+}
+```
 
 As you can see, we only need to return an array with the **names and ids of our headers**, no big deal.
 
@@ -558,9 +538,8 @@ create **multiple methods that handle a specific column**.
 
 For the purposes of this article, I'll use both.
 
-<Code
-  language='php'
-  children={`function column_default( $item, $column_name ) {
+```php
+function column_default( $item, $column_name ) {
     switch ( $column_name ) {
         case 'file':
             echo '<a href="' . $item->url . '">' . $item->name . '</a>';
@@ -569,16 +548,15 @@ For the purposes of this article, I'll use both.
             echo $item->$column_name;
             break;
     }
-}`}
-/>
+}
+```
 
 `column_default` will be called if **there's no other method** that handles a
 specific column, how does WordPress find it? By using the syntax `column_$columnName`,
 so if I want a specific method handling the `date` column, I do this:
 
-<Code
-  language='php'
-  children={`function column_date( $item ) {
+```php
+function column_date( $item ) {
     $m_time = $item->date;
     $time = strtotime( $m_time );
     $time_diff = time() - $time;
@@ -588,8 +566,8 @@ so if I want a specific method handling the `date` column, I do this:
         $h_time = mysql2date( __( 'Y/m/d' ), $m_time );
     }
     echo '<abbr title="' . $m_time . '">' . $h_time . '</abbr>';
-}`}
-/>
+}
+```
 
 And that way `column_default` won't be called for the `date` column. By the way,
 this is a simple function to make the date more readable, I just copied from
@@ -612,9 +590,8 @@ method and call another method: `row_actions`.
 
 _class-mah-download-manager-list.php_
 
-<Code
-  language='php'
-  children={`function column_default( $item, $column_name ) {
+```php
+function column_default( $item, $column_name ) {
 ...
     case 'file':
 ...
@@ -622,8 +599,8 @@ _class-mah-download-manager-list.php_
             'delete' => '<a href="' . add_query_arg( array( 'action' => 'delete', 'file_id' => $item->id ) ) . '">' . __( 'Delete', 'mah_download_manager' ) . '</a>'
         );
         echo $this->row_actions( $actions );
-...`}
-/>
+...
+```
 
 First we create an array with the actions we need, we need to give a name to our
 action and define the text or markup that will be displayed. The `add_query_arg`
@@ -641,19 +618,17 @@ on said page, the syntax is `toplevel_page_$menuslug`, in this case the slug is
 
 _mah-download-manager.php_
 
-<Code
-  language='php'
-  children={`function __construct() {
+```php
+function __construct() {
 ...
     add_action( 'toplevel_page_mah-download-manager', array( $this, 'custom_action' ) );
-...`}
-/>
+...
+```
 
 And we add the functionality:
 
-<Code
-    language="php"
-    children={`function custom_action() {
+```php
+function custom_action() {
     if ( ! isset( $_GET[ 'action' ] ) ) {
         return;
     }
@@ -694,8 +669,8 @@ And we add the functionality:
             break;
     }
 
-}`}
-/>
+}
+```
 
 Looks like there's a lot of code in here, but don't worry, most of it we've seen
 before, so let me explain the steps we take:
@@ -710,9 +685,8 @@ before, so let me explain the steps we take:
      **we need to activate the Filesystem API again**, and then call the new
      method `delete_file`.
 
-<Code
-    language="php"
-    children={`function delete_file( $id ) {
+```php
+function delete_file( $id ) {
     global $wpdb, $wp_filesystem;
     $table_name = $wpdb->prefix . "mah_download_manager";
 
@@ -729,8 +703,8 @@ before, so let me explain the steps we take:
         wp_die( __( 'There were errors while deleting the file.', 'mah_download_manager' ) );
     }
 
-}`}
-/>
+}
+```
 
 This method **will remove the file from the server and remove the data from our database**, here's the breakdown:
 
@@ -743,16 +717,15 @@ This method **will remove the file from the server and remove the data from our 
 
 Now let's go back to `display_messages` and add the new message:
 
-<Code
-  language='php'
-  children={`function display_messages() {
+```php
+function display_messages() {
 ...
     case 2:
         $class = 'updated';
         $text = __( 'The selected file has been removed.', 'mah-download-manager' );
         break;
-...`}
-/>{' '}
+...
+```
 
 ### The end of the road…
 

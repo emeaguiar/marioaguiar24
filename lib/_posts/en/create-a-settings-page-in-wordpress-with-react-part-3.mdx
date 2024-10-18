@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 3
 publishedOn: '2024-01-29'
-updatedOn: '2024-07-23T02:47:47.194Z'
+updatedOn: '2024-10-18T02:33:51.416Z'
 description: >-
   Part three of a series of tutorials where we will learn how to create a
   settings page in WordPress using React and the WordPress API. Now we need to
@@ -10,12 +10,7 @@ description: >-
 published: true
 readingTime: 900
 ---
-
-import Code from '@/components/code/code';
-
-During the [second part](/blog/create-a-settings-page-in-wordpress-with-react-part-2)
-of this tutorial to **create a settings page in WordPress**, I showed how to create
-a small React application that is displayed within our settings page, added a couple
+During the [second part](/blog/create-a-settings-page-in-wordpress-with-react-part-2) of this tutorial to **create a settings page in WordPress**, I showed how to create a small React application that is displayed within our settings page, added a couple
 of fields and styles; and prepared the save button to work. Now what remains is to
 **save the data** inside our database and read it within our settings page to make
 sure we are not overwriting the data.
@@ -33,9 +28,8 @@ with its utilities to make our lives easier, and, if we remember that in the sec
 part we registered our option using `register_setting`, we can use the ID we gave
 it to load the saved options in our database like this:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -49,6 +43,7 @@ import {
 } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
+
 const Settings = () => {
     const [ apiKey, setApiKey ] = useEntityProp(
         'root',
@@ -63,9 +58,11 @@ const Settings = () => {
     const saveSettings = () => {
         console.log( 'Guardar' );
     };
+
     return (
         <>
             <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
+
             <Card>
                 <CardBody>
                     <TextControl
@@ -75,7 +72,9 @@ const Settings = () => {
                         value={ apiKey || '' }
                     />
                 </CardBody>
+
                 <CardDivider />
+
                 <CardBody>
                     <ToggleControl
                         label={ __( 'Activate functionality', 'mah-settings' ) }
@@ -83,6 +82,7 @@ const Settings = () => {
                         checked={ toggled || false }
                     />
                 </CardBody>
+
                 <CardFooter>
                     <Button
                         disabled={ ! apiKey }
@@ -96,8 +96,8 @@ const Settings = () => {
         </>
     );
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 With this, we are **reading the value of our option saved earlier**, let's explain a
 little how it works:
@@ -122,9 +122,8 @@ replace the `saveSettings` function with a call to the functions available in th
 > unfortunately I don't have the answer, we only know that the team that added them
 > assumed that those were the best places to put them 🤷‍♂
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -139,6 +138,7 @@ import {
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+
 const Settings = () => {
     const [ apiKey, setApiKey ] = useEntityProp(
         'root',
@@ -162,8 +162,8 @@ const Settings = () => {
             }
         );
     };
-[…]`}
-/>
+[…]
+```
 
 I have added only the important parts of our modifications, to understand a little more
 
@@ -188,9 +188,8 @@ With a few modifications and with the help of the `@wordpress/components` packag
 
 `src/components/settings.js`
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -207,6 +206,7 @@ import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+
 const Settings = () => {
     const [ isLoading, setIsLoading ] = useState( false );
     const [ apiKey, setApiKey ] = useEntityProp(
@@ -233,16 +233,16 @@ const Settings = () => {
         );
         setIsLoading( false );
     };
-[…]`}
-/>
+[…]
+```
 
 `src/components/settings.js#49-85`
 
-<Code
-  language='jsx'
-  children={`return (
+```jsx
+return (
     <>
         <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
+        
         <Card>
             <CardBody>
                 <TextControl
@@ -252,7 +252,9 @@ const Settings = () => {
                     value={ apiKey || '' }
                 />
             </CardBody>
+
             <CardDivider />
+
             <CardBody>
                 <ToggleControl
                     label={ __( 'Activate functionality', 'mah-settings' ) }
@@ -260,6 +262,7 @@ const Settings = () => {
                     checked={ toggled || false }
                 />
             </CardBody>
+
             <CardFooter>
                 <Button
                     disabled={ ! apiKey }
@@ -272,8 +275,8 @@ const Settings = () => {
             </CardFooter>
         </Card>
     </>
-);`}
-/>
+);
+```
 
 And the result would be:
 
@@ -301,9 +304,8 @@ Another simple thing we can do is provide a **success message** (or error) when 
 
 We make some modifications to the first part of our file:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -321,6 +323,7 @@ import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+
 const Settings = () => {
     const [ isLoading, setIsLoading ] = useState( false );
     const [ showNotice, setShowNotice ] = useState( false );
@@ -349,9 +352,11 @@ const Settings = () => {
         setShowNotice( true );
         setIsLoading( false );
     };
+
     return (
         <>
             <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
+
             <Card>
                 { showNotice && (
                     <CardBody>
@@ -363,8 +368,9 @@ const Settings = () => {
                             { __( 'Saved Succesfully', 'mah-settings' ) }
                         </Notice>
                     </CardBody>
-                ) }`}
-/>
+                ) }
+[…]
+```
 
 Basically what we are doing is:
 
