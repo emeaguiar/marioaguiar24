@@ -1,16 +1,13 @@
 ---
 title: Cambiar el origin de un repositorio en Git
 publishedOn: '2020-04-09'
-updatedOn: '2024-07-23T02:34:11.490Z'
+updatedOn: '2024-10-18T04:06:55.851Z'
 description: >-
   Más de alguna vez he necesitado cambiar el origen de un repositorio, así que
   para hacerme la vida más fácil decidí hacer la anotación aquí.
 published: true
 readingTime: 60
 ---
-
-import Code from '@/components/code/code';
-
 Más de alguna vez he necesitado **cambiar el origen de un repositorio**, así que para
 hacerme la vida más fácil decidí hacer la anotación aquí.
 
@@ -18,9 +15,8 @@ Lo primero que se necesita es un nuevo repositorio, digamos que es `git@github.c
 
 Ahora, la cosa es tan simple como eliminar el viejo remoto de origen, agregar el nuevo, y configurarlo como master.
 
-<Code
-    language="bash"
-    children={`# Eliminar viejo origen
+```bash
+# Eliminar viejo origen
 ~ git remote rm origin
 
 # Agregar nuevo origen
@@ -29,7 +25,7 @@ Ahora, la cosa es tan simple como eliminar el viejo remoto de origen, agregar el
 
 # Configurarle como master
 
-~ git config master.remote origin`}
-/>
+~ git config master.remote origin
+```
 
 ¡Listo! Ahora al ejecutar `git remote get-url origin --all` verán el nuevo repositorio.

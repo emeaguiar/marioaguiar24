@@ -1,14 +1,11 @@
 ---
 title: Cómo manejar WordPress utilizando Git
 publishedOn: '2019-01-18'
-updatedOn: '2024-07-21T22:44:57.023Z'
+updatedOn: '2024-10-18T04:06:55.855Z'
 description: Aprende a manejar tu instalación de WordPress utilizando Git.
 published: true
 readingTime: 720
 ---
-
-import Code from '@/components/code/code';
-
 La semana pasada publicaba un artículo sobre el [por qué es una muy mala idea
 utilizar FTP](/blog/the-importance-of-not-using-ftp) para manejar nuestro sitio.
 Aunque el tema es muy general y no aplica únicamente para WordPress,
@@ -84,7 +81,9 @@ Digamos que ya hemos creado nuestro repositorio en Github, y que hemos agregado
 el contenido de nuestra carpeta `wp-content` a él, entonces tendríamos un repositorio
 más o menos así:
 
-<Code language='bash' children={`git@github.com:usuario/sitio.git`} />
+```bash
+git@github.com:usuario/sitio.git
+```
 
 Una vez teniendo nuestro repositorio, ya podemos preocuparnos por **sincronizarlo
 con nuestro servidor**.
@@ -105,32 +104,30 @@ Para empezar, necesitamos conectarnos a nuestro servidor a traves de SSH
 
 Digamos que nuestro repositorio está conformado por la carpeta `wp-content`, y que éste se ve así:
 
-<Code
-  language='plain'
-  children={`- sitio
+```plain
+- sitio
 --	.gitignore
 --	themes
 ---		nuestro-theme
 ----		style.css
 --	plugins
 ---		nuestro-plugin
-----		nuestro-plugin.php`}
-/>
+----		nuestro-plugin.php
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/bb2d0e00d955b4777e7cd91d47459d07)
 
 Para poder reemplazar nuestra carpeta por defecto con nuestro nuevo repositorio,
 necesitamos entrar al servidor y crear una copia del repositorio:
 
-<Code
-    language="bash"
-    children={`# Asumiendo que nuestra carpeta wp-content se encuentra en /public_html/wp-content
+```bash
+# Asumiendo que nuestra carpeta wp-content se encuentra en /public_html/wp-content
 
 $ ssh usuario@dominio.com
 $ cd /public_html
 $ mv wp-content wp-content.bk # Crea un backup de la actual carpeta wp-content en caso de necesitarla en un futuro
-$ git clone git@github.com:usuario/sitio.git wp-content # Crea una copia del repositorio en un forder llamado wp-content`}
-/>
+$ git clone git@github.com:usuario/sitio.git wp-content # Crea una copia del repositorio en un forder llamado wp-content
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/33a7b4b7bc526e442e634b47e72297b2)
 
@@ -155,9 +152,8 @@ El procedimiento de desarrollo es bastante sencillo una vez que se domina, digam
 que hemos creado un `feature/slideshow` y que estamos listo para probarlo en `staging`,
 entonces haríamos algo como esto:
 
-<Code
-    language="bash"
-    children={`# Asumiendo que el trabajo ha sido completado
+```bash
+# Asumiendo que el trabajo ha sido completado
 
 $ git checkout master
 $ git pull origin master # Asegurarnos de que tenemos la versión más reciente
@@ -171,8 +167,8 @@ $ git push origin feature/slideshow # Enviar ésta nueva versión al repositorio
 $ git checkout staging # Nos movemos a la versión de staging
 $ git pull origin staging # Asegurarnos de tener la versión reciente
 $ git merge --no-ff feature/slideshow # Unimos nuestra versión con el carrusel a staging para poder probarla
-$ git push origin staging # Enviar la nueva versión de staging al repositorio remoto (en Github)`}
-/>
+$ git push origin staging # Enviar la nueva versión de staging al repositorio remoto (en Github)
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/e96d07e040e292e0d563e03a2ea19ecf)
 
@@ -192,13 +188,12 @@ del repositorio en el servidor, con dos diferencias:
 Para hacer nuestro deploy y probar en staging, nos movemos a la carpeta donde
 tenemos la copia del repositorio (`wp-content`), y hacemos lo siguiente:
 
-<Code
-  language='bash'
-  children={`$ ssh usuario@dominio.com // Entrar al servidor
+```bash
+$ ssh usuario@dominio.com // Entrar al servidor
 # cd /staging.sitio.com/public_html/wp-content // Asegurarnos de estar en el sitio de pruebas
 # git checkout staging // Asegurarnos de estar en el branch de pruebas
-# git merge --no-ff feature/slideshow // Unir nuestro nuevo trabajo a nuestra rama de staging`}
-/>
+# git merge --no-ff feature/slideshow // Unir nuestro nuevo trabajo a nuestra rama de staging
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/bf9283c6a2c5afd64ab7130d2759fbac)
 
@@ -208,12 +203,11 @@ Así, una vez que ya hemos probado el sitio de pruebas (aún no hemos tocado pro
 y estamos seguros de que funcionará correctamente en producción, podemos **unir nuestros
 nuevos cambios**:
 
-<Code
-  language='bash'
-  children={`$ git checkout master # Asegurarnos de tener la versión más reciente de master
+```bash
+$ git checkout master # Asegurarnos de tener la versión más reciente de master
 $ git merge --no-ff feature/slideshow # Unir nuestra nueva funcionalidad a master
-$ git push origin master # Enviar la versión más reciente al repositorio (en Github)`}
-/>
+$ git pxush origin master # Enviar la versión más reciente al repositorio (en Github)
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/3c37d519608d9ce5c8a7dd946c5b7391)
 
@@ -222,14 +216,12 @@ asegurado de que todo funciona como queremos, y estamos listos para el **deploy 
 producción**. Podemos entrar a nuestro servidor y bajar los cambios más recientes a
 producción:
 
-<Code
-  language='bash'
-  children={`
+```bash
 $ ssh usuario@sitio.com
 $ cd /public_html # Asegurarnos de estar en producción
 $ git checkout master
-$ git pull origin master # Descargar los cambios más recientes del repositiorio (en Github)`}
-/>
+$ git pull origin master # Descargar los cambios más recientes del repositiorio (en Github)
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/e229444097d1aaba4a87431ba71fddad)
 
@@ -244,13 +236,12 @@ la prioridad ahora es **regresar producción a una versión anterior** que si fu
 que en éste caso, sería justo antes de unir el carrusel a producción, es decir,
 justo una versión antes, entramos a la terminal y hacemos algo como esto:
 
-<Code
-  language='bash'
-  children={`$ ssh usuario@sitio.com
+```bash
+$ ssh usuario@sitio.com
 $ cd /public_html # Asegurarnos de estar en producción
 $ git checkout master
-$ git revert HEAD # Revierte el último commit, regresa a una versión anterior`}
-/>
+$ git revert HEAD # Revierte el último commit, regresa a una versión anterior
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/f84ed7fda024f8b43e1c3b9382337050)
 

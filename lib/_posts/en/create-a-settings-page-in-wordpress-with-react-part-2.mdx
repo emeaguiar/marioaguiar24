@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 2
 publishedOn: '2024-01-22'
-updatedOn: '2024-07-23T02:47:47.184Z'
+updatedOn: '2024-10-18T02:33:51.416Z'
 description: >-
   Part two of a series of tutorials where we will learn how to create a settings
   page in WordPress using React and the WordPress API. I will show you how to
@@ -10,9 +10,6 @@ description: >-
 published: true
 readingTime: 900
 ---
-
-import Code from '@/components/code/code';
-
 In the [first part of this tutorial](/blog/create-a-settings-page-in-wordpress-with-react),
 I showed the basic principles to **create a settings page in WordPress**, in
 this second part, I will show you how to use the components included in WordPress
@@ -44,37 +41,40 @@ To create a settings page, we need to **add some fields**. To start, we must ope
 
 `settings.js`
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import { createRoot } from '@wordpress/element';
+
 /**
  * Internal dependencies
  */
 import Settings from './components/settings';
+
 const rootElement = document.querySelector( '#mah-settings' );
+
 if ( rootElement ) {
     createRoot( rootElement ).render( <Settings /> );
-}`}
-/>
+}
+```
 
 `components/settings.js`
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 const Settings = () => {
     return (
         <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
     );
 }
-export default Settings;`}
-/>
+
+export default Settings;
+```
 
 Among the things we can observe in this piece of code are:
 
@@ -96,9 +96,8 @@ Among the things we can observe in this piece of code are:
 
 Now that we have our application running we can start to **add options to our page**, one of the most common I come across is text fields, perhaps for an API, for example:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -108,8 +107,10 @@ import {
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+
 const Settings = () => {
     const [ apiKey, setApiKey ] = useState( '' );
+
     return (
         <>
             <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
@@ -126,8 +127,9 @@ const Settings = () => {
         </>
     );
 }
-export default Settings;`}
-/>
+
+export default Settings;
+```
 
 After reloading the page, we can see that **our options page** takes shape!
 although we can add some flavor, but we will do that later, now that we have our field, let's explain what happens here:
@@ -148,9 +150,8 @@ although we can add some flavor, but we will do that later, now that we have our
 
 As a bonus, let's add a `toggle` simply because I like how they work:
 
-<Code
-    language="jsx"
-    children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -164,21 +165,21 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const Settings = () => {
-const [ apiKey, setApiKey ] = useState( '' );
-const [ toggled, setToggled ] = useState( false );
-return (
-<>
-<h1>{ **( 'Select the desired options', 'mah-settings' ) }</h1>
-<Card>
-<CardBody>
-<TextControl
-help={ **( 'Enter your API key', 'mah-settings' ) }
-label={ \_\_( 'API Key', 'mah-settings' ) }
-onChange={ setApiKey }
-value={ apiKey }
-/>
-</CardBody>
+    const [ apiKey, setApiKey ] = useState( '' );
+    const [ toggled, setToggled ] = useState( false );
 
+    return (
+        <>
+            <h1>{ **( 'Select the desired options', 'mah-settings' ) }</h1>
+            <Card>
+                <CardBody>
+                    <TextControl
+                        help={ **( 'Enter your API key', 'mah-settings' ) }
+                        label={ __( 'API Key', 'mah-settings' ) }
+                        onChange={ setApiKey }
+                        value={ apiKey }
+                    />
+                </CardBody>
                 <CardDivider />
                 <CardBody>
                     <ToggleControl
@@ -190,10 +191,9 @@ value={ apiKey }
             </Card>
         </>
     );
-
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 ### What happened?
 
@@ -207,19 +207,21 @@ the same does not happen with our **style dependencies**. So it may be necessary
 
 `class-mah-settings.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Registra los scripts y estilos.
  * 
  * @return void 
  */
 public function enqueue_scripts(): void {
     $screen = get_current_screen();
+
     if ( $screen->id !== $this->menu_slug ) {
         return;
     }
+
     $asset = include $this->plugin_path . '/build/settings.asset.php';
+
     wp_enqueue_script(
         'mah-settings',
         plugins_url() . '/mah-settings-react/build/settings.js',
@@ -227,9 +229,10 @@ public function enqueue_scripts(): void {
         $asset['version'],
         true
     );
+
     wp_enqueue_style( 'wp-components' );
-}`}
-/>
+}
+```
 
 When we reload the page we will see the desired result, and if we look closely,
 **our text field also improved in appearance**:
@@ -251,9 +254,8 @@ In php, we can register them like this:
 
 `php/class-mah-settings.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Registra los hooks.
  * 
  * @return void 
@@ -263,14 +265,13 @@ public function init(): void {
     add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
     add_action( 'admin_init', [ $this, 'register_settings' ] );
     add_action( 'rest_api_init', [ $this, 'register_settings' ] );
-}`}
-/>
+}
+```
 
 `php/class-mah-settings.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Registra las opciones.
  * 
  * @return void 
@@ -295,8 +296,8 @@ public function register_settings(): void {
             'type'              => 'boolean',
         ]
     );
-}`}
-/>
+}
+```
 
 > [!WARNING]
 > The second rest_api_init hook is necessary to be able to use our options in React,
@@ -306,9 +307,8 @@ public function register_settings(): void {
 
 Now we just need to **save our options** from the React side, for which we need to add a save button to our application, and add an event when it is pressed:
 
-<Code
-  language='jsx'
-  children={`/**
+```jsx
+/**
  * WordPress dependencies
  */
 import {
@@ -322,6 +322,7 @@ import {
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+
 const Settings = () => {
     const [ apiKey, setApiKey ] = useState( '' );
     const [ toggled, setToggled ] = useState( false );
@@ -361,8 +362,8 @@ const Settings = () => {
         </>
     );
 }
-export default Settings;`}
-/>
+export default Settings;
+```
 
 A brief explanation of what we just added:
 

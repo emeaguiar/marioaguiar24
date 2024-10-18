@@ -1,13 +1,11 @@
 ---
 title: Compiling CSS and Javascript with wp-scripts
 publishedOn: '2022-01-14'
-updatedOn: '2024-07-21T22:44:57.005Z'
+updatedOn: '2024-10-18T02:33:51.416Z'
 description: Quick tutorial to compile CSS and Javascript with `wp-scripts`
 published: true
 readingTime: 180
 ---
-
-import Code from '@/components/code/code';
 
 Ever since the appearance of Gutenberg, or probably before, several **official WordPress
 packages** have been implemented to make our lives as developers easier, so to speak.
@@ -38,9 +36,8 @@ our application**, for the purposes of this tutorial we don't need much, we can 
 
 `package.json`
 
-<Code
-  language='json'
-  children={`{
+```json
+{
     "name": "scripts",
     "version": "1.0.0",
     "description": "Simple @wordpress/scripts tutorial",
@@ -53,8 +50,8 @@ our application**, for the purposes of this tutorial we don't need much, we can 
     "devDependencies": {
         "@wordpress/scripts": "^18.0.1"
     }
-}`}
-/>
+}
+```
 
 > [!NOTE]
 > Why `--save-dev`?
@@ -72,9 +69,8 @@ add it to our list of scripts in our `package.json`, like this:
 
 `package.json`
 
-<Code
-  language='json'
-  children={`{
+```json
+{
     "name": "scripts",
     "version": "1.0.0",
     "description": "Simple @wordpress/scripts tutorial",
@@ -88,8 +84,8 @@ add it to our list of scripts in our `package.json`, like this:
     "devDependencies": {
         "@wordpress/scripts": "^18.0.1"
     }
-}`}
-/>
+}
+```
 
 Now we just need to run it with `npm run start` or `npm start`
 
@@ -101,14 +97,13 @@ so we can start there.
 
 `index.js`
 
-<Code
-  language='js'
-  children={`import { __ } from '@wordpress/i18n';
+```js
+import { __ } from '@wordpress/i18n';
 const init = () => {
     console.log( __( 'Hello World' ) );
 };
-init();`}
-/>
+init();
+```
 
 Now when we look inside our `build` directory we can see the compiled files,
 along with their `sourcemap`. The `index.asset.php` file is a very useful file that is
@@ -117,9 +112,8 @@ our application can easily list them within our plugin**, for example:
 
 `plugin.php`
 
-<Code
-  language='php'
-  children={`/**
+```php
+/**
  * Include scripts and dependencies in our plugin
  *
  * @return void
@@ -133,8 +127,8 @@ function enqueue_scripts() {
         $asset['version'],
         true
     );
-}`}
-/>
+}
+```
 
 ## Conclusion
 

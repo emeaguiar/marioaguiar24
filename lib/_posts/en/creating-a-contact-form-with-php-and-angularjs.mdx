@@ -1,7 +1,7 @@
 ---
 title: Creating a contact form with PHP and AngularJS
 publishedOn: '2014-07-08'
-updatedOn: '2024-07-21T22:44:57.009Z'
+updatedOn: '2024-10-18T02:33:51.418Z'
 description: >-
   AngularJS seems to be the sensation these days, that's why I decided to try 
   and learn the basics of it. In fact, this very website is built using
@@ -12,8 +12,13 @@ description: >-
 published: true
 readingTime: 660
 ---
-
-import Code from '@/components/code/code';
+> [!WARNING]
+> This article was written in **2014** 👴🏼. Most of the tips here are not valid anymore and
+> I don't recommend using any of the snippets displayed here.
+>
+> I'm keeping this article here for historical reasons and to remind myself how much I've improved over the years.
+>
+> _Only cosmetic changes were made to this article._
 
 [AngularJS](http://angularjs.org/) seems to be the sensation these days, that's why I decided to try and
 learn the basics of it. In fact, this very website is built using AngularJS, however,
@@ -26,9 +31,8 @@ hang of it, I decided to share what I learned with a small tutorial.
 For this tutorial I'm going to use a very basic setup, just a couple fields and
 a submit button, so lets get started.
 
-<Code
-  language='jsx'
-  children={`<!DOCTYPE html>
+```jsx
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -44,8 +48,8 @@ a submit button, so lets get started.
                         Message:                                            
                    
                         I promise I'm not a bot                                            
-                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>     </body> </html>`}
-/>
+                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>     </body> </html>
+```
 
 Alright, I'd say that's pretty simple, we have a form, with three input fields,
 **name, email, and message**, we also have a fourth field used only to catch spam bots,
@@ -57,9 +61,8 @@ we'll hide it using css.
 Before I start with AngularJS, let's have a look at how we would do this using
 jQuery, like in the good old days:
 
-<Code
-  language='js'
-  children={`(function($) {
+```js
+(function($) {
   var contactForm = {
     $form: $( 'form' ),
     init: function() {
@@ -120,8 +123,8 @@ jQuery, like in the good old days:
     }
   }
   contactForm.init();
-})(jQuery);`}
-/>
+})(jQuery);
+```
 
 I set up some basic code, we select the form, add a callback to the submit process,
 validate the fields, make the AJAX request and wait for the result, however simple it is,
@@ -138,9 +141,8 @@ everything in our js file? the html code remained pretty much unchanged.
 AngularJS requires a bit more configuration on the markup side, so let's change
 it to this:
 
-<Code
-    language="js"
-    children={`<!DOCTYPE html>
+```js
+<!DOCTYPE html>
 <html ng-app="contact">
     <head>
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -161,9 +163,9 @@ Something wrong happened!, please try again.
                         Message:
 
                         I promise I'm not a bot
-                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>          //ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js          http://angularForm.js     </body> </html>`}
+                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>          //ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js          http://angularForm.js     </body> </html>
+```
 
-/>
 
 A few directives here and there and our markup is ready to be integrated with
 AngularJS, let's break it down a bit:
@@ -185,9 +187,8 @@ AngularJS, let's break it down a bit:
 
 Now let's look at our js file:
 
-<Code
-  language='js'
-  children={`(function(angular) {
+```js
+(function(angular) {
   var app = angular.module("contact", []);
   app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
     $scope.success = false;
@@ -208,8 +209,8 @@ Now let's look at our js file:
       } );
     }
   }]);
-})(angular);`}
-/>
+})(angular);
+```
 
 So much smaller than our jQuery counterpart, this is because we don't have any
 validation functions going on in here, why's that? Simple, because **AngularJS by
@@ -258,9 +259,8 @@ tiny version of jQuery in it, it does not provide the method we need, this of
 course means that we **need to include jQuery along AngularJS**. That doesn't make
 me very happy, but it _is_ a workaround. Thanks to the `$.param` method.
 
-<Code
-  language='js'
-  children={`(function(angular) {
+```js
+(function(angular) {
   var app = angular.module("contact", []);
   app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
     $scope.success = false;
@@ -282,8 +282,8 @@ me very happy, but it _is_ a workaround. Thanks to the `$.param` method.
       } );
     }
   }]);
-})(angular);`}
-/>
+})(angular);
+```
 
 Inside AngularJS, jQuery is known as `angular.element`, so in order to use the
 method we need, **we need to include jQuery in our HTML**, and call it using
@@ -295,9 +295,8 @@ As I said before, this is more of a problem with PHP, so why not let it fix it?
 It's actually really simple, we can't access our `$_POST` variables the usual way,
 but we can access them using `file_get_contents`, so we'll change our PHP to this:
 
-<Code
-  language='php'
-  children={`<?php
+```php
+<?php
     $response = array( 'success' => false );
     $formData = file_get_contents( 'php://input' );
     $data = json_decode( $formData );
@@ -318,8 +317,8 @@ but we can access them using `file_get_contents`, so we'll change our PHP to thi
         }
     }
     echo json_encode( $response );
-?>`}
-/>
+?>
+```
 
 And there! Now we can access our data, and our AngularJS code wasn't changed.
 

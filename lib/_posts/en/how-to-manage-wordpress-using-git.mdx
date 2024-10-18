@@ -1,14 +1,11 @@
 ---
 title: How to manage WordPress using Git
 publishedOn: '2019-01-18'
-updatedOn: '2024-07-21T22:44:57.012Z'
+updatedOn: '2024-10-18T02:33:51.421Z'
 description: Learn how to manage your WordPress installation using Git.
 published: true
 readingTime: 720
 ---
-
-import Code from '@/components/code/code';
-
 Last week I published an article about [why it's a very bad idea to use FTP](/blog/the-importance-of-not-using-ftp)
 to manage our site. Although the topic is very general and not only applies to
 WordPress, this time I want to explain a little more about the process I personally
@@ -80,7 +77,9 @@ Let's say we have already created our repository on Github, and we have added th
 contents of our `wp-content` folder to it, then we would have a repository more or
 less like this:
 
-<Code language='bash' children={`git@github.com:user/site.git`} />
+```bash
+git@github.com:user/site.git
+```
 
 Once we have our repository, we can now worry about **synchronizing it with our server**.
 
@@ -100,31 +99,29 @@ hosting company, make sure you have access).
 Let's say our repository is made up of the `wp-content` folder, and that it looks
 like this:
 
-<Code
-  language='plain'
-  children={`- site
+```plain
+- site
 --	.gitignore
 --	themes
 ---		our-theme
 ----		style.css
 --	plugins
 ---		our-plugin
-----		our-plugin.php`}
-/>
+----		our-plugin.php
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/bb2d0e00d955b4777e7cd91d47459d07)
 
 To be able to replace our default folder with our new repository, we need to enter
 the server and create a copy of the repository:
 
-<Code
-  language='bash'
-  children={`# Assuming that our wp-content folder is in /public_html/wp-content
+```bash
+# Assuming that our wp-content folder is in /public_html/wp-content
 $ ssh user@domain.com
 $ cd /public_html
 $ mv wp-content wp-content.bk # Create a backup of the current wp-content folder in case we need it in the future
-$ git clone git@github.com:user/site.git wp-content # Create a copy of the repository in a folder called wp-content`}
-/>
+$ git clone git@github.com:user/site.git wp-content # Create a copy of the repository in a folder called wp-content
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/33a7b4b7bc526e442e634b47e72297b2)
 
@@ -148,9 +145,8 @@ The development process is quite simple once you master it, let's say we have cr
 a `feature/slideshow` and we are ready to test it in `staging`, then we would do
 something like this:
 
-<Code
-    language="bash"
-    children={`# Assuming that the work has been completed
+```bash
+# Assuming that the work has been completed
 
 $ git checkout master
 $ git pull origin master # Make sure we have the latest version
@@ -164,8 +160,8 @@ $ git push origin feature/slideshow # Send this new version to the remote reposi
 $ git checkout staging # Move to the staging version
 $ git pull origin staging # Make sure we have the latest version
 $ git merge --no-ff feature/slideshow # Merge our version with the carousel to staging to be able to test it
-$ git push origin staging # Send the new version of staging to the remote repository (on Github)`}
-/>
+$ git push origin staging # Send the new version of staging to the remote repository (on Github)
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/e96d07e040e292e0d563e03a2ea19ecf)
 
@@ -185,13 +181,12 @@ repository on the server, with two differences:
 To make our deploy and test in staging, we move to the folder where we have the copy
 of the repository (`wp-content`), and do the following:
 
-<Code
-  language='bash'
-  children={`$ ssh user@domain.com # Enter the server
+```bash
+$ ssh user@domain.com # Enter the server
 $ cd /staging.site.com/public_html/wp-content # Make sure we are in the test site
 $ git checkout staging # Make sure we are in the staging branch
-$ git merge --no-ff feature/slideshow # Merge our new work into our staging branch`}
-/>
+$ git merge --no-ff feature/slideshow # Merge our new work into our staging branch
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/bf9283c6a2c5afd64ab7130d2759fbac)
 
@@ -200,12 +195,11 @@ of our `staging` branch, which now has the changes made in `feature/slideshow`.
 So, once we have tested the test site (we have not touched production yet) and we
 are sure that it will work correctly in production, we can **merge our new changes**:
 
-<Code
-  language='bash'
-  children={`$ git checkout master # Make sure we have the latest version of master
+```bash
+$ git checkout master # Make sure we have the latest version of master
 $ git merge --no-ff feature/slideshow # Merge our new functionality into master
-$ git push origin master # Send the latest version to the repository (on Github)`}
-/>
+$ git push origin master # Send the latest version to the repository (on Github)
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/3c37d519608d9ce5c8a7dd946c5b7391)
 
@@ -213,13 +207,12 @@ Now that we have the latest version in the Github repository, we have made sure 
 everything works as we want, and we are ready for **deployment to production**. We
 can enter our server and download the latest changes to production:
 
-<Code
-  language='bash'
-  children={`$ ssh usuario@sitio.com
+```bash
+$ ssh usuario@sitio.com
 $ cd /public_html # Make sure we are in production
 $ git checkout master
-$ git pull origin master # Download the latest changes from the repository`}
-/>
+$ git pull origin master # Download the latest changes from the repository
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/e229444097d1aaba4a87431ba71fddad)
 
@@ -234,13 +227,12 @@ the priority now is **to return production to a previous version** that did work
 which in this case, would be just before we joined the carousel to production, that
 is, just one version before, we enter the terminal and do something like this:
 
-<Code
-  language='bash'
-  children={`$ ssh user@domain.com
+```bash
+$ ssh user@domain.com
 $ cd /public_html # Make sure we are in production
 $ git checkout master
-$ git revert HEAD # Revert the last commit, return to a previous version`}
-/>
+$ git revert HEAD # Revert the last commit, return to a previous version
+```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/f84ed7fda024f8b43e1c3b9382337050)
 

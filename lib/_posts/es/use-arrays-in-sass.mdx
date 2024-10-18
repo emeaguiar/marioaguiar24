@@ -1,7 +1,7 @@
 ---
 title: Usar arrays en SASS
 publishedOn: '2024-01-09'
-updatedOn: '2024-07-21T22:44:57.025Z'
+updatedOn: '2024-10-18T04:06:55.858Z'
 description: >-
   A pesar de ser una herramienta mas o menos vieja, desde hace más de 10 años
   SASS es uno de mis mejores amigos en el desarrollo web, sigue siendo
@@ -11,9 +11,6 @@ description: >-
 published: true
 readingTime: 360
 ---
-
-import Code from '@/components/code/code';
-
 A pesar de ser una herramienta mas o menos vieja, desde hace más de 10 años
 [SASS](https://sass-lang.com/) es uno de mis mejores amigos en el desarrollo web,
 sigue siendo extremadamente poderoso aún con los numerosos avances de CSS en los
@@ -36,16 +33,17 @@ archivos y hasta ahorrarnos varias lineas de código.
 En SASS, los arrays son conocidos como **listas**, en su versión más básica, una
 lista es declarada de la siguiente forma:
 
-<Code language='scss' children={`$colores: amarillo, azul, rojo, verde;`} />
+```scss
+$colores: amarillo, azul, rojo, verde;
+```
 
 De ésta forma, podemos acceder a cualquier elemento en el array con la función `nth`:
 
-<Code
-  language='scss'
-  children={`$colores: amarillo, azul, rojo, verde;
+```scss
+$colores: amarillo, azul, rojo, verde;
 @debug nth($colores, 2);
-// style.scss:3 Debug: azul`}
-/>
+// style.scss:3 Debug: azul
+```
 
 ## Usos
 
@@ -53,9 +51,8 @@ Ahora que tenemos nuestra lista declarada, podemos comenzar a dale uso como se
 debe, el uso más común que me he encontrado es el de la impresión de utility
 classes, como por ejemplo al crear un loop con `@each`:
 
-<Code
-  language='scss'
-  children={`$colores: amarillo, azul, rojo, verde;
+```scss
+$colores: amarillo, azul, rojo, verde;
 @each $color in $colores {
     .texto-#{$color} {
         color: $color;
@@ -73,8 +70,8 @@ classes, como por ejemplo al crear un loop con `@each`:
 }
 .texto-verde {
     color: verde;
-}`}
-/>
+}
+```
 
 > [!TIP]
 > Mezclando SASS con CSS

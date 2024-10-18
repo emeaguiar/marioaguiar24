@@ -1,7 +1,7 @@
 ---
 title: 'WordPress Transients: What are they and how do I eat them'
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-07-23T02:49:31.698Z'
+updatedOn: '2024-10-18T02:33:51.425Z'
 description: >-
   WordPress, despite being my favorite daily work tool and the one I know the
   most,  has still several options and functions I've never used. Not too long
@@ -10,9 +10,6 @@ description: >-
 published: true
 readingTime: 480
 ---
-
-import Code from '@/components/code/code';
-
 > [!WARNING]
 > This article was written in **2011** 👴🏼. Most of the tips here may not be valid anymore.
 >
@@ -61,9 +58,8 @@ in fact, it's conformed by only three functions:
 Following the previous situation (the contact form), I'll show a little example
 of transients use, nothing to be worried about, we start with the form:
 
-<Code
-  language='php'
-  children={`<form id="transient_test" action="process.php" method="post">
+```php
+<form id="transient_test" action="process.php" method="post">
     <fieldset>
         <label for="name">Name:</label>
         <input id="name" type="text" name="name" />
@@ -75,8 +71,8 @@ of transients use, nothing to be worried about, we start with the form:
         <textarea id="comment" name="comment"></textarea>
         <input id="submit" type="submit" name="submit" value="submitted" />
     </fieldset>
-</form>`}
-/>
+</form>
+```
 
 This will give us a fairly simple form, we take **Name**, **Email**, **URL** and **Comment**.
 Also note I'm using HTML5 attributes, don't worry, I'm no hipster.
@@ -84,9 +80,8 @@ Also note I'm using HTML5 attributes, don't worry, I'm no hipster.
 Once we have the data we must of course process it, to do that we'll need a php
 file I've called `process.php`, this one will work more or less like this.
 
-<Code
-  language='php'
-  children={`<?php 
+```php
+<?php 
     if ( isset( $_POST['submit'] ) ) { // Make sure the form was submitted
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -103,8 +98,8 @@ file I've called `process.php`, this one will work more or less like this.
         $headers = 'From: ' . $name;
         wp_mail("me@me.com", "Transients Test", $comment, $headers); // Send a mail
     }
-?>`}
-/>
+?>
+```
 
 Ok, now this code will take the data we send through the form and search the
 database for the key value (our mail), if it doesn’t exist it will create new
@@ -120,9 +115,8 @@ All right, we have the code to store the transients, now what? Right, we needed
 them so the user doesn't have to type them over and over again in the form, in
 order to do that we have to modify our form and add a `cookie`:
 
-<Code
-  language='php'
-  children={`$cookie = $_COOKIE['transients_test'];
+```php
+$cookie = $_COOKIE['transients_test'];
 <form id="transient_test" action="process.php" method="post">
     <fieldset>
         <label for="name">Name:</label>
@@ -135,17 +129,15 @@ order to do that we have to modify our form and add a `cookie`:
         <textarea id="comment" name="comment"></textarea>
         <input id="submit" type="submit" name="submit" value="s ubmitted" />
     </fieldset>
-</form>`}
-/>
+</form>
+```
 
 Now the form will check the existence of the cookie called transients_test, which
 doesn't exist right now, to create it we have to add the following to the `process.php` file:
 
-<Code
-  language='php'
-  children={`setcookie('transients_test', $_POST['email'], time()+86400, '/', $_SERVER['HTTP_HOST'], 0, 0 );
-`}
-/>
+```php
+setcookie('transients_test', $_POST['email'], time()+86400, '/', $_SERVER['HTTP_HOST'], 0, 0 );
+```
 
 That will create the cookie called `transients_test`, with the user's email, will
 expire in **86400 seconds** (total seconds in one day) and will be valid for our

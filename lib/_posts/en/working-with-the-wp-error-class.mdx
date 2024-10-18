@@ -1,13 +1,19 @@
 ---
 title: Working with the WP_Error class
 publishedOn: '2014-08-25'
-updatedOn: '2024-07-21T22:44:57.018Z'
+updatedOn: '2024-10-18T02:33:51.425Z'
 description: Simple tutorial on how to use the WP_Error class in WordPress.
 published: true
 readingTime: 420
 ---
-
-import Code from '@/components/code/code';
+> [!WARNING]
+> This article was written in 2014 👴🏼. Most of the tips here are not valid anymore and
+> I don't recommend using any of the snippets displayed here.
+>
+> I'm keeping this article here for historical reasons and to remind myself how much I've improved
+> over the years.
+>
+> Only cosmetic changes were made to this article.
 
 Sometimes when we are coding a new feature… Actually, _every_ time we are coding a
 new feature we need to know what it's happening, specifically if something it's
@@ -30,9 +36,8 @@ I have a simple form with only two fields, when the user submits that form,
 the data will be sent through `$_POST`, I will attach an action to process the form
 and validate the data, like this:
 
-<Code
-  language='php'
-  children={`function mah_custom_shortcode( $atts, $content = null ) {
+```php
+function mah_custom_shortcode( $atts, $content = null ) {
     ob_start();
 ?>
     <form action="" id="mah_custom_form" method="post">
@@ -50,15 +55,14 @@ and validate the data, like this:
 <?php
     return apply_filters( 'mah_custom_shortcode', ob_get_clean() );
 }
-add_shortcode( 'mah_custom_form', 'mah_custom_shortcode' );`}
-/>
+add_shortcode( 'mah_custom_form', 'mah_custom_shortcode' );
+```
 
 This is pretty straightforward, I'm just creating a shortcode to use in my posts,
 that shortcode will display the form, now let's see the process function:
 
-<Code
-    language="php"
-    children={`function mah_process_function() {
+```php
+function mah_process_function() {
     if ( isset( $_POST[ 'mah_submit' ] ) && wp_verify_nonce( $_POST[ 'mah_nonce_field' ], 'mah_nonce_action' ) ) {
         // Start validation and save it in a variable
         $email = is_email( $_POST[ 'mah_email' ]) // Check if it's a valid address
@@ -72,8 +76,8 @@ that shortcode will display the form, now let's see the process function:
     }
 
 }
-add_action( 'init', 'mah_process_function' );`}
-/>
+add_action( 'init', 'mah_process_function' );
+```
 
 - First we check if the value for `mah_submit` is set, that means the form has been
   submitted, then we verify the nonce field to make sure it is still valid.
@@ -99,9 +103,8 @@ in the same screen?
 I could use the same approach, but then I would have two different error objects,
 I just want one, so I need to have ready _before_ validating the data.
 
-<Code
-    language="php"
-    children={`function mah_process_function() {
+```php
+function mah_process_function() {
     if ( isset( $_POST[ 'mah_submit' ] ) && wp_verify_nonce( $_POST[ 'mah_nonce_field' ], 'mah_nonce_action' ) ) {
         // Start error object
         $mah_error = new WP_Error();
@@ -128,8 +131,8 @@ I just want one, so I need to have ready _before_ validating the data.
         }
     }
 
-}`}
-/>
+}
+```
 
 While it's pretty similar, id does have a few differences, let's break it down:
 

@@ -1,14 +1,11 @@
 ---
 title: Working with the WP_Error class
 publishedOn: '2014-08-25'
-updatedOn: '2024-07-21T22:44:57.026Z'
+updatedOn: '2024-10-18T04:06:55.859Z'
 description: Sencillo tutorial sobre cómo usar la clase WP_Error en WordPress.
 published: true
 readingTime: 420
 ---
-
-import Code from '@/components/code/code';
-
 A veces cuando estamos codificando una nueva característica... En realidad, _cada_
 vez que estamos codificando una nueva característica necesitamos saber qué está pasando,
 específicamente si algo no está funcionando como queremos. Esa es la razón por la que
@@ -30,9 +27,8 @@ Tengo un formulario simple con solo dos campos, cuando el usuario envía ese for
 los datos se enviarán a través de `$_POST`, adjuntaré una acción para procesar el formulario
 y validar los datos, así:
 
-<Code
-  language='php'
-  children={`function mah_custom_shortcode( $atts, $content = null ) {
+```php
+function mah_custom_shortcode( $atts, $content = null ) {
     ob_start();
 ?>
     <form action="" id="mah_custom_form" method="post">
@@ -50,15 +46,14 @@ y validar los datos, así:
 <?php
     return apply_filters( 'mah_custom_shortcode', ob_get_clean() );
 }
-add_shortcode( 'mah_custom_form', 'mah_custom_shortcode' );`}
-/>
+add_shortcode( 'mah_custom_form', 'mah_custom_shortcode' );
+```
 
 Esto es bastante sencillo, solo estoy creando un shortcode para usar en mis publicaciones,
 ese shortcode mostrará el formulario, ahora veamos la función de proceso:
 
-<Code
-    language="php"
-    children={`function mah_process_function() {
+```php
+function mah_process_function() {
     if ( isset( $_POST[ 'mah_submit' ] ) && wp_verify_nonce( $_POST[ 'mah_nonce_field' ], 'mah_nonce_action' ) ) {
         // Comienza la validación y guárdala en una variable
         $email = is_email( $_POST[ 'mah_email' ]) // Revisa si es una dirección válida
@@ -72,8 +67,8 @@ ese shortcode mostrará el formulario, ahora veamos la función de proceso:
     }
 
 }
-add_action( 'init', 'mah_process_function' );`}
-/>
+add_action( 'init', 'mah_process_function' );
+```
 
 - Primero verificamos si el valor de `mah_submit` está establecido, eso significa
   que el formulario ha sido enviado, luego verificamos el campo de nonce para asegurarnos
@@ -100,9 +95,8 @@ pero ¿qué pasa si quiero validar el campo Nombre también y mostrar ambos mens
 Podría usar el mismo enfoque, pero luego tendría dos objetos de error diferentes,
 solo quiero uno, así que necesito tener listo _antes_ de validar los datos.
 
-<Code
-    language="php"
-    children={`function mah_process_function() {
+```php
+function mah_process_function() {
     if ( isset( $_POST[ 'mah_submit' ] ) && wp_verify_nonce( $_POST[ 'mah_nonce_field' ], 'mah_nonce_action' ) ) {
         // Comienza el objeto de error
         $mah_error = new WP_Error();
@@ -128,8 +122,8 @@ solo quiero uno, así que necesito tener listo _antes_ de validar los datos.
         }
     }
 
-}`}
-/>
+}
+```
 
 Puede ser bastante similar, pero tiene algunas diferencias, desglosemos:
 

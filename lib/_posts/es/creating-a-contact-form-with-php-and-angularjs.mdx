@@ -1,7 +1,7 @@
 ---
 title: Creando un formulario de contacto con PHP y AngularJS
 publishedOn: '2014-08-07'
-updatedOn: '2024-07-21T22:44:57.020Z'
+updatedOn: '2024-10-18T04:06:55.853Z'
 description: >-
   AngularJS parece ser la sensación en estos días, por eso decidí intentar y
   aprender lo básico de él. De hecho, este mismo sitio web está construido
@@ -12,8 +12,14 @@ description: >-
 published: true
 readingTime: 660
 ---
-
-import Code from '@/components/code/code';
+> [!WARNING]
+> Este artículo fue escrito en **2014** 👴🏼. La mayoría de los consejos aquí no son válidos y
+> no recomiendo usar ninguno de los fragmentos mostrados aquí.
+>
+> Mantengo este artículo aquí por razones históricas y para recordarme cuánto he mejorado
+> a lo largo de los años.
+>
+> _Solo se hicieron cambios cosméticos a este artículo._
 
 [AngularJS](http://angularjs.org/) parece ser la sensación en estos días, por eso decidí intentar y aprender lo básico de él.
 De hecho, este mismo sitio web está construido usando AngularJS, sin embargo, encontré un par de problemas
@@ -25,9 +31,8 @@ ya que me llevó un tiempo entenderlo, decidí compartir lo que aprendí con un 
 Para este tutorial voy a usar una configuración muy básica, solo un par de campos y
 un botón de envío, así que empecemos.
 
-<Code
-  language='jsx'
-  children={`<!DOCTYPE html>
+```jsx
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -43,8 +48,8 @@ un botón de envío, así que empecemos.
                         Mensaje:                                            
                    
                         Prometo que no soy un bot                                            
-                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Enviar</button>             </form>         </div>     </body> </html>`}
-/>
+                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Enviar</button>             </form>         </div>     </body> </html>
+```
 
 Muy bien, diría que es bastante simple, tenemos un formulario, con tres campos de entrada,
 **nombre, email y mensaje**, también tenemos un cuarto campo usado solo para atrapar bots de spam,
@@ -55,9 +60,8 @@ lo ocultaremos usando css.
 
 Antes de comenzar con AngularJS, veamos cómo haríamos esto usando jQuery, como en los buenos viejos tiempos:
 
-<Code
-  language='js'
-  children={`(function($) {
+```js
+(function($) {
   var contactForm = {
     $form: $( 'form' ),
     init: function() {
@@ -118,8 +122,8 @@ Antes de comenzar con AngularJS, veamos cómo haríamos esto usando jQuery, como
     }
   }
   contactForm.init();
-})(jQuery);`}
-/>
+})(jQuery);
+```
 
 Después de configurar un código básico, seleccionamos el formulario, agregamos un callback al proceso de envío,
 validamos los campos, hacemos la solicitud AJAX y esperamos el resultado, sin embargo, por simple que sea,
@@ -135,9 +139,8 @@ En primer lugar, una de las cosas que más me gusta de Angular es **la forma en 
 AngularJS requiere un poco más de configuración en el lado del marcado, así que cambiemos
 a esto:
 
-<Code
-    language="js"
-    children={`<!DOCTYPE html>
+```jsx
+<!DOCTYPE html>
 <html ng-app="contact">
     <head>
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -158,9 +161,8 @@ a esto:
                         Mensaje:
 
                         Prometo que no soy un bot
-                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>          //ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js          http://angularForm.js     </body> </html>`}
-
-/>
+                </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Submit</button>             </form>         </div>          //ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js          http://angularForm.js     </body> </html>
+```
 
 Unas cuantas directivas aquí y allá y nuestro marcado está listo para ser integrado con AngularJS,
 desglosemos un poco:
@@ -173,9 +175,8 @@ desglosemos un poco:
 
 Ahora veamos nuestro archivo js:
 
-<Code
-  language='js'
-  children={`(function(angular) {
+```js
+(function(angular) {
   var app = angular.module("contact", []);
   app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
     $scope.success = false;
@@ -196,8 +197,8 @@ Ahora veamos nuestro archivo js:
       } );
     }
   }]);
-})(angular);`}
-/>
+})(angular);
+```
 
 Mucho más pequeño que nuestro homólogo de jQuery, esto se debe a que no tenemos ninguna
 función de validación en este, ¿por qué? Simple, porque **AngularJS por defecto
@@ -244,9 +245,8 @@ versión reducida de jQuery en él, no proporciona el método que necesitamos,
 esto por supuesto significa que **necesitamos incluir jQuery junto con AngularJS**.
 Gracias al método `$.param`.
 
-<Code
-  language='js'
-  children={`(function(angular) {
+```js
+(function(angular) {
   var app = angular.module("contact", []);
   app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
     $scope.success = false;
@@ -268,8 +268,8 @@ Gracias al método `$.param`.
       } );
     }
   }]);
-})(angular);`}
-/>
+})(angular);
+```
 
 Dentro de AngularJS, jQuery es conocido como `angular.element`, así que para usar el
 método que necesitamos, **necesitamos incluir jQuery en nuestro HTML**, y llamarlo usando
@@ -281,9 +281,8 @@ Como dije antes, este es más un problema con PHP, así que ¿por qué no dejar 
 Es realmente simple, no podemos acceder a nuestras variables `$_POST` de la manera habitual,
 pero podemos acceder a ellas usando `file_get_contents`, así que cambiaremos nuestro PHP a esto:
 
-<Code
-  language='php'
-  children={`<?php
+```php
+<?php
     $response = array( 'success' => false );
     $formData = file_get_contents( 'php://input' );
     $data = json_decode( $formData );
@@ -304,8 +303,8 @@ pero podemos acceder a ellas usando `file_get_contents`, así que cambiaremos nu
         }
     }
     echo json_encode( $response );
-?>`}
-/>
+?>
+```
 
 Y ahí está! Ahora podemos acceder a nuestros datos, y nuestro código AngularJS no fue cambiado.
 
