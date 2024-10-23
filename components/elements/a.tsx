@@ -14,9 +14,7 @@ export function A({ children, href, id }: any) {
 
   return (
     <Link
-      className={clsx('text-inherit underline', 'hover:no-underline', {
-        'inline-flex items-center': isExternal,
-      })}
+      className={clsx('text-inherit underline', 'hover:no-underline')}
       href={href}
       passHref={isExternal}
       id={id}

@@ -15,7 +15,7 @@ export function Blockquote({ children }: { children?: React.ReactNode }) {
     <blockquote
       className={clsx(
         merriweather.className,
-        'my-4 w-full max-w-screen-sm border-primary py-2 pl-4 text-2xl/12 italic text-gray-600',
+        'my-4 w-full max-w-screen-sm border-primary p-2 text-2xl/12 italic text-gray-600',
         'lg:-mx-8 lg:max-w-screen-md'
       )}
     >
