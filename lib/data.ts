@@ -22,6 +22,8 @@ export const CONTACT_FORM_TO_EMAIL = process.env
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN as string;
 export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY as string;
 
+export const ANALYTICS_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID as string;
+
 export const CONFERENCES = [
   {
     name: 'WordCamp Lima',
