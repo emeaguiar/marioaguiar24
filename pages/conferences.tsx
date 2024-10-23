@@ -45,14 +45,14 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
           {t('title')}
         </h1>
 
-        <p className='px-4 lg:max-w-screen-md'>
+        <p className='px-4 text-xl/10 lg:max-w-screen-md'>
           <Trans
             i18nKey='conferences:content'
             components={[<strong key='strong' />]}
           />
         </p>
 
-        <p className='w-full px-4 lg:max-w-screen-md'>
+        <p className='w-full px-4 text-xl/10 lg:max-w-screen-md'>
           <Trans
             i18nKey='conferences:cta'
             components={[
