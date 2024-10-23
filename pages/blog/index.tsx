@@ -11,7 +11,7 @@ import { H2 } from '@/components/elements';
 import BlogCards from '@/components/blog/cards';
 import { getPosts } from '@/lib/posts';
 import { merriweather } from '@/components/fonts';
-import { BLOG_PREFIX } from '@/lib/data';
+import { BLOG_PREFIX, SITE_URL } from '@/lib/data';
 
 export const metadata = {
   title: 'Blog',
@@ -33,7 +33,7 @@ export default function Page({
       <NextSeo
         title={t('title')}
         description={t('description')}
-        canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/${BLOG_PREFIX}`}
+        canonical={`${SITE_URL}/${locale}${BLOG_PREFIX}`}
       />
 
       <div className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'>

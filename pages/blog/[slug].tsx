@@ -38,6 +38,7 @@ import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
 import Code from '@/components/code/code';
+import { SITE_URL } from '@/lib/data';
 
 export default function PostPage({
   code,
@@ -60,7 +61,7 @@ export default function PostPage({
       <NextSeo
         title={title}
         description={description}
-        canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}${pathname}`}
+        canonical={`${SITE_URL}/${locale}${pathname}`}
       />
 
       <div className='mt-4 flex flex-col items-center gap-6 px-4 text-xl/9 lg:my-16'>
