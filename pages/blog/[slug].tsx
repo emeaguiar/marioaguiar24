@@ -21,6 +21,7 @@ import { YouTubeEmbed } from '@next/third-parties/google';
  */
 import {
   A,
+  Blockquote,
   H1,
   H2,
   H3,
@@ -81,6 +82,7 @@ export default function PostPage({
           components={{
             YouTubeEmbed,
             a: A,
+            blockquote: Blockquote,
             code: CodeElement,
             h1: H1,
             h2: (props: any) => {
