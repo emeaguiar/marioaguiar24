@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import clsx from 'clsx';
 import { useMemo } from 'react';
 import { bundleMDX } from 'mdx-bundler';
 import remarkGfm from 'remark-gfm';
@@ -35,6 +36,7 @@ import {
   Tr,
   Code as CodeElement,
 } from '@/components/elements';
+import { notoSans } from '@/components/fonts';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
@@ -76,7 +78,12 @@ export default function PostPage({
         />
       </div>
 
-      <div className='flex flex-col items-center gap-6 px-4 text-xl/9 lg:w-[736px]'>
+      <div className={clsx(
+          notoSans.className,
+          'flex flex-col items-center gap-6 px-4 text-xl/10',
+          'lg:w-[736px]'
+        )}
+      >
         {/* @todo: Clean up this madness */}
         <Component
           components={{
