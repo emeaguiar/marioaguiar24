@@ -32,7 +32,7 @@ import {
   Td,
   Th,
   Tr,
-  CodeElement,
+  Code as CodeElement,
 } from '@/components/elements';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
