@@ -20,7 +20,7 @@ import Link from 'next/link';
 /**
  * Internal dependencies
  */
-import { CONTACT_FORM_TO_EMAIL, CONFERENCES } from '@/lib/data';
+import { CONTACT_FORM_TO_EMAIL, CONFERENCES, SITE_URL } from '@/lib/data';
 import { merriweather } from '@/components/fonts';
 
 export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
@@ -35,7 +35,7 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
       <NextSeo
         title={t('title')}
         description={t('description')}
-        canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/conferences`}
+        canonical={`${SITE_URL}/${locale}conferences`}
       />
 
       <div className={`flex flex-col items-center gap-4 lg:gap-8`}>

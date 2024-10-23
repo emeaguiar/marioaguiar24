@@ -15,12 +15,19 @@ export const MENU_ITEMS = [
 
 export const BLOG_PREFIX = '/blog';
 
+// Contact form data.
 export const CONTACT_FORM_FROM_EMAIL = process.env
   .CONTACT_FORM_FROM_EMAIL as string;
 export const CONTACT_FORM_TO_EMAIL = process.env
   .CONTACT_FORM_TO_EMAIL as string;
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN as string;
 export const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY as string;
+
+// Google Analytics ID.
+export const ANALYTICS_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID as string;
+
+// Site URL.
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL as string;
 
 export const CONFERENCES = [
   {
