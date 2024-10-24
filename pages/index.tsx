@@ -20,6 +20,7 @@ import { merriweather } from '@/components/fonts';
 import BlogCards from '@/components/blog/cards';
 import ServicesCard from '@/components/services/card';
 import { getPosts } from '@/lib/posts';
+import { SITE_URL } from '@/lib/data';
 
 export default function Home({
   locale,
@@ -38,7 +39,7 @@ export default function Home({
         <link rel='shortcut icon' href='/favicon.png' />
       </Head>
 
-      <NextSeo canonical={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}`} />
+      <NextSeo canonical={`${SITE_URL}/${locale}`} />
 
       <div
         className={`${merriweather.className} flex flex-col items-center gap-4 lg:gap-8`}

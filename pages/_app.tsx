@@ -15,6 +15,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
  * Internal dependencies
  */
 import '@/styles/globals.css';
+import { ANALYTICS_ID } from '@/lib/data';
 import Layout from '@/components/layout';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -45,7 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Layout>
       </ThemeProvider>
 
-      <GoogleAnalytics gaId='G-YRPBH5KSTQ' />
+      {ANALYTICS_ID && <GoogleAnalytics gaId={ANALYTICS_ID} />}
     </>
   );
 }

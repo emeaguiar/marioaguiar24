@@ -9,6 +9,7 @@ import matter from 'gray-matter';
  * Internal dependencies
  */
 import type { PostItem } from '@/types/post';
+import { SITE_URL } from '@/lib/data';
 
 function getPostSlugs(lang: 'en' | 'es') {
   return fs.readdirSync(getPostsDirectory(lang));
@@ -101,17 +102,17 @@ export function generateSiteMap() {
         .map((post, index) => {
           return `
             <url>
-              <loc>${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}</loc>
+              <loc>${SITE_URL}/blog/${post.slug}</loc>
               <lastmod>${post.updatedOn}</lastmod>
               <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="${process.env.NEXT_PUBLIC_SITE_URL}/blog/${esPosts[index].slug}"
+                href="${SITE_URL}/blog/${esPosts[index].slug}"
               />
               <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="${process.env.NEXT_PUBLIC_SITE_URL}/en/blog/${post.slug}"
+                href="${SITE_URL}/en/blog/${post.slug}"
               />
             </url>
           `;

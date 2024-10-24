@@ -1,4 +1,5 @@
 export * from '@/components/elements/a';
+export * from '@/components/elements/blockquote';
 export * from '@/components/elements/code';
 export * from '@/components/elements/h1';
 export * from '@/components/elements/h2';
