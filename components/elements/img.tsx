@@ -36,7 +36,7 @@ export const Img = ({ src, alt, title }: ImgProps): JSX.Element => {
     }
 
   return (
-    <span className='relative my-8 block w-full aspect-video'>
+    <div className='relative my-8 w-full aspect-video'>
       <Image
         src={src}
         alt={alt || ''}
@@ -46,6 +46,6 @@ export const Img = ({ src, alt, title }: ImgProps): JSX.Element => {
           objectFit: 'contain',
         }}
       />
-    </span>
+    </div>
   );
 };

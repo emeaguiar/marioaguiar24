@@ -1,7 +1,7 @@
 ---
 title: How to add a metabox in React to Gutenberg
 publishedOn: '2024-09-18'
-updatedOn: '2024-10-18T02:33:51.414Z'
+updatedOn: '2024-10-29T20:06:16.692Z'
 description: >-
   In this tutorial I will show you how to add a react component to the metaboxes
   area of WordPress
@@ -105,7 +105,7 @@ class Metabox
 What this will do is **add a new metabox to the block editor**, if we don't look closely, we can guess
 that _it is empty_ (although it simply doesn't have text), something like this:
 
-[![Image of the empty metabox](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)
+![Image of the empty metabox](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp) "Image of the empty metabox"]
 
 ## Register a Plugin in Gutenberg
 
@@ -172,7 +172,7 @@ public function enqueue_assets(): void
 
 And the result would be something like this:
 
-[![Image of the plugin in the sidebar](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)
+![Image of the plugin in the sidebar](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)
 
 Now we have the two components we need, and **we are ready to put them together**.
 
@@ -217,7 +217,7 @@ Done! That's all we need, what we are doing is creating a portal to our element 
 so, when React runs `MetaboxPortal` it will know that **it has to send its content through the portal**,
 and it will end up showing our component right where we need it, which is our metabox:
 
-[![Image of the component inside our metabox](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)
+![Image of the component inside our metabox](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)
 
 ## Conclusion
 
@@ -229,7 +229,7 @@ Once all these steps have been followed, we only need to add our controls as if 
 React project, and that's it, we already have a **metabox in React in Gutenberg**. With the advantage of being
 able to access the post data and modify it directly from our component through the components in `@wordpress/data`.
 
-[![Image of the plugin in the editor](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)
+![Image of the plugin in the editor](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)
 
 ## Resources
 
