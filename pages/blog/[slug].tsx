@@ -10,6 +10,7 @@ import { getMDXComponent } from 'mdx-bundler/client';
 import rehypeSlug from 'rehype-slug';
 import { NextSeo } from 'next-seo';
 import { usePathname } from 'next/navigation';
+import rehypeUnwrapImages from 'rehype-unwrap-images';
 
 /**
  * Next dependencies
@@ -27,6 +28,7 @@ import {
   H2,
   H3,
   H4,
+  Img,
   P,
   Pre,
   OL,
@@ -101,23 +103,7 @@ export default function PostPage({
             },
             h3: H3,
             h4: H4,
-            img: (props: any) => {
-              const { src, alt } = props;
-
-              return (
-                <span className='relative my-8 block h-96 w-full'>
-                  <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    sizes='100vw'
-                    style={{
-                      objectFit: 'contain',
-                    }}
-                  />
-                </span>
-              );
-            },
+            img: Img,
             ol: OL,
             p: P,
             ul: UL,
@@ -145,7 +131,7 @@ export default function PostPage({
 
               return <div {...props} className={classes} />;
             },
-            pre: Pre,
+            pre: (props: any) => <Pre {...props} />,
           }}
         />
       </div>
@@ -173,6 +159,7 @@ export async function getStaticProps({
         ...(options.rehypePlugins ?? []),
         rehypeGithubAlerts,
         rehypeSlug,
+        rehypeUnwrapImages,
       ];
 
       return options;

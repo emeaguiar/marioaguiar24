@@ -5,6 +5,7 @@ export * from '@/components/elements/h1';
 export * from '@/components/elements/h2';
 export * from '@/components/elements/h3';
 export * from '@/components/elements/h4';
+export * from '@/components/elements/img';
 export * from '@/components/elements/ol';
 export * from '@/components/elements/p';
 export * from '@/components/elements/pre';
