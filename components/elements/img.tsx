@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import clsx from 'clsx';
+
+/**
  * Next dependencies
  */
 import Image from 'next/image';
@@ -22,7 +27,10 @@ export const Img = ({ src, alt, title }: ImgProps): JSX.Element => {
                         objectFit: 'contain',
                     }}
                 />
-                <figcaption className='absolute italic text-sm/10 -bottom-12 left-1/2 -translate-x-1/2 w-max text-gray-600'>{title}</figcaption>
+                <figcaption className={clsx(
+                    'absolute italic text-sm/10 -bottom-12 left-1/2 -translate-x-1/2 w-max text-gray-600',
+                    'dark:text-gray-300'
+                )}>{title}</figcaption>
             </figure>
         );
     }
