@@ -6,9 +6,10 @@ description: >-
   sidebar on every single page of a blog, I think that is just a waste of space.
   But when used properly, you can turn your lame sidebar into a killer sidebar!
 published: true
-updatedOn: '2024-10-18T02:33:51.421Z'
+updatedOn: '2024-10-29T22:15:33.776Z'
 readingTime: 1620
 ---
+
 > [!WARNING]
 > This article was written in **2010** 👴🏼. Most of the tips here are not valid anymore and
 > I don't recommend using any of the snippets displayed here.
@@ -126,7 +127,7 @@ This goes into your **functions.php** file (noticed the importance of this file 
 
 ```php
 <?php
-    function twitle( $title ) { 
+    function twitle( $title ) {
         $newtitle = str_replace( " ", "+", $title );
         echo $newtitle;
     }
@@ -199,7 +200,6 @@ Don't forget to fill with your username and API key, after that paste this in yo
 <?php $bitlyurl = bitly(); ?>
 <a href="http://www.twitter.com/home?status=<?php twitle(the_title('','',false)); ?>+<?php echo $bitlyurl; ?>" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/twitter.png" alt="Tweet me!" /></a>
 ```
-
 
 > [!WARNING]
 > I have not tried this either, source: [DevMoose](http://devmoose.com/coding/automatically-create-a-bitly-url-for-wordpress-posts/)
@@ -431,7 +431,7 @@ where I took this from, it was on my `functions.php` file):
 <?php
 function recent_comments($comm = 5) {
 global $wpdb;
-$sql = "SELECT DISTINCT ID, post_title, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type,comment_author_url, SUBSTRING(comment_content,1,30) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID = $wpdb->posts.ID) WHERE comment_approved = '1' AND comment_type = '' AND post_password = '' ORDER BY comment_date_gmt DESC LIMIT $comm"; 
+$sql = "SELECT DISTINCT ID, post_title, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type,comment_author_url, SUBSTRING(comment_content,1,30) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID = $wpdb->posts.ID) WHERE comment_approved = '1' AND comment_type = '' AND post_password = '' ORDER BY comment_date_gmt DESC LIMIT $comm";
 $comments = $wpdb->get_results($sql);
 $output = $pre_HTML;
 $output .= "n<ul class="recentcomments">";

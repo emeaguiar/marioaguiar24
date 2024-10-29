@@ -103,7 +103,7 @@ export default function PostPage({
             },
             h3: H3,
             h4: H4,
-            img: Img,
+            img: (props: any) => <Img {...props} />,
             ol: OL,
             p: P,
             ul: UL,

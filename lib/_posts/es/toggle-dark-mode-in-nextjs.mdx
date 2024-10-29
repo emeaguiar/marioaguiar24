@@ -5,9 +5,10 @@ description: >-
   En éste rápido tutorial agregaremos un botón para activar modo oscuro a
   nuestros componentes con Tailwind.
 published: true
-updatedOn: '2024-10-18T04:06:55.857Z'
+updatedOn: '2024-10-29T22:15:33.783Z'
 readingTime: 480
 ---
+
 import AlignWide from '@/components/blog/align-wide';
 import {
   ComponentWithButton,
@@ -58,10 +59,10 @@ básico utilizando Tailwind. Por ejemplo, esta sencilla aplicación:
 
 ```jsx
 <main>
-    <div className="flex flex-col items-center px-4">
-        <h1 className="text-4xl font-bold mt-8">¡Hola, mundo!</h1>
-        <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
-    </div>
+  <div className='flex flex-col items-center px-4'>
+    <h1 className='mt-8 text-4xl font-bold'>¡Hola, mundo!</h1>
+    <p className='mt-4 text-lg'>¡Bienvenido a mi sitio web!</p>
+  </div>
 </main>
 ```
 
@@ -74,10 +75,10 @@ necesitamos en forma de clases `bg-` y `text-`:
 
 ```jsx
 <main>
-    <div className="flex flex-col items-center p-4 bg-yellow-100 text-slate-900">
-        <h1 className="text-4xl font-bold mt-8 text-red-700">¡Hola, mundo!</h1>
-        <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
-    </div>
+  <div className='flex flex-col items-center bg-yellow-100 p-4 text-slate-900'>
+    <h1 className='mt-8 text-4xl font-bold text-red-700'>¡Hola, mundo!</h1>
+    <p className='mt-4 text-lg'>¡Bienvenido a mi sitio web!</p>
+  </div>
 </main>
 ```
 
@@ -107,10 +108,12 @@ con el prefijo `dark:`.
 
 ```jsx
 <main>
-    <div className="flex flex-col items-center p-4 bg-yellow-100 dark:bg-orange-950 text-slate-900 dark:text-yellow-50">
-        <h1 className="text-4xl font-bold mt-8 text-red-700 dark:text-red-200">¡Hola, mundo!</h1>
-        <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
-    </div>
+  <div className='flex flex-col items-center bg-yellow-100 p-4 text-slate-900 dark:bg-orange-950 dark:text-yellow-50'>
+    <h1 className='mt-8 text-4xl font-bold text-red-700 dark:text-red-200'>
+      ¡Hola, mundo!
+    </h1>
+    <p className='mt-4 text-lg'>¡Bienvenido a mi sitio web!</p>
+  </div>
 </main>
 ```
 
@@ -121,17 +124,17 @@ Así, lo que normalmente haríamos así:
 
 ```css
 @media (prefers-color-scheme: dark) {
-    :root {
-        --color--foreground: #431407; /* bg-orange-950 */
-        --color--background: #fefce8; /* text-yellow-50 */
-    }
+  :root {
+    --color--foreground: #431407; /* bg-orange-950 */
+    --color--background: #fefce8; /* text-yellow-50 */
+  }
 }
 ```
 
 Ahora simplemente lo hacemos así:
 
 ```jsx
-<div className="dark:bg-orange-950 dark:text-yellow-50">¡Hola, mundo!</div>
+<div className='dark:bg-orange-950 dark:text-yellow-50'>¡Hola, mundo!</div>
 ```
 
 > [!NOTE]
@@ -157,8 +160,11 @@ Como seguimos utilizando Tailwind, podemos agregar un botón rápidamente con
 las clases `bg-`, `text-`, `rounded`, `p-`.
 
 ```jsx
-<button aria-label="Cambiar a modo oscuro" className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min">
-    <SunIcon className="w-6 h-6" />
+<button
+  aria-label='Cambiar a modo oscuro'
+  className='w-min rounded-full bg-yellow-800 p-2 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900'
+>
+  <SunIcon className='h-6 w-6' />
 </button>
 ```
 
@@ -192,17 +198,19 @@ extra y agregar el botón a nuestro componente.
 
 ```jsx
 <main>
-    <div className="flex flex-col items-center p-8 bg-yellow-100 text-slate-900">
-        <div className="flex justify-end w-full">
-            <button aria-label="Cambiar a modo oscuro" className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min">
-                <SunIcon className="w-6 h-6" />
-            </button>
-        </div>
-
-        <h1 className="text-4xl font-bold text-red-700">¡Hola, mundo!</h1>
-        <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
+  <div className='flex flex-col items-center bg-yellow-100 p-8 text-slate-900'>
+    <div className='flex w-full justify-end'>
+      <button
+        aria-label='Cambiar a modo oscuro'
+        className='w-min rounded-full bg-yellow-800 p-2 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900'
+      >
+        <SunIcon className='h-6 w-6' />
+      </button>
     </div>
 
+    <h1 className='text-4xl font-bold text-red-700'>¡Hola, mundo!</h1>
+    <p className='mt-4 text-lg'>¡Bienvenido a mi sitio web!</p>
+  </div>
 </main>
 ```
 
@@ -223,31 +231,32 @@ para manejar el estado de nuestro componente.
 import { useState } from 'react';
 
 export function Component() {
-    const [ isDarkModeActivated, setIsDarkModeActivated ] = useState( false );
+  const [isDarkModeActivated, setIsDarkModeActivated] = useState(false);
 
-    const toggleDarkMode = () => {
-        setIsDarkModeActivated( !isDarkModeActivated );
-    };
+  const toggleDarkMode = () => {
+    setIsDarkModeActivated(!isDarkModeActivated);
+  };
 
-    return (
-        <main>
-            <div className="flex flex-col items-center p-4 bg-yellow-100 dark:bg-orange-950 text-slate-900 dark:text-yellow-50">
-                <div className="flex justify-end w-full">
-                    <button
-                        aria-label="Cambiar a modo oscuro"
-                        className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min"
-                        onClick={ toggleDarkMode }
-                    >
-                        <SunIcon className="w-6 h-6" />
-                    </button>
-                </div>
+  return (
+    <main>
+      <div className='flex flex-col items-center bg-yellow-100 p-4 text-slate-900 dark:bg-orange-950 dark:text-yellow-50'>
+        <div className='flex w-full justify-end'>
+          <button
+            aria-label='Cambiar a modo oscuro'
+            className='w-min rounded-full bg-yellow-800 p-2 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900'
+            onClick={toggleDarkMode}
+          >
+            <SunIcon className='h-6 w-6' />
+          </button>
+        </div>
 
-                <h1 className="text-4xl font-bold mt-8 text-red-700 dark:text-red-200">¡Hola, mundo!</h1>
-                <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
-            </div>
-        </main>
-    );
-
+        <h1 className='mt-8 text-4xl font-bold text-red-700 dark:text-red-200'>
+          ¡Hola, mundo!
+        </h1>
+        <p className='mt-4 text-lg'>¡Bienvenido a mi sitio web!</p>
+      </div>
+    </main>
+  );
 }
 ```
 
@@ -260,10 +269,10 @@ una clase `dark` al `html`, sin embargo esta debe ser activada en el archivo
 de configuración de Tailwind: `tailwind.config.ts`.
 
 ```ts
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-darkMode: 'selector',
+  darkMode: 'selector',
 };
 
 export default config;
@@ -293,31 +302,32 @@ agregar la clase `dark` al contenedor principal si `isDarkModeActivated` es `tru
 import { useState } from 'react';
 
 export function Component() {
-    const [ isDarkModeActivated, setIsDarkModeActivated ] = useState( false );
+  const [isDarkModeActivated, setIsDarkModeActivated] = useState(false);
 
-    const toggleDarkMode = () => {
-        setIsDarkModeActivated( !isDarkModeActivated );
-    };
+  const toggleDarkMode = () => {
+    setIsDarkModeActivated(!isDarkModeActivated);
+  };
 
-    return (
-        <main className={ isDarkModeActivated ? 'dark' : '' }>
-            <div className="flex flex-col items-center p-4 bg-yellow-100 dark:bg-orange-950 text-slate-900 dark:text-yellow-50">
-                <div className="flex justify-end w-full">
-                    <button
-                        aria-label="Cambiar a modo oscuro"
-                        className="bg-yellow-800 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900 rounded-full p-2 w-min"
-                        onClick={ toggleDarkMode }
-                    >
-                        <SunIcon className="w-6 h-6" />
-                    </button>
-                </div>
+  return (
+    <main className={isDarkModeActivated ? 'dark' : ''}>
+      <div className='flex flex-col items-center bg-yellow-100 p-4 text-slate-900 dark:bg-orange-950 dark:text-yellow-50'>
+        <div className='flex w-full justify-end'>
+          <button
+            aria-label='Cambiar a modo oscuro'
+            className='w-min rounded-full bg-yellow-800 p-2 text-yellow-50 dark:bg-yellow-100 dark:text-slate-900'
+            onClick={toggleDarkMode}
+          >
+            <SunIcon className='h-6 w-6' />
+          </button>
+        </div>
 
-                <h1 className="text-4xl font-bold mt-8 text-red-700 dark:text-red-200">¡Hola, mundo!</h1>
-                <p className="text-lg mt-4">¡Bienvenido a mi sitio web!</p>
-            </div>
-        </main>
-    );
-
+        <h1 className='mt-8 text-4xl font-bold text-red-700 dark:text-red-200'>
+          ¡Hola, mundo!
+        </h1>
+        <p className='mt-4 text-lg'>¡Bienvenido a mi sitio web!</p>
+      </div>
+    </main>
+  );
 }
 ```
 

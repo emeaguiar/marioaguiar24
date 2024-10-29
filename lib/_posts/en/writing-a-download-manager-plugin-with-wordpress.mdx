@@ -1,7 +1,7 @@
 ---
 title: Writing a download manager plugin with WordPress
 publishedOn: '2014-08-13'
-updatedOn: '2024-10-18T02:33:51.426Z'
+updatedOn: '2024-10-29T22:15:33.779Z'
 description: >-
   I have always said that you can do almost anything using WordPress thanks to 
   all the built-in functions and APIs that we have at our disposal. However,
@@ -9,11 +9,11 @@ description: >-
 published: true
 readingTime: 1740
 ---
+
 > [!WARNING]
 > This article was written in 2014 👴🏼. Most of the tips here are not valid anymore and
-I don't recommend using any of the snippets displayed here.
-> 
-> 
+> I don't recommend using any of the snippets displayed here.
+>
 > I'm keeping this article here for historical reasons and to remind myself how much I've improved over the years.
 >
 > Only cosmetic changes were made to this article.
@@ -77,16 +77,16 @@ This space will display a list of files…
 $mah_download_manager = new Mah_Download_Manager;
 ```
 
-Here I'm defining a very basic structure, I **add the meta data of the plugin**, and 
-**an admin page** where I will display a list of all our files later on. Right now 
+Here I'm defining a very basic structure, I **add the meta data of the plugin**, and
+**an admin page** where I will display a list of all our files later on. Right now
 is empty, so let's setup another page to **add the files** and then we'll come back to this one.
 
 ```php
 add_submenu_page( 'mah-download-manager', __( 'Add new file', 'mah-download-manager' ), __( 'Add new file', 'mah-download-manager' ), 'upload_files', 'mah-download-manager/new', array( $this, 'display_add_new_page' ) );
 ```
 
-First, we create a new submenu page where we will put our **upload form**, this new 
-page will only be visible to people who can upload files, and will display whatever 
+First, we create a new submenu page where we will put our **upload form**, this new
+page will only be visible to people who can upload files, and will display whatever
 we put on the `display_add_new_page` function.
 
 ```php
@@ -102,10 +102,10 @@ function display_add_new_page() {
     }
 ```
 
-Simple form, we just added **one field to select our file**, a **submit button** and a 
-**nonce field** to make sure we are submitting the form from the right place, we also 
-check whether or not our form is being processed, in case it is, do not display 
-the form. Since we are leaving our `action` attribute empty, the form will be processed 
+Simple form, we just added **one field to select our file**, a **submit button** and a
+**nonce field** to make sure we are submitting the form from the right place, we also
+check whether or not our form is being processed, in case it is, do not display
+the form. Since we are leaving our `action` attribute empty, the form will be processed
 in the same function, unless we perform this check.
 
 ```php
@@ -137,19 +137,19 @@ function form_is_submitted() {
     }
 ```
 
-Now, if the form is empty, **we don't need to continue in this function**, so return 
-`false`. `check_admin_referer` checks if the nonce field we added to the form is valid 
+Now, if the form is empty, **we don't need to continue in this function**, so return
+`false`. `check_admin_referer` checks if the nonce field we added to the form is valid
 and if it is, **we are ready to perform our magic with the Filesystem API**.
 
-First we make sure we have submitted the form by **checking the value of the upload 
+First we make sure we have submitted the form by **checking the value of the upload
 button**, then we prepare a new nonce to go along our upload screen.
 
-`request_filesystem_credentials` checks if we have the credentials to upload files 
-depending on the method we use to perform the upload, in this case I left `$mdm_method` 
-blank, WordPress by default will use **FTP access**. If we don't have the credentials 
+`request_filesystem_credentials` checks if we have the credentials to upload files
+depending on the method we use to perform the upload, in this case I left `$mdm_method`
+blank, WordPress by default will use **FTP access**. If we don't have the credentials
 WordPress will display another screen asking for them.
 
-Once WordPress has confirmed **we can write in the server** we can save the file 
+Once WordPress has confirmed **we can write in the server** we can save the file
 temporary data in a variable and then go to our upload function.
 
 ```php
@@ -174,15 +174,15 @@ function upload_file( $file ) {
 }
 ```
 
-First I make sure our `$file` variable is not empty, if it is, something went wrong 
+First I make sure our `$file` variable is not empty, if it is, something went wrong
 in the process and i use `WP_Error` to let the user know about the issue.
 
-If there's no error I prepare the path where the file is going to be saved using 
+If there's no error I prepare the path where the file is going to be saved using
 `$this->uploadsDirectory[ 'path' ]` and our file's name and extension in `$file[ 'name' ]`.
 
-Then we move our file to it's new **permanent location on the server**, and wait 
-for the response, if the response of our next function is successful, we'll redirect 
-the user back to the main screen and display him a success message, if not, we'll 
+Then we move our file to it's new **permanent location on the server**, and wait
+for the response, if the response of our next function is successful, we'll redirect
+the user back to the main screen and display him a success message, if not, we'll
 display another error.
 
 ```php
@@ -196,7 +196,7 @@ function move_file( $from, $to ) {
 }
 ```
 
-This function is really simple, we just call the Filesystem API and **try to move 
+This function is really simple, we just call the Filesystem API and **try to move
 the file**, if it works then return `true`, if it doesn't work return an error.
 
 Remember how earlier I redirected the user along with a success message? When I  

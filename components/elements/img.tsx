@@ -15,28 +15,32 @@ interface ImgProps {
 }
 
 export const Img = ({ src, alt, title }: ImgProps): JSX.Element => {
-    if (title) {
-        return (
-            <figure className='relative mt-8 mb-16 block w-full aspect-video'>
-                <Image
-                    src={src}
-                    alt={alt || ''}
-                    fill
-                    sizes='100vw'
-                    style={{
-                        objectFit: 'contain',
-                    }}
-                />
-                <figcaption className={clsx(
-                    'absolute italic text-sm/10 -bottom-12 left-1/2 -translate-x-1/2 w-max text-gray-600',
-                    'dark:text-gray-300'
-                )}>{title}</figcaption>
-            </figure>
-        );
-    }
+  if (title) {
+    return (
+      <figure className='relative mb-16 mt-8 block aspect-video w-full'>
+        <Image
+          src={src}
+          alt={alt || ''}
+          fill
+          sizes='100vw'
+          style={{
+            objectFit: 'contain',
+          }}
+        />
+        <figcaption
+          className={clsx(
+            'absolute -bottom-12 left-1/2 w-max -translate-x-1/2 text-sm/10 italic text-gray-600',
+            'dark:text-gray-300'
+          )}
+        >
+          {title}
+        </figcaption>
+      </figure>
+    );
+  }
 
   return (
-    <div className='relative my-8 w-full aspect-video'>
+    <div className='relative my-8 aspect-video w-full'>
       <Image
         src={src}
         alt={alt || ''}

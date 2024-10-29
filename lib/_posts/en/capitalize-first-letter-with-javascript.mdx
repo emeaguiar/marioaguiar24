@@ -1,7 +1,7 @@
 ---
 title: Capitalize first letter with Javascript
 publishedOn: '2023-08-11'
-updatedOn: '2024-10-18T02:33:51.415Z'
+updatedOn: '2024-10-29T22:15:33.773Z'
 description: >-
   In this quick tutorial we will learn how to make the first letter of a string
   uppercase
@@ -23,11 +23,11 @@ do all this in css we only need:
 
 ```scss
 .test {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 ```
 
-> [!WARNING] 
+> [!WARNING]
 > `text-transform: capitalize` will be applied to all words within the element
 
 ## In Javascript
@@ -48,8 +48,8 @@ of our string, we use `charAt( 0 )`.
 
 ```js
 const str = 'foo';
-const firstLetter = str.charAt( 0 );
-console.log( firstLetter ); // f
+const firstLetter = str.charAt(0);
+console.log(firstLetter); // f
 ```
 
 ### `toUpperCase`
@@ -61,7 +61,7 @@ affects it:
 ```js
 const str = 'foo';
 const uppercaseStr = str.toUpperCase();
-console.log( uppercaseStr ); // FOO
+console.log(uppercaseStr); // FOO
 ```
 
 ### `slice`
@@ -73,18 +73,19 @@ the string, reaching the end.
 
 ```js
 const str = 'foo';
-const latterStr = str.slice( 1 );
-console.log( latterStr ); // oo
+const latterStr = str.slice(1);
+console.log(latterStr); // oo
 ```
+
 Now we have all the necessary parts, we just have to put them together:
 
 ```js
 const str = 'foo';
-const firstLetter = str.charAt( 0 );
+const firstLetter = str.charAt(0);
 const upperCaseStr = firstLetter.toUpperCase();
-const latterStr = str.slice( 1 );
+const latterStr = str.slice(1);
 const result = upperCaseStr + latterStr;
-console.log( result ); // Foo
+console.log(result); // Foo
 // Short version
-console.log( str.charAt( 0 ).toUpperCase() + str.slice( 1 ) ); // Foo
+console.log(str.charAt(0).toUpperCase() + str.slice(1)); // Foo
 ```

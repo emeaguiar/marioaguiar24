@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 2
 publishedOn: '2024-01-22'
-updatedOn: '2024-10-18T02:33:51.416Z'
+updatedOn: '2024-10-29T22:15:33.773Z'
 description: >-
   Part two of a series of tutorials where we will learn how to create a settings
   page in WordPress using React and the WordPress API. I will show you how to
@@ -10,6 +10,7 @@ description: >-
 published: true
 readingTime: 900
 ---
+
 In the [first part of this tutorial](/blog/create-a-settings-page-in-wordpress-with-react),
 I showed the basic principles to **create a settings page in WordPress**, in
 this second part, I will show you how to use the components included in WordPress
@@ -52,10 +53,10 @@ import { createRoot } from '@wordpress/element';
  */
 import Settings from './components/settings';
 
-const rootElement = document.querySelector( '#mah-settings' );
+const rootElement = document.querySelector('#mah-settings');
 
-if ( rootElement ) {
-    createRoot( rootElement ).render( <Settings /> );
+if (rootElement) {
+  createRoot(rootElement).render(<Settings />);
 }
 ```
 
@@ -68,10 +69,8 @@ if ( rootElement ) {
 import { __ } from '@wordpress/i18n';
 
 const Settings = () => {
-    return (
-        <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
-    );
-}
+  return <h1>{__('Select the desired options', 'mah-settings')}</h1>;
+};
 
 export default Settings;
 ```
@@ -85,8 +84,7 @@ Among the things we can observe in this piece of code are:
 2. Likewise, it comes with a javascript version of the `__` function for translations,
    unlike PHP **there is no version of** `esc_html__` so we use the normal version.
 
-> [!CAUTION]
-> **Using React**
+> [!CAUTION] > **Using React**
 >
 > As you can see from this small piece of code (and the title of the post...).
 > This tutorial assumes that you have at least a basic knowledge of ReactJS, if
@@ -100,33 +98,29 @@ Now that we have our application running we can start to **add options to our pa
 /**
  * WordPress dependencies
  */
-import {
-    Card,
-    CardBody,
-    TextControl,
-} from '@wordpress/components';
+import { Card, CardBody, TextControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const Settings = () => {
-    const [ apiKey, setApiKey ] = useState( '' );
+  const [apiKey, setApiKey] = useState('');
 
-    return (
-        <>
-            <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
-            <Card>
-                <CardBody>
-                    <TextControl
-                        help={ __( 'Enter your API key', 'mah-settings' ) }
-                        label={ __( 'API Key', 'mah-settings' ) }
-                        onChange={ setApiKey }
-                        value={ apiKey }
-                    />
-                </CardBody>
-            </Card>
-        </>
-    );
-}
+  return (
+    <>
+      <h1>{__('Select the desired options', 'mah-settings')}</h1>
+      <Card>
+        <CardBody>
+          <TextControl
+            help={__('Enter your API key', 'mah-settings')}
+            label={__('API Key', 'mah-settings')}
+            onChange={setApiKey}
+            value={apiKey}
+          />
+        </CardBody>
+      </Card>
+    </>
+  );
+};
 
 export default Settings;
 ```
@@ -143,7 +137,7 @@ although we can add some flavor, but we will do that later, now that we have our
 
 ![Options page with text field](/posts/create-a-settings-page-in-wordpress-with-react-part-2/settings-field.webp)
 
-> [!TIP] 
+> [!TIP]
 > `@wordpress/components` comes with many components available, I suggest
 > checking the [Storybook](https://wordpress.github.io/gutenberg/?path=/docs/docs-introduction--page)
 > to see a demonstration of what we have at our disposal
@@ -210,8 +204,8 @@ the same does not happen with our **style dependencies**. So it may be necessary
 ```php
 /**
  * Registra los scripts y estilos.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function enqueue_scripts(): void {
     $screen = get_current_screen();
@@ -257,8 +251,8 @@ In php, we can register them like this:
 ```php
 /**
  * Registra los hooks.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function init(): void {
     add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
@@ -273,8 +267,8 @@ public function init(): void {
 ```php
 /**
  * Registra las opciones.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function register_settings(): void {
     register_setting(
@@ -312,56 +306,52 @@ Now we just need to **save our options** from the React side, for which we need 
  * WordPress dependencies
  */
 import {
-    Button,
-    Card,
-    CardBody,
-    CardDivider,
-    CardFooter,
-    TextControl,
-    ToggleControl,
+  Button,
+  Card,
+  CardBody,
+  CardDivider,
+  CardFooter,
+  TextControl,
+  ToggleControl,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const Settings = () => {
-    const [ apiKey, setApiKey ] = useState( '' );
-    const [ toggled, setToggled ] = useState( false );
-    const saveSettings = () => {
-        console.log( 'Save' );
-    };
-    return (
-        <>
-            <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
-            <Card>
-                <CardBody>
-                    <TextControl
-                        help={ __( 'Enter your API key', 'mah-settings' ) }
-                        label={ __( 'API Key', 'mah-settings' ) }
-                        onChange={ setApiKey }
-                        value={ apiKey }
-                    />
-                </CardBody>
-                <CardDivider />
-                <CardBody>
-                    <ToggleControl
-                        label={ __( 'Activate functionality', 'mah-settings' ) }
-                        onChange={ setToggled }
-                        checked={ toggled }
-                    />
-                </CardBody>
-                <CardFooter>
-                    <Button
-                        disabled={ ! apiKey }
-                        onClick={ saveSettings }
-                        variant="primary"
-                    >
-                        { __( 'Save', 'mah-settings' ) }
-                    </Button>
-                </CardFooter>
-            </Card>
-        </>
-    );
-}
+  const [apiKey, setApiKey] = useState('');
+  const [toggled, setToggled] = useState(false);
+  const saveSettings = () => {
+    console.log('Save');
+  };
+  return (
+    <>
+      <h1>{__('Select the desired options', 'mah-settings')}</h1>
+      <Card>
+        <CardBody>
+          <TextControl
+            help={__('Enter your API key', 'mah-settings')}
+            label={__('API Key', 'mah-settings')}
+            onChange={setApiKey}
+            value={apiKey}
+          />
+        </CardBody>
+        <CardDivider />
+        <CardBody>
+          <ToggleControl
+            label={__('Activate functionality', 'mah-settings')}
+            onChange={setToggled}
+            checked={toggled}
+          />
+        </CardBody>
+        <CardFooter>
+          <Button disabled={!apiKey} onClick={saveSettings} variant='primary'>
+            {__('Save', 'mah-settings')}
+          </Button>
+        </CardFooter>
+      </Card>
+    </>
+  );
+};
 export default Settings;
 ```
 

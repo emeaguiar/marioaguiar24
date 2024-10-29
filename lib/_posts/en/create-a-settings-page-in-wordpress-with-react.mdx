@@ -1,7 +1,7 @@
 ---
 title: Create a options page in WordPress with React – Part 1
 publishedOn: '2024-01-15'
-updatedOn: '2024-10-18T02:33:51.417Z'
+updatedOn: '2024-10-29T22:15:33.774Z'
 description: >-
   Part one of a series of tutorials where we will learn how to create an options
   page in WordPress using React and the WordPress API
@@ -68,7 +68,7 @@ For the purposes of this tutorial, I will use option two, but with an important
 difference. I will not use the mentioned _Settings API_, but instead I will use
 **React**, with the help of the existing components in Gutenberg.
 
-> [!NOTE] 
+> [!NOTE]
 > **Why React?**
 >
 > Throughout my career, I have created countless options pages, each one different
@@ -86,7 +86,7 @@ environment you want, and I still say it, I will only ask that **it is capable o
 using node** and that you install the package `@wordpress/scripts` (as in my tutorial
 [Compiling CSS and Javascript with wp-scripts](/compiling-css-and-javascript-with-wp-scripts)).
 
-> [!NOTE] 
+> [!NOTE]
 > **Using wp-env**
 >
 > If you are not very familiar with local environments, I invite you to watch my
@@ -141,8 +141,8 @@ namespace Mah_Settings;
 class Settings {
     /**
      * Registers the hooks.
-     * 
-     * @return void 
+     *
+     * @return void
      */
     public function init(): void {
         var_dump( 'My page' );
@@ -153,7 +153,7 @@ class Settings {
 Once these files are created, we can enter our site and see `My page` at the top, this
 means that our plugin is working.
 
-> [!NOTE] 
+> [!NOTE]
 > **Why a class?**
 >
 > While all this code could go only in the file where we register our plugin, it is
@@ -173,7 +173,7 @@ private $plugin_path = '';
 
 /**
  * Menu slug.
- * 
+ *
  * @var string
  */
 private $menu_slug = '';
@@ -184,8 +184,8 @@ public function __construct( string $plugin_file ) {
 
 /**
  * Registers the hooks.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function init(): void {
     add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
@@ -193,8 +193,8 @@ public function init(): void {
 
 /**
  * Registers the options page.
- * 
- * @return void 
+ *
+ * @return void
  */
  public function add_menu_page(): void {
     $this->menu_slug = add_menu_page(
@@ -207,11 +207,11 @@ public function init(): void {
         99
     );
  }
- 
+
 /**
  * Renders the options page.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function render_settings_page(): void {
     ?>
@@ -241,14 +241,14 @@ After this we can update the configuration to compile our new files, either with
 `webpack.config.js`
 
 ```js
-const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
 module.exports = {
-    ...defaultConfig,
-    entry: {
-        ...defaultConfig.entry(),
-        settings: './js/src/settings.js',
-    },
+  ...defaultConfig,
+  entry: {
+    ...defaultConfig.entry(),
+    settings: './js/src/settings.js',
+  },
 };
 ```
 
@@ -267,7 +267,7 @@ module.exports = {
 `js/src/settings.js`
 
 ```js
-console.log( 'Hello settings' );
+console.log('Hello settings');
 ```
 
 Basically we are **extending the default configuration provided by WordPress** to add a new file: `settings.js`, after this we can run `npm run dev` so that our file is watched and each new change is compiled.
@@ -286,18 +286,18 @@ public static function init(): void {
 ```php
 /**
  * Registers the scripts and styles.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function enqueue_scripts(): void {
     $screen = get_current_screen();
-    
+
     if ( $screen->id !== $this->menu_slug ) {
         return;
     }
-    
+
     $asset = include $this->plugin_path . '/build/settings.asset.php';
-    
+
     wp_enqueue_script(
         'mah-settings',
         plugins_url() . '/mah-settings-react/build/settings.js',

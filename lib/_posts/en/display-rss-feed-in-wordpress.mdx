@@ -1,7 +1,7 @@
 ---
 title: Display RSS Feed in WordPress
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-10-18T02:33:51.419Z'
+updatedOn: '2024-10-29T22:15:33.775Z'
 description: >-
   Displaying an RSS feed in WordPress is pretty simple, you can use the built-in
   RSS widget or you can use a plugin. But what if you want to display an RSS
@@ -10,6 +10,7 @@ description: >-
 published: true
 readingTime: 240
 ---
+
 > [!WARNING]
 > This article was written in **2011** 👴🏼. Most of the tips here are not valid anymore and
 > I don't recommend using any of the snippets displayed here.
@@ -61,12 +62,12 @@ Now the good stuff, the implementation:
 function fetchFeed2($strFeedURL) { // Feed function
     if( !class_exists( 'WP_Http' ) ) // WP_Http Class
         include_once( ABSPATH . WPINC. '/class-http.php' ); // Include class
- 
+
     $request = new WP_Http;
     $result = $request->request( $strFeedURL ); // test conection
- 
+
     if ( ! is_wp_error($result) ) { // No error
-        if ( ( $result['response']['code'] = 200 ) && ( $result['response']['message'] = "OK" ) ) { 
+        if ( ( $result['response']['code'] = 200 ) && ( $result['response']['message'] = "OK" ) ) {
             return $result['body']; // get data
         } else {
             return  $result = "";
@@ -76,7 +77,7 @@ function fetchFeed2($strFeedURL) { // Feed function
         $error_string = $result->get_error_message(); // which error was it?
         echo '
 ' . $error_string . '; // display error
-    } 
+    }
 }
 ```
 
@@ -122,9 +123,9 @@ integrated to WordPress, now we just have to call the function `fetch_feed()`.
 $rss = fetch_feed('http://feed.url');
 if (!is_wp_error( $rss ) ) : // Was the object created?
     // How many items we got? (Max 5)
-    $maxitems = $rss->get_item_quantity(5); 
+    $maxitems = $rss->get_item_quantity(5);
     // Create an array with items starting with #0
-    $rss_items = $rss->get_items(0, $maxitems); 
+    $rss_items = $rss->get_items(0, $maxitems);
     endif;
 ?>
 ```

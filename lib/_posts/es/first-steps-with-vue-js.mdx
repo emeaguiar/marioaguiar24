@@ -1,11 +1,12 @@
 ---
 title: Primeros pasos con Vue.js
 publishedOn: '2018-11-20'
-updatedOn: '2024-10-18T04:06:55.855Z'
+updatedOn: '2024-10-29T22:15:33.781Z'
 description: Un rápido ejercicio para comenzar a trabajar con Vue.js
 published: true
 readingTime: 420
 ---
+
 Hace algunos meses comencé a estudiar React.js, al ver que muy probablemente sería
 el próximo rey de los Frameworks y sería adoptado por WordPress.
 
@@ -67,7 +68,7 @@ línea antes de nuestro `</body>`.
 
 <body>
 	<div id="app"></div>
-	
+
 	<!-- versión de desarrollo, incluye mensajes en la consola -->
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="hola-mundo.vue.js"></script>
@@ -84,9 +85,9 @@ Cómo pueden ver es una estructura bastante simple, tenemos nuestro `head`, nues
 Lo que sigue ahora, es inicializar nuestra aplicación con Vue, en nuestro `hola-mundo.vue.js`
 
 ```js
-const app = new Vue( {
-	el: '#app'
-} );
+const app = new Vue({
+  el: '#app',
+});
 ```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/80dd3310e5fe7df684d162563dfb9a6a)
@@ -123,7 +124,7 @@ Primero modifiquemos nuestro HTML para que se vea así:
 	<div id="app">
 		{{ mensaje }}
 	</div>
-	
+
 	<!-- versión de desarrollo, incluye mensajes en la consola -->
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="hola-mundo.vue.js"></script>
@@ -140,12 +141,12 @@ será sustituido por nuestro… mensaje.
 Ahora simplemente le decimos a Vue cuál es ese mensaje que queremos que sustituya:
 
 ```js
-const app = new Vue( {
-	el: '#app',
-	data: {
-		mensaje: '¡Hola Mundo!'
-	}
-} );
+const app = new Vue({
+  el: '#app',
+  data: {
+    mensaje: '¡Hola Mundo!',
+  },
+});
 ```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/3fa91a278976eda148a448d494ad680b)

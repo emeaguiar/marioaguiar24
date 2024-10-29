@@ -1,7 +1,7 @@
 ---
 title: Creando un formulario de contacto con PHP y AngularJS
 publishedOn: '2014-08-07'
-updatedOn: '2024-10-18T04:06:55.853Z'
+updatedOn: '2024-10-29T22:15:33.781Z'
 description: >-
   AngularJS parece ser la sensación en estos días, por eso decidí intentar y
   aprender lo básico de él. De hecho, este mismo sitio web está construido
@@ -12,6 +12,7 @@ description: >-
 published: true
 readingTime: 660
 ---
+
 > [!WARNING]
 > Este artículo fue escrito en **2014** 👴🏼. La mayoría de los consejos aquí no son válidos y
 > no recomiendo usar ninguno de los fragmentos mostrados aquí.
@@ -39,15 +40,15 @@ un botón de envío, así que empecemos.
         <title>Formulario de contacto usando AngularJS :: demo de Mario Aguiar</title>
     </head>
     <body>
-       
-                            Contactto                                    
-                        Nombre:                                            
-                   
-                        Email:                                            
-                   
-                        Mensaje:                                            
-                   
-                        Prometo que no soy un bot                                            
+
+                            Contactto
+                        Nombre:
+
+                        Email:
+
+                        Mensaje:
+
+                        Prometo que no soy un bot
                 </fieldset>                 <button type=”submit” name=”submit” value=”submit”>Enviar</button>             </form>         </div>     </body> </html>
 ```
 
@@ -61,45 +62,45 @@ lo ocultaremos usando css.
 Antes de comenzar con AngularJS, veamos cómo haríamos esto usando jQuery, como en los buenos viejos tiempos:
 
 ```js
-(function($) {
+(function ($) {
   var contactForm = {
-    $form: $( 'form' ),
-    init: function() {
-      this.$form.on( 'submit', this.validateForm );
+    $form: $('form'),
+    init: function () {
+      this.$form.on('submit', this.validateForm);
     },
-    validateField: function( $field ) {
-      if ( $field.val() === '' ) {
+    validateField: function ($field) {
+      if ($field.val() === '') {
         return false;
       }
-      if ( $field.attr( 'type' ) === 'email' ) {
+      if ($field.attr('type') === 'email') {
         var emailRegex = /^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
-        if ( ! emailRegex.test( $field.val() ) ) {
+        if (!emailRegex.test($field.val())) {
           return false;
         }
       }
       return true;
     },
-    validateForm: function(e) {
+    validateForm: function (e) {
       e.preventDefault();
       var $form = $(this);
-      var fields = $form.find( 'input, textarea' ),
-          hasError = false;
-      fields.each(function() {
+      var fields = $form.find('input, textarea'),
+        hasError = false;
+      fields.each(function () {
         var $field = $(this);
-        if ( $field.attr('required') ) {
-          if ( ! contactForm.validateField( $field ) ) {
+        if ($field.attr('required')) {
+          if (!contactForm.validateField($field)) {
             console.log('error');
             hasError = true;
           }
         }
       });
-      if ( ! hasError ) {
-        contactForm.processForm( $form );
+      if (!hasError) {
+        contactForm.processForm($form);
       } else {
         contactForm.errorFn();
       }
     },
-    processForm: function( $form ) {
+    processForm: function ($form) {
       var formData = $form.serialize();
       $.ajax({
         url: 'processForm.php',
@@ -107,20 +108,20 @@ Antes de comenzar con AngularJS, veamos cómo haríamos esto usando jQuery, como
         dataType: 'json',
         data: formData + '&submit=' + $form.find('button').val(),
       })
-      .done( contactForm.successFn )
-      .fail( contactForm.errorFn );
+        .done(contactForm.successFn)
+        .fail(contactForm.errorFn);
     },
-    successFn: function(data) {
-      if ( data.success === true ) {
+    successFn: function (data) {
+      if (data.success === true) {
         contactForm.$form.prepend('<p>¡Gracias por ponerte en contacto!</p>');
       } else {
         contactForm.errorFn();
       }
     },
-    errorFn: function() {
+    errorFn: function () {
       contactForm.$form.prepend('<p>¡Algo falló!, intenta de nuevo.</p>');
-    }
-  }
+    },
+  };
   contactForm.init();
 })(jQuery);
 ```
@@ -147,8 +148,8 @@ a esto:
         <title>Formulario de contacto usando AngularJS :: demo de Mario Aguiar</title>
     </head>
     <body>
-       
-                           
+
+
 ¡Gracias por ponerte en contacto!
 
 ¡Algo falló!, intenta de nuevo.
@@ -176,27 +177,30 @@ desglosemos un poco:
 Ahora veamos nuestro archivo js:
 
 ```js
-(function(angular) {
-  var app = angular.module("contact", []);
-  app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
-    $scope.success = false;
-    $scope.error = false;
-    $scope.sendMessage = function( input ) {
-      $http({
+(function (angular) {
+  var app = angular.module('contact', []);
+  app.controller('contactForm', [
+    '$scope',
+    '$http',
+    function ($scope, $http) {
+      $scope.success = false;
+      $scope.error = false;
+      $scope.sendMessage = function (input) {
+        $http({
           method: 'POST',
           url: '/processForm.php',
           data: input,
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      })
-      .success( function(data) {
-        if ( data.success ) {
-          $scope.success = true;
-        } else {
-          $scope.error = true;
-        }
-      } );
-    }
-  }]);
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        }).success(function (data) {
+          if (data.success) {
+            $scope.success = true;
+          } else {
+            $scope.error = true;
+          }
+        });
+      };
+    },
+  ]);
 })(angular);
 ```
 
@@ -246,28 +250,31 @@ esto por supuesto significa que **necesitamos incluir jQuery junto con AngularJS
 Gracias al método `$.param`.
 
 ```js
-(function(angular) {
-  var app = angular.module("contact", []);
-  app.controller("contactForm", ['$scope', '$http', function($scope, $http) {
-    $scope.success = false;
-    $scope.error = false;
-    $scope.sendMessage = function( input ) {
-      input.submit = true;
-      $http({
+(function (angular) {
+  var app = angular.module('contact', []);
+  app.controller('contactForm', [
+    '$scope',
+    '$http',
+    function ($scope, $http) {
+      $scope.success = false;
+      $scope.error = false;
+      $scope.sendMessage = function (input) {
+        input.submit = true;
+        $http({
           method: 'POST',
           url: 'processForm.php',
           data: angular.element.param(input),
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      })
-      .success( function(data) {
-        if ( data.success ) {
-          $scope.success = true;
-        } else {
-          $scope.error = true;
-        }
-      } );
-    }
-  }]);
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        }).success(function (data) {
+          if (data.success) {
+            $scope.success = true;
+          } else {
+            $scope.error = true;
+          }
+        });
+      };
+    },
+  ]);
 })(angular);
 ```
 

@@ -1,7 +1,7 @@
 ---
 title: 'Transient de WordPress: ¿Qué son y cómo se comen?'
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-10-18T04:06:55.858Z'
+updatedOn: '2024-10-29T22:15:33.784Z'
 description: >-
   A pesar de ser mi herramienta de trabajo diario favorita y la que más conozco,
   WordPress todavía tiene varias opciones y funciones que nunca he usado. Hace
@@ -10,6 +10,7 @@ description: >-
 published: true
 readingTime: 480
 ---
+
 > [!WARNING]
 > Este artículo fue escrito en **2011** 👴🏼. La mayoría de los consejos aquí pueden no ser válidos.
 >
@@ -81,7 +82,7 @@ Una vez que tenemos los datos, por supuesto debemos procesarlos, para hacer eso 
 un archivo php que he llamado `process.php`, este funcionará más o menos así.
 
 ```php
-<?php 
+<?php
     if ( isset( $_POST['submit'] ) ) { // Asegúrate de que el formulario fue enviado
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -106,7 +107,7 @@ base de datos para el valor clave (nuestro correo), si no existe, creará nuevos
 transientes con nombres como **name_me@me.com** usando los datos, estos expirarán en
 24 horas. Después de eso enviará un correo con el comentario.
 
-> [!NOTE] 
+> [!NOTE]
 > `$time` debe ser un valor de tiempo en segundos, como no tengo idea de cuántos segundos
 > hay en un día** es más fácil dejar que PHP haga el cálculo, esto es **60 segundos
 > × 60 minutos × 24 horas**, aún más fácil: **60″ × 60′ = 1 hora × 24 = 24 horas\*\*.

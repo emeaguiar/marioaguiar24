@@ -1,11 +1,12 @@
 ---
 title: Custom array order in PHP
 publishedOn: '2023-09-21'
-updatedOn: '2024-10-18T02:33:51.418Z'
+updatedOn: '2024-10-29T22:15:33.775Z'
 description: 'Next, I will mention how to achieve a custom order of arrays in PHP'
 published: true
 readingTime: 360
 ---
+
 Recently I found myself in the need to **create a list of elements in a very specific order**
 while working with an array in PHP, fortunately it turns out that the way to achieve
 it is very simple, thanks to PHP offering us the `usort` function.
@@ -95,7 +96,7 @@ For example, when our algorithm compares `DO` vs `MI`, it is comparing `[0]` vs 
 which are the indices of those elements in the array:
 
 ```php
-if ( false === $a_order ) {    
+if ( false === $a_order ) {
     $a_order = 999;
 }
 

@@ -1,11 +1,12 @@
 ---
 title: First steps with Vue.js
 publishedOn: '2018-11-20'
-updatedOn: '2024-10-18T02:33:51.420Z'
+updatedOn: '2024-10-29T22:15:33.776Z'
 description: A quick exercise to start working with Vue.js
 published: true
 readingTime: 420
 ---
+
 A few months ago I started studying React.js, seeing that it would probably be the
 next king of Frameworks and would be adopted by WordPress.
 
@@ -67,7 +68,7 @@ line before our `</body>`.
 
 <body>
 	<div id="app"></div>
-	
+
 	<!-- develop version, include messages in the console -->
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="hello-world.vue.js"></script>
@@ -84,9 +85,9 @@ As you can see, it is a quite simple structure, we have our `head`, our
 What follows now, is to initialize our application with Vue, in our `hello-world.vue.js`
 
 ```js
-const app = new Vue( {
-	el: '#app'
-} );
+const app = new Vue({
+  el: '#app',
+});
 ```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/80dd3310e5fe7df684d162563dfb9a6a)
@@ -123,7 +124,7 @@ First let's modify our HTML to look like this:
 	<div id="app">
 		{{ message }}
 	</div>
-	
+
 	<!-- development version, include messages in the console -->
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="hello-world.vue.js"></script>
@@ -140,12 +141,12 @@ will be replaced by our... message.
 Now we simply tell Vue what that message is that we want to replace:
 
 ```jsx
-const app = new Vue( {
-	el: '#app',
-	data: {
-		mensaje: 'Hello World!'
-	}
-} );
+const app = new Vue({
+  el: '#app',
+  data: {
+    mensaje: 'Hello World!',
+  },
+});
 ```
 
 [View Gist on GitHub](https://gist.github.com/emeaguiar/3fa91a278976eda148a448d494ad680b)
