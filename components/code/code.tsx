@@ -10,9 +10,11 @@ import clsx from 'clsx';
 export default function Code({
   children,
   language,
+  allowExpand = true,
 }: {
   children: string;
   language: string;
+  allowExpand?: boolean;
 }) {
   useEffect(() => {
     const loadLanguages = async () => {
@@ -38,7 +40,10 @@ export default function Code({
           className={clsx(
             className,
             'text-sm/1.5 w-full overflow-x-auto rounded-md p-2',
-            'lg:-mx-8 lg:max-w-screen-md lg:rounded-lg lg:p-4 lg:text-base'
+            'lg:rounded-lg lg:p-4 lg:text-base',
+            {
+              'lg:-mx-8 lg:max-w-screen-md': allowExpand,
+            }
           )}
         >
           {tokens.map((line, i) => (

@@ -7,6 +7,7 @@ export * from '@/components/elements/h3';
 export * from '@/components/elements/h4';
 export * from '@/components/elements/ol';
 export * from '@/components/elements/p';
+export * from '@/components/elements/pre';
 export * from '@/components/elements/table';
 export * from '@/components/elements/ul';
 export * from '@/components/elements/with-underline';

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import clsx from 'clsx';
-import { Fragment, createElement } from 'react';
+import { Fragment } from 'react';
 
 /**
  * Internal dependencies
@@ -10,13 +10,23 @@ import { Fragment, createElement } from 'react';
 import { P } from '@/components/elements/p';
 import { merriweather } from '@/components/fonts';
 
-export function Blockquote({ children }: { children?: React.ReactNode }) {
+export function Blockquote({
+  children,
+  allowExpand = true,
+}: {
+  children?: React.ReactNode;
+  allowExpand?: boolean;
+}) {
   return (
     <blockquote
       className={clsx(
         merriweather.className,
-        'my-4 w-full max-w-screen-sm border-primary p-2 text-2xl/12 italic text-gray-600',
-        'lg:-mx-8 lg:max-w-screen-md'
+        'my-4 w-full max-w-screen-sm border-primary p-2 text-2xl/12 italic',
+        {
+          'text-gray-600': allowExpand,
+          'lg:-mx-8 lg:max-w-screen-md': allowExpand,
+          'opacity-75': !allowExpand,
+        }
       )}
     >
       {/**
@@ -32,7 +42,7 @@ export function Blockquote({ children }: { children?: React.ReactNode }) {
            * the markdown is parsed.
            */
           if ('object' === typeof child && P === child.type) {
-            return createElement('p', {}, child.props.children);
+            return <p key={index}>{child.props.children}</p>;
           }
 
           return <Fragment key={index}>{child}</Fragment>;

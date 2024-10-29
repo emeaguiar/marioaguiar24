@@ -28,6 +28,7 @@ import {
   H3,
   H4,
   P,
+  Pre,
   OL,
   UL,
   Table,
@@ -40,7 +41,6 @@ import { notoSans } from '@/components/fonts';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
-import Code from '@/components/code/code';
 import { SITE_URL } from '@/lib/data';
 
 export default function PostPage({
@@ -78,7 +78,8 @@ export default function PostPage({
         />
       </div>
 
-      <div className={clsx(
+      <div
+        className={clsx(
           notoSans.className,
           'flex flex-col items-center gap-6 px-4 text-xl/10',
           'lg:w-[736px]'
@@ -143,18 +144,7 @@ export default function PostPage({
 
               return <div {...props} className={classes} />;
             },
-            pre: (props: any) => {
-              return (
-                <Code
-                  language={props.children.props.className.replace(
-                    'language-',
-                    ''
-                  )}
-                >
-                  {props.children.props.children}
-                </Code>
-              );
-            },
+            pre: Pre,
           }}
         />
       </div>
