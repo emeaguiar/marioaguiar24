@@ -6,7 +6,7 @@ import clsx from 'clsx';
 /**
  * Next dependencies
  */
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export default function Cards() {
   return (
@@ -50,14 +50,17 @@ function CardsRow({ inverted }: { inverted?: boolean }) {
 function Card({ className }: { className?: string }) {
   // @TODO: Fix width in mobile
   return (
-    <div className={clsx('flex aspect-project-closed h-full', className || '')}>
+    (<div className={clsx('flex aspect-project-closed h-full', className || '')}>
       <Image
         src='/thumbnail.jpg'
         alt='Thumbnail'
         width='700'
         height='420'
         className='w-full object-cover'
-      />
-    </div>
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
+    </div>)
   );
 }

@@ -14,7 +14,7 @@ import { usePathname } from 'next/navigation';
 /**
  * Next dependencies
  */
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { YouTubeEmbed } from '@next/third-parties/google';
 
 /**
@@ -59,97 +59,95 @@ export default function PostPage({
     frontmatter;
   const pathname = usePathname();
 
-  return (
-    <>
-      <NextSeo
-        title={title}
-        description={description}
-        canonical={`${SITE_URL}/${locale}${pathname}`}
+  return (<>
+    <NextSeo
+      title={title}
+      description={description}
+      canonical={`${SITE_URL}/${locale}${pathname}`}
+    />
+    <div className='mt-4 flex flex-col items-center gap-6 px-4 text-xl/9 lg:my-16'>
+      <H1>{title}</H1>
+
+      <BlogMeta
+        publishedOn={publishedOn}
+        updatedOn={updatedOn}
+        readingTime={readingTime / 60}
+        locale={locale}
       />
+    </div>
+    <div
+      className={clsx(
+        notoSans.className,
+        'flex flex-col items-center gap-6 px-4 text-xl/10',
+        'lg:w-[736px]'
+      )}
+    >
+      {/* @todo: Clean up this madness */}
+      <Component
+        components={{
+          YouTubeEmbed,
+          a: A,
+          blockquote: Blockquote,
+          code: CodeElement,
+          h1: H1,
+          h2: (props: any) => {
+            let classes;
+            if ('footnote-label' === props.id) {
+              classes = 'footnote-label font-bold mb-4 text-xl';
+            }
 
-      <div className='mt-4 flex flex-col items-center gap-6 px-4 text-xl/9 lg:my-16'>
-        <H1>{title}</H1>
+            return <H2 {...props} className={classes} />;
+          },
+          h3: H3,
+          h4: H4,
+          img: (props: any) => {
+            const { src, alt } = props;
 
-        <BlogMeta
-          publishedOn={publishedOn}
-          updatedOn={updatedOn}
-          readingTime={readingTime / 60}
-          locale={locale}
-        />
-      </div>
-
-      <div
-        className={clsx(
-          notoSans.className,
-          'flex flex-col items-center gap-6 px-4 text-xl/10',
-          'lg:w-[736px]'
-        )}
-      >
-        {/* @todo: Clean up this madness */}
-        <Component
-          components={{
-            YouTubeEmbed,
-            a: A,
-            blockquote: Blockquote,
-            code: CodeElement,
-            h1: H1,
-            h2: (props: any) => {
-              let classes;
-              if ('footnote-label' === props.id) {
-                classes = 'footnote-label font-bold mb-4 text-xl';
-              }
-
-              return <H2 {...props} className={classes} />;
-            },
-            h3: H3,
-            h4: H4,
-            img: (props: any) => {
-              const { src, alt } = props;
-
-              return (
-                <span className='relative my-8 block h-96 w-full'>
-                  <Image
-                    src={src}
-                    alt={alt}
-                    layout='fill'
-                    objectFit='contain'
-                  />
-                </span>
+            return (
+              (<span className='relative my-8 block h-96 w-full'>
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  sizes="100vw"
+                  style={{
+                    objectFit: "contain"
+                  }} />
+              </span>)
+            );
+          },
+          ol: OL,
+          p: P,
+          ul: UL,
+          table: Table,
+          td: Td,
+          th: Th,
+          tr: Tr,
+          div: (props: any) => {
+            if (props.className.includes('markdown-alert')) {
+              const type = props.className.replace(
+                'markdown-alert markdown-alert-',
+                ''
               );
-            },
-            ol: OL,
-            p: P,
-            ul: UL,
-            table: Table,
-            td: Td,
-            th: Th,
-            tr: Tr,
-            div: (props: any) => {
-              if (props.className.includes('markdown-alert')) {
-                const type = props.className.replace(
-                  'markdown-alert markdown-alert-',
-                  ''
-                );
 
-                return <Alert type={type}>{props.children}</Alert>;
-              }
+              return <Alert type={type}>{props.children}</Alert>;
+            }
 
-              return <div {...props} />;
-            },
-            section: (props: any) => {
-              let classes;
-              if (props.className.includes('footnotes')) {
-                classes = 'footnotes text-sm w-full max-w-screen-sm';
-              }
+            return <div {...props} />;
+          },
+          section: (props: any) => {
+            let classes;
+            if (props.className.includes('footnotes')) {
+              classes = 'footnotes text-sm w-full max-w-screen-sm';
+            }
 
-              return <div {...props} className={classes} />;
-            },
-            pre: Pre,
-          }}
-        />
-      </div>
-    </>
-  );
+            return <div {...props} className={classes} />;
+          },
+          pre: Pre,
+        }}
+      />
+    </div>
+  </>);
 }
 
 export async function getStaticProps({
