@@ -57,7 +57,9 @@ export default function Code({
                 }),
               })}
             >
-              <span className='mr-4'>{i + 1}</span>
+              <span className='mr-4 inline-block min-w-6 select-none'>
+                {i + 1}
+              </span>
 
               {line.map((token, key) => (
                 <span key={key} {...getTokenProps({ token })} />
