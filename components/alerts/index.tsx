@@ -50,7 +50,6 @@ export default function Alert({
          * All this happens after the markdown is parsed.
          */
         if (child && 'object' === typeof child) {
-          console.log(child.type);
           switch (child.type) {
             case Blockquote:
             case Pre:
