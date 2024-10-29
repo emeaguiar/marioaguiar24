@@ -1,0 +1,102 @@
+---
+title: The correct way of using blockquotes
+publishedOn: '2024-10-29'
+updatedOn: '2024-10-29T23:04:07.062Z'
+description: Advice on how to use blockquotes correctly in HTML
+published: true
+readingTime: 360
+---
+
+Just like fate (or maybe an excellent algorithm), I find myself working on the design of `<blockquote>` for this blog. I wanted it to be something flashy but at the same time elegant, as I hope to be able to do with the rest of the blog, and while I was doing it I came across an article in my feed about how **Michelle Barker** [has been using blockquotes wrong](https://css-irl.info/ive-been-doing-blockquotes-wrong/), which in turn led me to wonder if I was doing the same (answer: yes.)
+
+> You’ve probably used a `<blockquote>` when writing HTML. I know I’ve used literally hundreds of them. What I didn’t know is that I’ve been using them wrong all these years.
+
+The article takes us down a rabbit hole to _another article_, this time by **Heydon Pickering**, titled "[The blockquote element](https://heydonworks.com/article/the-blockquote-element/)" in which interesting points are expressed about the history of the element and some of its most common problems, I summarize some of the most interesting points from my understanding.
+
+## What is a blockquote?
+
+I think the main problem Heydon mentions, the same one Michelle has committed in the past and of which I have been guilty at the same time, is simply not having a clear idea of what a blockquote is, which itself leads us to its incorrect use. No matter how hard you hit a nail with the wrench, _it's still not a hammer_.
+
+The [original intention of the `<blockquote>` element](https://www.w3.org/TR/2011/WD-html5-author-20110809/the-blockquote-element.html) is to quote text from another source, and it is not uncommon to see quotes from an article cited in the same article, which is **wrong**.
+
+> Content inside a [blockquote](https://www.w3.org/TR/2011/WD-html5-author-20110809/the-blockquote-element.html#the-blockquote-element) **must** be quoted from another source[…]
+
+## Blockquote vs Pull quote
+
+This is where our second _main_ actor comes in, the _Pull quotes_, which for a change _also has no literal translation_ (and whose concept I have found very difficult to find in Spanish).
+
+A pull quote refers to _pulling_ a part of the article being written to highlight it **within the same article**, this is the main difference between pull quotes and blockquotes, more than design or positioning of the quote, it is about the source of the quote (_external vs internal_).
+
+![Example of pull quote from a magazine](/posts/the-correct-way-of-using-blockquotes/pullquote.jpg 'Example of pull quote in a magazine')
+
+These are quite common in magazines, due to several factors, among them, that magazines have _pages_. It is not uncommon to take quotes from the same article from some previous page to **emphasize a more advanced point in the article**, this does not happen on the web because nowadays web articles only occupy one page, since **there is no limit to how much you can scroll**.
+
+Another important reason why pull quotes are used in magazines is that **magazine articles usually have unique designs for them**, because they will only be printed on paper consistency tends to be less important, and the resources to design them tend to be less (it is not necessary _a whole team of designers and programmers_ to build the page where they will be printed). Therefore you can take a quote from the article to easily emphasize it on the same page.
+
+These are not determining factors on a website, so it should be rare to see pull quotes in the same way we see them in magazines. However, for aesthetic reasons more than anything else, it is common to see them.
+
+> [!NOTE]
+> It is worth noting that **there is no `<pullquote>` element in HTML**, (but there is the `<aside>` element, which is just right for those purposes.)
+
+So…
+
+## How to use blockquotes in HTML?
+
+Once we have understood (a little) the point of the element, we can deduce that outside of any aesthetic situation, `<blockquote>` serves us when we want to quote some **external text** to our article, for example:
+
+```html
+<blockquote>
+  <p>
+    Sonreí sin querer. Era divertido trabajar con las chicas; siempre estaban
+    haciendo chistes, lanzándose insultos y halagos en la cocina, quejándose de
+    clientes molestos o coqueteando con los cocineros y los lavatrastes. Había
+    sonreído más en esas dos semanas de lo que recordaba haberlo hecho en toda
+    mi vida.
+  </p>
+</blockquote>
+
+<cite>– El Jardín de las Mariposas</cite>
+```
+
+> [!TIP]
+> **`<cite>` – Inside or outside the quote?**
+>
+> If you notice in the previous example I used `<cite>` to give attribution to the source of the quote, but **I left it outside the quote itself**… why?
+>
+> Technically, **placing the citation inside the quote would make the citation part of the quote**, which is semantically incorrect ([and it comes in the specification](https://html.spec.whatwg.org/multipage/grouping-content.html#the-blockquote-element:~:text=Attribution%20for%20the%20quotation%2C%20if%20any%2C%20must%20be%20placed%20outside%20the%20blockquote%20element.))
+>
+> Unless it is clear that it is part of the quote:
+>
+> > You miss 100% of the shots you don't take.
+> > – Wayne Gretzky
+>
+> – Michael Scott
+
+> [!CAUTION]
+> Keep in mind that **the `<cite>` element is different from the `cite` attribute**, which _must be a valid URL that links to the source_. However, in reality it doesn't have much utility since almost all screen readers will simply ignore it…
+
+**Keeping the source outside the quote makes sense**, but I can't help but feel disconnected… As if both don't belong together, Heydon thinks the same, so he has proposed a solution using `<figure>` and `<figcaption>` to complement them:
+
+```html
+<figure>
+  <blockquote>
+    <p>
+      Sonreí sin querer. Era divertido trabajar con las chicas; siempre estaban
+      haciendo chistes, lanzándose insultos y halagos en la cocina, quejándose
+      de clientes molestos o coqueteando con los cocineros y los lavatrastes.
+      Había sonreído más en esas dos semanas de lo que recordaba haberlo hecho
+      en toda mi vida.
+    </p>
+  </blockquote>
+
+  <figcaption>– <cite>El Jardín de las Mariposas</cite></figcaption>
+</figure>
+```
+
+You can see how we still use the `<cite>` element, but now **everything feels like part of the same block**, personally, I like it.
+
+## Conclusion
+
+Many years ago, while trying to create _the most semantic site in existence_, I discovered that there are many small details that make the task difficult, likewise many elements have room for interpretation, not everything in the specification is as simple as yes and no. **The important thing, in my opinion, is that your site works**, (_and that it is accessible_.)
+
+So, in the end. Just make your users comfortable ☺️️.
