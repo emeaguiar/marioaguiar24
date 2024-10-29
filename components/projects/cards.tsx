@@ -6,7 +6,7 @@ import clsx from 'clsx';
 /**
  * Next dependencies
  */
-import Image from 'next/image';
+import Image from "next/legacy/image";
 
 export default function Cards() {
   return (

@@ -14,7 +14,7 @@ import { usePathname } from 'next/navigation';
 /**
  * Next dependencies
  */
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { YouTubeEmbed } from '@next/third-parties/google';
 
 /**
