@@ -3,13 +3,9 @@
  */
 import Code from '@/components/code/code';
 
-export const Pre = ({
-  children,
-  allowExpand = true,
-}: {
-  children: any;
-  allowExpand?: boolean;
-}) => {
+export const Pre = (props: any) => {
+  const { children, allowExpand } = props;
+
   if (!children) {
     return null;
   }

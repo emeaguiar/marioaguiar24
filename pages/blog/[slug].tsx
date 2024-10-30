@@ -131,7 +131,7 @@ export default function PostPage({
 
               return <div {...props} className={classes} />;
             },
-            pre: (props: any) => <Pre {...props} />,
+            pre: Pre,
           }}
         />
       </div>
