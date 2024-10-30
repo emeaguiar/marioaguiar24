@@ -1,7 +1,7 @@
 ---
 title: Implementing Debounce in Vanilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-29T22:15:33.776Z'
+updatedOn: '2024-10-30T16:23:29.368Z'
 description: >-
   A simple tutorial explaining the concept of Debounce and how to implement it
   in vanilla Javascript
@@ -19,7 +19,9 @@ Possibly one of the most used functions in the world of Javascript is (besides [
 
 That's why many times it can be more beneficial to **implement our own versions of these types of utilities**, and best of all, debounce is very simple to use.
 
-> [!NOTE] > **What is `debounce`?**
+> [!NOTE]
+>
+> **What is `debounce`?**
 >
 > When we talk about debounce, we refer to a technique used in programming (in Javascript mainly) in which **we prevent an event from being executed until
 > a certain time has passed**. This helps us prevent an event from being executed
@@ -142,7 +144,9 @@ const debounce = (callback, delay) => {
 };
 ```
 
-> [!NOTE] > `return (...args)`?
+> [!NOTE]
+>
+> `return (...args)`?
 >
 > If you find it strange that we create a function that _returns another function_, the reason is that we need
 > a function that **receives the arguments of the event, but that is executed after our timer**.

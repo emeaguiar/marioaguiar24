@@ -1,7 +1,7 @@
 ---
 title: How to add a metabox in React to Gutenberg
 publishedOn: '2024-09-18'
-updatedOn: '2024-10-29T22:15:33.772Z'
+updatedOn: '2024-10-30T16:23:29.367Z'
 description: >-
   In this tutorial I will show you how to add a react component to the metaboxes
   area of WordPress
@@ -40,7 +40,9 @@ to make this work, basically, we can do the following:
 
 That's the magic! Now let's see how we can do it with code.
 
-> [!NOTE] > **What is a `Portal`?**
+> [!NOTE]
+>
+> **What is a `Portal`?**
 >
 > This deserves its own post, but in a nutshell [portals](https://react.dev/reference/react-dom/createPortal)
 > allow us to **move parts of our components to any site within the DOM**, but keep their structure
@@ -175,7 +177,9 @@ And the result would be something like this:
 
 Now we have the two components we need, and **we are ready to put them together**.
 
-> [!IMPORTANT] > **What is `PluginDocumentSettingPanel`?**
+> [!IMPORTANT]
+>
+> **What is `PluginDocumentSettingPanel`?**
 >
 > This is a Gutenberg component that allows us to **add controls to the block editor**, in this
 > case we are using it to show our component in the sidebar.
