@@ -38,3 +38,8 @@ next-env.d.ts
 
 # obsidian
 .obsidian
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
