@@ -1,7 +1,7 @@
 ---
 title: Usar arrays en SASS
 publishedOn: '2024-01-09'
-updatedOn: '2024-10-18T04:06:55.858Z'
+updatedOn: '2024-10-29T22:15:33.784Z'
 description: >-
   A pesar de ser una herramienta mas o menos vieja, desde hace más de 10 años
   SASS es uno de mis mejores amigos en el desarrollo web, sigue siendo
@@ -11,6 +11,7 @@ description: >-
 published: true
 readingTime: 360
 ---
+
 A pesar de ser una herramienta mas o menos vieja, desde hace más de 10 años
 [SASS](https://sass-lang.com/) es uno de mis mejores amigos en el desarrollo web,
 sigue siendo extremadamente poderoso aún con los numerosos avances de CSS en los
@@ -54,22 +55,22 @@ classes, como por ejemplo al crear un loop con `@each`:
 ```scss
 $colores: amarillo, azul, rojo, verde;
 @each $color in $colores {
-    .texto-#{$color} {
-        color: $color;
-    }
+  .texto-#{$color} {
+    color: $color;
+  }
 }
 // Output:
 .texto-amarillo {
-    color: amarillo;
+  color: amarillo;
 }
 .texto-azul {
-    color: azul;
+  color: azul;
 }
 .texto-rojo {
-    color: rojo;
+  color: rojo;
 }
 .texto-verde {
-    color: verde;
+  color: verde;
 }
 ```
 

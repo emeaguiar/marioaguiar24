@@ -12,7 +12,7 @@ import Link from 'next/link';
 /**
  * Internal dependencies
  */
-import { merriweather } from '@/components/fonts';
+import { merriweather, notoSans } from '@/components/fonts';
 import { BLOG_PREFIX } from '@/lib/data';
 import type { PostItem } from '@/types/post';
 import clsx from 'clsx';

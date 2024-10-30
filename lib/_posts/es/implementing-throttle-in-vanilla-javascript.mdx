@@ -1,13 +1,14 @@
 ---
 title: Implementando throttle en Vanilla JavaScript
 publishedOn: '2021-09-24'
-updatedOn: '2024-10-18T04:06:55.856Z'
+updatedOn: '2024-10-29T22:15:33.782Z'
 description: >-
   En esta ocasión estaré mostrando cómo crear una simple función de throttle
   utilizando únicamente Vanilla JavaScript.
 published: true
 readingTime: 360
 ---
+
 import Codepen from 'react-codepen-embed';
 
 Hola, sean bienvenidos a éste video tutorial, en esta ocasión estaré mostrando
@@ -36,18 +37,18 @@ el usuario da click a un botón que ejecuta una función, la función se ejecuta
 Consideremos que tenemos código html, en él que se incluye éste botón:
 
 ```js
-<button id="js-say-hello">Salúdame</button>
+<button id='js-say-hello'>Salúdame</button>
 ```
 
 Y le anclamos un evento como éste, el cual graba “Hola mundo!” In la consola:
 
 ```js
-const button = document.querySelector( '#js-say-hello' );
+const button = document.querySelector('#js-say-hello');
 const sayHello = () => {
-    console.log( 'Hola Mundo!' );
-}
-if ( button ) {
-    button.addEventListener( 'click', sayHello );
+  console.log('Hola Mundo!');
+};
+if (button) {
+  button.addEventListener('click', sayHello);
 }
 ```
 
@@ -65,22 +66,22 @@ En el siguiente ejemplo implementaremos una versión simple de Throttle, tomando
 como referencia el código anterior, implementaremos lo siguiente:
 
 ```js
-const throttle = ( callback, delay ) => {
-    // Comenzamos variable para saber cuando se llamó por ultima vez a la función
-    let lastCalled = 0;
-    return ( ...args ) => {
-        // Guardamos referencia de éste momento.
-        const now = new Date().getTime();
-        // Revisamos si ha pasado el tiempo de retraso definido
-        if ( delay > ( now - lastCalled ) ) {
-            return;
-        }
-        // Guardamos éste momento como la última vez que se llamó a la función
-        lastCalled = now;
-        // Ejecutamos la función
-        return callback( ...args );
+const throttle = (callback, delay) => {
+  // Comenzamos variable para saber cuando se llamó por ultima vez a la función
+  let lastCalled = 0;
+  return (...args) => {
+    // Guardamos referencia de éste momento.
+    const now = new Date().getTime();
+    // Revisamos si ha pasado el tiempo de retraso definido
+    if (delay > now - lastCalled) {
+      return;
     }
-}
+    // Guardamos éste momento como la última vez que se llamó a la función
+    lastCalled = now;
+    // Ejecutamos la función
+    return callback(...args);
+  };
+};
 export default throttle;
 ```
 
@@ -91,15 +92,15 @@ en nuestro Throttle.
 ```js
 // Importamos nuestra función
 import throttle from './throttle.js';
-const button = document.querySelector( '#js-say-hello' );
+const button = document.querySelector('#js-say-hello');
 // Envolmemos nuestro mensaje en una función nueva
 const printMessage = () => {
-    console.log( 'Hola Mundo!' );
-}
+  console.log('Hola Mundo!');
+};
 // Ejecutamos Throttle
-const sayHello = throttle( printMessage, 1000 );
-if ( button ) {
-    button.addEventListener( 'click', sayHello );
+const sayHello = throttle(printMessage, 1000);
+if (button) {
+  button.addEventListener('click', sayHello);
 }
 ```
 

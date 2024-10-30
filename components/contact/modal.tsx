@@ -5,6 +5,7 @@
  */
 import useTranslation from 'next-translate/useTranslation';
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import clsx from 'clsx';
 
 /**
  * Next dependencies
@@ -16,8 +17,8 @@ import Link from 'next/link';
  * Internal dependencies
  */
 import { H2, P } from '@/components/elements';
+import { notoSans } from '@/components/fonts';
 import ContactForm from '@/components/contact/form';
-import clsx from 'clsx';
 
 export default function Modal() {
   const searchParams = useSearchParams();
@@ -28,7 +29,12 @@ export default function Modal() {
   return (
     <>
       {usesModal && (
-        <dialog className='modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'>
+        <dialog
+          className={clsx(
+            notoSans.className,
+            'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'
+          )}
+        >
           <div
             className={clsx(
               'm-auto h-full w-full bg-primary bg-opacity-90 p-8 text-background',

@@ -1,17 +1,18 @@
 ---
 title: Implementing Debounce in Vanilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-18T02:33:51.422Z'
+updatedOn: '2024-10-30T16:23:29.368Z'
 description: >-
   A simple tutorial explaining the concept of Debounce and how to implement it
   in vanilla Javascript
 published: true
 readingTime: 420
 ---
+
 import AlignWide from '@/components/blog/align-wide';
 import {
-    ExampleOne,
-    ExampleTwo,
+  ExampleOne,
+  ExampleTwo,
 } from '@/examples/implementing-debounce-in-javascript/en';
 
 Possibly one of the most used functions in the world of Javascript is (besides [throttle](/blog/implementing-throttle-in-vanilla-javascript)) **debounce**. So much so that many times it is the only function I end up importing from [lodash](https://lodash.com/), but, as small as the `lodash` library may be, **isn't it too much to import a new library just for one function?**
@@ -19,8 +20,9 @@ Possibly one of the most used functions in the world of Javascript is (besides [
 That's why many times it can be more beneficial to **implement our own versions of these types of utilities**, and best of all, debounce is very simple to use.
 
 > [!NOTE]
+>
 > **What is `debounce`?**
-> 
+>
 > When we talk about debounce, we refer to a technique used in programming (in Javascript mainly) in which **we prevent an event from being executed until
 > a certain time has passed**. This helps us prevent an event from being executed
 > before we have the tools it needs.
@@ -31,25 +33,22 @@ Before we start, let's imagine that we have a **search form** in our application
 
 ```jsx
 <form>
-    <label
-        htmlFor='search1'
-        className='block text-sm font-medium text-gray-700'
-    >
-        Enter a keyword
-    </label>
-    <input
-        type='text'
-        id='search1'
-        name='search1'
-        className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-    />
+  <label htmlFor='search1' className='block text-sm font-medium text-gray-700'>
+    Enter a keyword
+  </label>
+  <input
+    type='text'
+    id='search1'
+    name='search1'
+    className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+  />
 </form>
 ```
 
 This will result in:
 
 <AlignWide>
-    <ExampleOne />
+  <ExampleOne />
 </AlignWide>
 
 Now, let's say that before connecting our form to our API, we want to make sure it works, so we want to print the value of this field in the console (you can open the browser console and try the field yourself 😉️)
@@ -58,21 +57,18 @@ Simply add a `console.log` to the change function:
 
 ```jsx
 <form>
-    <label
-        htmlFor='search1'
-        className='block text-sm font-medium text-gray-700'
-    >
-        Enter a keyword
-    </label>
-    <input
-        type='text'
-        id='search1'
-        name='search1'
-        className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-        onChange={(e) => {
-            console.log(e.target.value);
-        }}
-    />
+  <label htmlFor='search1' className='block text-sm font-medium text-gray-700'>
+    Enter a keyword
+  </label>
+  <input
+    type='text'
+    id='search1'
+    name='search1'
+    className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+    onChange={(e) => {
+      console.log(e.target.value);
+    }}
+  />
 </form>
 ```
 
@@ -92,8 +88,10 @@ The logic of _debounce_ is not very complicated, it is based on some very simple
 1. An event is executed (such as pressing a key)
 2. A _timer_ is started
 3. If the _same_ event is executed again:
-  * The timer is cleared
-  * A new timer is started
+
+- The timer is cleared
+- A new timer is started
+
 4. If the timer manages to reach `0`, the function is finally executed
 
 Now that we have the logic we need, we can move on to the fun part.
@@ -116,7 +114,7 @@ Fortunately, in our example we are using the `onChange` event, so this already t
 > ```js
 > const input = document.querySelector('#search1');
 > input.addEventListener('change', (event) => {
->     console.log(event.target.value); // Here goes our logic
+>   console.log(event.target.value); // Here goes our logic
 > });
 > ```
 
@@ -134,19 +132,20 @@ To create the timer, first we need to save it in a reference (so we can clear it
 
 ```jsx
 const debounce = (callback, delay) => {
-    let timer;
+  let timer;
 
-    return (...args) => {
-        // Create a new timer.
-        timer = setTimeout( () => {
-            // Execute the function with the arguments.
-            callback( ...args );
-        }, delay );
-    };
+  return (...args) => {
+    // Create a new timer.
+    timer = setTimeout(() => {
+      // Execute the function with the arguments.
+      callback(...args);
+    }, delay);
+  };
 };
 ```
 
 > [!NOTE]
+>
 > `return (...args)`?
 >
 > If you find it strange that we create a function that _returns another function_, the reason is that we need
@@ -155,28 +154,29 @@ const debounce = (callback, delay) => {
 > and then `change` **sends the arguments to the function that `debounced` returns**.
 
 > If the _same_ event is executed again:
-> * The timer is cleared
-> * A new timer is started
+>
+> - The timer is cleared
+> - A new timer is started
 
 So far we already have our timer, and we have specified that when it finishes it will execute our function,
 (this takes care of point 4), but we are missing point 3, **clear the timer if the event is repeated**.
 Since we already have a reference to our timer, we can clear it with `clearTimeout`:
 
 ```jsx
-const debounce = ( callback, delay ) => {
-    // Save reference to the timer.
-    let timer;
+const debounce = (callback, delay) => {
+  // Save reference to the timer.
+  let timer;
 
-    return (...args) => {
-        // Clear the timer if it exists.
-        clearTimeout( timer );
+  return (...args) => {
+    // Clear the timer if it exists.
+    clearTimeout(timer);
 
-        // Create a new timer.
-        timer = setTimeout( () => {
-            // Execute the function with the arguments.
-            callback( ...args );
-        }, delay );
-    };
+    // Create a new timer.
+    timer = setTimeout(() => {
+      // Execute the function with the arguments.
+      callback(...args);
+    }, delay);
+  };
 };
 ```
 
@@ -184,7 +184,7 @@ Our function is complete! To use it with our example, instead of starting our or
 
 ```jsx
 const debounced = debounce((e) => {
-    console.log(e.target.value);
+  console.log(e.target.value);
 }, 500);
 ```
 
@@ -193,8 +193,8 @@ const debounced = debounce((e) => {
 >
 > ```js
 > (e) => {
->    console.log(e.target.value);
-> }
+>   console.log(e.target.value);
+> };
 > ```
 >
 > This would be our `callback`, and `500` would be the waiting time in milliseconds, our `delay`.
@@ -203,11 +203,11 @@ Now, instead of using our original function, **we pass our `debounced` function 
 
 ```jsx
 <input
-    type='text'
-    id='search1'
-    name='search1'
-    className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-    onChange={debounced}
+  type='text'
+  id='search1'
+  name='search1'
+  className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+  onChange={debounced}
 />
 ```
 
@@ -221,7 +221,7 @@ input.addEventListener('change', debounced)`}
 Now, if we try our search form again, we will have something similar to this:
 
 <AlignWide>
-    <ExampleTwo />
+  <ExampleTwo />
 </AlignWide>
 
 > [!TIP]
@@ -233,6 +233,6 @@ After this, we can see a great improvement in our calls, it no longer records _e
 
 ## Conclusion
 
-As we can see, this small function can be of great help, especially when we pay attention to the **user experience**, in many cases, it can benefit us to pause for a moment and wait for the user to give us some *feedback* before continuing with our calculations.
+As we can see, this small function can be of great help, especially when we pay attention to the **user experience**, in many cases, it can benefit us to pause for a moment and wait for the user to give us some _feedback_ before continuing with our calculations.
 
 If you have any questions or comments, don't hesitate to contact me, I would love to hear your opinion!

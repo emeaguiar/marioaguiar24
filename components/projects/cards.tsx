@@ -57,6 +57,10 @@ function Card({ className }: { className?: string }) {
         width='700'
         height='420'
         className='w-full object-cover'
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
       />
     </div>
   );

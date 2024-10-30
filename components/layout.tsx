@@ -1,6 +1,12 @@
 /**
+ * External dependencies
+ */
+import clsx from 'clsx';
+
+/**
  * Internal dependencies
  */
+import { notoSans } from '@/components/fonts';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import ContactModal from '@/components/contact/modal';
@@ -19,7 +25,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <main
         id='main-content'
-        className='flex flex-col items-center gap-6 lg:gap-20'
+        className={clsx(
+          notoSans.className,
+          'flex flex-col items-center gap-6 lg:gap-20'
+        )}
       >
         {children}
       </main>

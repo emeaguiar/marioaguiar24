@@ -1,7 +1,7 @@
 ---
 title: Use arrays in SASS
 publishedOn: '2024-01-09'
-updatedOn: '2024-10-18T02:33:51.425Z'
+updatedOn: '2024-10-29T22:15:33.778Z'
 description: >-
   Even though it is a somewhat old tool, for more than 10 years SASS has been
   one of my best friends in web development, it remains extremely powerful even
@@ -11,6 +11,7 @@ description: >-
 published: true
 readingTime: 360
 ---
+
 Even though it is a somewhat old tool, for more than 10 years _SASS_ has been one
 of my best friends in web development, it remains extremely powerful even with the
 numerous advances in CSS in recent years, because it still has several tools that
@@ -50,22 +51,22 @@ a loop with `@each`:
 ```scss
 $colors: yellow, blue, red, green;
 @each $color in $colors {
-    .text-#{$color} {
-        color: $color;
-    }
+  .text-#{$color} {
+    color: $color;
+  }
 }
 // Output:
 .text-yellow {
-    color: yellow;
+  color: yellow;
 }
 .text-blue {
-    color: blue;
+  color: blue;
 }
 .text-red {
-    color: red;
+  color: red;
 }
 .text-green {
-    color: green;
+  color: green;
 }
 ```
 

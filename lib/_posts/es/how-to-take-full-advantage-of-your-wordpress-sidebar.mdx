@@ -7,9 +7,10 @@ description: |-
     cuando se usan correctamente, ¡puedes convertir tu sidebar aburrida en una
     sidebar increíble!
 published: true
-updatedOn: '2024-10-18T04:06:55.855Z'
+updatedOn: '2024-10-29T22:15:33.782Z'
 readingTime: 1620
 ---
+
 > [!WARNING]
 > Este artículo fue escrito en **2010** 👴🏼. La mayoría de los consejos aquí no son válidos y
 > no recomiendo usar ninguno de los fragmentos mostrados aquí.
@@ -127,7 +128,7 @@ Esto va en tu archivo **functions.php** (¿ya notaste la importancia de este arc
 
 ```php
 <?php
-    function twitle( $title ) { 
+    function twitle( $title ) {
         $newtitle = str_replace( " ", "+", $title );
         echo $newtitle;
     }
@@ -430,7 +431,7 @@ de dónde saqué esto, estaba en mi archivo `functions.php`):
 <?php
 function recent_comments($comm = 5) {
 global $wpdb;
-$sql = "SELECT DISTINCT ID, post_title, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type,comment_author_url, SUBSTRING(comment_content,1,30) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID = $wpdb->posts.ID) WHERE comment_approved = '1' AND comment_type = '' AND post_password = '' ORDER BY comment_date_gmt DESC LIMIT $comm"; 
+$sql = "SELECT DISTINCT ID, post_title, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type,comment_author_url, SUBSTRING(comment_content,1,30) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID = $wpdb->posts.ID) WHERE comment_approved = '1' AND comment_type = '' AND post_password = '' ORDER BY comment_date_gmt DESC LIMIT $comm";
 $comments = $wpdb->get_results($sql);
 $output = $pre_HTML;
 $output .= "n<ul class="recentcomments">";

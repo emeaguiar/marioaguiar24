@@ -1,7 +1,7 @@
 ---
 title: Add a "Back to top" button in React
 publishedOn: '2024-07-28'
-updatedOn: '2024-10-18T02:33:51.412Z'
+updatedOn: '2024-10-30T16:23:29.365Z'
 description: En este tutorial aprenderás a crear un botón de regreso al inicio en React.
 published: true
 readingTime: 360
@@ -10,7 +10,7 @@ readingTime: 360
 import AlignWide from '@/components/blog/align-wide';
 import { SampleButton } from '@/examples/add-a-back-to-top-button-in-react/en';
 
-One of the most common (and useful) functionalities today is to **add a “back to 
+One of the most common (and useful) functionalities today is to **add a “back to
 top” button** to our pages, especially when our content tends to be long.
 
 And the truth is that it is not very difficult to achieve, with a few lines of
@@ -67,9 +67,7 @@ to make the jump. In this case, I will call it `BackToTopButton`.
 import React from 'react';
 
 export default function BackToTopButton() {
-    return (
-        <a href="#main">Back to top</a>
-    );
+  return <a href='#main'>Back to top</a>;
 }
 ```
 
@@ -79,12 +77,12 @@ And then, in our main component, we import it and add it at the end
 import BackToTopButton from './BackToTopButton';
 
 export default function Main() {
-    return (
-        <main id="main">
-            […our content]
-            <BackToTopButton />
-        </main>
-    );
+  return (
+    <main id='main'>
+      […our content]
+      <BackToTopButton />
+    </main>
+  );
 }
 ```
 
@@ -97,21 +95,20 @@ an `anchor` in the button, but to use a `button` instead.
 import React from 'react';
 
 export default function BackToTopButton() {
-    // Function to make the jump when clicked.
-    const handleClick = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth', // Makes the jump smoother.
-        });
-    };
+  // Function to make the jump when clicked.
+  const handleClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Makes the jump smoother.
+    });
+  };
 
-    return (
-        <button onClick={handleClick}>Back to top</button>
-    );
+  return <button onClick={handleClick}>Back to top</button>;
 }
 ```
 
 > [!NOTE]
+>
 > **Why don't we use an `anchor`?**
 >
 > When we use the `a` tag with an `href` pointing to an `id` on the page,
@@ -155,23 +152,23 @@ pointing upwards**. To do this, we need to add a little CSS to our component.
 import React from 'react';
 
 export default function BackToTopButton() {
-    const handleClick = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
-    };
+  const handleClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
-    return (
-        <button
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
-        >
-          Back to top
-        </button>
-    );
+  return (
+    <button
+      onClick={() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }}
+      className='fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary'
+    >
+      Back to top
+    </button>
+  );
 }
 ```
 
@@ -181,17 +178,17 @@ If you prefer to use normal CSS, you can do it like this:
 
 ```scss
 button {
-    background-color: var(--color--primary); // Or our primary color.
-    border: 1px solid var(--color--secondary); // Or our secondary color.
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); // Defined by Tailwind.
-    color: white;
-    inset-block-end: 0;
-    inset-inline-end: 0;
-    margin: 1rem; // 16px or "4" in Tailwind terms.
-    padding: 0.5rem; // 8px or "2" in Tailwind terms.
-    position: fixed;
-    z-index: 50;
+  background-color: var(--color--primary); // Or our primary color.
+  border: 1px solid var(--color--secondary); // Or our secondary color.
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); // Defined by Tailwind.
+  color: white;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  margin: 1rem; // 16px or "4" in Tailwind terms.
+  padding: 0.5rem; // 8px or "2" in Tailwind terms.
+  position: fixed;
+  z-index: 50;
 }
 ```
 
@@ -209,25 +206,25 @@ import React from 'react';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 
 export default function BackToTopButton() {
-    const handleClick = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
-    };
+  const handleClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
-    return (
-        <button
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
-        >
-          <ArrowUpIcon className="h-6 w-6" />
+  return (
+    <button
+      onClick={() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }}
+      className='fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary'
+    >
+      <ArrowUpIcon className='h-6 w-6' />
 
-          <span className="sr-only">Back to top</span>
-        </button>
-    );
+      <span className='sr-only'>Back to top</span>
+    </button>
+  );
 }
 ```
 
@@ -238,6 +235,7 @@ This will give us a result similar to the following (try clicking it 😉):
 </AlignWide>
 
 > [!TIP]
+>
 > **What is `sr-only`?**
 >
 > `sr-only` is a Tailwind class that hides an element visually, but keeps it
@@ -294,15 +292,17 @@ export default function BackToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return showButton && (
-    <button
-      onClick={handleClick}
-      className="fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary"
-    >
-      <ArrowUpIcon className="h-6 w-6" />
+  return (
+    showButton && (
+      <button
+        onClick={handleClick}
+        className='fixed bottom-0 right-0 z-50 m-4 rounded-full bg-primary p-2 text-white shadow-lg ring-1 ring-secondary'
+      >
+        <ArrowUpIcon className='h-6 w-6' />
 
-      <span className="sr-only">Back to top</span>
-    </button>
+        <span className='sr-only'>Back to top</span>
+      </button>
+    )
   );
 }
 ```

@@ -1,11 +1,12 @@
 ---
 title: Orden personalizado de arrays en PHP
 publishedOn: '2023-09-21'
-updatedOn: '2024-10-18T04:06:55.854Z'
+updatedOn: '2024-10-29T22:15:33.781Z'
 description: A continuación mencionaré como lograr un orden personalizado de arrays en PHP
 published: true
 readingTime: 360
 ---
+
 Recientemente me vi en la necesidad de **crear una lista de elementos en un orden
 muy específico** mientras trabajaba con un array en PHP, afortunadamente resulta que
 la forma de lograrlo es muy sencilla, gracias a que PHP nos ofrece la función `usort`.
@@ -91,7 +92,7 @@ Por ejemplo, cuando nuestro algoritmo compara `DO` vs `MI`, está comparando `[0
 que son los índices de esos elementos en el array:
 
 ```php
-if ( false === $a_order ) {    
+if ( false === $a_order ) {
     $a_order = 999;
 }
 if ( false === $b_order ) {

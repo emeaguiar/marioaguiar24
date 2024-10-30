@@ -1,17 +1,18 @@
 ---
 title: Implementando Debounce en Vainilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-18T04:06:55.856Z'
+updatedOn: '2024-10-30T16:23:29.369Z'
 description: >-
   Un simple tutorial explicando el concepto de Debounce y el como implementarlo
   en vainilla Javascript
 published: true
 readingTime: 420
 ---
+
 import AlignWide from '@/components/blog/align-wide';
 import {
-    ExampleOne,
-    ExampleTwo,
+  ExampleOne,
+  ExampleTwo,
 } from '@/examples/implementing-debounce-in-javascript/es';
 
 Probablemente una de las funciones más utilizadas en el mundo de Javascript es (además de [throttle](/blog/implementing-throttle-in-vanilla-javascript)) **debounce**. Tanto que muchas veces es la única función que llego a importar de [lodash](https://lodash.com/), pero, por muy pequeña que sea la librería de `lodash`, **¿no es demasiado importar una librería nueva sólo para una función?**
@@ -19,8 +20,9 @@ Probablemente una de las funciones más utilizadas en el mundo de Javascript es 
 Es por eso que muchas veces puede ser más beneficioso **implementar nuestras propias versiones de este tipo de utilidades**, y lo mejor de todo es que debounce es muy simple de utilizar.
 
 > [!NOTE]
+>
 > **¿Qué es `debounce`?**
-> 
+>
 > Cuando hablamos de debounce, nos referimos a una técnica utilizada en programación (en Javascript principalmente) en la que **evitamos que un evento se ejecute hasta que cierto tiempo ha pasado**. Esto nos ayuda a prevenir que un evento se ejecute antes de que tengamos las herramientas que necesita.
 
 ## El Problema
@@ -29,25 +31,22 @@ Antes de comenzar, imaginemos que tenemos un **formulario de búsqueda** en nues
 
 ```jsx
 <form>
-    <label
-        htmlFor='search1'
-        className='block text-sm font-medium text-gray-700'
-    >
-        Ingresa una palabra clave
-    </label>
-    <input
-        type='text'
-        id='search1'
-        name='search1'
-        className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-    />
+  <label htmlFor='search1' className='block text-sm font-medium text-gray-700'>
+    Ingresa una palabra clave
+  </label>
+  <input
+    type='text'
+    id='search1'
+    name='search1'
+    className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+  />
 </form>
 ```
 
 Esto resultará en:
 
 <AlignWide>
-	<ExampleOne />
+  <ExampleOne />
 </AlignWide>
 
 Ahora, digamos que antes de conectar nuestro formulario a nuestra API, queremos asegurarnos de que funcione, así que queremos imprimir el valor de este campo en la consola (puedes abrir la consola del navegador y probar el campo tu mismo 😉️)
@@ -56,21 +55,18 @@ Simplemente agregamos un `console.log` a la función de cambio:
 
 ```jsx
 <form>
-    <label
-        htmlFor='search1'
-        className='block text-sm font-medium text-gray-700'
-    >
-        Ingresa una palabra clave
-    </label>
-    <input
-        type='text'
-        id='search1'
-        name='search1'
-        className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-		onChange={(e) => {
-			console.log(e.target.value);
-		}}
-    />
+  <label htmlFor='search1' className='block text-sm font-medium text-gray-700'>
+    Ingresa una palabra clave
+  </label>
+  <input
+    type='text'
+    id='search1'
+    name='search1'
+    className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+    onChange={(e) => {
+      console.log(e.target.value);
+    }}
+  />
 </form>
 ```
 
@@ -78,7 +74,7 @@ Simplemente agregamos un `console.log` a la función de cambio:
 
 > [!WARNING]
 > ¿Puedes ver el problema? Cada vez que presionamos una tecla **nuestra función de cambio es ejecutada**, imagínate que hubieramos conectado nuestro formulario al API, cada uno de esos logs sería una petición a la API, y ¡de sólo un usuario!
-> 
+>
 > Ahora imagínate que tuvieramos _10,000 usuarios al día…_
 
 ## La Solución
@@ -90,11 +86,12 @@ La lógica de _debounce_ no es muy complicada, se basa en algunas pautas muy sim
 1. Se ejecuta un evento (como presionar una tecla)
 2. Se inicia un _timer_
 3. Si el _mismo_ evento vuelve a ser ejecutado:
-	* El timer se elimina
-	* Un nuevo timer se inicia
+   - El timer se elimina
+   - Un nuevo timer se inicia
 4. Si el timer logra llegar a `0`, la función finalmente se ejecuta
 
 Ya que tenemos la lógica que necesitamos, podemos pasar a la parte divertida.
+
 ## La implementación
 
 Ya que este es un tutorial para **mostrar el funcionamiento de debounce**, no recurriré a mi método habitual para utilizarlo (ya que mi método habitual es simplemente usar [lodash](https://lodash.com/docs/4.17.15#debounce)), en lugar de eso, tomaremos la lógica que escribimos en los párrafos anteriores y la _traduciremos a Javascript_.
@@ -107,13 +104,13 @@ Por fortuna, en nuestro ejemplo estamos utilizando el evento `onChange`, así qu
 
 > [!CAUTION]
 > Este blog, y sus ejemplos, están escritos en _[React](https://react.dev/)_.
-> 
+>
 > `onChange` es un evento que es agregado automáticamente a los elementos `input` cuando son creados en React, **esto no está disponible en Javascript convencional**, pero en ese caso podemos utilizar el equivalente:
-> 
+>
 > ```js
 > const input = document.querySelector('#search1');
 > input.addEventListener('change', (event) => {
->     console.log(event.target.value); // Aquí va nuestra lógica
+>   console.log(event.target.value); // Aquí va nuestra lógica
 > });
 > ```
 
@@ -123,7 +120,7 @@ Antes se acercarnos al evento de cambio, es una buena idea **guardar nuestra fun
 const debounce = () => {};
 ```
 
-Bastante simple, ahora veamos. 
+Bastante simple, ahora veamos.
 
 > Se inicia un _timer_
 
@@ -131,49 +128,50 @@ Para crear el timer, primero necesitamos guardarlo en una referencia (así podem
 
 ```jsx
 const debounce = (callback, delay) => {
-    let timer;
+  let timer;
 
-    return (...args) => {
-        // Creamos un nuevo timer.
-        timer = setTimeout( () => {
-            // Ejecutamos la función con los argumentos.
-            callback( ...args );
-        }, delay );
-    };
+  return (...args) => {
+    // Creamos un nuevo timer.
+    timer = setTimeout(() => {
+      // Ejecutamos la función con los argumentos.
+      callback(...args);
+    }, delay);
+  };
 };
 ```
 
 > [!NOTE]
 > ¿`return (...args)`?
 >
-> Si se te hace raro que creemos una función que _regresa otra función_, la razón es que necesitamos 
+> Si se te hace raro que creemos una función que _regresa otra función_, la razón es que necesitamos
 > una función que **reciba los argumentos del evento, pero que se ejecute después de nuestro timer**.
 > Cuando vemos: `addEventListener('change', debounced)`, lo que sucede es que `debounced` se ejecuta primero,
 > y después `change` **envía los argumentos a la función que `debounced` regresa**.
 
 > Si el _mismo_ evento vuelve a ser ejecutado:
-> * El timer se elimina
-> * Un nuevo timer se inicia
+>
+> - El timer se elimina
+> - Un nuevo timer se inicia
 
-Hasta ahora ya tenemos nuestro timer, y hemos especificado que al terminar ejecute nuestra función, 
+Hasta ahora ya tenemos nuestro timer, y hemos especificado que al terminar ejecute nuestra función,
 (esto se encarga del punto 4), pero nos falta el punto 3, **limpiar el timer si el evento se repite**.
 Como ya tenemos una referencia a nuestro timer, podemos limpiarlo con `clearTimeout`:
 
 ```jsx
-const debounce = ( callback, delay ) => {
-    // Guardamos referencia al timer.
-    let timer;
+const debounce = (callback, delay) => {
+  // Guardamos referencia al timer.
+  let timer;
 
-    return (...args) => {
-        // Limpiamos el timer si existe.
-        clearTimeout( timer );
+  return (...args) => {
+    // Limpiamos el timer si existe.
+    clearTimeout(timer);
 
-        // Creamos un nuevo timer.
-        timer = setTimeout( () => {
-            // Ejecutamos la función con los argumentos.
-            callback( ...args );
-        }, delay );
-    };
+    // Creamos un nuevo timer.
+    timer = setTimeout(() => {
+      // Ejecutamos la función con los argumentos.
+      callback(...args);
+    }, delay);
+  };
 };
 ```
 
@@ -181,30 +179,30 @@ const debounce = ( callback, delay ) => {
 
 ```jsx
 const debounced = debounce((e) => {
-    console.log(e.target.value);
+  console.log(e.target.value);
 }, 500);
 ```
 
 > [!NOTE]
 > Traduciendo esto, quedaría de esta forma:
-> 
+>
 > ```js
 > (e) => {
->    console.log(e.target.value);
-> }
+>   console.log(e.target.value);
+> };
 > ```
-> 
+>
 > Sería nuestro `callback`, y `500` sería el tiempo de espera en milisegundos, nuestro `delay`.
 
 Ahora, en lugar de utilizar nuestra función original, **pasamos nuestra función `debounced` al evento `onChange`**:
 
 ```jsx
 <input
-    type='text'
-    id='search1'
-    name='search1'
-    className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-    onChange={debounced}
+  type='text'
+  id='search1'
+  name='search1'
+  className='mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+  onChange={debounced}
 />
 ```
 
@@ -217,7 +215,7 @@ input.addEventListener('change', debounced);
 Ahora, si volvemos a probar nuestra forma de búsqueda, tendremos algo similar a esto:
 
 <AlignWide>
-    <ExampleTwo />
+  <ExampleTwo />
 </AlignWide>
 
 > [!TIP]
@@ -229,6 +227,6 @@ Después de esto, podemos ver una gran mejoría en nuestras llamadas, ya no se r
 
 ## Conclusión
 
-Como podemos ver, esta pequeña función puede llegar a ser de gran ayuda, especialmente cuando ponemos atención a la **experiencia del usuario**, en muchos casos, nos puede beneficiar el pausar un momento y esperar a que el usuario nos de algo de *feedback* antes de continuar con nuestros cálculos.
+Como podemos ver, esta pequeña función puede llegar a ser de gran ayuda, especialmente cuando ponemos atención a la **experiencia del usuario**, en muchos casos, nos puede beneficiar el pausar un momento y esperar a que el usuario nos de algo de _feedback_ antes de continuar con nuestros cálculos.
 
 Si tienes alguna duda o comentario, no dudes en contactarme, ¡me encantaría saber tu opinión!

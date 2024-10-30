@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 3
 publishedOn: '2024-01-29'
-updatedOn: '2024-10-18T02:33:51.416Z'
+updatedOn: '2024-10-29T22:15:33.774Z'
 description: >-
   Part three of a series of tutorials where we will learn how to create a
   settings page in WordPress using React and the WordPress API. Now we need to
@@ -10,6 +10,7 @@ description: >-
 published: true
 readingTime: 900
 ---
+
 During the [second part](/blog/create-a-settings-page-in-wordpress-with-react-part-2) of this tutorial to **create a settings page in WordPress**, I showed how to create a small React application that is displayed within our settings page, added a couple
 of fields and styles; and prepared the save button to work. Now what remains is to
 **save the data** inside our database and read it within our settings page to make
@@ -115,7 +116,7 @@ Now we need to **save our data** once the save button is pressed, for this we ne
 replace the `saveSettings` function with a call to the functions available in the
 `@wordpress/core-data`, and `@wordpress/data` packages
 
-> [!WARNING] 
+> [!WARNING]
 > **What is the difference?**
 >
 > If the question is why some functions are in core-data while others are in data?
@@ -240,41 +241,37 @@ const Settings = () => {
 
 ```jsx
 return (
-    <>
-        <h1>{ __( 'Select the desired options', 'mah-settings' ) }</h1>
-        
-        <Card>
-            <CardBody>
-                <TextControl
-                    help={ __( 'Insert your API key', 'mah-settings' ) }
-                    label={ __( 'API Key', 'mah-settings' ) }
-                    onChange={ setApiKey }
-                    value={ apiKey || '' }
-                />
-            </CardBody>
+  <>
+    <h1>{__('Select the desired options', 'mah-settings')}</h1>
 
-            <CardDivider />
+    <Card>
+      <CardBody>
+        <TextControl
+          help={__('Insert your API key', 'mah-settings')}
+          label={__('API Key', 'mah-settings')}
+          onChange={setApiKey}
+          value={apiKey || ''}
+        />
+      </CardBody>
 
-            <CardBody>
-                <ToggleControl
-                    label={ __( 'Activate functionality', 'mah-settings' ) }
-                    onChange={ setToggled }
-                    checked={ toggled || false }
-                />
-            </CardBody>
+      <CardDivider />
 
-            <CardFooter>
-                <Button
-                    disabled={ ! apiKey }
-                    onClick={ saveSettings }
-                    variant="primary"
-                >
-                    { isLoading && <Spinner /> }
-                    { ! isLoading && __( 'Save', 'mah-settings' ) }
-                </Button>
-            </CardFooter>
-        </Card>
-    </>
+      <CardBody>
+        <ToggleControl
+          label={__('Activate functionality', 'mah-settings')}
+          onChange={setToggled}
+          checked={toggled || false}
+        />
+      </CardBody>
+
+      <CardFooter>
+        <Button disabled={!apiKey} onClick={saveSettings} variant='primary'>
+          {isLoading && <Spinner />}
+          {!isLoading && __('Save', 'mah-settings')}
+        </Button>
+      </CardFooter>
+    </Card>
+  </>
 );
 ```
 
@@ -291,7 +288,7 @@ Let's see what we did:
    we tell the browser to **wait for the result** of the function with `await`, before disabling our flag again
 5. Finally, we indicate the conditions so that **if the flag is enabled show our spinner**, otherwise, show our text
 
-> [!NOTE] 
+> [!NOTE]
 > **Extra!**
 >
 > In addition to our spinner, it is often good to **disable** the button so that it cannot be used while our function loads. Can you figure out how to do this?
@@ -384,7 +381,7 @@ And now when we save our options, we will have a nice **success message** like t
 
 ![Success message in WordPress](/posts/create-a-settings-page-in-wordpress-with-react-part-3/success.webp)
 
-> [!CAUTION] 
+> [!CAUTION]
 > **What if something goes wrong?**
 >
 > In this example, I have only added a success message, but, in case we also want to know if something has failed (recommended) we could log it with the following modifications.

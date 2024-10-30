@@ -5,6 +5,11 @@ import { Children } from 'react';
 import clsx from 'clsx';
 import useTranslation from 'next-translate/useTranslation';
 
+/**
+ * Internal dependencies
+ */
+import { Blockquote, Pre } from '@/components/elements';
+
 export default function Alert({
   children,
   type,
@@ -33,10 +38,29 @@ export default function Alert({
         }
       )}
     >
-      {Children.map(children, (child, index) => {
+      {Children.map(children, (child: any, index: Number) => {
         if (0 === index) {
           // @TODO: Add translations for alert titles
           return <div className='alert-title'>{child}</div>;
+        }
+
+        /**
+         * If the child is a "expandable" element (breaks outside margins), we'll pass a prop to
+         * stay contained.
+         * All this happens after the markdown is parsed.
+         */
+        if (child && 'object' === typeof child) {
+          switch (child.type) {
+            case Blockquote:
+            case Pre:
+              return (
+                <child.type {...child.props.children} allowExpand={false}>
+                  {child.props.children}
+                </child.type>
+              );
+            default:
+              return child;
+          }
         }
 
         return child;

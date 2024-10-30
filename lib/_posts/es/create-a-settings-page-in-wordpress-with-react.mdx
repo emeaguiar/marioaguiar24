@@ -1,13 +1,14 @@
 ---
 title: Crear una página de opciones en WordPress con React – Parte 1
 publishedOn: '2024-01-15'
-updatedOn: '2024-10-18T04:06:55.853Z'
+updatedOn: '2024-10-29T22:15:33.780Z'
 description: |-
   Parte uno de una serie de tutoriales donde aprenderemos a crear una página de
     opciones en WordPress utilizando React y el API de WordPress
 published: true
 readingTime: 840
 ---
+
 A pesar de los avances en _Gutenberg_ que hemos visto los últimos años, con la
 idea de que las opciones de un post (o una página) deben ser manejadas **dentro
 del propio editor de WordPress** (a.k.a Gutenberg). Muchas veces aún nos vemos en
@@ -67,7 +68,7 @@ Para propositos de este tutorial, utilizaré la opción dos, pero con una difere
 importante. No utilizaré la mencionada _Settings API_, si no que en su lugar utilizaré
 **React**, con ayuda de los componentes existentes en Gutenberg.
 
-> [!NOTE] 
+> [!NOTE]
 > **¿Por qué React?**
 >
 > A lo largo de mis años de carrera, he creado un sin fin de páginas de opciones,
@@ -85,7 +86,7 @@ sobre como iniciar un proyecto local, normalmente diría que puedes usar cualqui
 ambiente que desees, y sigo diciéndolo, unicamente pediré que **sea capaz de utilizar
 node** e instales el paquete `@wordpress/scripts` (como en mi tutorial [Compilando CSS y Javascript con wp-scripts](/compiling-css-and-javascript-with-wp-scripts)).
 
-> [!NOTE] 
+> [!NOTE]
 > **Utilizando wp-env**
 >
 > Si no eres muy familiar con ambientes locales te invito a ver mi video
@@ -140,8 +141,8 @@ namespace Mah_Settings;
 class Settings {
     /**
      * Registra los hooks.
-     * 
-     * @return void 
+     *
+     * @return void
      */
     public function init(): void {
         var_dump( 'Mi página' );
@@ -152,7 +153,7 @@ class Settings {
 Una vez creados estos archivos podremos entrar en nuestro sitio y ver `Mi página`
 en la parte superior, esto significa que nuestro plugin está funcionando.
 
-> [!NOTE] 
+> [!NOTE]
 > **¿Por qué una clase?**
 >
 > Si bien todo este código podría ir únicamente en el archivo donde registramos
@@ -174,7 +175,7 @@ private $plugin_path = '';
 
 /**
  * Menu slug.
- * 
+ *
  * @var string
  */
 private $menu_slug = '';
@@ -185,8 +186,8 @@ public function __construct( string $plugin_file ) {
 
 /**
  * Registra los hooks.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function init(): void {
     add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
@@ -194,8 +195,8 @@ public function init(): void {
 
 /**
  * Registra la página de opciones.
- * 
- * @return void 
+ *
+ * @return void
  */
  public function add_menu_page(): void {
     $this->menu_slug = add_menu_page(
@@ -208,11 +209,11 @@ public function init(): void {
         99
     );
  }
- 
+
 /**
  * Renderiza la página de opciones.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function render_settings_page(): void {
     ?>
@@ -253,14 +254,14 @@ y colocamos lo siguiente:
 `webpack.config.js`
 
 ```js
-const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
 module.exports = {
-    ...defaultConfig,
-    entry: {
-        ...defaultConfig.entry(),
-        settings: './js/src/settings.js',
-    },
+  ...defaultConfig,
+  entry: {
+    ...defaultConfig.entry(),
+    settings: './js/src/settings.js',
+  },
 };
 ```
 
@@ -279,7 +280,7 @@ module.exports = {
 `js/src/settings.js`
 
 ```js
-console.log( 'Hello settings' );
+console.log('Hello settings');
 ```
 
 Básicamente estamos **extendiendo la configuración por defecto que provee WordPress**
@@ -300,8 +301,8 @@ public static function init(): void {
 ```php
 /**
  * Registra los scripts y estilos.
- * 
- * @return void 
+ *
+ * @return void
  */
 public function enqueue_scripts(): void {
     $screen = get_current_screen();

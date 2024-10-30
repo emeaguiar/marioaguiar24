@@ -1,11 +1,12 @@
 ---
 title: Compilando CSS y Javascript con wp-scripts
 publishedOn: '2022-01-14'
-updatedOn: '2024-10-18T04:06:55.851Z'
+updatedOn: '2024-10-29T22:15:33.780Z'
 description: Tutorial rápido para compilar CSS y Javascript con `wp-scripts`
 published: true
 readingTime: 180
 ---
+
 Desde la aparición de Gutenberg, o probablemente antes, se han estado implementando
 varios **paquetes oficiales** de WordPress para hacer nuestras vidas como desarrolladores
 más sencillas, por así decirlo.
@@ -102,7 +103,7 @@ así que podemos comenzar por ahí.
 ```js
 import { __ } from '@wordpress/i18n';
 const init = () => {
-    console.log( __( 'Hello World' ) );
+  console.log(__('Hello World'));
 };
 init();
 ```

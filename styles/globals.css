@@ -66,5 +66,5 @@ ul.contains-task-list {
 }
 
 .prism-code {
-  max-width: calc(100vw - 48px);
+  max-width: calc(100vw - 3rem);
 }

@@ -1,7 +1,7 @@
 ---
 title: Mostrar un feed RSS en WordPress
 publishedOn: '2011-07-22T18:50:36.516Z'
-updatedOn: '2024-10-18T04:06:55.854Z'
+updatedOn: '2024-10-29T22:15:33.781Z'
 description: >-
   Mostrar un feed RSS en WordPress es bastante simple, puedes usar el widget RSS
   integrado o puedes usar un plugin. Pero ¿qué pasa si quieres mostrar un feed
@@ -10,6 +10,7 @@ description: >-
 published: true
 readingTime: 240
 ---
+
 > [!WARNING]
 > Este artículo fue escrito en **2011** 👴🏼. La mayoría de los consejos aquí no son válidos y
 > no recomiendo usar ninguno de los fragmentos mostrados aquí.
@@ -61,12 +62,12 @@ Ahora a lo bueno, la implementación:
 function fetchFeed2($strFeedURL) { // Función del feed
     if( !class_exists( 'WP_Http' ) ) // Clase WP_Http
         include_once( ABSPATH . WPINC. '/class-http.php' ); // Incluir clase
-        
+
         $request = new WP_Http;
         $result = $request->request( $strFeedURL ); // probar conexión
-        
+
         if ( ! is_wp_error($result) ) { // Sin error
-            if ( ( $result['response']['code'] = 200 ) && ( $result['response']['message'] = "OK" ) ) { 
+            if ( ( $result['response']['code'] = 200 ) && ( $result['response']['message'] = "OK" ) ) {
                 return $result['body']; // obtener datos
             } else {
                 return  $result = "";
@@ -76,7 +77,7 @@ function fetchFeed2($strFeedURL) { // Función del feed
             $error_string = $result->get_error_message(); // ¿qué error fue?
             echo '
 ' . $error_string . '; // mostrar error
-        } 
+        }
     }
 ```
 
@@ -122,9 +123,9 @@ ahora solo tenemos que llamar a la función `fetch_feed()`.
 $rss = fetch_feed('http://feed.url');
 if (!is_wp_error( $rss ) ) : // ¿Se creó el objeto?
     // ¿Cuántos elementos tenemos? (Máximo 5)
-    $maxitems = $rss->get_item_quantity(5); 
+    $maxitems = $rss->get_item_quantity(5);
     // Crear un array con elementos comenzando con #0
-    $rss_items = $rss->get_items(0, $maxitems); 
+    $rss_items = $rss->get_items(0, $maxitems);
     endif;
 ?>
 ```

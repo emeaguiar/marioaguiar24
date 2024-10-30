@@ -1,0 +1,120 @@
+---
+title: La forma correcta de usar Blockquotes y Pullquotes
+publishedOn: '2024-10-23'
+updatedOn: '2024-10-30T16:23:29.370Z'
+description: Consejos para la utilización correcta del elemento blockquote
+published: true
+readingTime: 360
+---
+
+Justo como arte del destino (o tal vez un increíblemente buen algoritmo), me encuentro trabajando en el diseño de `<blockquote>` para este blog, quería que fuera algo vistoso pero al mismo tiempo elegante, como espero poder hacer con el resto del blog, y mientras lo hacía me he encontrado con un artículo en mi feed sobre cómo **Michelle Barker** [ha estado utilizando mal los blockquotes](https://css-irl.info/ive-been-doing-blockquotes-wrong/), lo que al mismo tiempo me llevó a preguntarme si yo también hacía lo mismo (respuesta: si.)
+
+> You’ve probably used a `<blockquote>` when writing HTML. I know I’ve used literally hundreds of them. What I didn’t know is that I’ve been using them wrong all these years.
+
+> [!NOTE]
+>
+> **Traducción**:
+>
+> _Probablemente has usado un `<blockquote>` al escribir HTML. Sé que yo he usado literalmente cientos de ellos. Lo que no sabía es que los he estado usando mal todos estos años._
+
+El artículo nos lleva a un agujero de conejo hacia _otro artículo_, ahora de **Heydon Pickering**, titulado "[El elemento blockquote](https://heydonworks.com/article/the-blockquote-element/)" en el que se expresan puntos interesantes sobre la historia del elemento y algunos de sus problemas más comunes, a continuación resumo algunos de los puntos más interesantes desde mi entendimiento.
+
+## ¿Qué es un blockquote?
+
+Creo que el principal problema que Heydon menciona, siendo el mismo que Michelle ha cometido en el pasado, y del que al mismo tiempo yo he sido culpable; es simplemente **no tener claro lo que es un blockquote**, y eso mismo nos lleva a su uso incorrecto. No importa que tan fuerte golpees con la llave de tuercas, _sigue sin ser un martillo_.
+
+En español, esto nos resulta aún más complicado porque _blockquote_ no tiene una traducción literal a nuestro lenguaje, lo más cercano que he podido encontrar es simplemente a **_cita_**, ¿un _bloque de cita_?, ¿o una _cita de bloque_? Ninguno de ellos funciona especialmente bien… pero si buscamos la definición de _cita literaria_, nos encontramos con este link hacia [el libro de estilo de la lengua española](https://www.rae.es/libro-estilo-lengua-espa%C3%B1ola/citas) de la RAE, dando una definición un poco diferente a lo que muestra [su propio diccionario sobre cita](https://dle.rae.es/cita) (énfasis mío):
+
+> Las citas reproducen fragmentos de otras obras o de palabras que **no pertenecen al propio texto**. Se trata, por tanto, de un discurso de segundo nivel que generalmente corresponde a una voz externa, pero que también puede tomarse de otra obra del mismo autor.
+
+Esta es, la definición más cercana que tenemos a [la intención original del elemento `<blockquote>`](https://www.w3.org/TR/2011/WD-html5-author-20110809/the-blockquote-element.html), y donde tantas veces nos hemos equivocado, y es no es algo raro ver citas de un artículo citado en el mismo articulo, lo que, aparentemente está **mal**.
+
+> Content inside a [blockquote](https://www.w3.org/TR/2011/WD-html5-author-20110809/the-blockquote-element.html#the-blockquote-element) **must** be quoted from another source[…]
+
+> [!NOTE]
+> (_Énfasis mío._)
+>
+> **Traducción**:
+>
+> _El contenido dentro de un blockquote **debe ser** citado desde otra fuente[…]_
+
+## Blockquote vs Pull quote
+
+Aquí es donde entra nuestro segundo actor _principal_, los _Pull quotes_, que para variar _tampoco tiene una traducción literal_ (y cuyo concepto me ha constado mucho encontrar en español).
+
+Un pull quote se refiere a _jalar_ (pull) una parte del articulo que se está escribiendo para resaltarlo **dentro del mismo artículo**, esta es la diferencia principal entre pull quotes y blockquotes, más que diseño o posicionamiento de la cita, se trata de la fuente de la misma (_externa vs interna_).
+
+![Ejemplo de pull quote de revista](/posts/the-correct-way-of-using-blockquotes/pullquote.jpg 'Ejemplo de pull quote en revista')
+
+Estos son bastante utilizados en revistas, debido varios factores, entre ellos, que las revistas tienen _páginas_. No es raro que se tomen citas del mismo artículo de alguna página anterior para **recalcar algún punto más avanzado el artículo**, esto no sucede en web porque hoy en día los artículos web únicamente ocupan una página, ya que **no tenemos límite de cuanto se puede hacer _scroll_**.
+
+Otra razón importante del por qué los pull quotes son utilizados en revistas es que normalmente **los artículos en revistas tienen diseños únicos para ellos**, debido a que sólo serán impresos en papel la consistencia tiende a ser menos importante, y los recursos para poder diseñarlos tienden a ser menos (no es necesario _todo un equipo de diseñadores y programadores_ para construir la página en donde irán impresos). Por lo tanto puedes tomar una cita del artículo para recalcarla fácilmente en la misma página.
+
+Éstos no son factores determinantes en un sitio web, por lo cual debería ser raro ver pull quotes de la misma forma en que los vemos en revistas. Sin embargo, por cuestiones estéticas más que por cualquier otra cosa, si es algo común verlos.
+
+> [!NOTE]
+> Cabe recalcar que **no hay un elemento `<pullquote>` en HTML**, (pero si existe el elemento `<aside>`, que justo queda para esos propósitos.)
+
+Entonces…
+
+## ¿Cómo usar blockquotes en HTML?
+
+Una vez hemos entendido (un poco) el punto del elemento, podemos deducir que fuera de cualquier situación estética, `<blockquote>` nos sirve para cuando queremos citar algún **texto externo** a nuestro artículo, por ejemplo:
+
+```html
+<blockquote>
+  <p>
+    Sonreí sin querer. Era divertido trabajar con las chicas; siempre estaban
+    haciendo chistes, lanzándose insultos y halagos en la cocina, quejándose de
+    clientes molestos o coqueteando con los cocineros y los lavatrastes. Había
+    sonreído más en esas dos semanas de lo que recordaba haberlo hecho en toda
+    mi vida.
+  </p>
+</blockquote>
+
+<cite>– El Jardín de las Mariposas</cite>
+```
+
+> [!TIP]
+>
+> **`<cite>` – ¿Dentro o fuera de la cita?**
+>
+> Si te das cuenta en el ejemplo anterior he utilizado `<cite>` para dar atribución sobre la fuente la cita, pero **lo he dejado fuera de la cita en si**… ¿por qué?
+>
+> Técnicamente, **el colocar la citación dentro de la cita convertiría la citación en parte de la cita**, lo que es semánticamente incorrecto ([y viene en la especificación](https://html.spec.whatwg.org/multipage/grouping-content.html#the-blockquote-element:~:text=Attribution%20for%20the%20quotation%2C%20if%20any%2C%20must%20be%20placed%20outside%20the%20blockquote%20element.))
+>
+> A menos claro que si sea parte de la cita:
+>
+> > You miss 100% of the shots you don't take.
+> > – Wayne Gretzky
+>
+> – Michael Scott
+
+> [!CAUTION]
+> Ten en mente que **el elemento `<cite>` es diferente a el atributo `cite`**, el cual _debe ser una URL válida que enlace a la fuente_. Sin embargo, en realidad no tiene mucha utilidad ya que casi todos los lectores de pantalla simplemente lo ignorarán…
+
+**Mantener la fuente fuera de la cita tiene sentido**, pero no puedo evitar pensar que se siente desconectado… Como si ambos no pertenecieran juntos, Heydon opina lo mismo, así que ha propuesto una solución utilizando `<figure>` y `<figcaption>` para complementarlos:
+
+```html
+<figure>
+  <blockquote>
+    <p>
+      Sonreí sin querer. Era divertido trabajar con las chicas; siempre estaban
+      haciendo chistes, lanzándose insultos y halagos en la cocina, quejándose
+      de clientes molestos o coqueteando con los cocineros y los lavatrastes.
+      Había sonreído más en esas dos semanas de lo que recordaba haberlo hecho
+      en toda mi vida.
+    </p>
+  </blockquote>
+
+  <figcaption>– <cite>El Jardín de las Mariposas</cite></figcaption>
+</figure>
+```
+
+Puedes ver como aún utilizamos el elemento `<cite>`, pero ahora **todo se siente como parte del mismo bloque**, en lo personal, a mi me gusta.
+
+## Conclusión
+
+Hace muchos años, mientras intentaba crear _el sitio más semántico en existencia_, descubrí que hay muchísimos pequeños detalles que dificultan la tarea, así mismo muchos elementos tienen lugar para la interpretación, no todo en la especificación es tan simple como si y no. **Lo importante, a mi parecer, es que tu sitio funcione**, (_y que sea accesible_.)
+
+Así que, al final. Sólo haz que tus usuarios estén cómodos ☺️️.

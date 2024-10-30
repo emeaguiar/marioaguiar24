@@ -1,15 +1,16 @@
 ---
 title: Como añadir un metabox en React a Gutenberg
 publishedOn: '2024-09-18'
-updatedOn: '2024-10-18T04:06:55.849Z'
+updatedOn: '2024-10-30T16:23:29.369Z'
 description: >-
   En este tutorial mostraré como agregar un componente de react al área de
   metaboxes de WordPress
 published: true
 readingTime: 240
 ---
-Recientemente me vi en la necesidad de agregar controles al **editor de bloques de WordPress**, o 
-_Gutenberg_ como también se le llama al proyecto, esto normalmente es muy sencillo pero tenía un par 
+
+Recientemente me vi en la necesidad de agregar controles al **editor de bloques de WordPress**, o
+_Gutenberg_ como también se le llama al proyecto, esto normalmente es muy sencillo pero tenía un par
 de complejidades que no había visto antes:
 
 1. Debía tener controles en React y
@@ -19,8 +20,8 @@ Estos requisitos por si mismos no son mayor problema, pero **juntos** era algo q
 
 ## El problema
 
-El asunto aquí es que es sencillo hacer ambas cosas por separado, podemos agregar un nuevo plugin al 
-editor y mostrarlo en **la parte lateral** (el sidebar), ó, podemos agregar un metabox con PHP y 
+El asunto aquí es que es sencillo hacer ambas cosas por separado, podemos agregar un nuevo plugin al
+editor y mostrarlo en **la parte lateral** (el sidebar), ó, podemos agregar un metabox con PHP y
 **se mostrará automáticamente en la parte inferior del editor**.
 
 ¿Ven el problema? **No hay forma de agregar un plugin de Gutenberg en la parte inferior, y no podemos agregar controles React en PHP**.
@@ -31,15 +32,16 @@ _…¿O si?_
 
 Resulta que la solución es mucho más simple de lo que pensaba, lo que necesitamos es **una combinación de ambas** para que esto funcione, básicamente, podemos hacer lo siguiente.
 
-1. Crear un *metabox* que aparezca en la parte inferior de la página, este **únicamente mostrará un contenedor**
+1. Crear un _metabox_ que aparezca en la parte inferior de la página, este **únicamente mostrará un contenedor**
 2. Creamos un plugin de Gutenberg con la funcionalidad react que necesitamos, este se mostrará en el sidebar por defecto
-3. **Creamos un *portal* que mueva nuestro componente en React a nuestro contenedor dentro del metabox**
+3. **Creamos un _portal_ que mueva nuestro componente en React a nuestro contenedor dentro del metabox**
 
 ¡Esa es la magia! Ahora veamos como podemos hacerlo con código.
 
 > [!NOTE]
+>
 > **¿Portal?**
-> 
+>
 > Esto merece su propio post, pero a grandes rasgos los [portales](https://react.dev/reference/react-dom/createPortal) nos permiten **mover partes de nuestros componentes a cualquier sitio dentro del DOM**, pero mantienen su estructura dentro de nuestra aplicación en React.
 
 ## Registrar un Metabox en WordPress
@@ -66,7 +68,7 @@ class Metabox
 {
     /**
      * Agrega los hooks necesarios
-     * 
+     *
      * @return void
      */
     public function init(): void
@@ -97,15 +99,15 @@ class Metabox
 (new Metabox())->init();
 ```
 
-Esto lo que hará será **agregar un nuevo metabox al editor de blocks**, si no fijamos bien, podemos adivinar 
+Esto lo que hará será **agregar un nuevo metabox al editor de blocks**, si no fijamos bien, podemos adivinar
 que _está vacío_ (aunque más bien simplemente no tiene texto), algo así:
 
-[![Imagen del metabox vacío](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)
+![Imagen del metabox vacío](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)
 
 ## Registrar un Plugin en Gutenberg
 
-Esto nos servirá como **el contenedor de nuestro componente en React**, ahora, para nuestro componente 
-podemos agregar un nuevo archivo, simplemente creamos un plugin de Gutenberg utilizando 
+Esto nos servirá como **el contenedor de nuestro componente en React**, ahora, para nuestro componente
+podemos agregar un nuevo archivo, simplemente creamos un plugin de Gutenberg utilizando
 [registerPlugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-plugins/#:~:text=to%20be%20rendered.-,registerPlugin,-Registers%20a%20plugin):
 
 ```jsx
@@ -115,18 +117,15 @@ podemos agregar un nuevo archivo, simplemente creamos un plugin de Gutenberg uti
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
 
-registerPlugin( 'mah-metabox', {
-	render: () => {
-		return (
-            <PluginDocumentSettingPanel
-                name="mah-metabox"
-                title="Mah Metabox"
-            >
-                <h2>Mah Metabox</h2>
-            </PluginDocumentSettingPanel>
-        );
-	},
-} );
+registerPlugin('mah-metabox', {
+  render: () => {
+    return (
+      <PluginDocumentSettingPanel name='mah-metabox' title='Mah Metabox'>
+        <h2>Mah Metabox</h2>
+      </PluginDocumentSettingPanel>
+    );
+  },
+});
 ```
 
 No olvidemos agregar nuestro archivo al editor:
@@ -134,7 +133,7 @@ No olvidemos agregar nuestro archivo al editor:
 ```php
 /**
  * Agrega los hooks necesarios
- * 
+ *
  * @return void
  */
 public function init(): void
@@ -166,23 +165,24 @@ public function enqueue_assets(): void
 
 Y el resultado sería algo así:
 
-[![Imagen del plugin en el sidebar](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)
+![Imagen del plugin en el sidebar](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)
 
 Ahora tenemos los dos componentes que necesitamos, y **estamos preparados para juntarlos**.
 
 > [!IMPORTANT]
+>
 > **¿Qué es `PluginDocumentSettingPanel`?**
 >
-> Este es un componente de Gutenberg que nos permite **agregar controles al editor de bloques**, en este 
+> Este es un componente de Gutenberg que nos permite **agregar controles al editor de bloques**, en este
 > caso lo estamos utilizando para mostrar nuestro componente en el sidebar.
 >
-> A pesar de lo que esto podría hacernos pensar (y lo sencillo que sería hacer todo esto), **no existe una 
+> A pesar de lo que esto podría hacernos pensar (y lo sencillo que sería hacer todo esto), **no existe una
 > alternativa que nos permita mostrar nuestro componente en la parte inferior del editor**.
 
 ## Juntando el plugin de Gutenberg con nuestro Metabox
 
-Por fortuna, esto es increiblemente sencillo gracias al anteriormente mencionado `createPortal`, 
-simplemente necesitamos modificar nuestro plugin para **crear un portal y enviar nuestro componente 
+Por fortuna, esto es increiblemente sencillo gracias al anteriormente mencionado `createPortal`,
+simplemente necesitamos modificar nuestro plugin para **crear un portal y enviar nuestro componente
 a través de ese portal**:
 
 ```jsx
@@ -192,44 +192,38 @@ a través de ese portal**:
 import { createPortal } from '@wordpress/element';
 import { registerPlugin } from '@wordpress/plugins';
 
-const Metabox = () => (
-    <h2>Mah Metabox</h2>
-);
+const Metabox = () => <h2>Mah Metabox</h2>;
 
-const MetaboxPortal = () => (
-	createPortal(
-		<Metabox />,
-		document.querySelector( '#mah-metabox-content' )
-	)
-);
+const MetaboxPortal = () =>
+  createPortal(<Metabox />, document.querySelector('#mah-metabox-content'));
 
-registerPlugin( 'mah-metabox', {
-	render: MetaboxPortal,
-} );
+registerPlugin('mah-metabox', {
+  render: MetaboxPortal,
+});
 ```
 
-¡Listo! Eso es todo lo que necesitamos, lo que estamos haciendo es crear un portal hacia nuestro 
-elemento con id `mah-metabox`, así, cuando React ejecute `MetaboxPortal` sabrá que **tiene que enviar 
-su contenido a través del portal**, y terminará mostrando nuestro componente justo en el lugar que 
+¡Listo! Eso es todo lo que necesitamos, lo que estamos haciendo es crear un portal hacia nuestro
+elemento con id `mah-metabox`, así, cuando React ejecute `MetaboxPortal` sabrá que **tiene que enviar
+su contenido a través del portal**, y terminará mostrando nuestro componente justo en el lugar que
 necesitamos, que es nuestro metabox:
 
-[![Imagen del componente dentro de nuestro metabox](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)
+![Imagen del componente dentro de nuestro metabox](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)
 
 ## Conclusión
 
-Esto resulta bastante útil cuando necesitamos más espacio del que nuestra sidebar puede darnos, un 
-buen ejemplo es el plugin [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) que muestra la 
+Esto resulta bastante útil cuando necesitamos más espacio del que nuestra sidebar puede darnos, un
+buen ejemplo es el plugin [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/) que muestra la
 información del post debajo del editor, lo cual hace que editarlo sea mucho más sencillo.
 
 Una vez seguidos todos estos pasos, sólo necesitamos agregar nuestros controles como si estuvieramos
-trabajando en cualquier otro proyecto de React, y listo, ya tenemos un **metabox en React en Gutenberg**. 
-Con la ventaja de poder acceder a los datos del post y modificarlos directamente desde nuestro componente 
+trabajando en cualquier otro proyecto de React, y listo, ya tenemos un **metabox en React en Gutenberg**.
+Con la ventaja de poder acceder a los datos del post y modificarlos directamente desde nuestro componente
 a travez de los componentes en `@wordpress/data`.
 
-[![Imagen del plugin en el editor](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)
+![Imagen del plugin en el editor](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)
 
 ## Leer más
 
-* [createPortal](https://react.dev/reference/react-dom/createPortal)
-* [registerPlugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-plugins/#:~:text=to%20be%20rendered.-,registerPlugin,-Registers%20a%20plugin)
-* [PluginDocumentSettingPanel](https://developer.wordpress.org/block-editor/reference-guides/slotfills/plugin-document-setting-panel/)
+- [createPortal](https://react.dev/reference/react-dom/createPortal)
+- [registerPlugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-plugins/#:~:text=to%20be%20rendered.-,registerPlugin,-Registers%20a%20plugin)
+- [PluginDocumentSettingPanel](https://developer.wordpress.org/block-editor/reference-guides/slotfills/plugin-document-setting-panel/)

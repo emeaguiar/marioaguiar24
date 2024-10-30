@@ -20,7 +20,7 @@ import Link from 'next/link';
 /**
  * Internal dependencies
  */
-import { CONTACT_FORM_TO_EMAIL, CONFERENCES, SITE_URL } from '@/lib/data';
+import { CONFERENCES, SITE_URL } from '@/lib/data';
 import { merriweather } from '@/components/fonts';
 
 export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
@@ -45,20 +45,20 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
           {t('title')}
         </h1>
 
-        <p className='px-4 lg:max-w-screen-md'>
+        <p className='px-4 text-xl/10 lg:max-w-screen-md'>
           <Trans
             i18nKey='conferences:content'
             components={[<strong key='strong' />]}
           />
         </p>
 
-        <p className='w-full px-4 lg:max-w-screen-md'>
+        <p className='w-full px-4 text-xl/10 lg:max-w-screen-md'>
           <Trans
             i18nKey='conferences:cta'
             components={[
               <Link
                 className='underline hover:no-underline'
-                href={`mailto:${CONTACT_FORM_TO_EMAIL}`}
+                href={{ search: '?modal=1' }}
                 key='email'
               />,
               <EnvelopeIcon className='inline-block h-6 w-6' key='icon' />,

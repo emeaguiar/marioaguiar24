@@ -1,13 +1,14 @@
 ---
 title: Implementing throttle in Vanilla JavaScript
 publishedOn: '2021-09-24'
-updatedOn: '2024-10-18T02:33:51.422Z'
+updatedOn: '2024-10-29T22:15:33.777Z'
 description: >-
   This time I will be showing how to create a simple throttle function using
   only Vanilla JavaScript.
 published: true
 readingTime: 360
 ---
+
 import Codepen from 'react-codepen-embed';
 import Code from '@/components/code/code';
 
@@ -38,18 +39,18 @@ executes a function, the function is executed once.
 Let's consider that we have HTML code, in which this button is included:
 
 ```js
-<button id="js-say-hello">Say Hello</button>
+<button id='js-say-hello'>Say Hello</button>
 ```
 
 And we anchor an event like this, which logs “Hello world!” in the console:
 
 ```js
-const button = document.querySelector( '#js-say-hello' );
+const button = document.querySelector('#js-say-hello');
 const sayHello = () => {
-    console.log( 'Hello World!' );
-}
-if ( button ) {
-    button.addEventListener( 'click', sayHello );
+  console.log('Hello World!');
+};
+if (button) {
+  button.addEventListener('click', sayHello);
 }
 ```
 
@@ -67,22 +68,22 @@ In the following example we will implement a simple version of Throttle, taking
 as reference the previous code, we will implement the following:
 
 ```js
-const throttle = ( callback, delay ) => {
-    // We start a variable to know when the function was last called
-    let lastCalled = 0;
-    return ( ...args ) => {
-        // We save a reference to this moment.
-        const now = new Date().getTime();
-        // We check if the defined delay time has passed
-        if ( delay > ( now - lastCalled ) ) {
-            return;
-        }
-        // We save this moment as the last time the function was called
-        lastCalled = now;
-        // We execute the function
-        return callback( ...args );
+const throttle = (callback, delay) => {
+  // We start a variable to know when the function was last called
+  let lastCalled = 0;
+  return (...args) => {
+    // We save a reference to this moment.
+    const now = new Date().getTime();
+    // We check if the defined delay time has passed
+    if (delay > now - lastCalled) {
+      return;
     }
-}
+    // We save this moment as the last time the function was called
+    lastCalled = now;
+    // We execute the function
+    return callback(...args);
+  };
+};
 export default throttle;
 ```
 
@@ -92,15 +93,15 @@ original code, the call to the function by wrapping it in our Throttle.
 ```js
 // Import our function
 import throttle from './throttle.js';
-const button = document.querySelector( '#js-say-hello' );
+const button = document.querySelector('#js-say-hello');
 // Wrap our message in a new function
 const printMessage = () => {
-    console.log( 'Hello World!' );
-}
+  console.log('Hello World!');
+};
 // Run Throttle
-const sayHello = throttle( printMessage, 1000 );
-if ( button ) {
-    button.addEventListener( 'click', sayHello );
+const sayHello = throttle(printMessage, 1000);
+if (button) {
+  button.addEventListener('click', sayHello);
 }
 ```
 

@@ -1,7 +1,7 @@
 ---
 title: Compiling CSS and Javascript with wp-scripts
 publishedOn: '2022-01-14'
-updatedOn: '2024-10-18T02:33:51.416Z'
+updatedOn: '2024-10-29T22:15:33.773Z'
 description: Quick tutorial to compile CSS and Javascript with `wp-scripts`
 published: true
 readingTime: 180
@@ -38,18 +38,18 @@ our application**, for the purposes of this tutorial we don't need much, we can 
 
 ```json
 {
-    "name": "scripts",
-    "version": "1.0.0",
-    "description": "Simple @wordpress/scripts tutorial",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Mario Aguiar",
-    "license": "ISC",
-    "devDependencies": {
-        "@wordpress/scripts": "^18.0.1"
-    }
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "Simple @wordpress/scripts tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mario Aguiar",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^18.0.1"
+  }
 }
 ```
 
@@ -71,19 +71,19 @@ add it to our list of scripts in our `package.json`, like this:
 
 ```json
 {
-    "name": "scripts",
-    "version": "1.0.0",
-    "description": "Simple @wordpress/scripts tutorial",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "wp-scripts start"
-    },
-    "author": "Mario Aguiar",
-    "license": "ISC",
-    "devDependencies": {
-        "@wordpress/scripts": "^18.0.1"
-    }
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "Simple @wordpress/scripts tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "wp-scripts start"
+  },
+  "author": "Mario Aguiar",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^18.0.1"
+  }
 }
 ```
 
@@ -100,7 +100,7 @@ so we can start there.
 ```js
 import { __ } from '@wordpress/i18n';
 const init = () => {
-    console.log( __( 'Hello World' ) );
+  console.log(__('Hello World'));
 };
 init();
 ```

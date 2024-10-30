@@ -1,7 +1,7 @@
 ---
 title: Calculate average reading time in JavaScript
 publishedOn: '2024-08-16'
-updatedOn: '2024-10-18T02:33:51.415Z'
+updatedOn: '2024-10-30T16:23:29.367Z'
 description: >-
   In this post I will explain and share a small script that will allow us to
   calculate
@@ -27,11 +27,11 @@ and then I will explain it:
 /**
  * Calculate the average reading time of a text
  */
-function readingTime( text: string ): number {
-    const WORDS_PER_MINUTE: number = 225;
-    const words: number = text.trim().split(/\s+/).length;
+function readingTime(text: string): number {
+  const WORDS_PER_MINUTE: number = 225;
+  const words: number = text.trim().split(/\s+/).length;
 
-    return Math.ceil(words / WORDS_PER_MINUTE);
+  return Math.ceil(words / WORDS_PER_MINUTE);
 }
 ```
 
@@ -39,18 +39,18 @@ function readingTime( text: string ): number {
 
 As you can see, it's a pretty simple piece of code, basically what we do is:
 
-* We define a constant `WORDS_PER_MINUTE` that will give us a base for our calculation,
-normally _ranges between 150 and 300_ (words per minute) depending on the level and age of the person, so **we will use 225**[^1]
-* `text.trim()` removes the spaces at the beginning and end of the text, so that
-**always starts and ends with a letter, number, or symbol**
-* `.split(/\s+/)` “cuts” all the text at each space and stores it in an `array`
-* `.length` returns **the total number of elements in the array**, our number of words
-* `Math` is the JavaScript library that provides functions for calculations
-* `.ceil` is a **rounding function**, it means that it will round _up_
-to the nearest whole number (for example 52.2 will become 53)[^2]
-* Finally, **we divide our total words by our constant of
-words per minute** (`words / WORDS_PER_MINUTE`), and we will have as a result
-the number of minutes it would take an average person to read the text
+- We define a constant `WORDS_PER_MINUTE` that will give us a base for our calculation,
+  normally _ranges between 150 and 300_ (words per minute) depending on the level and age of the person, so **we will use 225**[^1]
+- `text.trim()` removes the spaces at the beginning and end of the text, so that
+  **always starts and ends with a letter, number, or symbol**
+- `.split(/\s+/)` “cuts” all the text at each space and stores it in an `array`
+- `.length` returns **the total number of elements in the array**, our number of words
+- `Math` is the JavaScript library that provides functions for calculations
+- `.ceil` is a **rounding function**, it means that it will round _up_
+  to the nearest whole number (for example 52.2 will become 53)[^2]
+- Finally, **we divide our total words by our constant of
+  words per minute** (`words / WORDS_PER_MINUTE`), and we will have as a result
+  the number of minutes it would take an average person to read the text
 
 That's it! If we want to go a step further we can **convert it to hours** or save it
 in seconds to have better control, but basically this is all we need.
@@ -64,12 +64,13 @@ source we can think of.
 For example:
 
 ```ts
-const text = document.querySelector(".article").innerText; // It is important to use \`innerText\`;
+const text = document.querySelector('.article').innerText; // It is important to use \`innerText\`;
 
-readingTime( text );
+readingTime(text);
 ```
 
 > [!NOTE]
+>
 > **Why do we use `innerText` instead of `innerHTML`?**
 >
 > Because `innerText` returns the text _without tags_,
@@ -85,4 +86,5 @@ I hope it helps you as much as it has helped me, greetings!
 - [Calculate the estimated reading time of an article using JavaScript](https://dev.to/michaelburrows/calculate-the-estimated-reading-time-of-an-article-using-javascript-2k9l)
 
 [^1]: [Average Reading Speed by Age and Grade Level](https://scholarwithin.com/average-reading-speed#average-reading-speed-by-age-and-grade)
+
 [^2]: [Math.ceil() - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil)

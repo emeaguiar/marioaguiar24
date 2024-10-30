@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import clsx from 'clsx';
 import { useMemo } from 'react';
 import { bundleMDX } from 'mdx-bundler';
 import remarkGfm from 'remark-gfm';
@@ -9,6 +10,7 @@ import { getMDXComponent } from 'mdx-bundler/client';
 import rehypeSlug from 'rehype-slug';
 import { NextSeo } from 'next-seo';
 import { usePathname } from 'next/navigation';
+import rehypeUnwrapImages from 'rehype-unwrap-images';
 
 /**
  * Next dependencies
@@ -21,11 +23,14 @@ import { YouTubeEmbed } from '@next/third-parties/google';
  */
 import {
   A,
+  Blockquote,
   H1,
   H2,
   H3,
   H4,
+  Img,
   P,
+  Pre,
   OL,
   UL,
   Table,
@@ -34,10 +39,10 @@ import {
   Tr,
   Code as CodeElement,
 } from '@/components/elements';
+import { notoSans } from '@/components/fonts';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
-import Code from '@/components/code/code';
 import { SITE_URL } from '@/lib/data';
 
 export default function PostPage({
@@ -63,7 +68,6 @@ export default function PostPage({
         description={description}
         canonical={`${SITE_URL}/${locale}${pathname}`}
       />
-
       <div className='mt-4 flex flex-col items-center gap-6 px-4 text-xl/9 lg:my-16'>
         <H1>{title}</H1>
 
@@ -74,13 +78,19 @@ export default function PostPage({
           locale={locale}
         />
       </div>
-
-      <div className='flex flex-col items-center gap-6 px-4 text-xl/9 lg:w-[736px]'>
+      <div
+        className={clsx(
+          notoSans.className,
+          'flex flex-col items-center gap-6 px-4 text-xl/10',
+          'lg:w-[736px]'
+        )}
+      >
         {/* @todo: Clean up this madness */}
         <Component
           components={{
             YouTubeEmbed,
             a: A,
+            blockquote: Blockquote,
             code: CodeElement,
             h1: H1,
             h2: (props: any) => {
@@ -93,20 +103,7 @@ export default function PostPage({
             },
             h3: H3,
             h4: H4,
-            img: (props: any) => {
-              const { src, alt } = props;
-
-              return (
-                <span className='relative my-8 block h-96 w-full'>
-                  <Image
-                    src={src}
-                    alt={alt}
-                    layout='fill'
-                    objectFit='contain'
-                  />
-                </span>
-              );
-            },
+            img: (props: any) => <Img {...props} />,
             ol: OL,
             p: P,
             ul: UL,
@@ -134,18 +131,7 @@ export default function PostPage({
 
               return <div {...props} className={classes} />;
             },
-            pre: (props: any) => {
-              return (
-                <Code
-                  language={props.children.props.className.replace(
-                    'language-',
-                    ''
-                  )}
-                >
-                  {props.children.props.children}
-                </Code>
-              );
-            },
+            pre: Pre,
           }}
         />
       </div>
@@ -173,6 +159,7 @@ export async function getStaticProps({
         ...(options.rehypePlugins ?? []),
         rehypeGithubAlerts,
         rehypeSlug,
+        rehypeUnwrapImages,
       ];
 
       return options;

@@ -1,7 +1,7 @@
 ---
 title: How to add a metabox in React to Gutenberg
 publishedOn: '2024-09-18'
-updatedOn: '2024-10-18T02:33:51.414Z'
+updatedOn: '2024-10-30T16:23:29.367Z'
 description: >-
   In this tutorial I will show you how to add a react component to the metaboxes
   area of WordPress
@@ -24,27 +24,28 @@ The issue here is that it is easy to do both separately, we can add a new plugin
 editor and show it on **the sidebar**, or, we can add a metabox with PHP and
 **it will automatically show at the bottom of the editor**.
 
-Do you see the problem? **There is no way to add a Gutenberg plugin at the bottom, and we cannot add 
+Do you see the problem? **There is no way to add a Gutenberg plugin at the bottom, and we cannot add
 React controls in PHP**.
 
 _…Or can we?_
 
 ## The solution
 
-It turns out that the solution is much simpler than I thought, what we need is **a combination of both** 
+It turns out that the solution is much simpler than I thought, what we need is **a combination of both**
 to make this work, basically, we can do the following:
 
-1. Create a *metabox* that appears at the bottom of the page, this **only shows a container**
+1. Create a _metabox_ that appears at the bottom of the page, this **only shows a container**
 2. We create a Gutenberg plugin with the react functionality we need, this will be shown in the sidebar by default
-3. **We create a *portal* that moves our React component to our container within the metabox**
+3. **We create a _portal_ that moves our React component to our container within the metabox**
 
 That's the magic! Now let's see how we can do it with code.
 
 > [!NOTE]
+>
 > **What is a `Portal`?**
 >
-> This deserves its own post, but in a nutshell [portals](https://react.dev/reference/react-dom/createPortal) 
-> allow us to **move parts of our components to any site within the DOM**, but keep their structure 
+> This deserves its own post, but in a nutshell [portals](https://react.dev/reference/react-dom/createPortal)
+> allow us to **move parts of our components to any site within the DOM**, but keep their structure
 > within our React application.
 
 ## Register a Metabox in WordPress
@@ -71,7 +72,7 @@ class Metabox
 {
     /**
      * Adds the necessary hooks
-     * 
+     *
      * @return void
      */
     public function init(): void
@@ -105,7 +106,7 @@ class Metabox
 What this will do is **add a new metabox to the block editor**, if we don't look closely, we can guess
 that _it is empty_ (although it simply doesn't have text), something like this:
 
-[![Image of the empty metabox](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)
+![Image of the empty metabox](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp) "Image of the empty metabox"]
 
 ## Register a Plugin in Gutenberg
 
@@ -139,7 +140,7 @@ Now we need to add our file to the editor:
 ```php
 /**
  * Adds the necessary hooks
- * 
+ *
  * @return void
  */
 public function init(): void
@@ -172,11 +173,12 @@ public function enqueue_assets(): void
 
 And the result would be something like this:
 
-[![Image of the plugin in the sidebar](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)
+![Image of the plugin in the sidebar](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)
 
 Now we have the two components we need, and **we are ready to put them together**.
 
 > [!IMPORTANT]
+>
 > **What is `PluginDocumentSettingPanel`?**
 >
 > This is a Gutenberg component that allows us to **add controls to the block editor**, in this
@@ -197,27 +199,21 @@ we just need to modify our plugin to **create a portal and send our component th
 import { createPortal } from '@wordpress/element';
 import { registerPlugin } from '@wordpress/plugins';
 
-const Metabox = () => (
-    <h2>Mah Metabox</h2>
-);
+const Metabox = () => <h2>Mah Metabox</h2>;
 
-const MetaboxPortal = () => (
-    createPortal(
-        <Metabox />,
-        document.querySelector( '#mah-metabox-content' )
-    )
-);
+const MetaboxPortal = () =>
+  createPortal(<Metabox />, document.querySelector('#mah-metabox-content'));
 
-registerPlugin( 'mah-metabox', {
-    render: MetaboxPortal,
-} );
+registerPlugin('mah-metabox', {
+  render: MetaboxPortal,
+});
 ```
 
 Done! That's all we need, what we are doing is creating a portal to our element with id `mah-metabox`,
 so, when React runs `MetaboxPortal` it will know that **it has to send its content through the portal**,
 and it will end up showing our component right where we need it, which is our metabox:
 
-[![Image of the component inside our metabox](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)
+![Image of the component inside our metabox](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)
 
 ## Conclusion
 
@@ -229,10 +225,10 @@ Once all these steps have been followed, we only need to add our controls as if 
 React project, and that's it, we already have a **metabox in React in Gutenberg**. With the advantage of being
 able to access the post data and modify it directly from our component through the components in `@wordpress/data`.
 
-[![Image of the plugin in the editor](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)
+![Image of the plugin in the editor](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)
 
 ## Resources
 
-* [createPortal](https://react.dev/reference/react-dom/createPortal)
-* [registerPlugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-plugins/#:~:text=to%20be%20rendered.-,registerPlugin,-Registers%20a%20plugin)
-* [PluginDocumentSettingPanel](https://developer.wordpress.org/block-editor/reference-guides/slotfills/plugin-document-setting-panel/)
+- [createPortal](https://react.dev/reference/react-dom/createPortal)
+- [registerPlugin](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-plugins/#:~:text=to%20be%20rendered.-,registerPlugin,-Registers%20a%20plugin)
+- [PluginDocumentSettingPanel](https://developer.wordpress.org/block-editor/reference-guides/slotfills/plugin-document-setting-panel/)
