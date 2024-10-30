@@ -1,0 +1,183 @@
+---
+title: Agregar tests de Regresión Visual en NextJS con Playwright
+publishedOn: "2024-10-30"
+updatedOn: "2024-10-30T16:23:29.370Z"
+description: Tutorial para agregar Regression Testing visual a tu aplicación en NextJS utilizando Playwright
+published: true
+readingTime: 360
+---
+Algunos de los componentes más importantes en cualquier aplicación suelen ser las **pruebas automatizadas** (o los tests para más fácil). Estas nos ayudan a darnos cuenta de errores en nuestro sitio **antes** de siquiera terminar el desarrollo, así podemos corregirlos de una manera rápida sin que nuestros usuarios se den cuenta de qué acaba de pasar.
+
+Justo hace unos días, por ejemplo. Tuve un contratiempo en este blog, en donde corrí un comando para arreglar el formato de los archivos y **este terminó modificando componentes de muchos artículos**, por lo que tuve que arreglarlos manualmente *uno por uno*… mucho trabajo.
+
+Así que para eso, decidí que era momento de implementar alguna **librería de *Visual Regression Testing* (pruebas de regresión visual)** que me ayuden a descubrir si esto vuelve a pasar en el futuro antes de que guarde los cambios, así no tendré que perder tanto tiempo arreglándolos de nuevo.
+
+## ¿Qué son las Pruebas de Regresión Visual?
+
+**Visual Regression Testing**, o Pruebas de Regresión Visual en español. Es un tipo de pruebas automatizadas que corren ya sea cada cierto tiempo, o cada que hacemos una acción (en mi caso, cada que hacemos _commit_.), la diferencia que tiene con _unit testing_ es simplemente que en lugar de probar código, lo que hacemos es **comparar imágenes** (un antes y un ahora) para verificar que nada haya cambiado, si algo cambió, entonces se marca.
+
+> [!NOTE]
+> 
+> **¿Playwright?**
+> 
+> Existen _muchas_ librerías para hacer pruebas en Javascript, y parece que cada año aparecen nuevas, pero [Playwright](https://playwright.dev/) es la que está de moda ahora, así que esa es la que usaré aquí.
+> 
+> Además, ya viene con comparaciones visuales por defecto, así que no hay que instalar nada más.
+
+## Paso 1: Instalando Playwright
+
+Para comenzar, como no tengo la librería funcionando todavía, comenzaré por instalar Playwright, debido a que este block está funcionando con NextJS, significa que es una aplicación de node, así que simplemente hay que instalar la dependencia usando `npm` (o `pnpm` en mi caso):
+
+```bash
+# npm
+npm init playwright
+
+# yarn
+yarn create playwright
+
+# pnpm
+pnpm create playwright
+
+```
+
+Lo que este comando hará es hacernos una serie de preguntas que nos ayudarán a configurar playwright, también creará automáticamente las carpetas y el archivo de configuración `playwright.config.ts`. 
+
+> [!TIP]
+> 
+> Si estás comenzando un nuevo proyecto desde cero, puedes usar este comando para instalar playwright desde el inicio:
+> 
+> ```shell
+> pnpm exec create-next-app@latest --example with-playwright with-playwright-app
+> ```
+
+## Paso 2: Creando las pruebas
+
+Una vez que tenemos la librería instalada, es muy sencillo crear nuestras primeras pruebas, simplemente creamos un archivo dentro de la carpeta `tests` de la raíz de nuestro sitio (si no está creada, simplemente hay que crearla). Por ejemplo, yo crearé un archivo llamado `blog.spec.ts`
+
+```ts
+/**
+ * External dependencies
+ */
+import { test, expect } from '@playwright/test';
+
+test( 'Blog page', async ({ page }) => {
+	await page.goto( 'http://localhost:3000/blog' );
+
+	expect( await page.screenshot() ).toMatchSnapshot( 'blog' );
+} );
+```
+
+Básicamente lo que estamos diciendo aquí es:
+
+1. Crea una prueba llamada **Blog page**
+2. Cuando inicia la prueba, _espera_ a que el navegador vaya a `http://localhost:3000/blog`
+3. _Verifica_ que después de tomar una captura de pantalla, **ésta sea igual** a la que hemos guardado con el nombre `blog`
+Si la captura de pantalla no existe cuando ejecutemos la prueba, ésta será creada y guardada la primera vez.
+
+> [!TIP]
+> 
+> La URL `localhost:3000` es simplemente el servidor local que crea NextJS, esta debe de ser reemplazada si es diferente en tu caso, o para hacer las cosas más sencillas, puedes agregarla a tu archivo `playwrigth.config.js` así:
+> 
+> ```js
+> use: {
+>   /* Base URL to use in actions like `await page.goto('/')`. */
+>   baseURL: 'http://localhost:3000',
+>   // ...
+> },
+> ```
+> 
+> De esa forma únicamente tendrás que agregar `/blog` a las pruebas.
+
+Ahora, para ejecutar nuestra prueba podemos hacer:
+
+```bash
+pnpm exec playwright test
+```
+
+> [!WARNING]
+> Cuando corremos este comando por primera vez, notaremos que la prueba **falla**. Pero no hay que preocuparse, esto es entendible porque no hay una imagen de referencia todavía, como mencioné anteriormente, esta será creada la primera vez que ejecutemos el comando.
+> 
+> Si lo volvemos a ejecutar, **esta vez va a ser exitosa**.
+
+> [!CAUTION]
+> 
+> …O no.
+>
+> Mientras escribía este tutorial me di cuenta de que **mis pruebas seguían fallando**, así que tuve que revisar el por qué, y me di cuenta de algo bastante interesante… Y es que **una animación en el botón de dark mode seguía cambiando el resultado**, ya que tiene una animación de `pulse`, al final este cambió hace que siempre falle la prueba.
+> 
+> La solución es pasar el argumento `animations: 'disabled'` a la función de captura de pantalla para **deshabilitar las animaciones**:
+> 
+> ```ts
+> /**
+> * External dependencies
+> */
+> import { test, expect } from '@playwright/test';
+> 
+> test( 'Blog page', async ({ page }) => {
+> 	await page.goto( '/blog' );
+> 	
+>	expect( await page.screenshot({ animations: 'disabled' }) ).toMatchSnapshot( 'blog' );
+> } );
+> ```
+>
+> Ahora podemos actualizar los snapshots con:
+> 
+> ```shell
+> pnpm exec playwright test --update-snapshots
+> ```
+> 
+> Y las cosas deberían mejorar.
+
+Una vez nuestra comparación es exitosa, tendremos algo así:
+
+[Imagen de comparación exitosa]
+
+## Paso 3: Automatizando las automatizaciones
+
+Ahora que nuestras capturas funcionan, el siguiente paso es asegurarnos de que **sean ejecutadas cada vez que exista el riesgo de que algo cambie**. Esto podría suceder en cualquiera de estos escenarios:
+
+* Cada que hagamos *commit* a nuestros cambios
+* Cada que hagamos *push* al repositorio
+* Cada que el repositorio *reciba los cambios*
+
+Para ello tenemos varias opciones, en mi caso, ya tengo una automatización que actualiza la fecha de modificación de mis posts cada vez que el archivo es modificado, esto se logra comparándolo por medio de un script que **es ejecutado en cada *push***, así que al escoger la segunda opción sólo tengo que agregar un comando más cuando esto sucede.
+
+> [!TIP]
+> 
+> Hay muchas otras formas de hacer esto, generalmente se utilizan **acciones de Github** para hacer la comparación en el repositorio, pero ya que estamos trabajando con imagenes y no sólo con unit tests. Yo recomendaría hacer todo esto ya sea al hacer *commit*, o al hacer *push* para que todo **suceda antes de que alcance el repositorio**.
+
+En este caso, yo utilizo [Husky](https://typicode.github.io/husky/) para mis *git hooks*, el funcionamiento es muy simple, para comenzar, debemos instalarlo, la manera más sencilla es similar a como instalamos playwright, simplemente ejecutamos
+
+```shell
+pnpm exec husky init
+```
+
+Esto **creará automáticamente el archivo `pre-commit` dentro del directorio `.husky`**, que precisamente es el que necesito en este caso, así que simplemente abriré el archivo y colocaré los comandos que necesito ejecutar antes de hacer _commit_, por ejemplo:
+
+```shell
+pnpm lint:staged # Comando existente en mi caso
+pnpm test # Nuevo comando
+```
+
+Ahora cada vez que haga commit ambos comandos se ejecutarán automáticamente.
+
+> [!WARNING]
+> Asegúrate de agregar el comando test a tu archivo `package.json` para poder utilizarlo sin necesidad de agregar `pnpm exec playwright test`, por ejemplo:
+> 
+> ```json
+> // package.json
+> // ...
+> "scripts": {
+>   "test": "playwright test"
+> }
+> ```
+
+## ¿Que deberíamos probar?
+
+Una pregunta importante que debes hacer cuando trabajas con estas herramientas es: **¿qué debemos incluir?**
+
+En este caso es un poco complicado, porque en realidad **no queremos probar contenido dinámico**, la razón es simplemente que con el contenido dinámico, se espera que este cambie, por lo que tendríamos alertas todo el tiempo…
+
+*Sin embargo*, ya que sólo yo escribo en este blog, y debido a la infraestructura de este sitio; **quiero estar al tanto de esos cambios**, y no quiero ningún tipo de sorpresa. Por lo que bajo estos parámetros yo si estaré probando el contenido, como siempre, depende de ti decidir si es algo que necesitas o no.
+
+## Siguientes pasos

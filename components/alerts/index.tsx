@@ -54,7 +54,7 @@ export default function Alert({
             case Blockquote:
             case Pre:
               return (
-                <child.type {...child.props.children} allowExpand={false}>
+                <child.type {...child.props} allowExpand={false}>
                   {child.props.children}
                 </child.type>
               );
