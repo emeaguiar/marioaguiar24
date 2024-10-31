@@ -16,7 +16,7 @@ import Link from 'next/link';
  * Internal dependencies
  */
 import { H2, WithUnderline } from '@/components/elements';
-import { merriweather } from '@/components/fonts';
+import { merriweather, raleway } from '@/components/fonts';
 import BlogCards from '@/components/blog/cards';
 import ServicesCard from '@/components/services/card';
 import { getPosts } from '@/lib/posts';
@@ -42,29 +42,23 @@ export default function Home({
       <NextSeo canonical={`${SITE_URL}/${locale}`} />
 
       <div
-        className={`${merriweather.className} flex flex-col items-center gap-4 lg:gap-8`}
+        className={`${raleway.className} flex flex-col gap-4 lg:gap-8 max-w-screen-xl p-4 w-full tracking-wide`}
       >
-        <h1 className='text-center text-2xl font-bold lg:text-5xl'>
+        <h1 className='text-4xl uppercase lg:text-6xl self-start'>
           <Trans
             i18nKey='home:headline'
-            components={[<br className='lg:hidden' key='frontend' />]}
+            components={[<br key='spacing' />, <strong className="font-black" key='frontend' />]}
           />
         </h1>
 
-        <p className='text-center text-lg lg:text-3xl'>
+        <p className='text-7xl uppercase lg:text-8xl font-light -order-10'>
           <Trans
             i18nKey='home:hello'
             components={[
-              <strong key='name' />,
-              <WithUnderline key='underline' />,
+              <br />,
+              <strong className="font-black" key='name' />,
             ]}
           />
-        </p>
-
-        <p className='text-center'>
-          <span className='text-base lg:mt-6 lg:text-2xl'>
-            <Trans i18nKey='home:subtitle' components={[<br key='break' />]} />
-          </span>
         </p>
       </div>
 

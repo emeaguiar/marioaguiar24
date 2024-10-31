@@ -1,6 +1,7 @@
 {
-  "hello": "Hello! It's-a <0><1>Mario</1></0>.",
-  "headline": "Frontend <0 />Development",
+  "title": "Mario Aguiar | Front-End Developer",
+  "hello": "Hello, world. <0 /> It's-a <1>Mario</1>",
+  "headline": "I do <1>Front-End</1> <0 />Development ",
   "subtitle": "Frontend Developer <0 />for over 10 years",
   "responsiveSitesTitle": "Frontend Development",
   "responsiveSites": "Responsive websites made with the latest technology and the best user experience",
