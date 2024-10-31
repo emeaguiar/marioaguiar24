@@ -7,6 +7,7 @@ import {
   Luckiest_Guy,
   Noto_Sans,
   Noto_Sans_Mono,
+  Raleway,
 } from 'next/font/google';
 
 export const merriweather = Merriweather({
@@ -33,4 +34,9 @@ export const luckiestGuySans = Luckiest_Guy({
   subsets: ['latin'],
   weight: ['400'],
   style: ['normal'],
+});
+export const raleway = Raleway({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '600', '700', '900'],
+  style: ['normal', 'italic'],
 });
