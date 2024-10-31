@@ -37,6 +37,6 @@ export const luckiestGuySans = Luckiest_Guy({
 });
 export const raleway = Raleway({
   subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '600', '700', '900'],
+  weight: ['100', '300', '400', '500', '600', '700', '800', '900'],
   style: ['normal', 'italic'],
 });

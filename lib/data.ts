@@ -1,9 +1,5 @@
 export const MENU_ITEMS = [
   {
-    key: 'portfolio',
-    href: '/',
-  },
-  {
     key: 'blog',
     href: '/blog',
   },

@@ -21,11 +21,13 @@ export default function DesktopMenu() {
 
   return (
     <nav aria-label='Navegación principal' className='hidden lg:flex'>
-      <ul className='flex items-center justify-between gap-18'>
+      <ul className='flex items-center justify-between gap-18 text-lg'>
         {MENU_ITEMS.map(({ href, key }, index) => (
           <MenuItem key={index}>
-            <Link href={href} className='transition-colors hover:text-primary'>
+            <Link href={href} className='transition-colors hover:text-decor group'>
               {t(key)}
+
+              <div className="h-1 -mt-2 preserve-3d bg-primary origin-left will-change-transform transition-transform scale-x-0 group-hover:scale-x-100" />
             </Link>
           </MenuItem>
         ))}
@@ -33,7 +35,7 @@ export default function DesktopMenu() {
         <MenuItem>
           <Link
             href={{ pathname, search: '?modal=1' }}
-            className='transition-colors hover:text-primary'
+            className='transition-colors font-extrabold p-4 border-foreground border-2 hover:border-primary'
           >
             {t('contact')}
           </Link>
@@ -48,5 +50,5 @@ export default function DesktopMenu() {
 }
 
 function MenuItem({ children }: { children: React.ReactNode }) {
-  return <li className='font-bold uppercase'>{children}</li>;
+  return <li className='font-light uppercase'>{children}</li>;
 }
