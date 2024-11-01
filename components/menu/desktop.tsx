@@ -14,6 +14,7 @@ import { usePathname } from 'next/navigation';
  */
 import { MENU_ITEMS } from '@/lib/data';
 import DarkModeToggle from '@/components/dark-mode-toggle';
+import { WithUnderline } from '../elements';
 
 export default function DesktopMenu() {
   const { t } = useTranslation('common');
@@ -24,10 +25,10 @@ export default function DesktopMenu() {
       <ul className='flex items-center justify-between gap-18 text-lg'>
         {MENU_ITEMS.map(({ href, key }, index) => (
           <MenuItem key={index}>
-            <Link href={href} className='transition-colors hover:text-decor group'>
-              {t(key)}
-
-              <div className="h-1 -mt-2 preserve-3d bg-primary origin-left will-change-transform transition-transform scale-x-0 group-hover:scale-x-100" />
+            <Link href={href} className='group'>
+              <WithUnderline>
+                {t(key)}
+              </WithUnderline>
             </Link>
           </MenuItem>
         ))}
@@ -35,7 +36,7 @@ export default function DesktopMenu() {
         <MenuItem>
           <Link
             href={{ pathname, search: '?modal=1' }}
-            className='transition-colors font-extrabold p-4 border-foreground border-2 hover:border-primary'
+            className='font-extrabold p-4 border-zinc-900 text-zinc-900 border-2'
           >
             {t('contact')}
           </Link>

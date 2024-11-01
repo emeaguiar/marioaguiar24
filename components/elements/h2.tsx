@@ -8,11 +8,6 @@ import clsx from 'clsx';
  */
 import Link from 'next/link';
 
-/**
- * Internal dependencies
- */
-import { merriweather } from '@/components/fonts';
-
 export function H2({
   children,
   className,
@@ -25,7 +20,7 @@ export function H2({
   const H2Element = () => (
     <h2
       className={clsx(
-        `${merriweather.className} flex max-w-screen-sm text-2xl font-bold`,
+        "flex max-w-screen-sm text-4xl uppercase tracking-wide font-light",
         className
       )}
       id={id}

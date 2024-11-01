@@ -68,7 +68,7 @@ export default function Home({
           <div className={`items-baseline lg:flex lg:justify-start m-auto ${styles.aboutImage}`}>
               <Image
                 src="/mariobw.webp"
-                alt="Portrait of Mario"
+                alt={t('aboutImageAlt')}
                 className="object-contain"
                 width="1000"
                 height="1000"
@@ -88,7 +88,14 @@ export default function Home({
       </div>
 
       <div className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'>
-        <H2 className='text-center'>{t('blogTitle')}</H2>
+        <H2 className='text-center'>
+          <Trans
+            i18nKey='home:blogTitle'
+            components={[
+              <strong className='font-black' key='bold' />,
+            ]}
+          />
+        </H2>
 
         <BlogCards posts={posts} />
       </div>

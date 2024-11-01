@@ -1,9 +1,10 @@
+
 export function WithUnderline({ children }: { children?: React.ReactNode }) {
   return (
-    <span className='relative isolate'>
-      <span className='absolute bottom-1 left-0 h-1 w-full bg-underline opacity-80 lg:h-2' />
+    <>
+      {children}
 
-      <span className='relative z-10'>{children}</span>
-    </span>
+      <div className="h-1 -mt-2 preserve-3d bg-zinc-900/60 origin-left will-change-transform transition-transform scale-x-0 group-hover:scale-x-100" />    
+    </>
   );
 }

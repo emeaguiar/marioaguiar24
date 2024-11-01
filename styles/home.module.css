@@ -3,7 +3,6 @@
 }
 
 .aboutText {
-    display: grid;
 
     @media (min-width: 1024px) {
         margin-inline-start: -2rem;
