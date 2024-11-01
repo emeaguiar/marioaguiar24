@@ -1,0 +1,11 @@
+.aboutImage {
+    max-inline-size: 30rem;
+}
+
+.aboutText {
+    display: grid;
+
+    @media (min-width: 1024px) {
+        margin-inline-start: -2rem;
+    }
+}

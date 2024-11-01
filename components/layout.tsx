@@ -6,7 +6,7 @@ import clsx from 'clsx';
 /**
  * Internal dependencies
  */
-import { notoSans, raleway } from '@/components/fonts';
+import { raleway } from '@/components/fonts';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import ContactModal from '@/components/contact/modal';
@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main
         id='main-content'
         className={clsx(
-          notoSans.className,
+          raleway.className,
           'flex flex-col items-center gap-6 lg:gap-20'
         )}
       >

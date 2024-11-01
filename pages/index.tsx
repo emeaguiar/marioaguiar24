@@ -11,14 +11,15 @@ import { NextSeo } from 'next-seo';
  */
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 
 /**
  * Internal dependencies
  */
-import { H2, WithUnderline } from '@/components/elements';
+import styles from '@/styles/home.module.css';
+import { H2 } from '@/components/elements';
 import { merriweather, raleway } from '@/components/fonts';
 import BlogCards from '@/components/blog/cards';
-import ServicesCard from '@/components/services/card';
 import { getPosts } from '@/lib/posts';
 import { SITE_URL } from '@/lib/data';
 
@@ -42,7 +43,7 @@ export default function Home({
       <NextSeo canonical={`${SITE_URL}/${locale}`} />
 
       <div
-        className={`${raleway.className} flex flex-col gap-4 lg:gap-8 max-w-screen-xl p-4 w-full tracking-wide`}
+        className={`${raleway.className} flex flex-col gap-4 lg:gap-8 max-w-screen-xl p-4 w-full tracking-wide mb-10 lg:mb-20`}
       >
         <h1 className='text-4xl uppercase lg:text-6xl self-start'>
           <Trans
@@ -62,24 +63,21 @@ export default function Home({
         </p>
       </div>
 
-      <div className='grid items-center gap-4 lg:max-w-screen-xl lg:grid-cols-3 lg:items-start'>
-        <ServicesCard title={t('responsiveSitesTitle')} type='mobile'>
-          <p className='text-center'>{t('responsiveSites')}</p>
-        </ServicesCard>
-
-        <ServicesCard title={t('performanceTitle')} type='performance'>
-          <p className='text-center'>{t('performance')}</p>
-        </ServicesCard>
-
-        <ServicesCard title='WordPress' type='wordpress'>
-          <p className='text-center'>{t('wordpress')}</p>
-        </ServicesCard>
-      </div>
-
-      <div className='flex w-full items-center justify-center bg-primary px-4 py-8 text-background dark:bg-slate-800 lg:py-20'>
-        <p className='max-w-screen-md text-center text-xl font-bold dark:text-foreground lg:text-2xl'>
-          {t('strip')}
-        </p>
+      <div className='w-full bg-zinc-900 px-4 text-background dark:bg-slate-300'>
+        <div className="grid items-end lg:grid-cols-2 gap-4 lg:max-w-screen-xl m-auto py-8">
+          <div className={`items-baseline lg:flex lg:justify-start m-auto ${styles.aboutImage}`}>
+              <Image
+                src="/mariobw.webp"
+                alt="Portrait of Mario"
+                className="object-contain"
+                width="1000"
+                height="1000"
+              />
+          </div>
+          <p className={`text-xl dark:text-foreground lg:text-2xl lg:mb-8 ${styles.aboutText}`}>
+            {t('strip')}
+          </p>
+        </div>
       </div>
 
       <div className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'>
