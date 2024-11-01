@@ -74,8 +74,15 @@ export default function Home({
                 height="1000"
               />
           </div>
-          <p className={`text-xl dark:text-foreground lg:text-2xl lg:mb-8 ${styles.aboutText}`}>
-            {t('strip')}
+          <p className={`text-xl dark:text-foreground lg:text-2xl lg:mb-8 font-light ${styles.aboutText}`}>
+            <span className="block h-1 mb-4 preserve-3d bg-background origin-left scale-x-50" />
+
+            <Trans
+              i18nKey='home:strip'
+              components={[
+                <strong className="font-semibold" key='strip' />,
+              ]}
+            />
           </p>
         </div>
       </div>
