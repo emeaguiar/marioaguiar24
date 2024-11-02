@@ -3,7 +3,8 @@
  */
 import { Children } from 'react';
 import clsx from 'clsx';
-import useTranslation from 'next-translate/useTranslation';
+import Trans from 'next-translate/Trans';
+import { cloneElement } from 'react';
 
 /**
  * Internal dependencies
@@ -17,12 +18,10 @@ export default function Alert({
   children: React.ReactNode;
   type: 'note' | 'tip' | 'important' | 'warning' | 'caution';
 }) {
-  const { t } = useTranslation('common');
-
   return (
     <div
       className={clsx(
-        'my-4 flex w-full max-w-screen-md flex-col gap-2 rounded-lg border-l-4 p-4 text-base',
+        'my-4 w-full max-w-screen-md border-l-4 p-4 text-base',
         'lg:-mx-8 lg:max-w-screen-md',
         {
           'border-blue-400 bg-blue-50 text-blue-800 dark:border-blue-700 dark:bg-blue-950 dark:text-blue-100':
@@ -41,7 +40,22 @@ export default function Alert({
       {Children.map(children, (child: any, index: Number) => {
         if (0 === index) {
           // @TODO: Add translations for alert titles
-          return <div className='alert-title'>{child}</div>;
+          return (
+            <div className='text-4xl flex items-center gap-4 font-black uppercase'>
+              {
+                cloneElement(child.props.children[0], {
+                  className: clsx(
+                    child.props.className,
+                    'h-8 w-8'
+                  ),
+                })
+              }
+
+              <Trans
+                i18nKey={`alerts:${type}`}
+              />
+            </div>
+          );
         }
 
         /**
