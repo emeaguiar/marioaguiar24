@@ -17,32 +17,46 @@ export function H2({
   className?: string;
   id?: string;
 }) {
-  const H2Element = () => (
-    <h2
-      className={clsx(
-        "flex max-w-screen-sm text-4xl uppercase tracking-wide font-light",
-        className
-      )}
-      id={id}
-    >
-      {id && (
+  const H2Element = () => {
+
+    if ( ! id ) {
+      return (
+        <h2
+          className={clsx(
+            "max-w-screen-sm text-4xl uppercase tracking-wide font-light",
+            className
+          )}
+        >
+          {children}
+        </h2>
+      );
+    }
+
+    return (
+      <h2
+        className={clsx(
+          "flex max-w-screen-sm text-4xl uppercase tracking-wide font-light",
+          className
+        )}
+        id={id}
+      >
         <span
           className='transition-opacity lg:opacity-0 group-hover:lg:opacity-100'
           aria-hidden
         >
           #
         </span>
-      )}
 
-      <span
-        className={clsx({
-          'pl-4': id,
-        })}
-      >
-        {children}
-      </span>
-    </h2>
-  );
+        <span
+          className={clsx({
+            'pl-4': id,
+          })}
+        >
+          {children}
+        </span>
+      </h2>
+    );
+  };
 
   if (id) {
     return (

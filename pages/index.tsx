@@ -42,7 +42,7 @@ export default function Home({
 
       <NextSeo canonical={`${SITE_URL}/${locale}`} />
 
-      <div className="lg:grid max-w-screen-xl w-full lg:grid-cols-3 mb-10 lg:mb-20">
+      <div id="intro" className="lg:grid max-w-screen-xl w-full lg:grid-cols-3 mb-10 lg:mb-20">
         <div
           className={`${raleway.className} flex flex-col col-span-2 gap-4 lg:gap-8 max-w-screen-xl p-4 w-full tracking-wide`}
         >
@@ -75,9 +75,18 @@ export default function Home({
         </div>
       </div>
 
-      <div className='w-full bg-zinc-900 px-4 text-background dark:bg-slate-300'>
-        <div className="grid items-end lg:grid-cols-2 gap-4 lg:max-w-screen-xl m-auto p-8">
-          <p className={`text-xl dark:text-foreground lg:text-2xl lg:mb-8 font-light ${styles.aboutText}`}>
+      <div id="about" className='w-full bg-zinc-900 px-4 text-background dark:bg-slate-300'>
+        <div className="grid lg:grid-cols-3 gap-4 lg:max-w-screen-xl m-auto p-8 lg:p-32">
+          <H2 className='uppercase mt-5'>
+            <Trans
+              i18nKey='home:aboutTitle'
+              components={[
+                <strong className='font-black' key='bold' />,
+              ]}
+            />
+          </H2>
+
+          <p className={`text-xl dark:text-foreground lg:col-span-2 lg:text-2xl font-light ${styles.aboutText}`}>
             <span className="block h-1 mb-4 preserve-3d bg-background origin-left scale-x-50" />
 
             <Trans
