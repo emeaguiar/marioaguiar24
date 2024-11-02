@@ -21,7 +21,6 @@ import Link from 'next/link';
  * Internal dependencies
  */
 import { CONFERENCES, SITE_URL } from '@/lib/data';
-import { merriweather } from '@/components/fonts';
 
 export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
   const { t } = useTranslation('conferences');
@@ -38,17 +37,20 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
         canonical={`${SITE_URL}/${locale}conferences`}
       />
 
-      <div className={`flex flex-col items-center gap-4 lg:gap-8`}>
+      <div className={`flex flex-col items-center gap-16 lg:max-w-screen-xl`}>
         <h1
-          className={`${merriweather.className} self-start px-4 text-2xl font-bold lg:text-5xl`}
+          className="w-full text-center text-5xl lg:text-7xl uppercase font-light"
         >
-          {t('title')}
+          <Trans
+            i18nKey='conferences:title'
+            components={[<strong key='title' className='font-black' />]}
+          />
         </h1>
 
         <p className='px-4 text-xl/10 lg:max-w-screen-md'>
           <Trans
             i18nKey='conferences:content'
-            components={[<strong key='strong' />]}
+            components={[<strong key='strong' className='font-extrabold' />]}
           />
         </p>
 
@@ -100,13 +102,13 @@ function Conference({
 
   return (
     <div key={name} className='flex flex-col gap-2 p-4'>
-      <h2 className={`${merriweather.className} text-xl font-bold`}>{name}</h2>
+      <h2 className='text-xl' dangerouslySetInnerHTML={{__html: name}} />
 
       <p>{format(date, 'PPP', dateOptions)}</p>
 
       <p>{location}</p>
 
-      <p className='italic'>{title}</p>
+      <p className='italic font-bold'>“{title}”</p>
       <div className='divide-x-2'>
         {href && (
           <Link href={href} className='pr-2 underline hover:no-underline'>
