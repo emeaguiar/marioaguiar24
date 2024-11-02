@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <div className={clsx(
         raleway.className,
-        'mb-6 flex flex-col items-center lg:mb-20',
+        'mb-6 flex flex-col items-center lg:mb-44',
       )}>
         <Header />
       </div>
@@ -30,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         id='main-content'
         className={clsx(
           raleway.className,
-          'flex flex-col items-center gap-6 lg:gap-20'
+          'flex flex-col items-center gap-20 lg:gap-52'
         )}
       >
         {children}

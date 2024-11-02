@@ -14,7 +14,8 @@ import { usePathname } from 'next/navigation';
  */
 import { MENU_ITEMS } from '@/lib/data';
 import DarkModeToggle from '@/components/dark-mode-toggle';
-import { WithUnderline } from '../elements';
+import { WithUnderline } from '@/components/elements';
+import ContactCTA from '@/components/contact/cta';
 
 export default function DesktopMenu() {
   const { t } = useTranslation('common');
@@ -34,12 +35,7 @@ export default function DesktopMenu() {
         ))}
 
         <MenuItem>
-          <Link
-            href={{ pathname, search: '?modal=1' }}
-            className='font-extrabold p-4 border-zinc-900 text-zinc-900 border-2'
-          >
-            {t('contact')}
-          </Link>
+          <ContactCTA />
         </MenuItem>
 
         <li>
