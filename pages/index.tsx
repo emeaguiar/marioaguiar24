@@ -16,7 +16,6 @@ import Image from 'next/image';
  */
 import styles from '@/styles/home.module.css';
 import { H2 } from '@/components/elements';
-import { raleway } from '@/components/fonts';
 import BlogCards from '@/components/blog/cards';
 import ContactCTA from '@/components/contact/cta';
 import { getPosts } from '@/lib/posts';
