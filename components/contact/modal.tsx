@@ -30,12 +30,12 @@ export default function Modal() {
       {usesModal && (
         <dialog className={clsx(
           raleway.className,
-          'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'
+          'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-zinc-900/50 backdrop-blur'
         )}>
           <div
             className={clsx(
-              'm-auto h-full w-full bg-zinc-900 p-8 text-background',
-              'lg:h-auto lg:w-fit',
+              'm-auto h-full w-full p-4 bg-background',
+              'lg:h-auto lg:w-fit lg:border-4 lg:border-foreground lg:p-8',
               'dark:bg-slate-800 dark:text-foreground'
             )}
           >
@@ -58,7 +58,7 @@ export default function Modal() {
               <P className='max-w-screen-xl lg:max-w-screen-md'>
                 <Trans
                   i18nKey='common:contactModalMessage'
-                  components={[<strong key='strong' className='font-semibold' />]}
+                  components={[<strong key='strong' className='font-bold' />]}
                 />
               </P>
 

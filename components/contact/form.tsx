@@ -11,7 +11,6 @@ import useTranslation from 'next-translate/useTranslation';
  */
 import Alert from '@/components/alerts';
 import { Spinner } from '@/components/icons';
-import { toNamespacedPath } from 'path';
 
 const FIELDS = [
   { label: 'name', type: 'text' },
@@ -91,14 +90,13 @@ export default function ContactForm() {
         type='submit'
         disabled={isLoading}
         className={clsx(
-          'mt-4 flex items-center rounded-lg border border-red-700 bg-background px-4 py-2 font-bold uppercase text-primary transition-colors',
-          'hover:bg-red-50',
-          'disabled:cursor-not-allowed disabled:border-gray-900 disabled:bg-red-50 disabled:text-gray-500',
-          'dark:border-slate-900 dark:text-white dark:hover:bg-slate-900'
+            'flex items-center font-extrabold p-4 ml-0 mr-auto border-zinc-900 text-zinc-900 border-2 uppercase text-lg',
+            'lg:mr-0',
+            'dark:text-foreground dark:border-foreground'
         )}
       >
         {isLoading && <Spinner />}
-        Submit
+        {t('send')}
       </button>
     </form>
   );
@@ -123,10 +121,10 @@ const Input = ({label, type}: {
         name={label}
         required
         className={clsx(
-          'mb-6 w-full rounded border border-gray-300 p-2 text-foreground',
+          'mb-6 w-full border border-zinc-900 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
-          'dark:border-slate-900 dark:bg-white dark:text-black',
+          'dark:border-slate-800 dark:bg-white dark:text-black',
           {
             'min-h-44': type === 'textarea',
           }
