@@ -2,6 +2,7 @@
  * External dependencies
  */
 import useTranslation from 'next-translate/useTranslation';
+import clsx from 'clsx';
 
 /**
  * Next dependencies
@@ -16,7 +17,13 @@ export default function ContactCTA() {
     return (
         <Link
             href={{ pathname, search: '?modal=1' }}
-            className='font-extrabold p-4 ml-0 mr-auto border-zinc-900 text-zinc-900 border-2 uppercase text-lg lg:mr-0'
+            className={
+                clsx(
+                    'font-extrabold p-4 ml-0 mr-auto border-zinc-900 text-zinc-900 border-2 uppercase text-lg',
+                    'lg:mr-0',
+                    'dark:text-foreground dark:border-foreground'
+                )
+            }
         >
             {t('contact')}
         </Link>

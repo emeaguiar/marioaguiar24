@@ -17,7 +17,7 @@ import Image from 'next/image';
  */
 import styles from '@/styles/home.module.css';
 import { H2 } from '@/components/elements';
-import { merriweather, raleway } from '@/components/fonts';
+import { raleway } from '@/components/fonts';
 import BlogCards from '@/components/blog/cards';
 import ContactCTA from '@/components/contact/cta';
 import { getPosts } from '@/lib/posts';
@@ -42,9 +42,9 @@ export default function Home({
 
       <NextSeo canonical={`${SITE_URL}/${locale}`} />
 
-      <div id="intro" className="lg:grid max-w-screen-xl w-full lg:grid-cols-3 mb-10 lg:mb-20">
+      <div id="intro" className="lg:grid max-w-screen-xl w-full lg:grid-cols-3 mb-10">
         <div
-          className={`${raleway.className} flex flex-col col-span-2 gap-4 lg:gap-8 max-w-screen-xl p-4 w-full tracking-wide`}
+          className="flex flex-col col-span-2 gap-4 lg:gap-8 max-w-screen-xl p-4 w-full tracking-wide"
         >
           <h1 className='text-4xl uppercase lg:text-6xl self-start lg:mt-auto lg:mb-0'>
             <Trans
@@ -75,7 +75,7 @@ export default function Home({
         </div>
       </div>
 
-      <div id="about" className='w-full bg-zinc-900 px-4 text-background dark:bg-slate-300'>
+      <div id="about" className='w-full bg-zinc-900 px-4 text-background dark:text-foreground dark:bg-slate-800'>
         <div className="grid lg:grid-cols-3 gap-4 lg:max-w-screen-xl m-auto p-8 lg:p-32">
           <H2 className='uppercase mt-5'>
             <Trans
@@ -86,8 +86,8 @@ export default function Home({
             />
           </H2>
 
-          <p className={`text-xl dark:text-foreground lg:col-span-2 lg:text-2xl font-light ${styles.aboutText}`}>
-            <span className="block h-1 mb-4 preserve-3d bg-background origin-left scale-x-50" />
+          <p className={`text-xl lg:col-span-2 lg:text-2xl font-light ${styles.aboutText}`}>
+            <span className="block h-1 mb-4 preserve-3d bg-background origin-left scale-x-50 dark:bg-foreground" />
 
             <Trans
               i18nKey='home:strip'
@@ -131,13 +131,13 @@ export default function Home({
 
       <div className='flex'>
         <p
-          className="my-8 text-center text-sm/5"
+          className="my-8 text-center text-sm/5 font-light"
         >
           <Trans
             i18nKey='home:improve'
             components={[
               <br key='break' />,
-              <strong key='strong' className='font-black' />,
+              <strong key='strong' className='font-bold' />,
             ]}
           />
         </p>
