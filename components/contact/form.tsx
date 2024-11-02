@@ -61,11 +61,11 @@ export default function ContactForm() {
 
   return (
     <form
-      className='mt-8 flex w-full flex-col items-start'
+      className='mt-8 flex w-full flex-col items-start tracking-wide'
       onSubmit={handleOnSubmit}
     >
-      <label htmlFor='name' className='mb-2'>
-        {t('name')} *
+      <label htmlFor='name' className='mb-2 text-xl font-black uppercase lg:text-3xl'>
+        {t('name')}:
       </label>
       <input
         type='text'
@@ -73,15 +73,15 @@ export default function ContactForm() {
         name='name'
         required
         className={clsx(
-          'mb-4 w-full rounded border border-gray-300 p-2 text-foreground',
+          'mb-6 w-full rounded border border-gray-300 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
           'dark:border-slate-900 dark:bg-white dark:text-black'
         )}
       />
 
-      <label htmlFor='email' className='mb-2'>
-        {t('email')} *
+      <label htmlFor='email' className='mb-2 text-xl font-black uppercase lg:text-3xl'>
+        {t('email')}:
       </label>
       <input
         type='email'
@@ -89,22 +89,22 @@ export default function ContactForm() {
         name='email'
         required
         className={clsx(
-          'mb-4 w-full rounded border border-gray-300 p-2 text-foreground',
+          'mb-6 w-full rounded border border-gray-300 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
           'dark:border-slate-900 dark:bg-white dark:text-black'
         )}
       />
 
-      <label htmlFor='message' className='mb-2'>
-        {t('message')} *
+      <label htmlFor='message' className='mb-2 text-xl font-black uppercase lg:text-3xl'>
+        {t('message')}:
       </label>
       <textarea
         id='message'
         name='message'
         required
         className={clsx(
-          'mb-4 min-h-44 w-full rounded border border-gray-300 p-2 text-foreground',
+          'mb-6 min-h-44 w-full rounded border border-gray-300 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
           'dark:border-slate-900 dark:bg-white dark:text-black'

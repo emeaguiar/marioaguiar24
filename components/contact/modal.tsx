@@ -1,9 +1,8 @@
-'use client';
-
 /**
  * External dependencies
  */
 import useTranslation from 'next-translate/useTranslation';
+import Trans from 'next-translate/Trans';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 
@@ -17,7 +16,7 @@ import Link from 'next/link';
  * Internal dependencies
  */
 import { H2, P } from '@/components/elements';
-import { notoSans } from '@/components/fonts';
+import { raleway } from '@/components/fonts';
 import ContactForm from '@/components/contact/form';
 
 export default function Modal() {
@@ -29,16 +28,14 @@ export default function Modal() {
   return (
     <>
       {usesModal && (
-        <dialog
-          className={clsx(
-            notoSans.className,
-            'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'
-          )}
-        >
+        <dialog className={clsx(
+          raleway.className,
+          'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'
+        )}>
           <div
             className={clsx(
-              'm-auto h-full w-full bg-primary bg-opacity-90 p-8 text-background',
-              'lg:h-auto lg:w-fit lg:rounded-xl',
+              'm-auto h-full w-full bg-zinc-900 p-8 text-background',
+              'lg:h-auto lg:w-fit',
               'dark:bg-slate-800 dark:text-foreground'
             )}
           >
@@ -52,11 +49,17 @@ export default function Modal() {
 
             <div className='flex h-max flex-col items-center'>
               <H2 className='mb-4 max-w-screen-xl self-start'>
-                {t('contactModalTitle')}
+                <Trans
+                  i18nKey='common:contactModalTitle'
+                  components={[<strong key='strong' className='font-black' />]}
+                />
               </H2>
 
               <P className='max-w-screen-xl lg:max-w-screen-md'>
-                {t('contactModalMessage')}
+                <Trans
+                  i18nKey='common:contactModalMessage'
+                  components={[<strong key='strong' className='font-semibold' />]}
+                />
               </P>
 
               <ContactForm />

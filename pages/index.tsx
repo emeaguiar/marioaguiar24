@@ -3,7 +3,6 @@
  */
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
-import clsx from 'clsx';
 import { NextSeo } from 'next-seo';
 
 /**
