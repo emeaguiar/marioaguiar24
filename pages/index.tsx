@@ -62,7 +62,7 @@ export default function Home({
           </p>
         </div>
 
-        <div className={`items-baseline lg:flex lg:justify-start lg:m-auto ${styles.aboutImage}`}>
+        <div className={`items-baseline lg:flex lg:justify-start lg:mx-auto ${styles.aboutImage}`}>
             <Image
               src="/mariobw.webp"
               alt={t('aboutImageAlt')}
@@ -74,7 +74,7 @@ export default function Home({
       </div>
 
       <div id="about" className='w-full bg-zinc-900 px-4 text-background dark:text-foreground dark:bg-slate-800'>
-        <div className="grid lg:grid-cols-3 gap-4 lg:max-w-screen-xl m-auto p-8 lg:p-32">
+        <div className="grid lg:grid-cols-3 gap-4 lg:max-w-screen-xl mx-auto p-8 lg:p-32">
           <H2 className='uppercase mt-5'>
             <Trans
               i18nKey='home:aboutTitle'

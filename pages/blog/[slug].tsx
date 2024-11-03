@@ -15,7 +15,6 @@ import rehypeUnwrapImages from 'rehype-unwrap-images';
 /**
  * Next dependencies
  */
-import Image from 'next/image';
 import { YouTubeEmbed } from '@next/third-parties/google';
 
 /**
@@ -39,7 +38,6 @@ import {
   Tr,
   Code as CodeElement,
 } from '@/components/elements';
-import { notoSans } from '@/components/fonts';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
@@ -62,13 +60,13 @@ export default function PostPage({
   const pathname = usePathname();
 
   return (
-    <>
+    <article>
       <NextSeo
         title={title}
         description={description}
         canonical={`${SITE_URL}/${locale}${pathname}`}
       />
-      <div className='mt-4 flex flex-col items-center gap-6 px-4 text-xl/9 lg:my-16'>
+      <header className='max-w-screen-sm mb-20 flex flex-col items-center gap-6 px-4 text-xl/9 lg:mb-16 lg:max-w-screen-lg lg:mx-auto'>
         <H1>{title}</H1>
 
         <BlogMeta
@@ -77,12 +75,11 @@ export default function PostPage({
           readingTime={readingTime / 60}
           locale={locale}
         />
-      </div>
+      </header>
+      
       <div
         className={clsx(
-          notoSans.className,
-          'flex flex-col items-center gap-6 px-4 text-xl/10',
-          'lg:w-[736px]'
+          'prose prose-p:max-w-screen-sm prose-p:mx-auto lg:prose-xl prose-strong:text-inherit prose-figure:mb-18 px-4 mx-auto text-justify max-w-none',
         )}
       >
         {/* @todo: Clean up this madness */}
@@ -135,7 +132,7 @@ export default function PostPage({
           }}
         />
       </div>
-    </>
+    </article>
   );
 }
 

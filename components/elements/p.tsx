@@ -11,6 +11,6 @@ export function P({
   className?: string;
 }) {
   return (
-    <p className={clsx('w-full max-w-screen-sm', className)}>{children}</p>
+    <p className={className}>{children}</p>
   );
 }

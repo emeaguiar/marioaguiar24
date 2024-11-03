@@ -34,7 +34,7 @@ export default function Modal() {
         )}>
           <div
             className={clsx(
-              'm-auto h-full w-full p-4 bg-background',
+              'mx-auto h-full w-full p-4 bg-background',
               'lg:h-auto lg:w-fit lg:border-4 lg:border-foreground lg:p-8',
               'dark:bg-slate-800 dark:text-foreground'
             )}

@@ -3,11 +3,6 @@
  */
 import clsx from 'clsx';
 
-/**
- * Internal dependencies
- */
-import { merriweather } from '@/components/fonts';
-
 export function H1({
   children,
   className,
@@ -20,7 +15,7 @@ export function H1({
   return (
     <h1
       className={clsx(
-        `${merriweather.className} text-3xl/10 font-bold lg:mt-12 lg:max-w-screen-sm lg:text-center lg:text-4xl/normal`,
+        'text-3xl/10 lg:max-w-screen-xl lg:text-center lg:text-6xl/tight uppercase font-light',
         className
       )}
       id={id}

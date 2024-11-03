@@ -21,8 +21,7 @@ export default function Alert({
   return (
     <div
       className={clsx(
-        'my-4 w-full max-w-screen-md border-l-4 p-4 text-base',
-        'lg:-mx-8 lg:max-w-screen-md',
+        'my-4 w-full border-l-4 p-4 text-base mx-auto lg:max-w-screen-md',
         {
           'border-blue-400 bg-blue-50 text-blue-800 dark:border-blue-700 dark:bg-blue-950 dark:text-blue-100':
             type === 'note',
@@ -41,12 +40,12 @@ export default function Alert({
         if (0 === index) {
           // @TODO: Add translations for alert titles
           return (
-            <div className='text-4xl flex items-center gap-4 font-black uppercase'>
+            <div className='text-2xl lg:text-4xl flex items-center gap-3 font-black uppercase lg:gap-4'>
               {
                 cloneElement(child.props.children[0], {
                   className: clsx(
                     child.props.className,
-                    'h-8 w-8'
+                    'h-5 w-5 lg:h-8 lg:w-8'
                   ),
                 })
               }

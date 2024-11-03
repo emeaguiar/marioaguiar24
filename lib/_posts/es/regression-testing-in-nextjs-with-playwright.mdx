@@ -12,7 +12,7 @@ Justo hace unos días, por ejemplo. Tuve un contratiempo en este blog, en donde 
 
 Así que para eso, decidí que era momento de implementar alguna **librería de *Visual Regression Testing* (pruebas de regresión visual)** que me ayuden a descubrir si esto vuelve a pasar en el futuro antes de que guarde los cambios, así no tendré que perder tanto tiempo arreglándolos de nuevo.
 
-## ¿Qué son las Pruebas de Regresión Visual?
+## ¿Qué son las **Pruebas de Regresión Visual?**
 
 **Visual Regression Testing**, o Pruebas de Regresión Visual en español. Es un tipo de pruebas automatizadas que corren ya sea cada cierto tiempo, o cada que hacemos una acción (en mi caso, cada que hacemos _commit_.), la diferencia que tiene con _unit testing_ es simplemente que en lugar de probar código, lo que hacemos es **comparar imágenes** (un antes y un ahora) para verificar que nada haya cambiado, si algo cambió, entonces se marca.
 
@@ -24,7 +24,7 @@ Así que para eso, decidí que era momento de implementar alguna **librería de 
 > 
 > Además, ya viene con comparaciones visuales por defecto, así que no hay que instalar nada más.
 
-## Paso 1: Instalando Playwright
+## Paso 1: Instalando **Playwright**
 
 Para comenzar, como no tengo la librería funcionando todavía, comenzaré por instalar Playwright, debido a que este block está funcionando con NextJS, significa que es una aplicación de node, así que simplemente hay que instalar la dependencia usando `npm` (o `pnpm` en mi caso):
 
@@ -50,7 +50,7 @@ Lo que este comando hará es hacernos una serie de preguntas que nos ayudarán a
 > pnpm exec create-next-app@latest --example with-playwright with-playwright-app
 > ```
 
-## Paso 2: Creando las pruebas
+## Paso 2: **Creando las pruebas**
 
 Una vez que tenemos la librería instalada, es muy sencillo crear nuestras primeras pruebas, simplemente creamos un archivo dentro de la carpeta `tests` de la raíz de nuestro sitio (si no está creada, simplemente hay que crearla). Por ejemplo, yo crearé un archivo llamado `blog.spec.ts`
 
@@ -132,7 +132,7 @@ Una vez nuestra comparación es exitosa, tendremos algo así:
 
 [Imagen de comparación exitosa]
 
-## Paso 3: Automatizando las automatizaciones
+## Paso 3: Automatizando las **automatizaciones**
 
 Ahora que nuestras capturas funcionan, el siguiente paso es asegurarnos de que **sean ejecutadas cada vez que exista el riesgo de que algo cambie**. Esto podría suceder en cualquiera de estos escenarios:
 
@@ -172,7 +172,7 @@ Ahora cada vez que haga commit ambos comandos se ejecutarán automáticamente.
 > }
 > ```
 
-## ¿Que deberíamos probar?
+## ¿Que **deberíamos probar?**
 
 Una pregunta importante que debes hacer cuando trabajas con estas herramientas es: **¿qué debemos incluir?**
 
@@ -180,4 +180,4 @@ En este caso es un poco complicado, porque en realidad **no queremos probar cont
 
 *Sin embargo*, ya que sólo yo escribo en este blog, y debido a la infraestructura de este sitio; **quiero estar al tanto de esos cambios**, y no quiero ningún tipo de sorpresa. Por lo que bajo estos parámetros yo si estaré probando el contenido, como siempre, depende de ti decidir si es algo que necesitas o no.
 
-## Siguientes pasos
+## **Siguientes** pasos

@@ -42,7 +42,7 @@ export default function Code({
             'text-sm/1.5 w-full overflow-x-auto rounded-md p-2',
             'lg:rounded-lg lg:p-4 lg:text-base',
             {
-              'lg:-mx-8 lg:max-w-screen-md': allowExpand,
+              'lg:max-w-screen-md lg:mx-auto': allowExpand,
             }
           )}
         >
