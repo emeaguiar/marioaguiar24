@@ -17,7 +17,7 @@ interface ImgProps {
 export const Img = ({ src, alt, title }: ImgProps): JSX.Element => {
   if (title) {
     return (
-      <figure className='relative mb-16 mt-8 block aspect-video w-full'>
+      <figure className='relative mb-16 mt-8 block aspect-video w-full lg:max-w-screen-md mx-auto'>
         <Image
           src={src}
           alt={alt || ''}
@@ -40,7 +40,7 @@ export const Img = ({ src, alt, title }: ImgProps): JSX.Element => {
   }
 
   return (
-    <div className='relative my-8 aspect-video w-full'>
+    <div className='relative my-8 aspect-video w-full lg:max-w-screen-md mx-auto'>
       <Image
         src={src}
         alt={alt || ''}

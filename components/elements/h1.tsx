@@ -15,7 +15,8 @@ export function H1({
   return (
     <h1
       className={clsx(
-        'text-3xl/10 lg:max-w-screen-xl lg:text-center lg:text-6xl/tight uppercase font-light',
+        'text-3xl/10 uppercase font-black',
+        'lg:max-w-screen-xl lg:text-center lg:text-6xl/tight',
         className
       )}
       id={id}

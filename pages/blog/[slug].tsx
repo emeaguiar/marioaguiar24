@@ -79,7 +79,9 @@ export default function PostPage({
       
       <div
         className={clsx(
-          'prose prose-p:max-w-screen-sm prose-p:mx-auto lg:prose-xl prose-strong:text-inherit prose-figure:mb-18 px-4 mx-auto text-justify max-w-none',
+          'prose prose-p:max-w-screen-sm prose-p:mx-auto lg:prose-xl prose-strong:text-inherit prose-figure:mb-18 prose-pre:rounded-none',
+          'px-4 mx-auto text-justify max-w-none',
+          'prose-p:dark:text-foreground'
         )}
       >
         {/* @todo: Clean up this madness */}
@@ -123,7 +125,7 @@ export default function PostPage({
             section: (props: any) => {
               let classes;
               if (props.className.includes('footnotes')) {
-                classes = 'footnotes text-sm w-full max-w-screen-sm';
+                classes = 'footnotes text-sm w-full max-w-screen-sm mx-auto';
               }
 
               return <div {...props} className={classes} />;

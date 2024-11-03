@@ -13,8 +13,8 @@ export default function AlignWide({
   return (
     <div
       className={clsx(
-        'w-full max-w-screen-md',
-        'lg:-mx-8 lg:max-w-screen-md',
+        'w-full max-w-screen-md mx-auto',
+        'lg:max-w-screen-md',
         className
       )}
     >

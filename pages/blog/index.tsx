@@ -53,7 +53,7 @@ export default function Page({
           />
         </p>
 
-        <H2 className='text-center'>
+        <H2 className='text-center uppercase'>
           <Trans
             i18nKey='blog:latest'
             components={[<strong key='latest' className='font-black' />]}

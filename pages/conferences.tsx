@@ -102,7 +102,7 @@ function Conference({
 
   return (
     <div key={name} className='flex flex-col gap-2 p-4'>
-      <h2 className='text-xl' dangerouslySetInnerHTML={{__html: name}} />
+      <h2 className='text-xl uppercase' dangerouslySetInnerHTML={{__html: name}} />
 
       <p>{format(date, 'PPP', dateOptions)}</p>
 

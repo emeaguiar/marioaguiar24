@@ -25,7 +25,7 @@ export function H2({
       return (
         <h2
           className={clsx(
-            "max-w-screen-sm text-4xl uppercase tracking-wide font-light",
+            "max-w-screen-sm text-4xl tracking-wide font-light",
             className
           )}
         >
@@ -37,7 +37,8 @@ export function H2({
     return (
       <h2
         className={clsx(
-          "flex text-4xl uppercase tracking-wide font-light -ml-4",
+          "flex text-4xl tracking-wide font-light -ml-4",
+          'dark:text-foreground',
           className,
           {
             'lg:-ml-11': pull,

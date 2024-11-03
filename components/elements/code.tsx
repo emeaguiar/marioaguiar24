@@ -13,7 +13,7 @@ export function Code({ children }: { children?: React.ReactNode }) {
     <code
       className={clsx(
         `rounded-md bg-slate-100 ${notoSansMono.className} px-1.5 py-1`,
-        `dark:bg-slate-700`
+        `dark:bg-slate-700 dark:text-foreground`
       )}
     >
       {children}

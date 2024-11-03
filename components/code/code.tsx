@@ -7,6 +7,11 @@ import { useEffect } from 'react';
 import { Highlight, themes, Prism } from 'prism-react-renderer';
 import clsx from 'clsx';
 
+/**
+ * Internal dependencies
+ */
+import { notoSansMono } from '@/components/fonts';
+
 export default function Code({
   children,
   language,
@@ -38,9 +43,10 @@ export default function Code({
         <pre
           style={style}
           className={clsx(
+            notoSansMono.className,
+            'text-sm/1.5 w-full overflow-x-auto p-2',
+            'lg:p-4 lg:text-base',
             className,
-            'text-sm/1.5 w-full overflow-x-auto rounded-md p-2',
-            'lg:rounded-lg lg:p-4 lg:text-base',
             {
               'lg:max-w-screen-md lg:mx-auto': allowExpand,
             }
