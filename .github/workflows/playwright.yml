@@ -24,7 +24,7 @@ jobs:
           path: .test/**
       - name: Initialize snapshots
         if: ${{steps.cache.outputs.cache-hit != 'true'}}
-        run: pnpm playwrigth test --update-snapshots
+        run: pnpm playwright test --update-snapshots
       - name: Run Playwright tests
         run: pnpm exec playwright test
       - uses: actions/upload-artifact@v4
