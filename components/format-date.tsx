@@ -13,5 +13,9 @@ export default function FormatDate({
   const formattedDate = formatDistance(date, new Date(), options);
   const fullDate = format(date, 'PPP', options);
 
-  return <time dateTime={dateString} title={fullDate}>{formattedDate}</time>;
+  return (
+    <time dateTime={dateString} title={fullDate}>
+      {formattedDate}
+    </time>
+  );
 }

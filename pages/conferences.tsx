@@ -38,9 +38,7 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
       />
 
       <div className={`flex flex-col items-center gap-16 lg:max-w-screen-xl`}>
-        <h1
-          className="w-full text-center text-5xl lg:text-7xl uppercase font-light"
-        >
+        <h1 className='w-full text-center text-5xl font-light uppercase lg:text-7xl'>
           <Trans
             i18nKey='conferences:title'
             components={[<strong key='title' className='font-black' />]}
@@ -102,13 +100,16 @@ function Conference({
 
   return (
     <div key={name} className='flex flex-col gap-2 p-4'>
-      <h2 className='text-xl uppercase' dangerouslySetInnerHTML={{__html: name}} />
+      <h2
+        className='text-xl uppercase'
+        dangerouslySetInnerHTML={{ __html: name }}
+      />
 
       <p>{format(date, 'PPP', dateOptions)}</p>
 
       <p>{location}</p>
 
-      <p className='italic font-bold'>“{title}”</p>
+      <p className='font-bold italic'>“{title}”</p>
       <div className='divide-x-2'>
         {href && (
           <Link href={href} className='pr-2 underline hover:no-underline'>

@@ -20,7 +20,7 @@ export function H3({
   return (
     <h3
       className={clsx(
-        'w-full max-w-screen-sm text-xl font-light text-gray-600 mx-auto',
+        'mx-auto w-full max-w-screen-sm text-xl font-light text-gray-600',
         'dark:text-gray-300',
         className
       )}

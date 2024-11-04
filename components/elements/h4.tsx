@@ -15,7 +15,7 @@ export function H4({
   return (
     <h4
       className={clsx(
-        `w-full max-w-screen-sm text-lg font-bold text-gray-600 dark:text-gray-300 mx-auto`,
+        `mx-auto w-full max-w-screen-sm text-lg font-bold text-gray-600 dark:text-gray-300`,
         className
       )}
       id={id}

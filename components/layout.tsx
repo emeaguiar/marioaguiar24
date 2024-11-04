@@ -19,10 +19,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SkipNavigation />
       <BackToTop />
 
-      <div className={clsx(
-        raleway.className,
-        'mb-6 flex flex-col items-center lg:mb-44',
-      )}>
+      <div
+        className={clsx(
+          raleway.className,
+          'mb-6 flex flex-col items-center lg:mb-44'
+        )}
+      >
         <Header />
       </div>
 

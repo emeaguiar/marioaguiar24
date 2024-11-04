@@ -46,7 +46,7 @@ export default defineConfig({
             '--disable-skia-runtime-opts',
             '--disable-font-subpixel-positioning',
             '--disable-lcd-text',
-          ]
+          ],
         },
       },
     },
@@ -72,8 +72,8 @@ export default defineConfig({
             '--disable-skia-runtime-opts',
             '--disable-font-subpixel-positioning',
             '--disable-lcd-text',
-          ]
-        }
+          ],
+        },
       },
     },
     {

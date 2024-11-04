@@ -37,9 +37,7 @@ export default function Page({
       />
 
       <div className='flex w-full flex-col items-center gap-16 px-4 lg:max-w-screen-xl'>
-        <h1
-          className="w-full max-w-screen-sm text-center text-5xl lg:text-7xl uppercase"
-        >
+        <h1 className='w-full max-w-screen-sm text-center text-5xl uppercase lg:text-7xl'>
           <Trans
             i18nKey='blog:title'
             components={[<strong key='title' className='font-black' />]}
@@ -49,7 +47,9 @@ export default function Page({
         <p className='text-center lg:max-w-screen-md'>
           <Trans
             i18nKey='blog:description'
-            components={[<strong key='description' className='font-extrabold' />]}
+            components={[
+              <strong key='description' className='font-extrabold' />,
+            ]}
           />
         </p>
 

@@ -11,21 +11,19 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export default function ContactCTA() {
-    const pathname = usePathname();
-    const { t } = useTranslation('common');
-    
-    return (
-        <Link
-            href={{ pathname, search: '?modal=1' }}
-            className={
-                clsx(
-                    'font-extrabold p-4 ml-0 mr-auto border-zinc-900 text-zinc-900 border-2 uppercase text-lg',
-                    'lg:mr-0',
-                    'dark:text-foreground dark:border-foreground'
-                )
-            }
-        >
-            {t('contact')}
-        </Link>
-    );
+  const pathname = usePathname();
+  const { t } = useTranslation('common');
+
+  return (
+    <Link
+      href={{ pathname, search: '?modal=1' }}
+      className={clsx(
+        'ml-0 mr-auto border-2 border-zinc-900 p-4 text-lg font-extrabold uppercase text-zinc-900',
+        'lg:mr-0',
+        'dark:border-foreground dark:text-foreground'
+      )}
+    >
+      {t('contact')}
+    </Link>
+  );
 }

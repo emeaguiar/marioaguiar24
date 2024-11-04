@@ -27,9 +27,7 @@ export default function DesktopMenu() {
         {MENU_ITEMS.map(({ href, key }, index) => (
           <MenuItem key={index}>
             <Link href={href} className='group'>
-              <WithUnderline>
-                {t(key)}
-              </WithUnderline>
+              <WithUnderline>{t(key)}</WithUnderline>
             </Link>
           </MenuItem>
         ))}

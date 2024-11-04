@@ -90,9 +90,9 @@ export default function ContactForm() {
         type='submit'
         disabled={isLoading}
         className={clsx(
-            'flex items-center font-extrabold p-4 ml-0 mr-auto border-zinc-900 text-zinc-900 border-2 uppercase text-lg',
-            'lg:mr-0',
-            'dark:text-foreground dark:border-foreground'
+          'ml-0 mr-auto flex items-center border-2 border-zinc-900 p-4 text-lg font-extrabold uppercase text-zinc-900',
+          'lg:mr-0',
+          'dark:border-foreground dark:text-foreground'
         )}
       >
         {isLoading && <Spinner />}
@@ -102,7 +102,10 @@ export default function ContactForm() {
   );
 }
 
-const Input = ({label, type}: {
+const Input = ({
+  label,
+  type,
+}: {
   label: string;
   type: string;
 }): React.ReactNode => {
@@ -111,7 +114,10 @@ const Input = ({label, type}: {
 
   return (
     <>
-      <label htmlFor='name' className='mb-2 text-xl font-black uppercase lg:text-3xl'>
+      <label
+        htmlFor='name'
+        className='mb-2 text-xl font-black uppercase lg:text-3xl'
+      >
         {t(label)}:
       </label>
 

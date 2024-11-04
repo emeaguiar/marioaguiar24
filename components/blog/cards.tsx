@@ -34,25 +34,22 @@ function Card({ post }: { post: PostItem }) {
 
   return (
     <div
-      className={clsx(
-        'flex flex-col gap-4 border p-6',
-        'dark:bg-slate-800'
-      )}
+      className={clsx('flex flex-col gap-4 border p-6', 'dark:bg-slate-800')}
     >
       <h3 className={`text-xl font-extrabold uppercase`}>
-        <Link className="hover:underline" href={`${BLOG_PREFIX}/${post.slug}`}>{post.title}</Link>
+        <Link className='hover:underline' href={`${BLOG_PREFIX}/${post.slug}`}>
+          {post.title}
+        </Link>
       </h3>
 
       <p className='line-clamp-5'>{post.description}</p>
 
       <Link
         href={`${BLOG_PREFIX}/${post.slug}`}
-        className={`mb-0 mt-auto flex items-center gap-2 text-sm uppercase group font-semibold`}
+        className={`group mb-0 mt-auto flex items-center gap-2 text-sm font-semibold uppercase`}
       >
         <span>
-          <WithUnderline>
-            {t('readMore')}
-          </WithUnderline>
+          <WithUnderline>{t('readMore')}</WithUnderline>
         </span>
       </Link>
     </div>

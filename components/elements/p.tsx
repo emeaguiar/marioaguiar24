@@ -10,7 +10,5 @@ export function P({
   children?: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <p className={className}>{children}</p>
-  );
+  return <p className={className}>{children}</p>;
 }

@@ -66,7 +66,7 @@ export default function PostPage({
         description={description}
         canonical={`${SITE_URL}/${locale}${pathname}`}
       />
-      <header className='max-w-screen-sm mb-20 flex flex-col items-center gap-6 px-4 text-xl/9 lg:mb-16 lg:max-w-screen-lg lg:mx-auto'>
+      <header className='mb-20 flex max-w-screen-sm flex-col items-center gap-6 px-4 text-xl/9 lg:mx-auto lg:mb-16 lg:max-w-screen-lg'>
         <H1>{title}</H1>
 
         <BlogMeta
@@ -76,11 +76,11 @@ export default function PostPage({
           locale={locale}
         />
       </header>
-      
+
       <div
         className={clsx(
-          'prose prose-p:max-w-screen-sm prose-p:mx-auto lg:prose-xl prose-strong:text-inherit prose-figure:mb-18 prose-pre:rounded-none',
-          'px-4 mx-auto text-justify max-w-none',
+          'prose lg:prose-xl prose-p:mx-auto prose-p:max-w-screen-sm prose-figure:mb-18 prose-strong:text-inherit prose-pre:rounded-none',
+          'mx-auto max-w-none px-4 text-justify',
           'prose-p:dark:text-foreground'
         )}
       >

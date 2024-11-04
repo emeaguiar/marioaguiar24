@@ -45,8 +45,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    typography,
-  ],
+  plugins: [typography],
 };
 export default config;

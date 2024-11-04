@@ -17,15 +17,12 @@ export function H2({
   className?: string;
   id?: string;
 }) {
-  const H2Element = ({pull = false}: {
-    pull?: boolean;
-  }) => {
-
-    if ( ! id ) {
+  const H2Element = ({ pull = false }: { pull?: boolean }) => {
+    if (!id) {
       return (
         <h2
           className={clsx(
-            "max-w-screen-sm text-4xl tracking-wide font-light",
+            'max-w-screen-sm text-4xl font-light tracking-wide',
             className
           )}
         >
@@ -37,7 +34,7 @@ export function H2({
     return (
       <h2
         className={clsx(
-          "flex text-4xl tracking-wide font-light -ml-4",
+          '-ml-4 flex text-4xl font-light tracking-wide',
           'dark:text-foreground',
           className,
           {
@@ -47,7 +44,7 @@ export function H2({
         id={id}
       >
         <span
-          className='transition-opacity hidden lg:flex lg:opacity-0 group-hover:lg:opacity-100 font-bold'
+          className='hidden font-bold transition-opacity lg:flex lg:opacity-0 group-hover:lg:opacity-100'
           aria-hidden
         >
           #
@@ -68,7 +65,7 @@ export function H2({
     return (
       <Link
         href={`#${id}`}
-        className='group block w-full lg:max-w-screen-sm self-start text-start mx-auto no-underline hover:underline prose-strong:font-black'
+        className='group mx-auto block w-full self-start text-start no-underline hover:underline prose-strong:font-black lg:max-w-screen-sm'
       >
         <H2Element pull={true} />
       </Link>

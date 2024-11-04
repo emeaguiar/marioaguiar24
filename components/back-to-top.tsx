@@ -35,7 +35,7 @@ export default function BackToTop() {
       className={clsx(
         'fixed bottom-0 right-0 z-50 m-4 rounded-full bg-foreground p-2 text-background shadow-lg ring-1 ring-zinc-900',
         'transform-gpu transition-transform hover:scale-105',
-        'dark:bg-slate-700 dark:ring-slate-700 dark:text-white',
+        'dark:bg-slate-700 dark:text-white dark:ring-slate-700',
         {
           'translate-y-18': !isVisible,
           'translate-y-0': isVisible,

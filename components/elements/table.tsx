@@ -1,7 +1,7 @@
 /**
  * Extrenal dependencies
  */
-import clsx from "clsx";
+import clsx from 'clsx';
 
 export function Table({ children }: { children?: React.ReactNode }) {
   return (
@@ -11,20 +11,28 @@ export function Table({ children }: { children?: React.ReactNode }) {
 
 export function Th({ children }: { children?: React.ReactNode }) {
   return (
-    <th className={clsx(
-      'bg-zinc-900 p-4 text-start font-bold text-background ring-1 ring-zinc-900/60 first:pl-4',
-      'dark:text-foreground dark:bg-slate-800 dark:ring-slate-800'
-    )}>
+    <th
+      className={clsx(
+        'bg-zinc-900 p-4 text-start font-bold text-background ring-1 ring-zinc-900/60 first:pl-4',
+        'dark:bg-slate-800 dark:text-foreground dark:ring-slate-800'
+      )}
+    >
       {children}
     </th>
   );
 }
 
 export function Tr({ children }: { children?: React.ReactNode }) {
-  return <tr className={clsx(
-    'even:bg-slate-300',
-    'dark:text-foreground dark:even:text-foreground dark:even:bg-slate-700 dark:border-slate-800'
-  )}>{children}</tr>;
+  return (
+    <tr
+      className={clsx(
+        'even:bg-slate-300',
+        'dark:border-slate-800 dark:text-foreground dark:even:bg-slate-700 dark:even:text-foreground'
+      )}
+    >
+      {children}
+    </tr>
+  );
 }
 
 export function Td({ children }: { children?: React.ReactNode }) {

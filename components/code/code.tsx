@@ -48,7 +48,7 @@ export default function Code({
             'lg:p-4 lg:text-base',
             className,
             {
-              'lg:max-w-screen-md lg:mx-auto': allowExpand,
+              'lg:mx-auto lg:max-w-screen-md': allowExpand,
             }
           )}
         >

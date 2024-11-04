@@ -1,7 +1,7 @@
 {
-    "warning": "Advertencia",
-    "note": "Nota",
-    "tip": "Consejo",
-    "caution": "Precaución",
-    "important": "Importante"
+  "warning": "Advertencia",
+  "note": "Nota",
+  "tip": "Consejo",
+  "caution": "Precaución",
+  "important": "Importante"
 }

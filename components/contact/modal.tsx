@@ -28,13 +28,15 @@ export default function Modal() {
   return (
     <>
       {usesModal && (
-        <dialog className={clsx(
-          raleway.className,
-          'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-zinc-900/50 backdrop-blur'
-        )}>
+        <dialog
+          className={clsx(
+            raleway.className,
+            'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-zinc-900/50 backdrop-blur'
+          )}
+        >
           <div
             className={clsx(
-              'mx-auto h-full w-full p-4 bg-background',
+              'mx-auto h-full w-full bg-background p-4',
               'lg:h-auto lg:w-fit lg:border-4 lg:border-foreground lg:p-8',
               'dark:bg-slate-800 dark:text-foreground'
             )}

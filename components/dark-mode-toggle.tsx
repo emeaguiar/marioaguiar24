@@ -36,13 +36,9 @@ export default function DarkModeToggle({ className }: { className?: string }) {
 }
 
 function SunButton() {
-  return (
-    <SunIcon className='h-6 w-6 text-yellow-600' />
-  );
+  return <SunIcon className='h-6 w-6 text-yellow-600' />;
 }
 
 function MoonButton() {
-  return (
-    <MoonIcon className='h-6 w-6 text-gray-600' />
-  );
+  return <MoonIcon className='h-6 w-6 text-gray-600' />;
 }
