@@ -15,29 +15,31 @@ import { GoogleAnalytics } from '@next/third-parties/google';
  * Internal dependencies
  */
 import '@/styles/globals.css';
-import { ANALYTICS_ID } from '@/lib/data';
+import { ANALYTICS_ID, SITE_URL } from '@/lib/data';
 import Layout from '@/components/layout';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { t } = useTranslation('common');
+  const title = t('seoTitle');
+  const description = t('seoDescription');
 
   return (
     <>
       <DefaultSeo
-        defaultTitle={t('seoTitle')}
+        defaultTitle={title}
         titleTemplate='%s | Mario Aguiar'
-        description={t('seoDescription')}
+        description={description}
         openGraph={{
           type: 'website',
           locale: 'es' === pageProps.__lang ? 'es_MX' : 'en_US',
-          url: 'https://www.marioaguiar.net',
-          site_name: t('seoTitle'),
+          url: SITE_URL,
+          site_name: title,
           images: [
             {
-              url: 'https://www.marioaguiar.net/mariobw.webp',
-              width: 1124,
-              height: 1125,
-              alt: t('seoTitle'),
+              url: `${SITE_URL}/api/og`,
+              width: 1200,
+              height: 630,
+              alt: title,
             },
           ],
         }}
