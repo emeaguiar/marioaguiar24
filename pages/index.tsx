@@ -59,7 +59,7 @@ export default function Home({
             <Trans
               i18nKey='home:hello'
               components={[
-                <br />,
+                <br key='break' />,
                 <strong className='font-black' key='name' />,
               ]}
             />
