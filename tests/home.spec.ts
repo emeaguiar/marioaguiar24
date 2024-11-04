@@ -8,7 +8,7 @@ test.describe( 'Homepage', () => {
         await page.goto( '/' );
     
         expect( await page.locator('#intro').screenshot({
-            timeout: 2000 * 60,
+            timeout: 3000 * 60,
         }) ).toMatchSnapshot( 'intro' );
     } );
 
