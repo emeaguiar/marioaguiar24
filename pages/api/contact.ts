@@ -27,7 +27,6 @@ async function contact(
   req: NextApiRequest,
   res: NextApiResponse<string | void>
 ) {
-  console.log(req.method);
   if (req.method !== 'POST') {
     return res.status(405).end();
   }
