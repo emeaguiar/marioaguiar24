@@ -65,6 +65,15 @@ export default function PostPage({
         title={title}
         description={description}
         canonical={`${SITE_URL}/${locale}${pathname}`}
+        openGraph={{
+          images: [
+            {
+              url: `${SITE_URL}/api/og?title=${encodeURIComponent(title)}`,
+              width: 1200,
+              height: 630,
+            },
+          ],
+        }}
       />
       <header className='mb-20 flex max-w-screen-sm flex-col gap-6 px-4 text-xl/9 md:mx-auto md:items-center lg:mx-auto lg:mb-16 lg:max-w-screen-lg'>
         <H1>{title}</H1>
