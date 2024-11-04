@@ -2,10 +2,10 @@ module.exports = {
   locales: ['en', 'es'],
   defaultLocale: 'es',
   pages: {
-    '*': ['common'],
+    '*': ['common', 'alerts'],
     '/': ['home'],
     '/blog': ['blog'],
-    '/blog/[slug]': ['blog', 'alerts'],
+    '/blog/[slug]': ['blog'],
     '/conferences': ['conferences'],
   },
 };

@@ -84,7 +84,7 @@ export default function Home({
         id='about'
         className='w-full bg-zinc-900 px-4 text-background dark:bg-slate-800 dark:text-foreground'
       >
-        <div className='mx-auto grid gap-4 p-8 lg:max-w-screen-xl lg:grid-cols-3 lg:p-32'>
+        <div className='mx-auto grid gap-4 py-8 lg:max-w-screen-xl lg:grid-cols-3 lg:p-32'>
           <H2 className='mt-5 uppercase'>
             <Trans
               i18nKey='home:aboutTitle'
@@ -123,7 +123,7 @@ export default function Home({
         id='cta'
         className='flex w-full flex-col gap-8 px-4 py-8 lg:max-w-screen-xl lg:flex-row lg:items-center lg:justify-between'
       >
-        <div className='flex max-w-screen-md flex-col items-center gap-10 lg:items-start'>
+        <div className='flex max-w-screen-md flex-col gap-10 lg:items-start'>
           <H2 className='uppercase'>
             <Trans
               i18nKey='home:ctaTitle'

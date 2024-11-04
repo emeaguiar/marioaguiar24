@@ -36,9 +36,9 @@ export default function Modal() {
         >
           <div
             className={clsx(
-              'mx-auto h-full w-full bg-background p-4',
+              'mx-auto h-full w-full bg-background lg:bg-background p-4',
               'lg:h-auto lg:w-fit lg:border-4 lg:border-foreground lg:p-8',
-              'dark:bg-slate-800 dark:text-foreground'
+              'dark:bg-dark:lg:bg-slate-800'
             )}
           >
             <Link
@@ -49,8 +49,8 @@ export default function Modal() {
               <XMarkIcon className='h-6 w-6' />
             </Link>
 
-            <div className='flex h-max flex-col items-center'>
-              <H2 className='mb-4 max-w-screen-xl self-start'>
+            <div className='flex h-max flex-col items-center -mt-8'>
+              <H2 className='mb-4 max-w-screen-xl self-start uppercase'>
                 <Trans
                   i18nKey='common:contactModalTitle'
                   components={[<strong key='strong' className='font-black' />]}
