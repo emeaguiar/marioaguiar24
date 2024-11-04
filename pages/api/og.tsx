@@ -4,6 +4,11 @@
 import { ImageResponse } from 'next/og';
 import { NextApiRequest } from 'next';
 
+/**
+ * Internal dependencies
+ */
+import { SITE_URL } from '@/lib/data';
+
 export const config = {
   runtime: 'edge',
 };
@@ -54,7 +59,7 @@ async function handler(req: NextApiRequest): Promise<ImageResponse> {
           <img
             width={400}
             height={400}
-            src='http://localhost:3000/mariobw-og.jpg'
+            src={`${SITE_URL}/mariobw-og.jpg`}
             alt='Mario Aguiar'
           />
         </div>
