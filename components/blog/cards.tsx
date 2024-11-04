@@ -12,14 +12,17 @@ import Link from 'next/link';
 /**
  * Internal dependencies
  */
-import { merriweather, notoSans } from '@/components/fonts';
 import { BLOG_PREFIX } from '@/lib/data';
 import type { PostItem } from '@/types/post';
 import clsx from 'clsx';
+import { WithUnderline } from '../elements';
 
 export default function Cards({ posts }: { [key: string]: any }) {
   return (
-    <div className='auto grid w-full items-stretch gap-8 lg:max-w-screen-xl lg:grid-cols-3'>
+    <div
+      id='blog-cards'
+      className='auto grid w-full items-stretch gap-8 lg:max-w-screen-xl lg:grid-cols-3'
+    >
       {posts &&
         posts.map((post: PostItem) => <Card post={post} key={post.slug} />)}
     </div>
@@ -31,24 +34,23 @@ function Card({ post }: { post: PostItem }) {
 
   return (
     <div
-      className={clsx(
-        'flex flex-col gap-4 rounded-2xl border p-6',
-        'dark:bg-slate-800'
-      )}
+      className={clsx('flex flex-col gap-4 border p-6', 'dark:bg-slate-800')}
     >
-      <h3 className={`${merriweather.className} text-xl font-bold`}>
-        <Link href={`${BLOG_PREFIX}/${post.slug}`}>{post.title}</Link>
+      <h3 className={`text-xl font-extrabold uppercase`}>
+        <Link className='hover:underline' href={`${BLOG_PREFIX}/${post.slug}`}>
+          {post.title}
+        </Link>
       </h3>
 
       <p className='line-clamp-5'>{post.description}</p>
 
       <Link
         href={`${BLOG_PREFIX}/${post.slug}`}
-        className={`mb-0 mt-auto flex items-center gap-2 text-sm text-primary transition-colors hover:text-foreground`}
+        className={`group mb-0 mt-auto flex items-center gap-2 text-sm font-semibold uppercase`}
       >
-        <span>{t('readMore')}</span>
-
-        <ArrowRightIcon className='h-4 w-4' />
+        <span>
+          <WithUnderline>{t('readMore')}</WithUnderline>
+        </span>
       </Link>
     </div>
   );

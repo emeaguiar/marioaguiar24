@@ -6,7 +6,7 @@ import clsx from 'clsx';
 /**
  * Internal dependencies
  */
-import { notoSans } from '@/components/fonts';
+import { raleway } from '@/components/fonts';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import ContactModal from '@/components/contact/modal';
@@ -19,15 +19,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SkipNavigation />
       <BackToTop />
 
-      <div className='mb-6 flex flex-col items-center lg:mb-20'>
+      <div
+        className={clsx(
+          raleway.className,
+          'mb-6 flex flex-col items-center lg:mb-44'
+        )}
+      >
         <Header />
       </div>
 
       <main
         id='main-content'
         className={clsx(
-          notoSans.className,
-          'flex flex-col items-center gap-6 lg:gap-20'
+          raleway.className,
+          'flex flex-col items-center gap-20 lg:gap-52'
         )}
       >
         {children}

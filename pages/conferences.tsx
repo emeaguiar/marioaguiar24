@@ -21,7 +21,6 @@ import Link from 'next/link';
  * Internal dependencies
  */
 import { CONFERENCES, SITE_URL } from '@/lib/data';
-import { merriweather } from '@/components/fonts';
 
 export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
   const { t } = useTranslation('conferences');
@@ -33,22 +32,23 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
       </Head>
 
       <NextSeo
-        title={t('title')}
+        title={t('title').replace('<0>', '').replace('</0>', '')}
         description={t('description')}
         canonical={`${SITE_URL}/${locale}conferences`}
       />
 
-      <div className={`flex flex-col items-center gap-4 lg:gap-8`}>
-        <h1
-          className={`${merriweather.className} self-start px-4 text-2xl font-bold lg:text-5xl`}
-        >
-          {t('title')}
+      <div className={`flex flex-col items-center gap-16 lg:max-w-screen-xl`}>
+        <h1 className='w-full px-4 text-5xl font-light uppercase lg:text-center lg:text-7xl'>
+          <Trans
+            i18nKey='conferences:title'
+            components={[<strong key='title' className='font-black' />]}
+          />
         </h1>
 
         <p className='px-4 text-xl/10 lg:max-w-screen-md'>
           <Trans
             i18nKey='conferences:content'
-            components={[<strong key='strong' />]}
+            components={[<strong key='strong' className='font-extrabold' />]}
           />
         </p>
 
@@ -66,7 +66,7 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
           />
         </p>
 
-        <div className='grid gap-4 lg:max-w-screen-md lg:grid-cols-2'>
+        <div className='grid gap-4 self-start md:grid-cols-2 lg:max-w-screen-md'>
           {CONFERENCES.map((conference) => (
             <Conference locale={locale} {...conference} key={conference.name} />
           ))}
@@ -100,13 +100,16 @@ function Conference({
 
   return (
     <div key={name} className='flex flex-col gap-2 p-4'>
-      <h2 className={`${merriweather.className} text-xl font-bold`}>{name}</h2>
+      <h2
+        className='text-xl uppercase'
+        dangerouslySetInnerHTML={{ __html: name }}
+      />
 
       <p>{format(date, 'PPP', dateOptions)}</p>
 
       <p>{location}</p>
 
-      <p className='italic'>{title}</p>
+      <p className='font-bold italic'>“{title}”</p>
       <div className='divide-x-2'>
         {href && (
           <Link href={href} className='pr-2 underline hover:no-underline'>

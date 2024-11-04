@@ -1,7 +1,7 @@
 {
-  "title": "El Blog",
-  "description": "Una de mis grandes pasiones es escribir y compartir conocimiento, aquí encontrarás algunos de mis artículos más recientes. Mayormente sobre desarrollo web, pero también sobre otros temas que me interesan.",
-  "latest": "Lo más reciente…",
+  "title": "El <0>Blog</0>",
+  "description": "Una de mis grandes pasiones es <0>escribir y compartir conocimiento</0>, aquí encontrarás algunos de mis artículos más recientes. Mayormente sobre desarrollo web, pero también sobre otros temas que me interesan.",
+  "latest": "Lo <0>más reciente…</0>",
   "mostInteresting": "Lo más interesante…",
   "publishedOn": "Publicado hace <0 />",
   "updatedOn": "Actualizado hace <0 />",

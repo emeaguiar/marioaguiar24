@@ -21,11 +21,12 @@ export function Blockquote({
     <blockquote
       className={clsx(
         merriweather.className,
-        'relative my-4 w-full max-w-screen-sm border-primary py-2 pl-10 text-2xl/12 italic lg:pl-20',
-        'before:absolute before:left-0 before:top-3 before:text-6xl before:opacity-20 before:content-["“"] lg:before:text-9xl',
+        'relative my-4 w-full max-w-screen-sm border-0 py-2 pl-10 text-2xl/12 italic lg:pl-20',
+        'before:absolute before:left-0 before:top-10 before:text-6xl before:opacity-20 before:content-["“"] lg:before:text-9xl',
+        'prose-p:max-w-screen-lg',
+        'md:mx-auto md:max-w-screen-md',
         {
           'text-gray-600 dark:text-gray-300': allowExpand,
-          'lg:-mx-8 lg:max-w-screen-md': allowExpand,
           'opacity-75': !allowExpand,
         }
       )}

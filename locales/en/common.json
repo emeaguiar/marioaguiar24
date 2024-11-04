@@ -7,8 +7,8 @@
   "seoTitle": "Mario Aguiar | Frontend Developer",
   "seoDescription": "Frontend Developer with over 10 years of experience. Specializing in responsive websites, performance, and accessibility. Let's work together!",
   "readMore": "Read more",
-  "contactModalTitle": "Contact me",
-  "contactModalMessage": "If you have any questions or would like to work together, please send me an email. I'll reply as soon as possible. Or you can contact me in my social networks:",
+  "contactModalTitle": "<0>Contact</0> me",
+  "contactModalMessage": "If you have any questions or would like to work together, please <0>send me an email</0>. I'll reply as soon as possible.",
   "close": "Close",
   "name": "Name",
   "email": "Email",
@@ -19,5 +19,6 @@
   "tooBad": "Too bad!",
   "pageNotFound": "The page you are looking for does not exist.",
   "backToTop": "Back to top",
-  "conferences": "Conferences"
+  "conferences": "Conferences",
+  "send": "Send"
 }

@@ -1,9 +1,19 @@
+/**
+ * External dependencies
+ */
+import clsx from 'clsx';
+
 export function WithUnderline({ children }: { children?: React.ReactNode }) {
   return (
-    <span className='relative isolate'>
-      <span className='absolute bottom-1 left-0 h-1 w-full bg-underline opacity-80 lg:h-2' />
+    <>
+      {children}
 
-      <span className='relative z-10'>{children}</span>
-    </span>
+      <div
+        className={clsx(
+          'preserve-3d -mt-2 h-1 origin-left scale-x-0 bg-zinc-900/60 transition-transform will-change-transform group-hover:scale-x-100',
+          'dark:bg-slate-300'
+        )}
+      />
+    </>
   );
 }

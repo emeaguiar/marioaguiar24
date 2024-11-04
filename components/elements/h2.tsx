@@ -8,11 +8,6 @@ import clsx from 'clsx';
  */
 import Link from 'next/link';
 
-/**
- * Internal dependencies
- */
-import { merriweather } from '@/components/fonts';
-
 export function H2({
   children,
   className,
@@ -22,40 +17,57 @@ export function H2({
   className?: string;
   id?: string;
 }) {
-  const H2Element = () => (
-    <h2
-      className={clsx(
-        `${merriweather.className} flex max-w-screen-sm text-2xl font-bold`,
-        className
-      )}
-      id={id}
-    >
-      {id && (
+  const H2Element = ({ pull = false }: { pull?: boolean }) => {
+    if (!id) {
+      return (
+        <h2
+          className={clsx(
+            'max-w-screen-sm text-4xl font-light tracking-wide',
+            className
+          )}
+        >
+          {children}
+        </h2>
+      );
+    }
+
+    return (
+      <h2
+        className={clsx(
+          '-ml-4 flex text-4xl font-light tracking-wide',
+          'dark:text-foreground',
+          className,
+          {
+            'md:-ml-11': pull,
+          }
+        )}
+        id={id}
+      >
         <span
-          className='transition-opacity lg:opacity-0 group-hover:lg:opacity-100'
+          className='hidden font-bold transition-opacity md:flex md:opacity-0 group-hover:md:opacity-100'
           aria-hidden
         >
           #
         </span>
-      )}
 
-      <span
-        className={clsx({
-          'pl-4': id,
-        })}
-      >
-        {children}
-      </span>
-    </h2>
-  );
+        <span
+          className={clsx({
+            'pl-4': id,
+          })}
+        >
+          {children}
+        </span>
+      </h2>
+    );
+  };
 
   if (id) {
     return (
       <Link
         href={`#${id}`}
-        className='group block w-full max-w-screen-md self-start text-start'
+        className='group mx-auto block w-full self-start text-start no-underline hover:underline prose-strong:font-black md:max-w-screen-sm'
       >
-        <H2Element />
+        <H2Element pull={true} />
       </Link>
     );
   }

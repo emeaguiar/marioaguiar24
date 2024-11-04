@@ -14,29 +14,26 @@ import { usePathname } from 'next/navigation';
  */
 import { MENU_ITEMS } from '@/lib/data';
 import DarkModeToggle from '@/components/dark-mode-toggle';
+import { WithUnderline } from '@/components/elements';
+import ContactCTA from '@/components/contact/cta';
 
 export default function DesktopMenu() {
   const { t } = useTranslation('common');
   const pathname = usePathname();
 
   return (
-    <nav aria-label='Navegación principal' className='hidden lg:flex'>
-      <ul className='flex items-center justify-between gap-18'>
+    <nav aria-label='Navegación principal' className='hidden md:flex'>
+      <ul className='flex items-center justify-between gap-18 text-lg'>
         {MENU_ITEMS.map(({ href, key }, index) => (
           <MenuItem key={index}>
-            <Link href={href} className='transition-colors hover:text-primary'>
-              {t(key)}
+            <Link href={href} className='group'>
+              <WithUnderline>{t(key)}</WithUnderline>
             </Link>
           </MenuItem>
         ))}
 
         <MenuItem>
-          <Link
-            href={{ pathname, search: '?modal=1' }}
-            className='transition-colors hover:text-primary'
-          >
-            {t('contact')}
-          </Link>
+          <ContactCTA />
         </MenuItem>
 
         <li>
@@ -48,5 +45,5 @@ export default function DesktopMenu() {
 }
 
 function MenuItem({ children }: { children: React.ReactNode }) {
-  return <li className='font-bold uppercase'>{children}</li>;
+  return <li className='font-light uppercase'>{children}</li>;
 }

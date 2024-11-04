@@ -1,7 +1,7 @@
 {
-  "title": "The Blog",
-  "description": "One of my great passions is writing and sharing knowledge, here you will find some of my most recent articles. Mostly about web development, but also about other topics I may find interesting.",
-  "latest": "The Latest…",
+  "title": "The <0>Blog</0>",
+  "description": "One of my great passions is <0>writing and sharing knowledge</0>, here you will find some of my most recent articles. Mostly about web development, but also about other topics I may find interesting.",
+  "latest": "The <0>Latest…</0>",
   "mostInteresting": "Most Interesting…",
   "publishedOn": "Published <0 /> ago",
   "updatedOn": "Updated <0 /> ago",

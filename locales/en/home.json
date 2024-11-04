@@ -1,16 +1,19 @@
 {
-  "hello": "Hello! It's-a <0><1>Mario</1></0>.",
-  "headline": "Frontend <0 />Development",
+  "title": "Mario Aguiar | Front-End Developer",
+  "hello": "Hello, world. <0 /> It's-a <1>Mario</1>",
+  "headline": "I do <1>Front-End</1> <0 />Development ",
   "subtitle": "Frontend Developer <0 />for over 10 years",
   "responsiveSitesTitle": "Frontend Development",
   "responsiveSites": "Responsive websites made with the latest technology and the best user experience",
   "performanceTitle": "Performance & Accessibility",
   "performance": "Fast, inclusive, and easy-to-find websites",
   "wordpress": "Themes, plugins, advanced optimization",
-  "strip": "For the past 10 years since I began my journey, I've done freelance work, agency work, consulting, conferences, and collaborated with talented people to create websites in every field.",
-  "blogTitle": "From the Blog…",
-  "ctaTitle": "Need a website?",
+  "strip": "For over 10 years since I began my journey, I've done <0>freelance work, agency work, consulting, conferences,</0> and collaborated with talented people to create <0>beautiful websites</0> in every field.",
+  "blogTitle": "From <0>the Blog</0>…",
+  "ctaTitle": "Need a <0>website?</0>",
   "cta": "Let's work together! Send me an email and let's find out how we can collaborate",
   "whyMe": "Why work with me?",
-  "improve": "I'm always improving,<0 />improving the web."
+  "improve": "<1>I'm always improving</1>,<0 />improving the web.",
+  "aboutImageAlt": "Portrait of Mario Aguiar, Front-End Developer. Wearing a tuxedo, in a black and white photo looking right.",
+  "aboutTitle": "<0>About</0> Me"
 }

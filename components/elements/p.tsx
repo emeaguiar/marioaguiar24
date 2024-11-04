@@ -10,7 +10,5 @@ export function P({
   children?: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <p className={clsx('w-full max-w-screen-sm', className)}>{children}</p>
-  );
+  return <p className={className}>{children}</p>;
 }

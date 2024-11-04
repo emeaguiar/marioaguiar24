@@ -20,7 +20,8 @@ export function H3({
   return (
     <h3
       className={clsx(
-        `${merriweather.className} w-full max-w-screen-sm text-xl font-bold text-gray-600 dark:text-gray-300`,
+        'mx-auto w-full max-w-screen-sm text-xl font-light text-gray-600',
+        'dark:text-gray-300',
         className
       )}
       id={id}

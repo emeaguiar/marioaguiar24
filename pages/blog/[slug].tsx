@@ -15,7 +15,6 @@ import rehypeUnwrapImages from 'rehype-unwrap-images';
 /**
  * Next dependencies
  */
-import Image from 'next/image';
 import { YouTubeEmbed } from '@next/third-parties/google';
 
 /**
@@ -39,7 +38,6 @@ import {
   Tr,
   Code as CodeElement,
 } from '@/components/elements';
-import { notoSans } from '@/components/fonts';
 import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
@@ -62,13 +60,13 @@ export default function PostPage({
   const pathname = usePathname();
 
   return (
-    <>
+    <article>
       <NextSeo
         title={title}
         description={description}
         canonical={`${SITE_URL}/${locale}${pathname}`}
       />
-      <div className='mt-4 flex flex-col items-center gap-6 px-4 text-xl/9 lg:my-16'>
+      <header className='mb-20 flex max-w-screen-sm flex-col gap-6 px-4 text-xl/9 md:mx-auto md:items-center lg:mx-auto lg:mb-16 lg:max-w-screen-lg'>
         <H1>{title}</H1>
 
         <BlogMeta
@@ -77,12 +75,13 @@ export default function PostPage({
           readingTime={readingTime / 60}
           locale={locale}
         />
-      </div>
+      </header>
+
       <div
         className={clsx(
-          notoSans.className,
-          'flex flex-col items-center gap-6 px-4 text-xl/10',
-          'lg:w-[736px]'
+          'prose lg:prose-xl prose-p:mx-auto prose-p:max-w-screen-sm prose-figure:mb-18 prose-strong:text-inherit prose-pre:rounded-none',
+          'mx-auto max-w-none px-4 text-justify',
+          'prose-p:dark:text-foreground'
         )}
       >
         {/* @todo: Clean up this madness */}
@@ -126,7 +125,7 @@ export default function PostPage({
             section: (props: any) => {
               let classes;
               if (props.className.includes('footnotes')) {
-                classes = 'footnotes text-sm w-full max-w-screen-sm';
+                classes = 'footnotes text-sm w-full max-w-screen-sm mx-auto';
               }
 
               return <div {...props} className={classes} />;
@@ -135,7 +134,7 @@ export default function PostPage({
           }}
         />
       </div>
-    </>
+    </article>
   );
 }
 

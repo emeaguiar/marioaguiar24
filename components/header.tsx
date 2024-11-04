@@ -12,8 +12,11 @@ import DesktopMenu from '@/components/menu/desktop';
 
 export default function Header() {
   return (
-    <div className='flex w-full max-w-screen-xl justify-between p-4'>
-      <Link href='/' className='hover:text-primary'>
+    <div className='flex w-full max-w-screen-xl justify-between p-6'>
+      <Link
+        href='/'
+        className='hover:text-zinc-900/60 dark:hover:text-slate-300'
+      >
         <Logo />
       </Link>
 

@@ -8,9 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "lint:staged": "lint-staged",
-    "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore .",
-    "prepare": "husky"
+    "format": "prettier --check --ignore-path .prettierignore .",
+    "format:fix": "prettier --write --ignore-path .prettierignore .",
+    "prepare": "husky",
+    "test": "playwright test"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -35,6 +36,8 @@
   },
   "devDependencies": {
     "@next/third-parties": "^14.2.5",
+    "@playwright/test": "^1.48.2",
+    "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

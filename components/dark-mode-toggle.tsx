@@ -24,7 +24,7 @@ export default function DarkModeToggle({ className }: { className?: string }) {
       {!isMounted && (
         <div
           className={clsx(
-            'absolute -inset-1 transform rounded-full bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 opacity-20 blur transition-transform duration-300',
+            'absolute -inset-1 transform rounded-full opacity-20 blur transition-transform duration-300',
             'group-hover:scale-150'
           )}
         />
@@ -36,29 +36,9 @@ export default function DarkModeToggle({ className }: { className?: string }) {
 }
 
 function SunButton() {
-  return (
-    <>
-      <div
-        className={clsx(
-          'absolute -inset-1 transform animate-glow rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 blur transition-transform duration-300'
-        )}
-      />
-
-      <SunIcon className='h-6 w-6 text-yellow-600' />
-    </>
-  );
+  return <SunIcon className='h-6 w-6 text-yellow-600' />;
 }
 
 function MoonButton() {
-  return (
-    <>
-      <div
-        className={clsx(
-          'absolute -inset-1 transform animate-glow rounded-full bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 blur transition-transform duration-300'
-        )}
-      />
-
-      <MoonIcon className='h-6 w-6 text-gray-600' />
-    </>
-  );
+  return <MoonIcon className='h-6 w-6 text-gray-600' />;
 }

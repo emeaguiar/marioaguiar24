@@ -1,9 +1,8 @@
-'use client';
-
 /**
  * External dependencies
  */
 import useTranslation from 'next-translate/useTranslation';
+import Trans from 'next-translate/Trans';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 
@@ -17,7 +16,7 @@ import Link from 'next/link';
  * Internal dependencies
  */
 import { H2, P } from '@/components/elements';
-import { notoSans } from '@/components/fonts';
+import { raleway } from '@/components/fonts';
 import ContactForm from '@/components/contact/form';
 
 export default function Modal() {
@@ -31,15 +30,15 @@ export default function Modal() {
       {usesModal && (
         <dialog
           className={clsx(
-            notoSans.className,
-            'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-black bg-opacity-50 backdrop-blur'
+            raleway.className,
+            'modal fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-auto bg-zinc-900/50 backdrop-blur'
           )}
         >
           <div
             className={clsx(
-              'm-auto h-full w-full bg-primary bg-opacity-90 p-8 text-background',
-              'lg:h-auto lg:w-fit lg:rounded-xl',
-              'dark:bg-slate-800 dark:text-foreground'
+              'mx-auto h-full w-full bg-background p-4 lg:bg-background',
+              'lg:h-auto lg:w-fit lg:border-4 lg:border-foreground lg:p-8',
+              'dark:bg-dark:lg:bg-slate-800'
             )}
           >
             <Link
@@ -50,13 +49,19 @@ export default function Modal() {
               <XMarkIcon className='h-6 w-6' />
             </Link>
 
-            <div className='flex h-max flex-col items-center'>
-              <H2 className='mb-4 max-w-screen-xl self-start'>
-                {t('contactModalTitle')}
+            <div className='-mt-8 flex h-max flex-col items-center'>
+              <H2 className='mb-4 max-w-screen-xl self-start uppercase'>
+                <Trans
+                  i18nKey='common:contactModalTitle'
+                  components={[<strong key='strong' className='font-black' />]}
+                />
               </H2>
 
               <P className='max-w-screen-xl lg:max-w-screen-md'>
-                {t('contactModalMessage')}
+                <Trans
+                  i18nKey='common:contactModalMessage'
+                  components={[<strong key='strong' className='font-bold' />]}
+                />
               </P>
 
               <ContactForm />
