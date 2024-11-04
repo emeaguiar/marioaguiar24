@@ -32,11 +32,23 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+  timeout: 30000,
+
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: [
+            '--font-render-hinting=none',
+            '--disable-skia-runtime-opts',
+            '--disable-font-subpixel-positioning',
+            '--disable-lcd-text',
+          ]
+        },
+      },
     },
 
     {
@@ -50,14 +62,24 @@ export default defineConfig({
     },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: {
+        ...devices['Pixel 5'],
+        launchOptions: {
+          args: [
+            '--font-render-hinting=none',
+            '--disable-skia-runtime-opts',
+            '--disable-font-subpixel-positioning',
+            '--disable-lcd-text',
+          ]
+        }
+      },
+    },
+    {
+      name: 'Mobile Safari',
+      use: { ...devices['iPhone 12'] },
+    },
 
     /* Test against branded browsers. */
     // {

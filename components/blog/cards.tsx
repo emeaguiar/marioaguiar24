@@ -19,7 +19,10 @@ import { WithUnderline } from '../elements';
 
 export default function Cards({ posts }: { [key: string]: any }) {
   return (
-    <div className='auto grid w-full items-stretch gap-8 lg:max-w-screen-xl lg:grid-cols-3'>
+    <div
+      id='blog-cards'
+      className='auto grid w-full items-stretch gap-8 lg:max-w-screen-xl lg:grid-cols-3'
+    >
       {posts &&
         posts.map((post: PostItem) => <Card post={post} key={post.slug} />)}
     </div>

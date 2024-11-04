@@ -69,6 +69,7 @@ export default function Home({
               className="object-contain"
               width="1000"
               height="1000"
+              loading='eager'
             />
         </div>
       </div>
@@ -97,7 +98,7 @@ export default function Home({
         </div>
       </div>
 
-      <div className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'>
+      <div id='blog' className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'>
         <H2 className='text-center'>
           <Trans
             i18nKey='home:blogTitle'
@@ -110,7 +111,7 @@ export default function Home({
         <BlogCards posts={posts} />
       </div>
 
-      <div className='flex w-full flex-col gap-8 px-4 py-8 lg:flex-row lg:items-center lg:justify-between lg:max-w-screen-xl'>
+      <div id='cta' className='flex w-full flex-col gap-8 px-4 py-8 lg:flex-row lg:items-center lg:justify-between lg:max-w-screen-xl'>
         <div className='flex max-w-screen-md flex-col items-center gap-10 lg:items-start'>
           <H2 className='uppercase'>
             <Trans
@@ -127,7 +128,7 @@ export default function Home({
         <ContactCTA />
       </div>
 
-      <div className='flex'>
+      <div id='footer' className='flex'>
         <p
           className="my-8 text-center text-sm/5 font-light"
         >
