@@ -1,8 +1,18 @@
 /**
  * Next dependencies
  */
-import { Long_Cang, Noto_Sans_Mono, Raleway } from 'next/font/google';
+import {
+  Merriweather,
+  Long_Cang,
+  Noto_Sans_Mono,
+  Raleway,
+} from 'next/font/google';
 
+export const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['italic'],
+});
 export const notoSansMono = Noto_Sans_Mono({
   subsets: ['latin'],
   weight: ['400'],
