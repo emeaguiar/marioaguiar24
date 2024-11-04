@@ -22,7 +22,7 @@ export default function DesktopMenu() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label='Navegación principal' className='hidden lg:flex'>
+    <nav aria-label='Navegación principal' className='hidden md:flex'>
       <ul className='flex items-center justify-between gap-18 text-lg'>
         {MENU_ITEMS.map(({ href, key }, index) => (
           <MenuItem key={index}>

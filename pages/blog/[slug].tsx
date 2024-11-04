@@ -66,7 +66,7 @@ export default function PostPage({
         description={description}
         canonical={`${SITE_URL}/${locale}${pathname}`}
       />
-      <header className='mb-20 flex max-w-screen-sm flex-col items-center gap-6 px-4 text-xl/9 lg:mx-auto lg:mb-16 lg:max-w-screen-lg'>
+      <header className='mb-20 flex max-w-screen-sm flex-col items-center gap-6 px-4 text-xl/9 md:mx-auto lg:mx-auto lg:mb-16 lg:max-w-screen-lg'>
         <H1>{title}</H1>
 
         <BlogMeta

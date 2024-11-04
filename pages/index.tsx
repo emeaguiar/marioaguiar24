@@ -42,7 +42,7 @@ export default function Home({
 
       <div
         id='intro'
-        className='mb-10 w-full max-w-screen-xl lg:grid lg:grid-cols-3'
+        className='mb-10 w-full max-w-screen-xl md:grid md:grid-cols-3'
       >
         <div className='col-span-2 flex w-full max-w-screen-xl flex-col gap-4 p-4 tracking-wide lg:gap-8'>
           <h1 className='self-start text-4xl uppercase lg:mb-0 lg:mt-auto lg:text-6xl'>
@@ -109,7 +109,7 @@ export default function Home({
         id='blog'
         className='flex w-full flex-col items-center gap-10 px-4 lg:max-w-screen-xl'
       >
-        <H2 className='text-center'>
+        <H2 className='self-start uppercase lg:self-center'>
           <Trans
             i18nKey='home:blogTitle'
             components={[<strong className='font-black' key='bold' />]}

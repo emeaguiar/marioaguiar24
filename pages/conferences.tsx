@@ -66,7 +66,7 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
           />
         </p>
 
-        <div className='grid gap-4 lg:max-w-screen-md lg:grid-cols-2'>
+        <div className='grid gap-4 self-start md:grid-cols-2 lg:max-w-screen-md'>
           {CONFERENCES.map((conference) => (
             <Conference locale={locale} {...conference} key={conference.name} />
           ))}

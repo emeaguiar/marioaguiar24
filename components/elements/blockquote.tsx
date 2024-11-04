@@ -24,7 +24,7 @@ export function Blockquote({
         'relative my-4 w-full max-w-screen-sm border-0 py-2 pl-10 text-2xl/12 italic lg:pl-20',
         'before:absolute before:left-0 before:top-10 before:text-6xl before:opacity-20 before:content-["“"] lg:before:text-9xl',
         'prose-p:max-w-screen-lg',
-        'lg:mx-auto lg:max-w-screen-md',
+        'md:mx-auto md:max-w-screen-md',
         {
           'text-gray-600 dark:text-gray-300': allowExpand,
           'opacity-75': !allowExpand,

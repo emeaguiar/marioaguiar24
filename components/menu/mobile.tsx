@@ -31,15 +31,15 @@ export default function MobileMenu() {
 
   return (
     <>
-      <DarkModeToggle className='ml-auto mr-8 lg:hidden' />
+      <DarkModeToggle className='ml-auto mr-8 md:hidden' />
 
-      <button className='lg:hidden' onClick={() => setIsOpen(true)}>
+      <button className='md:hidden' onClick={() => setIsOpen(true)}>
         <Bars3Icon className='h-6 w-6' />
       </button>
 
       <div
         className={clsx(
-          'fixed inset-0 z-10 -translate-y-full bg-background transition-transform lg:hidden',
+          'fixed inset-0 z-10 -translate-y-full bg-background transition-transform md:hidden',
           {
             'translate-y-0': isOpen,
           }

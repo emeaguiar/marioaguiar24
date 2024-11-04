@@ -38,13 +38,13 @@ export function H2({
           'dark:text-foreground',
           className,
           {
-            'lg:-ml-11': pull,
+            'md:-ml-11': pull,
           }
         )}
         id={id}
       >
         <span
-          className='hidden font-bold transition-opacity lg:flex lg:opacity-0 group-hover:lg:opacity-100'
+          className='hidden font-bold transition-opacity md:flex md:opacity-0 group-hover:md:opacity-100'
           aria-hidden
         >
           #
@@ -65,7 +65,7 @@ export function H2({
     return (
       <Link
         href={`#${id}`}
-        className='group mx-auto block w-full self-start text-start no-underline hover:underline prose-strong:font-black lg:max-w-screen-sm'
+        className='group mx-auto block w-full self-start text-start no-underline hover:underline prose-strong:font-black md:max-w-screen-sm'
       >
         <H2Element pull={true} />
       </Link>
