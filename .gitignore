@@ -40,6 +40,7 @@ next-env.d.ts
 .obsidian
 node_modules/
 /test-results/
+/tests/*-snapshots/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
