@@ -20,7 +20,7 @@ export default function Custom404() {
           &lt;404 /&gt;
         </h1>
 
-        <h2 className='p-4 text-7xl font-black uppercase md:text-7xl'>
+        <h2 className='p-4 text-6xl font-black uppercase md:text-7xl'>
           {t('tooBad')}
         </h2>
         <p className='text-lg'>{t('pageNotFound')}</p>
