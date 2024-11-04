@@ -24,7 +24,7 @@ export default function DarkModeToggle({ className }: { className?: string }) {
       {!isMounted && (
         <div
           className={clsx(
-            'absolute -inset-1 transform rounded-full bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 opacity-20 blur transition-transform duration-300',
+            'absolute -inset-1 transform rounded-full opacity-20 blur transition-transform duration-300',
             'group-hover:scale-150'
           )}
         />
