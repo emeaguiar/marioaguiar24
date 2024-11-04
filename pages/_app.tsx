@@ -31,7 +31,15 @@ export default function App({ Component, pageProps }: AppProps) {
           type: 'website',
           locale: 'es' === pageProps.__lang ? 'es_MX' : 'en_US',
           url: 'https://www.marioaguiar.net',
-          site_name: 'Example',
+          site_name: t('seoTitle'),
+          images: [
+            {
+              url: 'https://www.marioaguiar.net/mariobw.webp',
+              width: 1124,
+              height: 1125,
+              alt: t('seoTitle'),
+            },
+          ],
         }}
         twitter={{
           handle: '@emeaguiar',
