@@ -31,7 +31,7 @@ export default function Page({
   return (
     <>
       <NextSeo
-        title={t('title')}
+        title={t('title').replace('<0>', '').replace('</0>', '')}
         description={t('description')}
         canonical={`${SITE_URL}/${locale}${BLOG_PREFIX}`}
       />

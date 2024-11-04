@@ -32,7 +32,7 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
       </Head>
 
       <NextSeo
-        title={t('title')}
+        title={t('title').replace('<0>', '').replace('</0>', '')}
         description={t('description')}
         canonical={`${SITE_URL}/${locale}conferences`}
       />
