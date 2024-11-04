@@ -76,13 +76,17 @@ export default function ContactForm() {
 
       {successMessage && (
         <div className='flex-column flex w-full justify-center'>
-          <Alert type='tip' standAlone={true}>{successMessage}</Alert>
+          <Alert type='tip' standAlone={true}>
+            {successMessage}
+          </Alert>
         </div>
       )}
 
       {errorMessage && (
         <div className='flex-column flex w-full justify-center'>
-          <Alert type='warning' standAlone={true}>{errorMessage}</Alert>
+          <Alert type='warning' standAlone={true}>
+            {errorMessage}
+          </Alert>
         </div>
       )}
 

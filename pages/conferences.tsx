@@ -38,7 +38,7 @@ export default function Conferences({ locale }: { locale: 'es' | 'en' }) {
       />
 
       <div className={`flex flex-col items-center gap-16 lg:max-w-screen-xl`}>
-        <h1 className='w-full px-4 lg:text-center text-5xl font-light uppercase lg:text-7xl'>
+        <h1 className='w-full px-4 text-5xl font-light uppercase lg:text-center lg:text-7xl'>
           <Trans
             i18nKey='conferences:title'
             components={[<strong key='title' className='font-black' />]}

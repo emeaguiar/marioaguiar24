@@ -25,7 +25,7 @@ export default function Alert({
       className={clsx(
         'mx-auto my-4 w-full border-l-4 p-4 text-base lg:max-w-screen-md',
         {
-          'border-blue-400 bg-blue-50 text-blue-800 prose-p:text-blue-88 dark:border-blue-700 dark:bg-blue-950 dark:text-blue-100 dark:prose-p:text-blue-100':
+          'prose-p:text-blue-88 border-blue-400 bg-blue-50 text-blue-800 dark:border-blue-700 dark:bg-blue-950 dark:text-blue-100 dark:prose-p:text-blue-100':
             type === 'note',
           'border-green-400 bg-green-50 text-green-800 prose-p:text-green-800 dark:border-green-700 dark:bg-green-950 dark:text-green-100 dark:prose-p:text-green-100':
             type === 'tip',
@@ -39,12 +39,16 @@ export default function Alert({
       )}
     >
       {Children.map(children, (child: any, index: Number) => {
-        if (0 === index && ! standAlone) {
+        if (0 === index && !standAlone) {
           return (
             <div className='flex items-center gap-3 text-2xl font-black uppercase lg:gap-4 lg:text-4xl'>
-              {child?.props?.children && cloneElement(child?.props?.children[0], {
-                className: clsx(child?.props?.className, 'h-5 w-5 lg:h-8 lg:w-8'),
-              })}
+              {child?.props?.children &&
+                cloneElement(child?.props?.children[0], {
+                  className: clsx(
+                    child?.props?.className,
+                    'h-5 w-5 lg:h-8 lg:w-8'
+                  ),
+                })}
 
               <Trans i18nKey={`alerts:${type}`} />
             </div>
