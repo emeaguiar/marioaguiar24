@@ -11,7 +11,6 @@ export const config = {
 async function handler(req: NextApiRequest): Promise<ImageResponse> {
     const { searchParams } = new URL(req.url || '');
     const title = searchParams.get('title') || 'Mario Aguiar';
-    const description = searchParams.get('description') || 'Frontend developer';
 
     return new ImageResponse(
         (
@@ -37,10 +36,6 @@ async function handler(req: NextApiRequest): Promise<ImageResponse> {
                     }}>
                         {title}
                     </h1>
-
-                    <p>
-                        {description}
-                    </p>
                 </div>
 
                 <div style={{
