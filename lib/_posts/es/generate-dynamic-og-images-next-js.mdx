@@ -1,0 +1,457 @@
+---
+title: Generar imágenes dinámicas de Open Graph en Next.js
+publishedOn: '2024-11-04'
+updatedOn: '2024-11-07T22:45:15.889Z'
+description: >-
+  En este artículo, te mostraré cómo generar imágenes dinámicas de Open Graph en
+  Next.js.
+published: true
+readingTime: 360
+---
+display solo soporta flex, block o none
+
+> [!CAUTION]
+> 
+> Este tutorial está escrito utilizando el **page router**, es posible que los pasos a seguir sean algo diferentes en el *app router*.
+
+Si alguna vez has puesto atención, hay una funcionalidad muy útil en la mayoría de sitios de social media como **Facebook**, o ~~Twitter~~ **X**, y es que cuando se escribe una dirección ésta automáticamente **carga una vista previa del contenido** de dicha dirección, siendo en la mayor parte de las veces una tarjeta con una imagen y el título de la publicación, por ejemplo:
+
+![Ejemplo de tarjeta de Open Graph](/posts/generate-dynamic-og-images-next-js/tweet.webp "Ejemplo de tarjeta de Open Graph")
+
+Estas tarjetas son muy útiles porque **puedes mostrar una vista previa del artículo** para que tus lectores sepan fácil y rápido de que es lo que se va a tratar tu enlace, en la mayoría de los casos puedes utilizar imágenes personalizadas para cada artículo, pero esto llega a ser tedioso (además de que lógicamente consumirá tiempo,) así que para éste blog decidí que quería utilizar un template simple y que *únicamente cambiara el texto que se muestra en la imagen*.
+
+Por supuesto, podría guardar el template en Photoshop y simplemente actualizarlo con un nuevo texto cada vez que publique un nuevo artículo, pero esto me trae dos problemas:
+
+1. Mencionado anteriormente, es **la pérdida de tiempo** en la que resulta crear una nueva imagen para cada post
+2. Cada imagen necesita ser subida al servidor, lo que genera **pérdida de espacio**
+
+Por fortuna, encontré una forma bastante sencilla de **crear imágenes dinámicas para Open Graph en Next.js**, a continuación muestro cómo logré el resultado de este Blog.
+
+> [!NOTE]
+> 
+> **¿Open Graph?**
+> 
+> [Open Graph](https://ogp.me/) es un protocolo originalmente creado por *Facebook* para **estandarizar el uso de metadata (datos de un sitio,) para uso de otros sitios**, en otras palabras permite que muchos sitios consuman algunos datos de tu sitio de una forma predecible, para no tener que adivinar de donde sacar cada cosa.
+> 
+> No entraré mucho en detalles sobre elk protocolo en sí, ya que sólo necesitamos un título y una imagen para este tutorial, pero si tienes cualquier pregunta no dudes en contactarme ☺️️.
+
+## PASO 1: CREAR LA **RUTA EN REST**
+
+A grandes rasgos, lo que vamos a hacer es **crear una ruta en rest que genere la imagen que necesitamos** automáticamente con base en el título que enviemos, así simplemente en lazaremos la ruta con los parámetros necesarios a nuestra etiqueta de open graph.
+
+Comenzamos creando nuestro archivo, este debe ir ubicado en `pages/api/og.tsx`.
+
+Para crear una ruta, lo único que necesitamos es agregar el siguiente código a nuestro archivo:
+
+```tsx
+/**
+ * Next.js dependencies
+ */
+import { NextApiRequest, NextApiResponse } from 'next';
+
+function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  res.status(200).json({ message: '¡Hola Mundo!' })
+}
+
+export default handler;
+
+```
+
+Ahora si abrimos la ruta en http://localhost:3000/api/og nos encontraremos con un pequeño código JSON, que es justo lo que hemos enviado a nuestra ruta:
+
+```json
+{"message": "¡Hola Mundo!"}
+```
+Aquí es justo donde colocaremos nuestras imágenes, así que ahora que nuestra ruta está creada lo que debemos hacer es utilizar la magia de `ImageResponse` [^1]
+
+> [!NOTE]
+> 
+> **¿Y mis estilos?**
+> 
+> Habrás notado de nuestra respuesta en JSON en el navegador **no tiene ningún otro componente** o ninguno de los estilos que debería tener nuestro sitio. Esto sucede porque el folder `/pages/api` es especial en Next.js, le dice al compilador que **todo lo que se encuentre adentro está en una sección aparte de nuestro sitio (las rutas en rest)** y que deberá formar su propia respuesta.
+
+## PASO 2: **CONVERTIR UN COMPONENTE EN IMAGEN**
+
+Lo que hace `ImageResponse`, a grandes rasgos, es **convertir cualquier componente en una imagen** antes de mostrarlo en el navegador. Esto es precisamente lo que necesitamos ya que nos permite colocar el título que queramos dentro de nuestra imagen, aquí es donde sucede la magia.
+
+Partiendo de nuestro código anterior, haremos algunas modificaciones para **regresar una imagen** en lugar de nuestro JSON:
+
+```tsx
+/**
+ * Next.js dependencies
+ */
+import { ImageResponse } from 'next/og';
+
+/**
+ * Necesario para evitar un error
+ * al ejecutar en el runtime de Node.js
+ */
+export const config = {
+    runtime: 'edge',
+};
+
+function handler() {
+  return new ImageResponse(
+    (
+        <div style={{
+            alignItems: 'center',
+            backgroundColor: 'rgb(24 24 27/1)',
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+            height: '100%',
+            width: '100%',
+        }}>
+            <h1>¡Hola Mundo!</h1>
+        </div>
+    ),
+    {
+        width: 1200,
+        height: 630,
+    }
+  );
+}
+
+export default handler;
+```
+
+> [!TIP]
+>
+>Cuando vemos esto:
+>
+> ```tsx
+> {
+>   width: 1200,
+>   height: 630,
+> }   
+> ```
+> 
+> Nos referimos al **tamaño que tendrá la imagen final**, esto puede ser cualquier tamaño que quieras pero `1200x630` es común en Open Graph.
+
+Ahora si volvemos a abrir nuestra página de API, podremos ver esto en el navegador:
+
+![Ejemplo de ImageResponse](/posts/generate-dynamic-og-images-next-js/og-example.png "Imagen real generada por `ImageResponse`")
+
+> [!NOTE]
+> 
+> Como seguramente the habrás dado cuenta, estamos utilizando el atributo `style` directamente en componente. Esto sucede porque como no podremos cargar ningún tipo de estilos en la imagen, **debemos incluirlos directamente en el componente**.
+> 
+> Esto funciona muy bien en la mayoría de los casos, pero si tiene limitantes, asegúrate de revisar [la documentación](https://nextjs.org/docs/app/api-reference/functions/image-response#supported-css-properties) para tener una lista de propiedades funcionales.
+
+> [!IMPORTANT]
+> 
+> En algunos casos, cuando regresas más de un componente, si llegas a tener un error y la imagen no carga, **prueba agregando explícitamente `display: flex` al elemento padre** (como yo hice en el ejemplo anterior). Los errores pueden ser bastante difíciles de encontrar pero encontrarás un log en la consola si estás en modo de desarrollo.
+> 
+> ![Ejemplo de error enterrado en log](/posts/generate-dynamic-og-images-next-js/error-example.png "Ejemplo de error enterrado en el log")
+
+## PASO 3: **DANDO ESTILO** A NUESTRA IMAGEN
+
+Ya casi tenemos todo listo, ya solo necesitamos agregar un poco más de estilo a nuestra imagen, y como simplemente convertiremos un componente en imagen, no hay nada que nos impida **agregar otra imagen también**:
+
+```tsx
+/**
+ * Next.js dependencies
+ */
+import { ImageResponse } from 'next/og';
+
+/**
+ * La etiqueta img necesita una URL absoluta
+ */
+const SITE_URL = 'https://marioaguiar.net';
+
+/**
+ * Necesario para evitar un error
+ * al ejecutar en el runtime de Node.js
+ */
+export const config = {
+    runtime: 'edge',
+};
+
+function handler() {
+  return new ImageResponse(
+    (
+        <div
+        style={{
+          backgroundColor: 'rgb(24 24 27/1)',
+          display: 'flex',
+          fontFamily: 'Raleway, sans-serif',
+          gap: 16,
+        }}
+      >
+        <div
+          style={{  
+            alignItems: 'center',
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            fontSize: 36,
+            height: 630,
+            justifyContent: 'center',
+            padding: 16,
+            textAlign: 'center',
+            width: 800,
+          }}
+        >
+          <h1
+            style={{
+              fontWeight: 600,
+            }}
+          >
+            ¡Hola Mundo!
+          </h1>
+
+          <p>
+            marioaguiar.net
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}
+        >
+          <img
+            width={400}
+            height={400}
+            src={`${SITE_URL}/mariobw-og.jpg`}
+            alt='Mario Aguiar'
+          />
+        </div>
+      </div>
+    ),  
+    {
+        width: 1200,
+        height: 630,
+    }
+  );
+}
+
+export default handler;
+```
+
+![Ejemplo de Imagen con estilos](/posts/generate-dynamic-og-images-next-js/styled-example.webp)
+
+## PASO 4: AGREGANDO **LOS DATOS DEL POST**
+
+Por último (y el punto de todo el tutorial en realidad,) debemos **agregar los datos de nuestro post a la imagen**, y para ello simplemente debemos modificar un poco el código para recibir parámetros y utilizarlos en la imagen:
+
+```tsx
+/**
+ * Next.js dependencies
+ */
+import { ImageResponse } from 'next/og';
+import { NextApiRequest } from 'next';
+
+/**
+ * La etiqueta img necesita una URL absoluta
+ */
+const SITE_URL = 'https://marioaguiar.net';
+
+/**
+ * Necesario para evitar un error
+ * al ejecutar en el runtime de Node.js
+ */
+export const config = {
+    runtime: 'edge',
+};
+
+async function handler(req: NextApiRequest): Promise<ImageResponse> {
+  // Recibe los parámetros de la URL.	
+  const { searchParams } = new URL(req.url || '');
+  const title = searchParams.get('title') || 'Mario Aguiar';
+
+  return new ImageResponse(
+    (
+        <div
+        style={{
+          backgroundColor: 'rgb(24 24 27/1)',
+          display: 'flex',
+          gap: 16,
+          fontFamily: 'Raleway, sans-serif',
+        }}
+      >
+        <div
+          style={{  
+            display: 'flex',
+            flexDirection: 'column',
+            fontSize: 36,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 800,
+            height: 630,
+            color: 'white',
+            padding: 16,
+            textAlign: 'center',
+          }}
+        >
+          <h1
+            style={{
+              fontWeight: 600,
+            }}
+          >
+            {
+                <span style={{
+                    textTransform: 'uppercase',
+                }}>
+                    {title}
+                </span>
+            }
+          </h1>
+
+          <p>
+            marioaguiar.net
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}
+        >
+          <img
+            width={400}
+            height={400}
+            src={`${SITE_URL}/mariobw-og.jpg`}
+            alt='Mario Aguiar'
+          />
+        </div>
+      </div>
+    ),  
+    {
+        width: 1200,
+        height: 630,
+    }
+  );
+}
+
+export default handler;
+```
+
+Y finalmente, si entramos a `/api/og?title=lorem ipsum` tendremos nuestro resultado final:
+
+![Ejemplo con título](/posts/generate-dynamic-og-images-next-js/title-example.webp)
+
+## BONUS: **MEJORANDO LA TIPOGRAFÍA**
+
+Sinceramente pensaba en terminar el tutorial aquí, pero justo antes de sentarme a escribir hoy, descubrí que además que algunos pocos estilos que utilizamos, `ImageResponse` **también acepta una versión un poco más básica de edición de tipografía**, no sé que tan recomendable sea ya que hay que hay que tener en cuenta **cuestiones de performance**, pero aún así mostraré como se hace.
+
+Para esto, es necesario tener el archivo de la fuente en algún lugar de nuestro servidor (o acceso a un cdn también podría funcionar.) Una vez que escogemos nuestra fuente, **debemos cargar los contenidos del archivo en Javascript**, y pasarla a `ImageResponse` en la configuración:
+
+```tsx
+/**
+ * Next.js dependencies
+ */
+import { ImageResponse } from 'next/og';
+import { NextApiRequest } from 'next';
+
+/**
+ * La etiqueta img necesita una URL absoluta
+ */
+const SITE_URL = 'https://marioaguiar.net';
+
+/**
+ * Necesario para evitar un error
+ * al ejecutar en el runtime de Node.js
+ */
+export const config = {
+    runtime: 'edge',
+};
+
+async function handler(req: NextApiRequest): Promise<ImageResponse> {
+    const { searchParams } = new URL(req.url || '');
+    const title = searchParams.get('title') || 'Mario Aguiar';
+
+	// Cargamos el contenido de la tipografía en buffer.
+    const ralewayBlack = await fetch( new URL('./fonts/Raleway-Black.ttf', SITE_URL) )
+        .then((res) => res.arrayBuffer());
+
+  return new ImageResponse(
+    (
+        <div
+        style={{
+          backgroundColor: 'rgb(24 24 27/1)',
+          display: 'flex',
+          gap: 16,
+          // Especificamos la tipografía a utilizar.
+          fontFamily: 'Raleway, sans-serif',
+        }}
+      >
+        <div
+          style={{  
+            display: 'flex',
+            flexDirection: 'column',
+            fontSize: 36,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 800,
+            height: 630,
+            color: 'white',
+            padding: 16,
+            textAlign: 'center',
+          }}
+        >
+          <h1
+            style={{
+              fontWeight: 600,
+            }}
+          >
+            {
+                <span style={{
+                    textTransform: 'uppercase',
+                }}>
+                    {title}
+                </span>
+            }
+          </h1>
+
+          <p>
+            marioaguiar.net
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}
+        >
+          <img
+            width={400}
+            height={400}
+            src={`${SITE_URL}/mariobw-og.jpg`}
+            alt='Mario Aguiar'
+          />
+        </div>
+      </div>
+    ),  
+    {
+        width: 1200,
+        height: 630,
+        fonts: [
+	        // Agregamos los datos de nuestra tipografía.
+            { data: ralewayBlack, name: 'Raleway,' weight: 900 },
+        ]
+    }
+  );
+}
+
+export default handler;
+```
+
+Y con esto, tendremos una tipografía un poco más personalizada:
+
+![Ejemplo con tipografía personalizada](/posts/generate-dynamic-og-images-next-js/font-example.webp "Ejemplo utilizando la tipografía Raleway")
+
+## **CONCLUSIÓN**
+
+Y con esto, hemos terminado, espero que este tutorial te haya sido de ayuda, y si tienes alguna pregunta **no dudes en contactarme**. ¡Nos vemos!
+
+[^1]: [ImageResponse en Next.js](https://nextjs.org/docs/app/api-reference/functions/image-response)
