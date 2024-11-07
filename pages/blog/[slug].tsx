@@ -88,7 +88,7 @@ export default function PostPage({
 
       <div
         className={clsx(
-          'prose lg:prose-xl prose-p:mx-auto prose-p:max-w-screen-sm prose-figure:mb-18 prose-strong:text-inherit prose-pre:rounded-none',
+          'prose lg:prose-xl prose-p:mx-auto prose-p:max-w-screen-sm prose-figure:mb-18 prose-strong:text-inherit prose-pre:rounded-none prose-img:my-0',
           'mx-auto max-w-none px-4 text-justify',
           'prose-p:dark:text-foreground'
         )}
