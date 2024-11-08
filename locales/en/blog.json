@@ -6,5 +6,6 @@
   "publishedOn": "Published <0 /> ago",
   "updatedOn": "Updated <0 /> ago",
   "readingTime": "{{ minutes }} min read",
-  "switchLanguage": "Cambiar a Español"
+  "switchLanguage": "Cambiar a Español",
+  "Footnotes": "Footnotes"
 }

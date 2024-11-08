@@ -6,5 +6,6 @@
   "publishedOn": "Publicado hace <0 />",
   "updatedOn": "Actualizado hace <0 />",
   "readingTime": "{{ minutes }} minutos de lectura",
-  "switchLanguage": "Switch to English"
+  "switchLanguage": "Switch to English",
+  "Footnotes": "Notas al pie"
 }

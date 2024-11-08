@@ -11,6 +11,7 @@ import rehypeSlug from 'rehype-slug';
 import { NextSeo } from 'next-seo';
 import { usePathname } from 'next/navigation';
 import rehypeUnwrapImages from 'rehype-unwrap-images';
+import useTranslation from 'next-translate/useTranslation';
 
 /**
  * Next dependencies
@@ -58,6 +59,7 @@ export default function PostPage({
   const { publishedOn, updatedOn, title, description, readingTime } =
     frontmatter;
   const pathname = usePathname();
+  const { t } = useTranslation('blog');
 
   return (
     <article>
@@ -104,10 +106,12 @@ export default function PostPage({
             h2: (props: any) => {
               let classes;
               if ('footnote-label' === props.id) {
-                classes = 'footnote-label font-bold mb-4 text-xl';
+                return <H2 {...props} id="footnote-label" className='mb-4 text-xl'>
+                  <strong className='font-black uppercase'>{t(props.children)}</strong>
+                </H2>
               }
 
-              return <H2 {...props} className={classes} />;
+              return <H2 {...props} />;
             },
             h3: H3,
             h4: H4,
@@ -134,7 +138,7 @@ export default function PostPage({
             section: (props: any) => {
               let classes;
               if (props.className.includes('footnotes')) {
-                classes = 'footnotes text-sm w-full max-w-screen-sm mx-auto';
+                classes = 'footnotes text-sm w-full max-w-screen-sm mx-auto prose-h2:text-4xl';
               }
 
               return <div {...props} className={classes} />;
