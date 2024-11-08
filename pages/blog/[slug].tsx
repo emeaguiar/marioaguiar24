@@ -106,9 +106,13 @@ export default function PostPage({
             h2: (props: any) => {
               let classes;
               if ('footnote-label' === props.id) {
-                return <H2 {...props} id="footnote-label" className='mb-4 text-xl'>
-                  <strong className='font-black uppercase'>{t(props.children)}</strong>
-                </H2>
+                return (
+                  <H2 {...props} id='footnote-label' className='mb-4 text-xl'>
+                    <strong className='font-black uppercase'>
+                      {t(props.children)}
+                    </strong>
+                  </H2>
+                );
               }
 
               return <H2 {...props} />;
@@ -138,7 +142,8 @@ export default function PostPage({
             section: (props: any) => {
               let classes;
               if (props.className.includes('footnotes')) {
-                classes = 'footnotes text-sm w-full max-w-screen-sm mx-auto prose-h2:text-4xl';
+                classes =
+                  'footnotes text-sm w-full max-w-screen-sm mx-auto prose-h2:text-4xl';
               }
 
               return <div {...props} className={classes} />;
