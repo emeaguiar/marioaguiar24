@@ -17,10 +17,12 @@ async function handler(req: NextApiRequest): Promise<ImageResponse> {
   const { searchParams } = new URL(req.url || '');
   const title = searchParams.get('title');
 
-  const longCangRegular = await fetch( new URL('./fonts/LongCang-Regular.ttf', SITE_URL) )
-    .then((res) => res.arrayBuffer());
-  const ralewayBlack = await fetch( new URL('./fonts/Raleway-Black.ttf', SITE_URL) )
-    .then((res) => res.arrayBuffer());
+  const longCangRegular = await fetch(
+    new URL('./fonts/LongCang-Regular.ttf', SITE_URL)
+  ).then((res) => res.arrayBuffer());
+  const ralewayBlack = await fetch(
+    new URL('./fonts/Raleway-Black.ttf', SITE_URL)
+  ).then((res) => res.arrayBuffer());
 
   return new ImageResponse(
     (
@@ -33,7 +35,7 @@ async function handler(req: NextApiRequest): Promise<ImageResponse> {
         }}
       >
         <div
-          style={{  
+          style={{
             display: 'flex',
             flexDirection: 'column',
             fontSize: 36,
@@ -51,39 +53,39 @@ async function handler(req: NextApiRequest): Promise<ImageResponse> {
               fontWeight: 600,
             }}
           >
-            {
-                title ? (
-                    <span style={{
-                        textTransform: 'uppercase',
-                    }}>
-                        {title}
-                    </span>
-                ) : (
-                    <span style={{
-                        fontFamily: 'Long Cang, cursive',
-                        fontSize: '8rem',
-                    }}>
-                        Mario Aguiar.
-                    </span>
-                )
-            }
+            {title ? (
+              <span
+                style={{
+                  textTransform: 'uppercase',
+                }}
+              >
+                {title}
+              </span>
+            ) : (
+              <span
+                style={{
+                  fontFamily: 'Long Cang, cursive',
+                  fontSize: '8rem',
+                }}
+              >
+                Mario Aguiar.
+              </span>
+            )}
           </h1>
 
           <p>
-            {
-                title ?
-                    (
-                        <span style={{
-                            fontFamily: 'Long Cang, cursive',
-                            fontSize: '5rem',
-                        }}>
-                            Mario Aguiar.
-                        </span>
-                    ) :
-                    (
-                        <>FRONT-END DEVELOPER</>
-                    )
-            }
+            {title ? (
+              <span
+                style={{
+                  fontFamily: 'Long Cang, cursive',
+                  fontSize: '5rem',
+                }}
+              >
+                Mario Aguiar.
+              </span>
+            ) : (
+              <>FRONT-END DEVELOPER</>
+            )}
           </p>
         </div>
 
@@ -92,7 +94,7 @@ async function handler(req: NextApiRequest): Promise<ImageResponse> {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-        }}
+          }}
         >
           <img
             width={400}
@@ -109,7 +111,7 @@ async function handler(req: NextApiRequest): Promise<ImageResponse> {
       fonts: [
         { data: longCangRegular, name: 'Long Cang', weight: 400 },
         { data: ralewayBlack, name: 'Raleway', weight: 900 },
-      ]
+      ],
     }
   );
 }
