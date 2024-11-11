@@ -76,6 +76,7 @@ export default function Home({
             width='1000'
             height='1000'
             loading='eager'
+            sizes='(max-width: 640px) 100vw, 33vw'
           />
         </div>
       </div>
