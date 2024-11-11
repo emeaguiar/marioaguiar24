@@ -6,7 +6,7 @@
   "contact": "Contact",
   "seoTitle": "Mario Aguiar | Frontend Developer",
   "seoDescription": "Frontend Developer with over 10 years of experience. Specializing in responsive websites, performance, and accessibility. Let's work together!",
-  "readMore": "Read more",
+  "readMore": "Read post",
   "contactModalTitle": "<0>Contact</0> me",
   "contactModalMessage": "If you have any questions or would like to work together, please <0>send me an email</0>. I'll reply as soon as possible.",
   "close": "Close",
@@ -20,5 +20,6 @@
   "pageNotFound": "The page you are looking for does not exist.",
   "backToTop": "Back to top",
   "conferences": "Conferences",
-  "send": "Send"
+  "send": "Send",
+  "readMoreAbout": "Read more about \"{{title}}\""
 }

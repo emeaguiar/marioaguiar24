@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import useTranslation from 'next-translate/useTranslation';
 
 /**
@@ -47,6 +46,7 @@ function Card({ post }: { post: PostItem }) {
       <Link
         href={`${BLOG_PREFIX}/${post.slug}`}
         className={`group mb-0 mt-auto flex items-center gap-2 text-sm font-semibold uppercase`}
+        aria-label={t('readMoreAbout', { title: post.title })}
       >
         <span>
           <WithUnderline>{t('readMore')}</WithUnderline>
