@@ -21,5 +21,6 @@
   "pageNotFound": "La página que buscas no existe.",
   "backToTop": "Volver arriba",
   "conferences": "Conferencias",
-  "send": "Enviar"
+  "send": "Enviar",
+  "readMoreAbout": "Leer más sobre \"{{title}}\""
 }

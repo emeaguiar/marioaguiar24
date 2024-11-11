@@ -20,5 +20,6 @@
   "pageNotFound": "The page you are looking for does not exist.",
   "backToTop": "Back to top",
   "conferences": "Conferences",
-  "send": "Send"
+  "send": "Send",
+  "readMoreAbout": "Read more about \"{{title}}\""
 }
