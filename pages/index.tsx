@@ -77,6 +77,7 @@ export default function Home({
             height='1000'
             loading='eager'
             sizes='(max-width: 640px) 100vw, 33vw'
+            priority={true}
           />
         </div>
       </div>
