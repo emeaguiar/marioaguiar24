@@ -1,7 +1,7 @@
 ---
 title: Crear una página de opciones en WordPress con React – Parte 2
 publishedOn: '2024-01-22'
-updatedOn: '2024-10-29T22:15:33.780Z'
+updatedOn: '2024-11-13T16:36:05.846Z'
 description: |-
   Parte dos de una serie de tutoriales donde aprenderemos a crear una página de
     opciones en WordPress utilizando React y el API de WordPress. mostraré como utilizar los componentes incluidos en WordPress para agregar campos de texto, y guardar las opciones.
@@ -130,7 +130,7 @@ tenemos nuestro campo, expliquemos que pasa aquí:
 4. El uso de fragmentos de React, solo que utilizamos su versión recortada, en lugar
    de `import { Fragment } from '@wordpress/element'` simplemente utilizamos `<></>`
 
-![Página de opciones con campo de texto](/posts/create-a-settings-page-in-wordpress-with-react-part-2/settings-field.webp)
+![Página de opciones con campo de texto](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511638/settings-field_vgzlic.webp)
 
 > [!TIP]
 > `@wordpress/components` viene con muchos componentes disponibles, sugiero
@@ -188,7 +188,7 @@ export default Settings;
 
 Si recargamos la página, nos damos cuenta de que nuestro `toggle` se ve más bien como un checkbox, ¿qué pasó?
 
-![Toggle como checkbox](/posts/create-a-settings-page-in-wordpress-with-react-part-2/plain-toggle.webp)
+![Toggle como checkbox](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511638/plain-toggle_hota9x.webp)
 
 Lo que sucede es que a pesar de que nuestras dependencias de javascript se agregan
 automáticamente a nuestro script, no sucede lo mismo con nuestras **dependencias de estilos**.
@@ -223,7 +223,7 @@ public function enqueue_scripts(): void {
 Al volver a recargar la página veremos el resultado deseado, y si nos fijamos bien,
 **también nuestro campo de texto mejoró en apariencia**:
 
-![Página de opciones con campo de texto y toggle](/posts/create-a-settings-page-in-wordpress-with-react-part-2/fancy-toggle.webp)
+![Página de opciones con campo de texto y toggle](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511637/fancy-toggle_crybge.webp)
 
 ## Paso 3: Registrar las opciones en el backend
 
@@ -362,7 +362,7 @@ Una breve explicación de lo que acabamos de agregar:
 Así al dar click al botón veremos como en la consola se registra nuestra acción,
 ahora sólo debemos **reemplazarla por la verdadera función de guardado**.
 
-![Página de opciones con campo de texto, toggle y botón de guardado](/posts/create-a-settings-page-in-wordpress-with-react-part-2/full-settings.webp)
+![Página de opciones con campo de texto, toggle y botón de guardado](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511637/full-settings_fka1ij.webp)
 
 ## Próximamente…
 

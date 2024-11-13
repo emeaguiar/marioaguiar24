@@ -1,7 +1,7 @@
 ---
 title: Como añadir un metabox en React a Gutenberg
 publishedOn: '2024-09-18'
-updatedOn: '2024-10-30T16:23:29.369Z'
+updatedOn: '2024-11-13T16:36:05.845Z'
 description: >-
   En este tutorial mostraré como agregar un componente de react al área de
   metaboxes de WordPress
@@ -102,7 +102,7 @@ class Metabox
 Esto lo que hará será **agregar un nuevo metabox al editor de blocks**, si no fijamos bien, podemos adivinar
 que _está vacío_ (aunque más bien simplemente no tiene texto), algo así:
 
-![Imagen del metabox vacío](/posts/add-react-metabox-in-gutenberg/empty-metabox.webp)
+![Imagen del metabox vacío](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731451385/empty-metabox_ghukt4.webp "Imagen del metabox vacío")
 
 ## Registrar un Plugin en Gutenberg
 
@@ -165,7 +165,7 @@ public function enqueue_assets(): void
 
 Y el resultado sería algo así:
 
-![Imagen del plugin en el sidebar](/posts/add-react-metabox-in-gutenberg/plugin-in-sidebar.webp)
+![Imagen del plugin en el sidebar](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731451385/plugin-in-sidebar_csdrmx.webp)
 
 Ahora tenemos los dos componentes que necesitamos, y **estamos preparados para juntarlos**.
 
@@ -207,7 +207,7 @@ elemento con id `mah-metabox`, así, cuando React ejecute `MetaboxPortal` sabrá
 su contenido a través del portal**, y terminará mostrando nuestro componente justo en el lugar que
 necesitamos, que es nuestro metabox:
 
-![Imagen del componente dentro de nuestro metabox](/posts/add-react-metabox-in-gutenberg/plugin-in-metabox.webp)
+![Imagen del componente dentro de nuestro metabox](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731451385/plugin-in-metabox_j1ibam.webp)
 
 ## Conclusión
 
@@ -220,7 +220,7 @@ trabajando en cualquier otro proyecto de React, y listo, ya tenemos un **metabox
 Con la ventaja de poder acceder a los datos del post y modificarlos directamente desde nuestro componente
 a travez de los componentes en `@wordpress/data`.
 
-![Imagen del plugin en el editor](/posts/add-react-metabox-in-gutenberg/finished-plugin.webp)
+![Imagen del plugin en el editor](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731451386/finished-plugin_vlerbz.webp)
 
 ## Leer más
 
