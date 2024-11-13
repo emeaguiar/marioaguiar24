@@ -1,7 +1,7 @@
 ---
 title: Generar imágenes dinámicas de Open Graph en Next.js
 publishedOn: '2024-11-08'
-updatedOn: '2024-11-08T16:08:11.165Z'
+updatedOn: '2024-11-13T16:36:05.848Z'
 description: >-
   En este artículo, te mostraré cómo generar imágenes dinámicas de Open Graph en
   Next.js.
@@ -14,7 +14,7 @@ readingTime: 600
 
 Si alguna vez has puesto atención, hay una funcionalidad muy útil en la mayoría de sitios de social media como **Facebook**, o ~~Twitter~~ **X**, y es que cuando se escribe una dirección ésta automáticamente **carga una vista previa del contenido** de dicha dirección, siendo en la mayor parte de las veces una tarjeta con una imagen y el título de la publicación, por ejemplo:
 
-![Ejemplo de tarjeta de Open Graph](/posts/generate-dynamic-og-images-next-js/tweet.webp "Ejemplo de tarjeta de Open Graph")
+![Ejemplo de tarjeta de Open Graph](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731512537/tweet_skbhux.webp "Ejemplo de tarjeta de Open Graph")
 
 Estas tarjetas son muy útiles porque **puedes mostrar una vista previa del artículo** para que tus lectores sepan fácil y rápido de que es lo que se va a tratar tu enlace, en la mayoría de los casos puedes utilizar imágenes personalizadas para cada artículo, pero esto llega a ser tedioso (además de que lógicamente consumirá tiempo,) así que para éste blog decidí que quería utilizar un template simple y que *únicamente cambiara el texto que se muestra en la imagen*.
 
@@ -131,7 +131,7 @@ export default handler;
 
 Ahora si volvemos a abrir nuestra página de API, podremos ver esto en el navegador:
 
-![Ejemplo de ImageResponse](/posts/generate-dynamic-og-images-next-js/og-example.png "Imagen real generada por `ImageResponse`")
+![Ejemplo de ImageResponse](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731512536/og-example_z7ias0.png "Imagen real generada por `ImageResponse`")
 
 > [!NOTE]
 > 
@@ -143,7 +143,7 @@ Ahora si volvemos a abrir nuestra página de API, podremos ver esto en el navega
 > 
 > En algunos casos, cuando regresas más de un componente, si llegas a tener un error y la imagen no carga, **prueba agregando explícitamente `display: flex` al elemento padre** (como yo hice en el ejemplo anterior). Los errores pueden ser bastante difíciles de encontrar pero encontrarás un log en la consola si estás en modo de desarrollo.
 > 
-> ![Ejemplo de error enterrado en log](/posts/generate-dynamic-og-images-next-js/error-example.png "Ejemplo de error enterrado en el log")
+> ![Ejemplo de error enterrado en log](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731512535/error-example_tckn0u.jpg "Ejemplo de error enterrado en el log")
 
 ## PASO 3: **DANDO ESTILO** A NUESTRA IMAGEN
 
@@ -232,7 +232,7 @@ function handler() {
 export default handler;
 ```
 
-![Ejemplo de Imagen con estilos](/posts/generate-dynamic-og-images-next-js/styled-example.webp)
+![Ejemplo de Imagen con estilos](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731512536/styled-example_c9ibbv.webp)
 
 ## PASO 4: AGREGANDO **LOS DATOS DEL POST**
 
@@ -334,7 +334,7 @@ export default handler;
 
 Y finalmente, si entramos a `/api/og?title=lorem ipsum` tendremos nuestro resultado final:
 
-![Ejemplo con título](/posts/generate-dynamic-og-images-next-js/title-example.webp)
+![Ejemplo con título](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731512537/title-example_k5egme.webp)
 
 ## BONUS: **MEJORANDO LA TIPOGRAFÍA**
 
@@ -446,7 +446,7 @@ export default handler;
 
 Y con esto, tendremos una tipografía un poco más personalizada:
 
-![Ejemplo con tipografía personalizada](/posts/generate-dynamic-og-images-next-js/font-example.webp "Ejemplo utilizando la tipografía Raleway")
+![Ejemplo con tipografía personalizada](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731512535/font-example_iuxwlx.webp "Ejemplo utilizando la tipografía Raleway")
 
 ## **CONCLUSIÓN**
 

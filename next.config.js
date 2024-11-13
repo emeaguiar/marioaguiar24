@@ -9,6 +9,9 @@ const nextConfig = {
   async redirects() {
     return redirects;
   },
+  images: {
+    domains: ['res.cloudinary.com']
+  }
 };
 
 module.exports = nextTranslate(nextConfig);

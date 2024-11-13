@@ -1,7 +1,7 @@
 ---
 title: Create a settings page in WordPress with React – Part 2
 publishedOn: '2024-01-22'
-updatedOn: '2024-11-04T18:01:27.218Z'
+updatedOn: '2024-11-13T16:36:05.842Z'
 description: >-
   Part two of a series of tutorials where we will learn how to create a settings
   page in WordPress using React and the WordPress API. I will show you how to
@@ -137,7 +137,7 @@ although we can add some flavor, but we will do that later, now that we have our
 4. The use of React fragments, only that we use its shortened version, instead
    of `import { Fragment } from '@wordpress/element'` we simply use `<></>`
 
-![Options page with text field](/posts/create-a-settings-page-in-wordpress-with-react-part-2/settings-field.webp)
+![Options page with text field](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511638/settings-field_vgzlic.webp)
 
 > [!TIP]
 >
@@ -196,7 +196,7 @@ export default Settings;
 
 If we reload the page, we realize that our `toggle` looks more like a checkbox, what happened?
 
-![Toggle as checkbox](/posts/create-a-settings-page-in-wordpress-with-react-part-2/plain-toggle.webp)
+![Toggle as checkbox](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511638/plain-toggle_hota9x.webp)
 
 What happens is that despite our javascript dependencies being automatically added to our script,
 the same does not happen with our **style dependencies**. So it may be necessary to add them ourselves to the file
@@ -234,7 +234,7 @@ public function enqueue_scripts(): void {
 When we reload the page we will see the desired result, and if we look closely,
 **our text field also improved in appearance**:
 
-![Options page with text field and toggle](/posts/create-a-settings-page-in-wordpress-with-react-part-2/fancy-toggle.webp)
+![Options page with text field and toggle](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511637/fancy-toggle_crybge.webp)
 
 ## Step 3: Register options in the backend
 
@@ -370,7 +370,7 @@ A brief explanation of what we just added:
 So when we click the button we will see how our action is registered in the console,
 now we just need to **replace it with the real save function**.
 
-![Options page with text field, toggle, and save button](/posts/create-a-settings-page-in-wordpress-with-react-part-2/full-settings.webp)
+![Options page with text field, toggle, and save button](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731511637/full-settings_fka1ij.webp)
 
 ## Coming soon…
 

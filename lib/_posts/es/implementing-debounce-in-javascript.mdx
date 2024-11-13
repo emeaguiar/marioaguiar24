@@ -1,7 +1,7 @@
 ---
 title: Implementando Debounce en Vainilla Javascript
 publishedOn: '2024-09-26'
-updatedOn: '2024-10-30T16:23:29.369Z'
+updatedOn: '2024-11-13T16:36:05.848Z'
 description: >-
   Un simple tutorial explicando el concepto de Debounce y el como implementarlo
   en vainilla Javascript
@@ -70,7 +70,7 @@ Simplemente agregamos un `console.log` a la función de cambio:
 </form>
 ```
 
-![Console log de cada cambio en el campo de búsqueda](/posts/implementing-debounce-in-javascript/no-debounce.gif)
+![Console log de cada cambio en el campo de búsqueda](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731515088/no-debounce_a6j3tp.gif)
 
 > [!WARNING]
 > ¿Puedes ver el problema? Cada vez que presionamos una tecla **nuestra función de cambio es ejecutada**, imagínate que hubieramos conectado nuestro formulario al API, cada uno de esos logs sería una petición a la API, y ¡de sólo un usuario!
@@ -221,7 +221,7 @@ Ahora, si volvemos a probar nuestra forma de búsqueda, tendremos algo similar a
 > [!TIP]
 > Puedes probar el ejemplo anterior en la consola del navegador, 😉
 
-![Ejemplo con debounce](/posts/implementing-debounce-in-javascript/debounced.gif)
+![Ejemplo con debounce](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1731515087/debounced_g94cui.gif)
 
 Después de esto, podemos ver una gran mejoría en nuestras llamadas, ya no se registra _todas y cada una_ de las letras que ponemos en el campo, si no que se **espera a que el usuario termine de escribir** antes de hacer la llamada, lo que resulta en muchas **menos y más completas llamadas a nuestra API**.
 
