@@ -43,6 +43,7 @@ import Alert from '@/components/alerts';
 import { getPosts, getPostsDirectory } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
 import { SITE_URL } from '@/lib/data';
+import Comments from '@/components/comments/comments';
 
 export default function PostPage({
   code,
@@ -151,6 +152,16 @@ export default function PostPage({
             pre: Pre,
           }}
         />
+      </div>
+
+      <div
+        className={clsx(
+          'prose lg:prose-xl prose-p:mx-auto prose-p:max-w-screen-sm prose-figure:mb-18 prose-strong:text-inherit prose-pre:rounded-none prose-img:my-0',
+          'mx-auto mt-16 max-w-screen-sm px-4 text-justify',
+          'prose-p:dark:text-foreground'
+        )}
+      >
+        <Comments slug={pathname} title={title} locale={locale} />
       </div>
     </article>
   );
