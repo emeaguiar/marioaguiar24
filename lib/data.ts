@@ -10,6 +10,8 @@ export const MENU_ITEMS = [
 ];
 
 export const BLOG_PREFIX = '/blog';
+export const DISQUS_SHORTNAME = process.env
+  .NEXT_PUBLIC_DISQUS_SHORTNAME as string;
 
 // Contact form data.
 export const CONTACT_FORM_FROM_EMAIL = process.env
