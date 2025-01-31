@@ -1,7 +1,7 @@
 ---
 title: Cómo consultar usuarios en Gutenberg
 publishedOn: '2025-01-31T17:23:00.000Z'
-updatedOn: '2025-01-31T23:24:30.485Z'
+updatedOn: '2025-01-31T23:45:24.604Z'
 description: >-
   Una demostración creando un bloque de Gutenberg que consulta la información de
   un usuario en Gutenberg y WordPress.
@@ -11,6 +11,19 @@ readingTime: 900
 Hace algunos meses me vi en la necesidad de crear un pequeño bloque en **Gutenberg** que hiciera una consulta para conseguir datos de usuarios en **WordPress**. Me sorprendí un poco de lo poco documentada que está esta sección así que he decidio escribir un pequeño tutorial mostrando cómo es que logré **consultar usuarios en Gutenberg**.
 
 Para que las cosas sean más sencillas de digerir, escribiré un pequeño bloque que simplemente **dejará seleccionar a un autor en el sitio y mostrará su información**. Comencemos:
+
+## TABLA DE **CONTENIDO**
+
+- [PASO 1: LA BASE DE EL BLOQUE](#paso-1-la-base-de-el-bloque)
+- [PASO 2: LA ESTRUCTURA](#paso-2-la-estructura)
+  - [PASO 2.1: LA SELECCIÓN](#paso-21-la-selección)
+  - [PASO 2.2: LOS DATOS REALES](#paso-22-los-datos-reales)
+- [PASO 3: GUARDANDO LA SELECCIÓN](#paso-3-guardando-la-selección)
+- [PASO 4: MOSTRAR LA INFORMACIÓN DEL USUARIO](#paso-4-mostrar-la-información-del-usuario)
+  - [PASO 4.1: MOSTRAR EL DROPDOWN SI NINGÚN USUARIO HA SIDO SELECCIONADO](#paso-41-mostrar-el-dropdown-si-ningún-usuario-ha-sido-seleccionado)
+  - [PASO 4.2: MOSTRAR UNA VISTA PREVIA DE LOS DATOS DEL USUARIO QUE SE SELECCIONA](#paso-42-mostrar-una-vista-previa-de-los-datos-del-usuario-que-se-selecciona)
+  - [PASO 4.3: OFRECER CONTROLES PARA CAMBIAR DE USUARIO DESDE LA VISTA PREVIA](#paso-43-ofrecer-controles-para-cambiar-de-usuario-desde-la-vista-previa)
+  - [PASO 4.4: OFRECER UNA FORMA DE ELIMINAR LA SELECCIÓN Y VOLVER AL DROPDOWN (OPCIONAL)](#paso-44-ofrecer-una-forma-de-eliminar-la-selección-y-volver-al-dropdown-opcional)
 
 ## PASO 1: LA BASE DE **EL BLOQUE**
 
@@ -56,8 +69,7 @@ Entonces en nuestro `block.json` agregamos el atributo:
 > 
 > Este tutorial esta pensado para ser un **bloque dinámico** (dynamic block), por lo que sólo mostraremos el funcionamiento del editor de bloque. No entraré a fondo sobre cómo se muestra un bloque dinámico en el frontend, pero si quieres que lo haga [déjame un comentario](#disqus_thread) y lo veremos en un futuro.
 
-
-> ### PASO 2.1: **LA SELECCIÓN**
+### PASO 2.1: **LA SELECCIÓN**
 
 Como necesitamos seleccionar usuarios, podemos utilizar uno de los componentes que ya existen en WordPress para ello, así que en el archivo `edit.js` podemos importar el componente llamado `SelectControl` y mostrarlo en el editor:
 

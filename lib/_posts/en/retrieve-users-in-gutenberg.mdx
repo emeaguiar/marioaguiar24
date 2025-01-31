@@ -1,7 +1,7 @@
 ---
 title: How to retrieve users in Gutenberg
 publishedOn: '2025-01-31T17:23:00.000Z'
-updatedOn: '2025-01-31T23:24:30.483Z'
+updatedOn: '2025-01-31T23:45:24.602Z'
 description: >-
   A demonstration of creating a Gutenberg block that queries user information in
   Gutenberg and WordPress.
@@ -13,6 +13,19 @@ readingTime: 900
 A few months ago I needed to create a small block in **Gutenberg** that made a query to get user data in **WordPress**. I was surprised by how little this section is documented so I decided to write a small tutorial showing how I managed to **query users in Gutenberg**.
 
 To make things easier to digest, I will write a small block that simply **allows you to select an author on the site and display their information**. Let's start:
+
+## TABLE OF **CONTENTS**
+
+- [STEP 1: THE BLOCK **BASE**](#step-1-the-block-base)
+- [STEP 2: THE STRUCTURE](#step-2-the-structure)
+  - [STEP 2.1: THE SELECTION](#step-21-the-selection)
+  - [STEP 2.2: THE **REAL DATA**](#step-22-the-real-data)
+- [STEP 3: SAVING THE SELECTION](#step-3-saving-the-selection)
+- [STEP 4: SHOWING THE USER INFORMATION](#step-4-showing-the-user-information)
+  - [STEP 4.1: SHOWING THE DROPDOWN IF NO USER HAS BEEN SELECTED](#step-41-showing-the-dropdown-if-no-user-has-been-selected)
+  - [STEP 4.2: SHOWING A PREVIEW OF THE SELECTED USER DATA](#step-42-showing-a-preview-of-the-selected-user-data)
+  - [STEP 4.3: OFFERING CONTROLS TO CHANGE THE USER FROM THE PREVIEW](#step-43-offering-controls-to-change-the-user-from-the-preview)
+  - [STEP 4.4: OFFERING A WAY TO RESET THE SELECTION AND GO BACK TO THE DROPDOWN (OPTIONAL)](#step-44-offering-a-way-to-reset-the-selection-and-go-back-to-the-dropdown-optional)
 
 ## STEP 1: THE BLOCK **BASE**
 
@@ -58,7 +71,6 @@ Then in our `block.json` we add the attribute:
 > [!WARNING]
 > 
 > This tutorial is intended to be a **dynamic block**, so we will only show the block editor functionality. I will not delve into how a dynamic block is displayed in the frontend, but if you want me to do it [leave a comment](#disqus_thread) and I will see it in a future video.
-
 
 ### STEP 2.1: **THE SELECTION**
 
@@ -264,7 +276,7 @@ The idea would be:
 3. Offer controls to change the user from the preview
 4. Offer a way to delete the selection and go back to the dropdown
 
-### PASO 4.1: **MOSTRAR EL DROPDOWN** SI NINGÚN USUARIO HA SIDO SELECCIONADO
+### STEP 4.1: **SHOWING THE DROPDOWN** IF NO USER HAS BEEN SELECTED
 
 The first step is almost done, **we are already showing our dropdown by default**, this, within Gutenberg, is what we know as "placeholder". In practice *it shows when no selection has been made, and disappears when something is selected*, but it doesn't work that way by default, so let's make it work:
 
@@ -312,7 +324,7 @@ To see our placeholder, we only need to select the block, delete it, and **inser
 > 
 > You will notice that we are importing an **icon** to show in our placeholder, if you want to know which ones are available you can give a tour of my [Gutenberg Icon Finder](https://emeaguiar.github.io/gutenberg-icon-finder/).
 
-### STEP 4.2: **SHOWING A PREVIEW** OF THE USER DATA THAT IS SELECTED
+### STEP 4.2: **SHOWING A PREVIEW** OF THE SELECTED USER DATA
 
 Now that we have different components to show, we must add a preview of the user data so that the editor knows what is being added, so to start, we must make a `request` to receive the data **each time the user is selected**.
 
@@ -364,7 +376,7 @@ You will notice that the only thing we see is the name, so **we must update the 
 
 ![Preview result](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1738175175/Screenshot_2025-01-29_at_12.26.04_p.m._bizxln.png)
 
-### PASO 4.3: OFRECER CONTROLES PARA **CAMBIAR DE USUARIO DESDE LA VISTA PREVIA**
+### STEP 4.3: **OFFERING CONTROLS** TO CHANGE THE USER FROM THE PREVIEW
 
 We have our preview, but we have a problem, and that is that if we want to change the user now, **we will have to delete and recreate our block**. That is not very friendly, so what we will do is add a control to our sidebar to easily change the user.
 
