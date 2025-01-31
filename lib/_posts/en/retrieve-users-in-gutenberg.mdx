@@ -1,0 +1,488 @@
+---
+title: How to retrieve users in Gutenberg
+publishedOn: '2025-01-31T17:23:00.000Z'
+updatedOn: '2025-01-31T23:47:21.374Z'
+description: >-
+  A demonstration of creating a Gutenberg block that queries user information in
+  Gutenberg and WordPress.
+published: true
+readingTime: 900
+---
+
+
+A few months ago I needed to create a small block in **Gutenberg** that made a query to get user data in **WordPress**. I was surprised by how little this section is documented so I decided to write a small tutorial showing how I managed to **query users in Gutenberg**.
+
+To make things easier to digest, I will write a small block that simply **allows you to select an author on the site and display their information**. Let's start:
+
+## TABLE OF **CONTENTS**
+
+- [STEP 1: THE BLOCK BASE](#step-1-the-block-base)
+- [STEP 2: THE STRUCTURE](#step-2-the-structure)
+  - [STEP 2.1: THE SELECTION](#step-21-the-selection)
+  - [STEP 2.2: THE REAL DATA](#step-22-the-real-data)
+- [STEP 3: SAVING THE SELECTION](#step-3-saving-the-selection)
+- [STEP 4: SHOWING THE USER INFORMATION](#step-4-showing-the-user-information)
+  - [STEP 4.1: SHOWING THE DROPDOWN IF NO USER HAS BEEN SELECTED](#step-41-showing-the-dropdown-if-no-user-has-been-selected)
+  - [STEP 4.2: SHOWING A PREVIEW OF THE SELECTED USER DATA](#step-42-showing-a-preview-of-the-selected-user-data)
+  - [STEP 4.3: OFFERING CONTROLS TO CHANGE THE USER FROM THE PREVIEW](#step-43-offering-controls-to-change-the-user-from-the-preview)
+  - [STEP 4.4: OFFERING A WAY TO RESET THE SELECTION AND GO BACK TO THE DROPDOWN (OPTIONAL)](#step-44-offering-a-way-to-reset-the-selection-and-go-back-to-the-dropdown-optional)
+
+## STEP 1: THE BLOCK **BASE**
+
+We will start with the **basic creation of the block**, I will not delve too much into this topic because it is not the point of this tutorial, but to make things easier I will use the [official WordPress tool](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) `@wordpress/create-block`:
+
+We simply need to execute these commands (`slug` is the name of the directory where the plugin will be created).
+
+```bash
+npx @wordpress/create-block@latest mah-users --wp-env
+cd mah-users
+npx wp-env start
+npm start
+```
+
+> [!NOTE]
+> **Using wp-env**
+> 
+> The `wp-env` flag allows us to create a local environment in which our plugin will work, if you already have an environment you use for testing this is not necessary.
+> 
+> If you are not very familiar with local environments, I invite you to watch my video (in spanish)
+> [Creating a local WordPress environment with WP-ENV](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1) on youtube  where I explain
+> a way to achieve it easily with the tools that WordPress offers.
+>
+> <YouTubeEmbed videoid='K5Uxc3H-kaU' />
+
+
+Once we have our plugin working, we can start creating the block.
+
+## STEP 2: **THE STRUCTURE**
+
+As I mentioned earlier, what we want to do is **create a user selection**, and that when selecting them **the user data is displayed**, so for this we will need only one attribute, which will be the ID of the user we want to display:
+
+Then in our `block.json` we add the attribute:
+
+```json
+"attributes": {
+    "userId": {
+        "type": "number"
+    }
+}
+```
+
+> [!WARNING]
+> 
+> This tutorial is intended to be a **dynamic block**, so we will only show the block editor functionality. I will not delve into how a dynamic block is displayed in the frontend, but if you want me to do it [leave a comment](#disqus_thread) and I will see it in a future video.
+
+### STEP 2.1: **THE SELECTION**
+
+As we need to select users, we can use one of the components that already exist in WordPress for this, so in the `edit.js` file we can import the `SelectControl` component and display it in the editor:
+
+To import the component at the beginning of the file:
+
+```jsx
+import { SelectControl } from '@wordpress/components';
+```
+
+And in the `Edit` function we return it:
+
+```jsx
+export default function Edit() {
+    return (
+        <div { ...useBlockProps() }>
+            <SelectControl
+                label={ __( 'Select a user', 'mah-users' ) }
+                value={ 'user1' }
+                options={ [
+                    { label: 'User 1', value: 'user1' },
+                    { label: 'User 2', value: 'user2' },
+                    { label: 'User 3', value: 'user3' },
+                ] }
+            />
+        </div>
+    );
+}
+```
+
+
+> [!TIP]
+> If you are following this tutorial and wondering why the `select` is blue… It's because `create-block` adds some default styles to the files, to remove them simply delete the content of the `style.scss` and `editor.scss` files.
+
+Once done, we will have something similar to this image:
+
+![Example of select box](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1737141392/Screenshot_2025-01-17_at_1.16.14_p.m._sy0gpf.png)
+
+### STEP 2.2: THE **REAL DATA**
+
+Our select box is working, but it's clear that it's not what we want, for starters, **the data doesn't tell us anything**, the first thing we should do is make a query to the database so that **display the options based on the data that exists in our site**.
+
+Then, we can make use of the `getUsers` method that is available in the `@wordpress/core-data` package.
+
+To start, we must import our components, go back to the beginning of the file and add the following:
+
+```jsx
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+```
+
+And we make a `select` call to have our query, this is within the `Edit` function: 
+
+```jsx
+const records = useSelect( ( select ) => {
+	const { getUsers } = select( coreStore );
+	
+	return getUsers( {
+		per_page: -1, // Select all users.
+		_fields: 'id,name', // Only return the ID and the Name.
+		context: 'view', // Indicates that we only want to view the data, not edit it. This reduces the fields to only what we need.
+	} );
+}, [] );
+```
+
+> [!CAUTION]
+> When we use `per_page: -1` we are telling WordPress that we want to query **all the records**. This can become problematic if we have for example a network of blogs with **hundreds** (or thousands) of users.
+> 
+> But generally, that is not the case so for the purposes of this tutorial we will assume it is safe to use it.
+
+If we `console.log` with the content of `records` we will eventually have the following:
+
+```js
+[
+  {
+    "id": 1,
+    "name": "admin"
+  }
+]
+```
+
+This is _almost_ what we need, why? because **the format is incorrect**, when we see [the documentation](https://wordpress.github.io/gutenberg/?path=/story/components-selectcontrol--default) of `SelectControl` we find that **each option must be an object with a `label` and a `value`**. In this case our `value` (what we are going to update in the block attributes) will be the user ID, while the `label` will be the user name.
+
+So to get it we must make a small _loop_ through the results, and since we are in this we will use `useMemo` **to keep it in memory and not have to repeat it until we have new results**.
+
+First we import the function at the beginning of the file:
+
+```jsx
+import { useMemo } from '@wordpress/element';
+```
+
+And right after our query, we convert the format to what we need: 
+
+```jsx
+const records = useSelect( ( select ) => {
+	const { getUsers } = select( coreStore );
+	
+	return getUsers( {
+		per_page: -1, // Select all users.
+		_fields: 'id,name', // Only return the ID and the Name.
+		context: 'view', // Indicates that we only want to view the data, not edit it. This reduces the fields to only what we need.
+	} );
+}, [] );
+
+const users = useMemo( () => {
+	const fetchedUsers = ( records ?? [ { id: '', name: __( 'Loading…', 'mah-users' ) } ] ).map( ( record ) => {
+		return {
+			value: record.id,
+			label: record.name,
+		};
+	} );
+
+	return fetchedUsers;
+}, [ records ] );
+```
+
+If once again we try a `console.log`, what we will see is **the format that we need**, now simply replace the options we had in `SelectControl` with our `users` variable:
+
+```js
+[
+  {
+    "value": 1,
+    "label": "admin"
+  }
+]
+```
+
+```jsx
+<SelectControl
+	label={ __( 'Select a user', 'mah-users' ) }
+	value={ 'user1' }
+	options={ users }
+/>
+```
+
+And the result will be the following:
+
+![Successful query](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1737151031/Edit_Post_Hello_world_mah-users_WordPress_2025-01-17_at_3.56.29_p.m._r2pgjj.jpg)
+
+If we want to have a better idea of how this would look with a real name, we only need to **edit the user profile** and add our data.
+
+> [!TIP]
+> If we want to know how it would work with more users, there is a simple way to achieve it. `wp-env` comes with a version of `wp-cli` ready to use, and as mentioned in my [Introduction to WP-CLI](/blog/intro-to-wp-cli), there is a command that allows us to add new users easily. We need to create a CSV file with a list of users, for example `users.cvs` in the root of our `mah-users` folder:
+> 
+> ```csv
+> user_login,user_email,display_name,role
+> bobjones,bobjones@example.com,Bob Jones,contributor
+> newuser1,newuser1@example.com,New User,author
+> existinguser,existinguser@example.com,Existing User,administrator
+> johndoe,johndoe@example.com,John Doe,subscriber
+> janedoe,janedoe@example.com,Jane Doe,subscriber
+> ```
+> Now we save it and use the following command in the terminal:
+> 
+> ```bash
+> npx wp-env run cli wp user import-csv wp-content/plugins/mah-users/users.csv
+> ```
+
+After adding some extra users to our site, now our result is the expected one:
+
+![Complete user list](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1737152788/Screenshot_2025-01-17_at_4.25.51_p.m._frs2b3.png)
+
+## STEP 3: **SAVING** THE SELECTION
+
+Saving the selection is actually quite simple, as **we already added the attribute in which we will save the selection** at the beginning of this tutorial, we only need to add a function to the `prop` `onChange` of `SelectControl` (much *buzzword*…).
+
+First we specify that we will use the `props` `attributes`, and `setAttributes` in the `Edit` function of our block:
+
+```jsx
+export default function Edit( { attributes, setAttributes } ) {
+```
+
+Then we replace the `value` with the `userId` attribute and add a function to update the attribute when the value changes… something difficult to explain but basically it will look like this in code:
+
+```jsx
+<SelectControl
+	label={ __( 'Select a user', 'mah-users' ) }
+	value={ attributes.userId }
+	options={ users }
+	onChange={ ( userId ) => setAttributes( { userId: parseInt( userId, 10 ) } ) }
+/>
+```
+
+
+> [!NOTE] 
+> ¿`parseInt`?
+> 
+> In the previous example I use `parseInt` to convert the new value to an *integer*, this because I started having problems with the value **not being saved**.
+> 
+> The reason was that it was trying to be saved as a `string` when in the attribute we specified that it was going to be a `number`.
+
+Finally, we can try it by selecting a user from the dropdown, saving the post and if we reload the page, we should see the user we chose **appear automatically selected**.
+
+## STEP 4: **SHOWING** THE USER INFORMATION
+
+Here we have a decision to make, on one hand, we could end our editor here (which would be completely acceptable) and advance to the frontend part, but as we care about the user experience, **why not show a preview to the editor when we select a user?**
+
+The idea would be:
+
+1. Show the dropdown if no user has been selected
+2. Show a preview of the user data that is selected
+3. Offer controls to change the user from the preview
+4. Offer a way to delete the selection and go back to the dropdown
+
+### STEP 4.1: **SHOWING THE DROPDOWN** IF NO USER HAS BEEN SELECTED
+
+The first step is almost done, **we are already showing our dropdown by default**, this, within Gutenberg, is what we know as "placeholder". In practice *it shows when no selection has been made, and disappears when something is selected*, but it doesn't work that way by default, so let's make it work:
+
+To start, and to follow best practices, we will use the `Placeholder` component from Gutenberg from the same package where we imported `SelectControl`.
+
+```jsx
+import { SelectControl, Placeholder } from '@wordpress/components';
+import { people } from '@wordpress/icons';
+```
+
+Then, we specify that we want to show our dropdown **only if no user has been selected**, and we wrap it in the `<Placeholder />`.
+
+```jsx
+if ( ! attributes.userId ) {
+	return (
+		<div { ...useBlockProps() }>
+			<Placeholder icon={ people } label={ __( 'Usuarios', 'mah-users' ) }>
+				<SelectControl
+					label={ __( 'Select a user', 'mah-users' ) }
+					value={ attributes.userId }
+					options={ users }
+					onChange={ ( userId ) => setAttributes( { userId: parseInt( userId, 10 ) } ) }
+				/>
+			</Placeholder>
+		</div>
+	);
+}  
+
+return (
+	<div { ...useBlockProps() } >
+		{ __( 'A user has been selected', 'mah-users' ) }
+	</div>
+);
+```
+
+Now, if we reload the page we will see that **since we have already selected and saved a user previously**, we will have this result:
+
+![User selected](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1738172349/Screenshot_2025-01-29_at_11.38.54_a.m._w7zcqx.png)
+
+To see our placeholder, we only need to select the block, delete it, and **insert a new one**:
+
+![Placeholder](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1738172519/Screenshot_2025-01-29_at_11.41.38_a.m._ktfjql.png)
+
+> [!TIP]
+> 
+> You will notice that we are importing an **icon** to show in our placeholder, if you want to know which ones are available you can give a tour of my [Gutenberg Icon Finder](https://emeaguiar.github.io/gutenberg-icon-finder/).
+
+### STEP 4.2: **SHOWING A PREVIEW** OF THE SELECTED USER DATA
+
+Now that we have different components to show, we must add a preview of the user data so that the editor knows what is being added, so to start, we must make a `request` to receive the data **each time the user is selected**.
+
+For this we must add a new `useSelect` block that uses `userId` as a dependency, in this way we will be able to get the **name of the user, their avatar, and their description**.
+
+```jsx
+const { userName, userAvatar, userDescription } = useSelect( ( select ) => {
+	const { getEntityRecord } = select( coreStore );
+	const userInfo = getEntityRecord( 'root', 'user', attributes.userId );
+
+	return {
+		userName: userInfo?.name,
+		userAvatar: userInfo?.avatar_urls?.['96'],
+		userDescription: userInfo?.description,
+	};
+}, [ attributes.userId ] );
+```
+
+And to show it we must **replace** our `div` that contains "A user has been selected" with a block with the data we just received:
+
+> [!TIP]
+> If we don't want to get too involved in the design topic, Gutenberg offers a couple of components to help us layout, which I will use in the next example, these are `Flex` and `FlexItem`
+
+We import the new components:
+
+```jsx
+import { Flex, FlexItem, SelectControl, Placeholder } from '@wordpress/components';
+```
+
+And within the `Edit` function:
+
+```jsx
+return (
+	<div { ...useBlockProps() } >
+		<Flex justify='start' align='start' gap="4">
+			<FlexItem>
+				<img src={ userAvatar } alt={ userName } />
+			</FlexItem>
+			<FlexItem isBlock>
+				<h3>{ userName }</h3>
+				<p>{ userDescription }</p>
+			</FlexItem>
+		</Flex>
+	</div>
+);
+```
+
+You will notice that the only thing we see is the name, so **we must update the profile data** with real information (remember that the avatar is linked to [Gravatar](https://gravatar.com/)), and once we save the data we will see this:
+
+![Preview result](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1738175175/Screenshot_2025-01-29_at_12.26.04_p.m._bizxln.png)
+
+### STEP 4.3: **OFFERING CONTROLS** TO CHANGE THE USER FROM THE PREVIEW
+
+We have our preview, but we have a problem, and that is that if we want to change the user now, **we will have to delete and recreate our block**. That is not very friendly, so what we will do is add a control to our sidebar to easily change the user.
+
+Basically we will copy our `SelectControl` and paste it in the controls, so for that we will import `InspectorControls`, and `PanelBody` and we will add them together with our block:
+
+```jsx
+import { InspectorControls } from '@wordpress/block-editor';
+import { Flex, FlexItem, SelectControl, Placeholder, PanelBody} from '@wordpress/components';
+```
+
+And just before our preview we add our control, so we modify the result in this way:
+
+```jsx
+return (
+	<>
+		<InspectorControls>
+			<PanelBody title={ __( 'Configuración', 'mah-users' ) }>
+				<SelectControl
+					label={ __( 'Selecciona un usuario', 'mah-users' ) }
+					value={ attributes.userId }
+					options={ users }
+					onChange={ ( userId ) => setAttributes( { userId: parseInt( userId, 10 ) } ) }
+				/>
+			</PanelBody>
+		</InspectorControls>
+
+		<div { ...useBlockProps() }>
+			<Flex justify='start' align='start' gap="4">
+				<FlexItem>
+					<img src={ userAvatar } alt={ userName } />
+				</FlexItem>
+				<FlexItem isBlock>
+					<h3>{ userName }</h3>
+					<p>{ userDescription }</p>
+				</FlexItem>
+			</Flex>
+		</div>
+	</>
+);
+```
+
+And now we will see that we have the option to change the user **without the need to delete our block**:
+
+![Controls](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1738178079/Screenshot_2025-01-29_at_1.13.20_p.m._jozpas.png)
+
+
+> [!NOTE]
+> 
+> In broad terms, `InspectorControls` is a [portal](https://react.dev/reference/react-dom/createPortal) that **automatically places what we put inside it in the active sidebar for the block we are editing**, this is useful because it allows us to place all the components of a block in the same place, instead of having to modify several related files.
+
+### STEP 4.4: OFFERING A WAY **TO RESET THE SELECTION** AND GO BACK TO THE DROPDOWN (OPTIONAL)
+
+This last step is completely optional because we are already offering a way to change the user, but I wanted to show a way to **reset the dropdown** and be able to choose a user again.
+
+The functional part is quite simple, all we have to do is **assign a null value to the attribute**, and for this we will add a button just next to our `InspectorControls`.
+
+First we import the components:
+
+```jsx
+import { InspectorControls, BlockControls } from '@wordpress/block-editor';
+import { Flex, FlexItem, SelectControl, Placeholder, PanelBody, ToolbarGroup, ToolbarButton } from '@wordpress/components';
+```
+
+And simply we add the button that we imported inside the `BlockControls` component:
+
+```jsx
+<InspectorControls>
+// …
+</InspectorControls>
+
+<BlockControls group="block">
+	<ToolbarGroup>
+		<ToolbarGroup>
+			<ToolbarButton
+				icon={ closeSmall }
+				title={ __( 'Reset selection', 'mah-users' ) }
+				onClick={ () => setAttributes( { userId: null } ) }
+			/>
+		</ToolbarGroup>
+	</ToolbarGroup>
+</BlockControls>
+```
+
+And with that, we will see a new button appear when we select the block, when we press it we will see how the selection is deleted and we return to the beginning:
+
+![Button position](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1738362241/Screenshot_2025-01-31_at_4.23.27_p.m._ebz13f.png)
+
+
+> [!NOTE] 
+> Just like `InspectorControls`, `BlockControls` works as a **portal**.
+
+## CONCLUSION
+
+That's all for this tutorial (which as usual went a bit longer than expected 😅️). The only thing we would have left to do would be to **request the information in PHP** when we show the block in the frontend.
+
+## READ **MORE**
+
+- [How to add a metabox in React to Gutenberg](/blog/add-react-metabox-in-gutenberg)
+- [Introduction to WP-CLI](/blog/intro-to-wp-cli)
+- [Gutenberg Icon Finder](https://emeaguiar.github.io/gutenberg-icon-finder/)
+- [Create Block](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/)
+- [Creating a local WordPress environment with WP-ENV](https://youtu.be/K5Uxc3H-kaU?si=H93NqzLg-DsPWJW1) 
+- [`SelectControl` documentation](https://wordpress.github.io/gutenberg/?path=/story/components-selectcontrol--default)
+- [Portals](https://react.dev/reference/react-dom/createPortal)
+- [`Flex` documentation](https://wordpress.github.io/gutenberg/?path=/story/components-flex--default)
+- [`FlexItem` documentation](https://wordpress.github.io/gutenberg/?path=/story/components-flexitem--default)
+- [`ToolbarGroup` documentation](https://developer.wordpress.org/block-editor/reference-guides/components/toolbar-group/)
+- [`ToolbarButton` documentation](https://developer.wordpress.org/block-editor/reference-guides/components/toolbar-button/)
+- [Gravatar](https://gravatar.com/)
