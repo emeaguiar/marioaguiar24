@@ -1,4 +1,10 @@
 /**
+ * External dependencies
+ */
+import useTranslation from 'next-translate/useTranslation';
+import clsx from 'clsx';
+
+/**
  * Next dependencies
  */
 import Link from 'next/link';
@@ -6,33 +12,48 @@ import Link from 'next/link';
 /**
  * Internal dependencies
  */
+import { FormatDateShort } from '@/components/format-date';
 import type { PostItem } from '@/types/post';
 import { BLOG_PREFIX } from '@/lib/data';
 
-export function List({ posts }: { posts: PostItem[] }) {
+export function List({ posts, locale }: { posts: PostItem[]; locale: string }) {
   return (
     <div
       id='blog-list'
       className='auto flex w-full flex-col gap-2 lg:max-w-screen-md'
     >
       {posts.map((post) => (
-        <ListItem post={post} key={post.slug} />
+        <ListItem post={post} key={post.slug} locale={locale} />
       ))}
     </div>
   );
 }
 
-export function ListItem({ post }: { post: PostItem }) {
+export function ListItem({ post, locale }: { post: PostItem; locale: string }) {
+  const { t } = useTranslation('blog');
+
   return (
-    <div className='relative flex flex-row gap-4 border-b border-gray-200 pb-4 last:border-b-0'>
+    <div className='group relative flex flex-row gap-4 border-b border-gray-200 py-2 last:border-b-0'>
       <div className='flex flex-col gap-4'>
-        <time dateTime={post.publishedOn} className='text-sm text-gray-500'>
-          {post.publishedOn}
-        </time>
+        <FormatDateShort
+          dateString={post.publishedOn}
+          locale={locale}
+          className='text-sm font-extrabold'
+        />
       </div>
-      <h3 className=''>{post.title}</h3>
+      <h3
+        className={clsx(
+          'transition-colors',
+          'group-hover:text-zinc-900/60',
+          'dark:hover:text-slate-300'
+        )}
+      >
+        {post.title}
+      </h3>
       <div className='ml-auto mr-0 flex flex-col gap-4'>
-        <p className='text-sm text-gray-500'>{post.readingTime} min read</p>
+        <p className='text-sm text-gray-500'>
+          {t('blog:readingTime', { minutes: post.readingTime / 60 })}
+        </p>
       </div>
       <Link
         href={`${BLOG_PREFIX}/${post.slug}`}

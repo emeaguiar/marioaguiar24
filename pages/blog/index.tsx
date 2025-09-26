@@ -66,7 +66,7 @@ export default function Page({
 
         <BlogCards posts={featuredPosts} />
 
-        <BlogList posts={allPosts} />
+        <BlogList posts={allPosts} locale={locale} />
       </div>
     </>
   );
