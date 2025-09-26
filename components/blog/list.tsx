@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import useTranslation from 'next-translate/useTranslation';
 import clsx from 'clsx';
 
@@ -33,7 +34,7 @@ export function ListItem({ post, locale }: { post: PostItem; locale: string }) {
   const { t } = useTranslation('blog');
 
   return (
-    <div className='group relative flex flex-row gap-4 border-b border-gray-200 py-2 last:border-b-0'>
+    <div className='group relative flex flex-row gap-4 border-b border-gray-200 py-2 last:border-b-0 overflow-hidden'>
       <div className='flex flex-col gap-4'>
         <FormatDateShort
           dateString={post.publishedOn}
@@ -50,10 +51,11 @@ export function ListItem({ post, locale }: { post: PostItem; locale: string }) {
       >
         {post.title}
       </h3>
-      <div className='ml-auto mr-0 flex flex-col gap-4'>
+      <div className='ml-auto mr-0 flex flex-row items-center gap-2 translate-x-4 group-hover:translate-x-0 transition-transform'>
         <p className='text-sm text-gray-500'>
           {t('blog:readingTime', { minutes: post.readingTime / 60 })}
         </p>
+        <ChevronRightIcon className='h-4 w-4' />
       </div>
       <Link
         href={`${BLOG_PREFIX}/${post.slug}`}
