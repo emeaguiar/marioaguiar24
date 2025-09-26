@@ -32,11 +32,12 @@ export function FormatDateShort({
   const date = parseISO(dateString);
   const options = { locale: locale === 'es' ? es : undefined };
   const fullDate = format(date, 'PPP', options);
-  const mothYear = format(date, 'dd.MM.yy', options);
+  const dateFormat = locale === 'es' ? 'dd.MM.yy' : 'MM.dd.yy';
+  const formattedDate = format(date, dateFormat, options);
 
   return (
     <time dateTime={dateString} title={fullDate} className={className}>
-      {mothYear}
+      {formattedDate}
     </time>
   );
 }
