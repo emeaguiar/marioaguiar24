@@ -22,5 +22,6 @@
   "backToTop": "Volver arriba",
   "conferences": "Conferencias",
   "send": "Enviar",
-  "readMoreAbout": "Leer más sobre \"{{title}}\""
+  "readMoreAbout": "Leer más sobre \"{{title}}\"",
+  "copyToClipboard": "Copiar al portapapeles"
 }
