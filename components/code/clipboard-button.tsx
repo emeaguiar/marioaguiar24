@@ -37,7 +37,7 @@ export default function ClipboardButton({ code }: { code: string }) {
     <button
       aria-label={t('copyToClipboard')}
       className={clsx(
-        'group absolute right-4 top-4 rounded-md border border-stone-800 bg-stone-900 p-2 text-white opacity-0 transition-opacity',
+        'group/button absolute right-4 top-4 rounded-md border border-stone-800 bg-stone-900 p-2 text-white opacity-0 transition-opacity',
         'group-hover:opacity-100'
       )}
     >
@@ -45,7 +45,7 @@ export default function ClipboardButton({ code }: { code: string }) {
         <ClipboardDocumentCheckIcon
           className={clsx(
             'h-4 w-4 transform-gpu transition-transform',
-            'group-hover:scale-125'
+            'group-hover/button:scale-125'
           )}
           aria-hidden
         />
@@ -53,7 +53,7 @@ export default function ClipboardButton({ code }: { code: string }) {
         <ClipboardDocumentIcon
           className={clsx(
             'h-4 w-4 transform-gpu transition-transform',
-            'group-hover:scale-125'
+            'group-hover/button:scale-125'
           )}
           aria-hidden
           onClick={() => {
