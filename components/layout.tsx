@@ -2,6 +2,12 @@
  * External dependencies
  */
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+
+/**
+ * Next dependencies
+ */
+import { usePathname } from 'next/navigation';
 
 /**
  * Internal dependencies
@@ -13,7 +19,29 @@ import ContactModal from '@/components/contact/modal';
 import SkipNavigation from '@/components/skip-navigation';
 import BackToTop from '@/components/back-to-top';
 
+const HEADER_HEIGHT = 84;
+
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isBlog, setIsBlog] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsBlog(pathname.includes('/blog'));
+      // Only apply in /blog pages
+      if (isBlog) {
+        setIsScrolled(window.scrollY > HEADER_HEIGHT);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [pathname, isBlog]);
+
   return (
     <>
       <SkipNavigation />
@@ -22,7 +50,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div
         className={clsx(
           raleway.className,
-          'sticky top-0 z-50 mb-6 flex flex-col items-center bg-background lg:mb-44'
+          'z-50 mb-6 flex flex-col items-center lg:mb-44',
+          {
+            'sticky top-0 bg-background': isBlog,
+            'shadow-lg': isScrolled,
+          }
         )}
       >
         <Header />
