@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 export default function Document() {
   return (
-    <Html className={clsx('bg-background text-foreground', {})}>
+    <Html className={clsx('scroll-smooth bg-background text-foreground', {})}>
       <Head />
       <body className='has-[dialog]:overflow-hidden'>
         <Main />

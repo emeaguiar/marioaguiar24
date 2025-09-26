@@ -34,7 +34,7 @@ export function H2({
     return (
       <h2
         className={clsx(
-          '-ml-4 flex text-4xl font-light tracking-wide',
+          '-ml-4 flex scroll-mt-24 text-4xl font-light tracking-wide',
           'dark:text-foreground',
           className,
           {
