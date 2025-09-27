@@ -34,7 +34,10 @@ export function ListItem({ post, locale }: { post: PostItem; locale: string }) {
   const { t } = useTranslation('blog');
 
   return (
-    <div className='group relative flex flex-row gap-4 overflow-hidden border-b border-gray-200 py-2 last:border-b-0'>
+    <div className={clsx(
+      'group relative flex flex-row gap-4 overflow-hidden border-b border-gray-200 py-2 last:border-b-0',
+      'dark:border-slate-900'
+    )}>
       <div className='flex flex-col gap-4'>
         <FormatDateShort
           dateString={post.publishedOn}
@@ -46,7 +49,7 @@ export function ListItem({ post, locale }: { post: PostItem; locale: string }) {
         className={clsx(
           'truncate text-ellipsis transition-colors',
           'group-hover:text-zinc-900/60',
-          'dark:hover:text-slate-300'
+          'dark:hover:text-slate-300 group-hover:dark:text-gray-500'
         )}
       >
         {post.title}
