@@ -40,6 +40,10 @@ export default function ClipboardButton({ code }: { code: string }) {
         'group/button absolute right-4 top-4 rounded-md border border-stone-800 bg-stone-900 p-2 text-white opacity-0 transition-opacity',
         'group-hover:opacity-100'
       )}
+      onClick={() => {
+        navigator.clipboard.writeText(code);
+        setIsCopied(true);
+      }}
     >
       {isCopied ? (
         <ClipboardDocumentCheckIcon
@@ -56,10 +60,6 @@ export default function ClipboardButton({ code }: { code: string }) {
             'group-hover/button:scale-125'
           )}
           aria-hidden
-          onClick={() => {
-            navigator.clipboard.writeText(code);
-            setIsCopied(true);
-          }}
         />
       )}
     </button>
