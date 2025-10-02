@@ -27,12 +27,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [isBlog, setIsBlog] = useState(false);
 
   useEffect(() => {
+    setIsBlog(pathname.includes('/blog'));
+  }, [pathname]);
+
+  useEffect(() => {
+    // Only apply in /blog pages
+    if (!isBlog) {
+      setIsScrolled(false);
+      return;
+    }
+
     const handleScroll = () => {
-      setIsBlog(pathname.includes('/blog'));
-      // Only apply in /blog pages
-      if (isBlog) {
-        setIsScrolled(window.scrollY > HEADER_HEIGHT);
-      }
+      setIsScrolled(window.scrollY > HEADER_HEIGHT);
     };
 
     window.addEventListener('scroll', handleScroll);
