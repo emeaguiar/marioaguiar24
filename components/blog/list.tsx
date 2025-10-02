@@ -34,10 +34,12 @@ export function ListItem({ post, locale }: { post: PostItem; locale: string }) {
   const { t } = useTranslation('blog');
 
   return (
-    <div className={clsx(
-      'group relative flex flex-row gap-4 overflow-hidden border-b border-gray-200 py-2 last:border-b-0',
-      'dark:border-slate-900'
-    )}>
+    <div
+      className={clsx(
+        'group relative flex flex-row gap-4 overflow-hidden border-b border-gray-200 py-2 last:border-b-0',
+        'dark:border-slate-900'
+      )}
+    >
       <div className='flex flex-col gap-4'>
         <FormatDateShort
           dateString={post.publishedOn}
