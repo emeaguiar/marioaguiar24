@@ -58,7 +58,7 @@ export function ListItem({ post, locale }: { post: PostItem; locale: string }) {
       </h3>
       <div className='ml-auto mr-0 flex translate-x-4 flex-row items-center gap-2 text-nowrap transition-transform group-hover:translate-x-0'>
         <p className='text-sm text-gray-500'>
-          {t('blog:readingTime', { minutes: post.readingTime / 60 })}
+          {t('blog:readingTime', { minutes: Math.ceil(post.readingTime / 60) })}
         </p>
         <ChevronRightIcon className='h-4 w-4' />
       </div>
