@@ -10,6 +10,7 @@ import { NextSeo } from 'next-seo';
  */
 import { H2 } from '@/components/elements';
 import BlogCards from '@/components/blog/cards';
+import { List as BlogList } from '@/components/blog/list';
 import { getPosts } from '@/lib/posts';
 import { BLOG_PREFIX, SITE_URL } from '@/lib/data';
 
@@ -27,6 +28,9 @@ export default function Page({
   };
 }) {
   const { t } = useTranslation('blog');
+
+  const featuredPosts = posts.slice(0, 3);
+  const allPosts = posts.slice(3);
 
   return (
     <>
@@ -60,7 +64,9 @@ export default function Page({
           />
         </H2>
 
-        <BlogCards posts={posts} />
+        <BlogCards posts={featuredPosts} />
+
+        <BlogList posts={allPosts} locale={locale} />
       </div>
     </>
   );

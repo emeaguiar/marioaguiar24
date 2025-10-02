@@ -11,6 +11,7 @@ import clsx from 'clsx';
  * Internal dependencies
  */
 import { notoSansMono } from '@/components/fonts';
+import ClipboardButton from '@/components/code/clipboard-button';
 
 export default function Code({
   children,
@@ -44,7 +45,7 @@ export default function Code({
           style={style}
           className={clsx(
             notoSansMono.className,
-            'text-sm/1.5 w-full overflow-x-auto p-2',
+            'text-sm/1.5 group relative w-full overflow-x-auto p-2',
             'lg:p-4 lg:text-base',
             className,
             {
@@ -72,6 +73,7 @@ export default function Code({
               ))}
             </div>
           ))}
+          <ClipboardButton code={children} />
         </pre>
       )}
     </Highlight>

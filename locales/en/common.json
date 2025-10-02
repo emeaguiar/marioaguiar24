@@ -21,5 +21,6 @@
   "backToTop": "Back to top",
   "conferences": "Conferences",
   "send": "Send",
-  "readMoreAbout": "Read more about \"{{title}}\""
+  "readMoreAbout": "Read more about \"{{title}}\"",
+  "copyToClipboard": "Copy to clipboard"
 }

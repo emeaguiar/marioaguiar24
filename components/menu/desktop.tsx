@@ -7,7 +7,6 @@ import useTranslation from 'next-translate/useTranslation';
  * Next dependencies
  */
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 /**
  * Internal dependencies
@@ -19,7 +18,6 @@ import ContactCTA from '@/components/contact/cta';
 
 export default function DesktopMenu() {
   const { t } = useTranslation('common');
-  const pathname = usePathname();
 
   return (
     <nav aria-label='Navegación principal' className='hidden md:flex'>

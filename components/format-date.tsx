@@ -19,3 +19,25 @@ export default function FormatDate({
     </time>
   );
 }
+
+export function FormatDateShort({
+  dateString = '',
+  locale = '',
+  className = '',
+}: {
+  dateString?: string;
+  locale?: string;
+  className?: string;
+}) {
+  const date = parseISO(dateString);
+  const options = { locale: locale === 'es' ? es : undefined };
+  const fullDate = format(date, 'PPP', options);
+  const dateFormat = locale === 'es' ? 'dd.MM.yy' : 'MM.dd.yy';
+  const formattedDate = format(date, dateFormat, options);
+
+  return (
+    <time dateTime={dateString} title={fullDate} className={className}>
+      {formattedDate}
+    </time>
+  );
+}

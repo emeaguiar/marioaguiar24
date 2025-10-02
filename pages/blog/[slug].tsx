@@ -57,8 +57,13 @@ export default function PostPage({
   locale: string;
 }) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
-  const { publishedOn, updatedOn, title, description, readingTime } =
-    frontmatter;
+  const {
+    publishedOn,
+    updatedOn,
+    title,
+    description,
+    readingTime = 0,
+  } = frontmatter;
   const pathname = usePathname();
   const { t } = useTranslation('blog');
 
