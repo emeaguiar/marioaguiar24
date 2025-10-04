@@ -1,16 +1,15 @@
 ---
 title: Guía para imágenes responsivas en HTML
 publishedOn: '2025-10-04'
-updatedOn: '2025-10-04T18:56:23.449Z'
+updatedOn: '2025-10-04T21:34:12.755Z'
 description: En este tutorial aprenderás a crear imágenes responsivas en HTML.
 published: true
 readingTime: 360
 ---
 
 import AlignWide from '@/components/blog/align-wide';
-import { SrcsetExample } from '@/examples/a-guide-to-responsive-images-in-html/es';
+import { SrcsetExample, PictureExample } from '@/examples/a-guide-to-responsive-images-in-html/es';
 
-# Guía para imágenes responsivas en HTML
 Durante los últimos años –por fortuna– se ha visto un auge en la importancia que se le da al *performance* dentro de la web. No se trata sólo de hacer tus **sitios web más rápidos** para la gente que tiene una velocidad baja en sus conexiones. También debemos tomar en cuenta que no todos los dispositivos son de última generación. Las páginas de internet hoy en día son visitadas desde teléfonos celulares, tabletas (incluso lectores de libros digitales), y finalmente laptops y computadoras de escritorio.
 
 Es por eso que se ha tenido la necesidad de traer mejoras a nuestros sitios, con el fin de que sean más fácilmente navegables, accesibles, y *rápidos*.
@@ -153,9 +152,33 @@ Con estos datos el navegador decide **cual de las imágenes reportadas funcionar
 
 ### El elemento `<picture>`
 
-Ahora que vimos la forma genérica de utilizar imágenes responsivas, podemos comenzar con mi forma preferida de utilizaras, y la que yo creo brinda más control sobre nuestro sitio, el elemento `<picture>`.
+Ahora que vimos la forma genérica de utilizar imágenes responsivas, podemos comenzar con mi forma preferida de utilizaras, y la que yo creo brinda **más control sobre nuestro sitio**, el elemento `<picture>`.
 
+A diferencia de `srcset` y `sizes`, `<picture>` funciona más como un contenedor de nuestro elemento `<img>`. Cuando usamos `<picture>`, el navegador no *elige* la mejor imagen a utilizar, en lugar de eso, se limita a obedecer las indicaciones que nosotros le brindamos. Es por esto que no es tan genérico como el ejemplo anterior, pero si más sencillo de utilizar:
 
+```html
+<picture>
+	<source srcset="https://picsum.photos/800/450" media="(min-width: 700px)" />
+	<img src="https://picsum.photos/400/225" alt="Imagen Responsiva" />
+</picture>
+```
+
+Esto nos daría un resultado como:
+
+<AlignWide>
+  <PictureExample />
+</AlignWide>
+
+En este caso, especificamos que si nuestra pantalla es de al menos 700px entonces debemos mostrar la imagen asignama al atributo `srcset` del elemento `<source>`. El navegador simplemente tomará esta indicación y mostrará la imagen, sin tener que tomar desciciones por su cuenta.
+
+> [!NOTE]
+> El atributo `media` soporta cualquier *media query*, ya sea de dispositivo, tamaño de *viewport*, o incluso de contenedor. por ejemplo:
+> ```html
+> <source srcset="https://picsum.photos/225/400" media="(orientation: portrait)" />
+> ```
+
+## Conclusión
+En un mundo donde nuestras páginas de internet pueden ser visualizadas en prácticamente cualquier tipo de dispositivo, y con tantas opciones a nuestro alcance, no olvidemos que también debemos procurar que nuestros usuarios 
 
 [^svg]::
     *Scalable Vector Graphics* (Gráficos vectoriales escalables) 
