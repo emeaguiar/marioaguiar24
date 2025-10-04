@@ -1,12 +1,39 @@
+/**
+ * External dependencies
+ */
+import { useRef } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useCurrentSrc } from './use-current-src';
+
+/**
+ * Internal dependencies
+ */
+
 export function SrcsetExample() {
+  const imageRef = useRef<HTMLImageElement>(null);
+  const currentSrc = useCurrentSrc(imageRef);
+
   return (
-    <img
-      src='https://picsum.photos/400/225'
-      srcSet='https://picsum.photos/600/338 600w,
-                    https://picsum.photos/800/450 800w'
-      sizes='(min-width: 500px) 600px
-                (min-width: 740px) 800px'
-      alt='Imagen Responsiva'
-    />
+    <div className='max-w-[400px] lg:max-w-none'>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className='w-full object-cover'
+        srcSet='https://picsum.photos/400/225 400w, https://picsum.photos/800/450 800w'
+        sizes='(max-width: 700px) 400px, 800px'
+        src='https://picsum.photos/400/225'
+        alt='Imagen Responsiva'
+        ref={imageRef}
+      />
+
+      <p>
+        Current source:{' '}
+        <code className='__className_c91388 rounded-md bg-slate-100 px-1.5 py-1 dark:bg-slate-700 dark:text-foreground'>
+          {currentSrc}
+        </code>
+      </p>
+    </div>
   );
 }
