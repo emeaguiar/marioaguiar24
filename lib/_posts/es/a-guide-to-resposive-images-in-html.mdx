@@ -1,7 +1,7 @@
 ---
 title: Guía para imágenes responsivas en HTML
 publishedOn: '2025-10-04'
-updatedOn: '2025-10-04T02:17:02.125Z'
+updatedOn: '2025-10-04T18:56:23.449Z'
 description: En este tutorial aprenderás a crear imágenes responsivas en HTML.
 published: true
 readingTime: 360
@@ -95,10 +95,10 @@ Aquí tenemos un ejemplo de como funciona, suponiendo que tenemos esta etiqueta:
 <!-- Se aplica formato para facilitar la lectura -->
 <img
 	src="https://picsum.photos/400/225"
-	srcset="https://picsum.photos/600/338 600w
+	srcset="https://picsum.photos/400/225 400w,
 			https://picsum.photos/800/450 800w"
-	sizes="(min-width: 500px) 600px
-		   (min-width: 740px) 800px"
+	sizes="(max-width: 700px) 400px,
+		   800px"
 	alt="Imagen Responsiva"
 />
 ```
@@ -108,6 +108,54 @@ Nos daría este resultado:
 <AlignWide>
   <SrcsetExample />
 </AlignWide>
+
+> [!CAUTION]
+> Dependiendo de tu pantalla, puede que en realidad estés viendo **la imagen grande** 800px, esto es porque además de el ancho de la pantalla, el navegador toma en cuenta la *densidad de pixeles*, por ejemplo, en mi *retina display* aún en versión móvil, en una ventana de 490px **yo veo la imagen de 800px**. ¿Por qué? porque la densidad de mi pantalla multiplica los pixeles por dos, así que en una ventana de 490 pixeles el navegador espera una imagen de 490x2 = 980px. Por lo que decide que la versión grande de 800px es la más cercana.
+> 
+> Esta es la principal razón por la que yo personalmente no soy muy devoto a esta técnica.
+
+Debido a que el navegador escoge cual es la mejor versión de la imagen **se pierde algo de control**, pero es muy útil si por ejemplo estamos trabajando con algún CMS[^cms] en el que no queremos preocuparnos por seleccionar la mejor imagen cada vez que se crea una página, y en lugar de eso **queremos una solución más genérica que cubra muchas bases**.
+### La relación `srcset` y `sizes`
+Una forma sencilla de ver como es que relacionan los atributos `srcset` y `sizes` es imaginándolos como una lista, donde un atributo hace referencia a los contenidos del otro, si tomamos nuestro ejemplo anterior:
+
+```html
+<!-- Se aplica formato para facilitar la lectura -->
+<img
+	srcset="https://picsum.photos/400/225 400w,
+			https://picsum.photos/800/450 800w"
+	sizes="(max-width: 700px) 400px,
+		   800px"
+/>
+```
+
+| Source                        | Ancho reportado | Sizes                    |
+| ----------------------------- | --------------- | ------------------------ |
+| https://picsum.photos/400/225 | 400w            | (max-width: 700px) 400px |
+| https://picsum.photos/800/450 | 800w            | 800px                    |
+* El **ancho reportado** somos nosotros diciéndole al navegador que independientemente de la imagen, nosotros la tratamos como si tuviera este ancho, esto nos ayuda a utilizar imágenes un poco más grandes para mantener la calidad.
+* Sizes se compone de un *media query* (opcional) y el **ancho que esta imagen debe mostrar en el navegador**. En este ejemplo decimos que *hasta un ancho del dispositivo de 700px*, nuestra imagen va a mostrarse a un **máximo** de 400px;
+* El source es únicamente la dirección donde nuestra imagen está alojada
+
+Con estos datos el navegador decide **cual de las imágenes reportadas funcionará mejor para el ancho máximo en el que será utilizada**.
+
+> [!TIP]
+> Toma en cuenta que el ancho reportado **no necesariamente debe ser el ancho real de la imagen**, así, podemos "mentirle" un poco al navegador para mejorar nuestras imagenes, nada nos impide hacer algo como esto:
+> 
+> ```html
+> <!-- Se aplica formato para facilitar la lectura -->
+> <img
+>   srcset="https://picsum.photos/400/225 600w,
+>           https://picsum.photos/800/450 1000w"
+>   sizes="(max-width: 700px) 400px,
+>          800px"
+> />
+> ```
+
+### El elemento `<picture>`
+
+Ahora que vimos la forma genérica de utilizar imágenes responsivas, podemos comenzar con mi forma preferida de utilizaras, y la que yo creo brinda más control sobre nuestro sitio, el elemento `<picture>`.
+
+
 
 [^svg]::
     *Scalable Vector Graphics* (Gráficos vectoriales escalables) 
@@ -125,3 +173,5 @@ Nos daría este resultado:
 	*Pixel width*, se refiere al ancho que el navegador necesita para imprimir la imagen con base en el tamaño del dispositivo que se está utilizando
 [^density]:
 	*Pixel density*, se refiere a la densidad de pixeles de la pantalla. En el pasado, la mayoría de las pantallas contaban con una densidad de *96ppi* (pixeles por pulgada). Esto cambió en los 2000s con dispositivos como el **retina display** que utiliza una densidad de *192ppi* –el doble– por lo que se comenzó a decir que poseian una densidad de "2x" (*two times*, "dos veces", o "el doble")
+[^cms]:
+	*Content Management System*, como puede ser WordPress, Drupal, Ghost, etc.

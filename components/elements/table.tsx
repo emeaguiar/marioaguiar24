@@ -5,7 +5,9 @@ import clsx from 'clsx';
 
 export function Table({ children }: { children?: React.ReactNode }) {
   return (
-    <table className='w-full max-w-screen-md table-auto p-4'>{children}</table>
+    <table className='m-auto w-full max-w-screen-md table-auto p-4'>
+      {children}
+    </table>
   );
 }
 
