@@ -89,7 +89,7 @@ export default function PostPage({
         <BlogMeta
           publishedOn={publishedOn}
           updatedOn={updatedOn}
-          readingTime={readingTime / 60}
+          readingTime={Math.ceil(readingTime / 60)}
           locale={locale}
         />
       </header>
