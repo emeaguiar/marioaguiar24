@@ -1,7 +1,7 @@
 ---
 title: Guía para imágenes responsivas en HTML
 publishedOn: '2025-10-04'
-updatedOn: '2025-10-04T21:34:12.755Z'
+updatedOn: '2025-10-04T21:52:19.061Z'
 description: En este tutorial aprenderás a crear imágenes responsivas en HTML.
 published: true
 readingTime: 360
@@ -16,15 +16,27 @@ Es por eso que se ha tenido la necesidad de traer mejoras a nuestros sitios, con
 
 Una de esas mejoras, son las imágenes responsivas. A continuación publico una **guía rápida para que nuestras imágenes tengan la calidad que necesitamos** para que carguen lo más rápido posible sin que afecten las demás secciones de nuestro sitio.
 
-## Introducción
+## TABLA DE **CONTENIDO**
+
+- [INTRODUCCIÓN](#introducción)
+- [FORMATOS DE IMÁGENES](#formatos-de-imágenes)
+- [WEBP (FIGURAS E IMÁGENES REPRESENTATIVAS)](#webp-figuras-e-imágenes-representativas)
+- [CARGA DIFERIDA (*Lazy Loading*)](#carga-diferente-lazy-loading)
+- [IMÁGENES RESPONSIVAS](#imágenes-responsivas)
+  - [SOURCE SET (`srcset`)](#source-set-srcset)
+  - [LA RELACIÓN `srcset` Y `sizes`](#la-relación-srcset-y-sizes)
+  - [EL ELEMENTO `<picture>`](#el-elemento-picture)
+- [CONCLUSIÓN](#conclusión)
+
+## INTRODUCCIÓN
 
 Cuando hablamos de **imágenes responsivas**, no sólo nos referimos a que cambien de tamaño cuando pasamos de teléfonos móviles a ordenadores de escritorio. Si no que también engloba el *como y cuando debemos cargar nuestras imágenes*, así como también el formato más óptimo para mantener una buena relación entre **calidad, y tamaño del archivo**.
 
-## Formatos de imágenes
+## FORMATOS DE **IMÁGENES**
 
 Dependiendo de las necesidades que tengamos para nuestro sitio, debemos escoger el formato que mejor nos convenga. Hoy en día tenemos muchas opciones disponibles, sin embargo también tenemos un consenso general sobre cuales son las más óptimas para usos generales.
 
-### SVG (íconos)
+### **SVG** (íconos)
 Cuando utilizamos imágenes muy pequeñas –como íconos– lo más conveniente en la mayoría de los casos es utilizar el formato **svg**[^svg]. Ésto nos permitirá incluso incluir el archivo directamente en nuestro código HTML de una manera sencilla y rápida, sin utilizar mucho espacio. Por lo cual generalmente su tamaño es **muy pequeño**, sin embargo, cuando la complejidad del ícono aumenta demasiado generalmente lo mejor es movernos hacia una *imagen rasterizada* en su lugar.
 
 > [!NOTE]
@@ -35,7 +47,7 @@ Cuando utilizamos imágenes muy pequeñas –como íconos– lo más conveniente
 >
 >Así, una imagen vectorial funciona mejor en *íconos* que podemos utilizar en distintos tamaños sin preocuparnos mucho por el resultado. Mientras que una imagen rasterizada es más útil en *imágenes complejas* de un sólo uso más espécifico.
 
-### WEBP (figuras e imágenes representativas)
+### **WEBP** (figuras e imágenes representativas)
 En el pasado, cuando necesitabamos mostrar alguna figura[^figure], las opciones más comunes eran ya sea un JPEG[^jpeg], o un PNG[^png]. Si bien ambos formatos tenían sus usos y funcionaron bien en su momento, hoy en día se les considera anticuados y sus ventajas han sido sobrepasadas por otros formatos más eficientes, como el más usado actualmente: **WEBP**.
 
 WEBP es un formato de compresión desarrollado por [Google](https://developers.google.com/speed/webp), soporta compresión con o sin pérdida y fue lanzado en el 2010 como una alternativa a los populares JPEG y PNG.
@@ -46,7 +58,7 @@ Las mayores ventajas con respecto a sus competidores son que a diferencia de JPE
 > Además de las ventajas que ofrece sobre JPEG y PNG. Vale la pena mencionar que WebP también soporta animaciones como lo hace un GIF[^gif]. Pero a diferencia del GIF, éste soporta más de 256 colores.
 > Se podría decir que tenemos **lo mejor de cualquier mundo**.
 
-## Carga diferida (*Lazy Loading*)
+## CARGA **DIFERIDA** (*Lazy Loading*)
 Si bien el tamaño y formato de la imagen ayudan mucho a hacer más eficiente la carga de las imágenes, otra técnica bastante útil es el *lazy loading*, la lógica es la siguiente:
 
 1. El navegador **lee todo el código HTML** de la página, busca **cada una de las etiquetas** –incluidas las imágenes– y después **imprime todo en la página**
@@ -72,13 +84,13 @@ Esto le dirá al navegador que debe cargar la imagen sólo cuando el usuario **c
 > <img src="https://picsum.photos/800/600" loading="eager" />
 > ```
 
-## Imágenes responsivas
+## IMÁGENES **RESPONSIVAS**
 
 Ahora estamos listos para la parte principal de éste artículo, las **imágenes responsivas**. Básicamente, tenemos la posibilidad de utilizar distintos tamaños (o incluso distintas versiones) de una imagen dependiendo del tipo de dispositivo, o del tamaño de dispositivo que el usuario esté utilizando.
 
 La forma más común de conseguir esto es mediante los atributos `srcset` y `sizes` de la etiqueta de imagen, pero en lo personal yo prefiero utilizar la etiqueta `picture`, comencemos por lo básico.
 
-### Source set (`srcset`)
+### **SOURCE** SET (`srcset`)
 
 El atributo `srcset` nos permite definir uno o más **candidatos de imagen**, junto con su **set de circunstancias** óptimas para que estas sean utilizadas.
 
@@ -114,7 +126,7 @@ Nos daría este resultado:
 > Esta es la principal razón por la que yo personalmente no soy muy devoto a esta técnica.
 
 Debido a que el navegador escoge cual es la mejor versión de la imagen **se pierde algo de control**, pero es muy útil si por ejemplo estamos trabajando con algún CMS[^cms] en el que no queremos preocuparnos por seleccionar la mejor imagen cada vez que se crea una página, y en lugar de eso **queremos una solución más genérica que cubra muchas bases**.
-### La relación `srcset` y `sizes`
+### LA **RELACIÓN** `srcset` y `sizes`
 Una forma sencilla de ver como es que relacionan los atributos `srcset` y `sizes` es imaginándolos como una lista, donde un atributo hace referencia a los contenidos del otro, si tomamos nuestro ejemplo anterior:
 
 ```html
@@ -150,7 +162,7 @@ Con estos datos el navegador decide **cual de las imágenes reportadas funcionar
 > />
 > ```
 
-### El elemento `<picture>`
+### EL **ELEMENTO** `<picture>`
 
 Ahora que vimos la forma genérica de utilizar imágenes responsivas, podemos comenzar con mi forma preferida de utilizaras, y la que yo creo brinda **más control sobre nuestro sitio**, el elemento `<picture>`.
 
@@ -177,7 +189,7 @@ En este caso, especificamos que si nuestra pantalla es de al menos 700px entonce
 > <source srcset="https://picsum.photos/225/400" media="(orientation: portrait)" />
 > ```
 
-## Conclusión
+## CONCLUSIÓN
 En un mundo donde nuestras páginas de internet pueden ser visualizadas en prácticamente cualquier tipo de dispositivo, y con tantas opciones a nuestro alcance, no olvidemos que también debemos procurar que nuestros usuarios 
 
 [^svg]::

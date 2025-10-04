@@ -63,3 +63,8 @@ ul.contains-task-list {
     max-width: calc(100vw - 3rem);
   }
 }
+
+.footnotes li,
+sup a {
+  scroll-margin-top: 24px;
+}
