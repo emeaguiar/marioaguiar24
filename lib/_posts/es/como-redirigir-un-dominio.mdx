@@ -1,0 +1,115 @@
+---
+title: ¿Cómo redirigir un dominio a otro?
+publishedOn: '2025-11-12'
+updatedOn: '2025-11-13T23:01:28.885Z'
+description: Formas rápidas y sencillas para redirigir un dominio de una dirección a otra
+published: true
+readingTime: 720
+---
+
+ **Contexto**: Hace muchos años (diez más o menos) cuando creé mi portafolios en linea por vez primera, utilicé el dominio `marioaguiar.com`, ya que hasta la fecha es el más popular. Por diferentes motivos —léase desidia— olvidé renovarlo en un punto crítico, o mejor dicho, de popularidad. Lo que llevó a que cayera en ojos de los llamados _domainers_[^domainers] que tan de moda estaban en esos tiempos. El tipo trataba de venderme el dominio a un precio excesivamente caro, lo cual rechacé, y en su lugar decidí registrar el dominio `marioaguiar.net` que mantengo hasta la fecha.
+
+Recientemente, sin embargo, pensé en revisar si el dominio `marioaguiar.dev` estaba disponible, y ¡sorpresa!, me encuentro con que el dominio `marioaguiar.com` que hace tantos años se escabuyó de mis brazos digitales ¡estaba una vez más disponible! y mejor aún ¡a un precio **razonable**!
+
+Decidí aprovechar y adquirir ambos dominios, para tener la sagrada trifecta `marioaguiar.net`, `marioaguiar.com`, y el nuevo `marioaguiar.dev`. Pero queda una cuestión ahora… **¿Qué hacer con ellos?** Decidí hacer el cambio de este sitio web al nuevo formato `marioaguiar.dev` —después de todo, so un *developer*[^developer], y para matar dos pájaros de un tiro, crear un pequeño tutorial para mostrar el proceso de migración.
+
+## PASO 1: REDIRECCIONES **SECUNDARIAS**
+
+En este caso yo tengo tres dominios:
+
+1. `marioaguiar.net`: En uso
+2. `marioaguiar.com`: En desuso—para redirección
+3. `marioaguiar.dev`: En desuso—para uso principal
+Cómo sólo uno de ellos se mantendrá en "desuso" durante todo el movimiento, es el más seguro a modificar primero, quiero que `marioaguiar.com` redirija a la version dev, por lo tanto simplemente debo encontrar las opciones del dominio, en mi caso los he registrado en [name.com](https://name.com)
+
+Sin portar en dónde tengas registrado tu dominio—la mayoría tiene la opción de "URL Forwarding" disponible, ésta es la forma más sencilla de activar una redirección:
+
+![Ejemplo de opciones de dominio](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1762975743/Screenshot_2025-11-12_at_1.28.01_p.m._nclg4r.png "Ejemplo de opciones de dominio")
+
+Una vez dentro simplemente debemos seguir las instrucciones, pero es tan sencillo como únicamente escribir la nueva dirección a donde queremos que se redirija nuestro dominio:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1762976150/Screenshot_2025-11-12_at_1.35.39_p.m._o7lzj5.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1762976150/Screenshot_2025-11-12_at_1.35.39_p.m._o7lzj5.png "Redirije cualquier subdominio de marioaguiar.com a marioaguiar.dev")
+
+## PASO 2: CAMBIAR EL **DOMINIO PRINCIPAL**
+
+Esa fue la parte sencilla, ahora viene lo complicado, cambiar el dominio desafortunadamente no implica sólo el cambio en si, si no que además debemos tener en cuenta cualquier servicio que tuviéramos asociado a ese nombre de mi caso, en mi caso, identifiqué los siguientes servicios:
+
+1. Correo electrónico
+2. Comentarios externos (Disqus)
+3. Métricas (Google Analytics)
+Todos esos servicios están conectados al dominio .net, por que es necesario actualizarlos para que todo siga funcionando como lo esperaba, comenzando por lo más sencillo:
+
+### Paso 2.1 Actualizar los **registros DNS**
+Este sitio web está alojado en Vercel, por lo tanto, para poder utilizar mi nuevo dominio, debo utilizar los datos que ellos proporcionan para hacer la dirección correcta.
+
+Para actualizar la configuración, se agrega un nuevo dominio desde la ventana "Add domain", y una vez agregado nos mostrará la información de los registros DNS que necesitamos agregar en nuestro dominio:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763062191/Zight_Recording_2025-11-13_at_01.28.21_p.m._tykerj.gif](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763062191/Zight_Recording_2025-11-13_at_01.28.21_p.m._tykerj.gif "Nuevo dominio en Vercel")
+
+> [!IMPORTANT]
+> Los dominios `.dev` tienen como _requisito_ tener un **certificado SSL**[^ssl] o de lo contrario no funcionarán, por suerte, Vercel proporciona un certificado gratuito al momento de agregar un nuevo dominio, por lo que no tuve necesidad de hacer nada más.
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763062747/Zight_2025-11-13_at_1.38.12_p.m._t1xbju.jpg](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763062747/Zight_2025-11-13_at_1.38.12_p.m._t1xbju.jpg "Pantalla de edición de registros en Name.com")
+
+### Paso 2.2: Agregar redirecciones para buscadores
+
+Cambiar el dominio es algo sencillo, el problema viene a la hora de **avisar a los buscadores que nuestro dominio ha cambiado**. Esto es importante porque necesitamos que *todos* nuestros enlaces sigan funcionando cuando vienen de buscadores, y necesitamos que los buscadores sepan el porque estamos redirigiendo.
+
+> [!CAUTION]
+> La mayoría de los servicios de hosting ya tienen opciones para hacer este proceso en automático—por ejemplo en Vercel esto se actualizó automáticamente cuando agregué el dominio al seleccionar la redirección 301. Revisa tu configuración para ver si esta opción está disponible.
+
+
+
+## PASO 3: ACTUALIZAR EL **CORREO ELECTRÓNICO**
+
+Como siguiente paso, actualicemos a una dirección de correo electrónico. Mi dirección actual me@marioaguiar.net funciona bastante bien—excepto por la peculiaridad de que no puedo ingresar a mi cuenta de Google… Pero historia para otro momento.
+Yo utilizo el servicio de [Zoho](https://zoho.com) para manejar mi cuenta de correo, así que para crear un nuevo correo electrónico deberé **modificar los registros de mi dominio**, y crear una cuenta desde su panel de administración.
+
+Dentro de Zoho Mail, debemos abrir la consola de administración, en ella encontraremos el apartado de "Dominios" desde donde podemos agregar el nuevo dominio:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070099/Zight_2025-11-13_at_3.41.14_p.m._w2vaai.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070099/Zight_2025-11-13_at_3.41.14_p.m._w2vaai.png)
+
+Una vez agregado, veremos la advertencia de que faltan registros DNS que agregar al dominio, y nos dará los datos necesarios para agregar los registros en Name.com.
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070466/Zight_2025-11-13_at_3.44.38_p.m._bz3qmk.jpg](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070466/Zight_2025-11-13_at_3.44.38_p.m._bz3qmk.jpg "Edición de registro")
+
+Después de agregar los registros necesarios, agregaremos un alias a nuestra dirección de correo existente, desde la pantalla de "Usuarios", elegimos nuestro usuario y seleccionamos "Agregar un alias".
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070518/Zight_2025-11-13_at_3.46.42_p.m._mpckl6.jpg](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070518/Zight_2025-11-13_at_3.46.42_p.m._mpckl6.jpg)
+
+Después agregamos nuestro alias y veremos nuestro nuevo dominio disponible:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070596/Zight_2025-11-13_at_3.49.20_p.m._uxrgpy.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763070596/Zight_2025-11-13_at_3.49.20_p.m._uxrgpy.png)
+
+> [!NOTE]
+> **¿Alias?**
+> 
+> A pesar de que estamos agregando una **nueva dirección de correo**, esta se agrega como un "alias" a la cuenta principal, esto significa que los correos enviados a esta nueva dirección **llegarán a la misma bandeja de entrada** que ya tenemos. Pero podemos utilizar filtros para separarlos si asi lo queremos.
+
+Si probamos enviando un correo a esta nueva dirección, deberíamos ver que funciona sin problemas.
+
+## PASO 4: ACTUALIZAR COMENTARIOS
+
+Para actualizar la dirección de los comentarios de disqus, basta con que inicimies sesión en la página, bajo la pestaña de "Configuración → General" encontraremos un tooltip que nos llevará al proceso de migración de dominio:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763071461/Zight_2025-11-13_at_4.03.56_p.m._kani0d.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763071461/Zight_2025-11-13_at_4.03.56_p.m._kani0d.png)
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763071542/Zight_2025-11-13_at_4.04.58_p.m._kcnean.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763071542/Zight_2025-11-13_at_4.04.58_p.m._kcnean.png)
+
+Una vez terminada la migración recibirás un correo de confirmación y todo estará listo.
+
+## PASO 4: ACTUALIZAR **GOOGLE ANALYTICS**
+
+Por último, debemos ingresar a nuestra cuenta de Google Analytics, dentro debemos hacer click en el menú de "Admin", y seleccionar "Data Collection and modifications → Data Streams". Ahí veremos nuestro sitio:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763072063/Zight_2025-11-13_at_4.12.59_p.m._g0lnwg.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763072063/Zight_2025-11-13_at_4.12.59_p.m._g0lnwg.png)
+
+Ahora simplemente seleccionamos el sitio, damos click en el ícono de "Editar" y actualizamos "Stream URL" con nuestro nuevo dominio.
+
+## **CONCLUSIÓN**
+
+Dentro de lo que cabe, no fue tanto problema el actualizar a mi nuevo dominio, lo más complicado fue crear el alias para mi dirección de correo electrónico, y eso fue unicamente porque no podía encontrar la opción correcta, una vez di con la documentación correcta las cosas fueron muy fáciles. Ahora si, ¡a disfrutar el cambio!
+
+[^domainers]: Dícese de la persona cuyo "negocio" es pensar en nombres de dominio que revender a precios altos
+[^developer]:  Desarrollador
+[^ssl]:  *Secure Lockets Layer*, es un protocolo de seguridad que **cifra**—convierte información legible a ilegible—nuestro sitio web. El equivalente a _encrypt_ en inglés (la palabra "encriptar" no existe en español) 
