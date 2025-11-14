@@ -8,7 +8,6 @@ import { Fragment } from 'react';
  * Internal dependencies
  */
 import { P } from '@/components/elements/p';
-import { merriweather } from '@/components/fonts';
 
 export function Blockquote({
   children,
@@ -20,13 +19,12 @@ export function Blockquote({
   return (
     <blockquote
       className={clsx(
-        merriweather.className,
-        'relative my-4 w-full max-w-screen-sm border-0 py-2 pl-10 text-2xl/12 italic lg:pl-20',
-        'before:absolute before:left-0 before:top-10 before:text-6xl before:opacity-20 before:content-["“"] lg:before:text-9xl',
+        'relative my-4 w-full border-0 py-2 text-lg/8 font-normal italic',
+        'before:absolute before:left-12 before:top-5 before:text-6xl before:font-medium before:opacity-20 before:content-["“"] lg:before:text-9xl',
         'prose-p:max-w-screen-lg',
         'md:mx-auto md:max-w-screen-md',
         {
-          'text-gray-600 dark:text-gray-300': allowExpand,
+          'text-zinc-500 dark:text-zinc-300': allowExpand,
           'opacity-75': !allowExpand,
         }
       )}
@@ -44,7 +42,11 @@ export function Blockquote({
            * the markdown is parsed.
            */
           if ('object' === typeof child && P === child.type) {
-            return <p key={index}>{child.props.children}</p>;
+            return (
+              <p key={index} className='px-6'>
+                {child.props.children}
+              </p>
+            );
           }
 
           return <Fragment key={index}>{child}</Fragment>;
