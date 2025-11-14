@@ -45,7 +45,7 @@ export default function Code({
           style={style}
           className={clsx(
             notoSansMono.className,
-            'text-sm/1.5 group relative w-full overflow-x-auto p-2',
+            'text-sm/1.5 group relative mx-auto w-full overflow-x-auto p-2',
             'lg:p-4 lg:text-base',
             className,
             {

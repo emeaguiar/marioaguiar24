@@ -1,3 +1,7 @@
+/**
+ * External dependencies
+ */
+import { useEffect, useState } from 'react';
 import { parseISO, formatDistance, format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
@@ -8,10 +12,16 @@ export default function FormatDate({
   dateString?: string;
   locale?: string;
 }) {
-  const date = parseISO(dateString);
-  const options = { locale: locale === 'es' ? es : undefined };
-  const formattedDate = formatDistance(date, new Date(), options);
-  const fullDate = format(date, 'PPP', options);
+  const [formattedDate, setFormattedDate] = useState('');
+  const [fullDate, setFullDate] = useState('');
+
+  useEffect(() => {
+    const date = parseISO(dateString);
+    const options = { locale: locale === 'es' ? es : undefined };
+
+    setFormattedDate(formatDistance(date, new Date(), options));
+    setFullDate(format(date, 'PPP', options));
+  }, [dateString, locale]);
 
   return (
     <time dateTime={dateString} title={fullDate}>
