@@ -43,7 +43,7 @@ export function Blockquote({
            */
           if ('object' === typeof child && P === child.type) {
             return (
-              <p className='px-6' key={index}>
+              <p key={index} className='px-6'>
                 {child.props.children}
               </p>
             );
