@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import { getMDXComponent } from 'mdx-bundler/client';
 import rehypeSlug from 'rehype-slug';
+import rehypeVideo from 'rehype-video';
 import { NextSeo } from 'next-seo';
 import { usePathname } from 'next/navigation';
 import rehypeUnwrapImages from 'rehype-unwrap-images';
@@ -193,6 +194,7 @@ export async function getStaticProps({
         rehypeGithubAlerts,
         rehypeSlug,
         rehypeUnwrapImages,
+        rehypeVideo,
       ];
 
       return options;
