@@ -38,6 +38,7 @@ import {
   Td,
   Th,
   Tr,
+  Video,
   Code as CodeElement,
 } from '@/components/elements';
 import Alert from '@/components/alerts';
@@ -155,6 +156,7 @@ export default function PostPage({
 
               return <div {...props} className={classes} />;
             },
+            video: Video,
             pre: Pre,
           }}
         />
@@ -194,7 +196,7 @@ export async function getStaticProps({
         rehypeGithubAlerts,
         rehypeSlug,
         rehypeUnwrapImages,
-        rehypeVideo,
+        [rehypeVideo, { details: false }],
       ];
 
       return options;

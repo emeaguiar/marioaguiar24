@@ -12,3 +12,4 @@ export * from '@/components/elements/pre';
 export * from '@/components/elements/table';
 export * from '@/components/elements/ul';
 export * from '@/components/elements/with-underline';
+export * from '@/components/elements/video';
