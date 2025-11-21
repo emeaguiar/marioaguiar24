@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import { getMDXComponent } from 'mdx-bundler/client';
 import rehypeSlug from 'rehype-slug';
+import rehypeVideo from 'rehype-video';
 import { NextSeo } from 'next-seo';
 import { usePathname } from 'next/navigation';
 import rehypeUnwrapImages from 'rehype-unwrap-images';
@@ -37,6 +38,7 @@ import {
   Td,
   Th,
   Tr,
+  Video,
   Code as CodeElement,
 } from '@/components/elements';
 import Alert from '@/components/alerts';
@@ -154,6 +156,7 @@ export default function PostPage({
 
               return <div {...props} className={classes} />;
             },
+            video: Video,
             pre: Pre,
           }}
         />
@@ -193,6 +196,7 @@ export async function getStaticProps({
         rehypeGithubAlerts,
         rehypeSlug,
         rehypeUnwrapImages,
+        [rehypeVideo, { details: false }],
       ];
 
       return options;

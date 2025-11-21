@@ -1,0 +1,129 @@
+---
+title: Crear un esqueleto de carga en CSS con Tailwind
+publishedOn: '2025-11-21T17:13:36.516Z'
+description: Tutorial para crear un esqueleto de carga sencillo en CSS y Tailwind
+published: true
+updatedOn: '2025-11-21T22:56:08.846Z'
+readingTime: 240
+---
+
+import AlignWide from '@/components/blog/align-wide';
+import { ExampleOne, ExampleTwo, ExampleThree } from '@/examples/crear-un-esqueleto-en-css-con-tailwind/es';
+
+Un "esqueleto" es como se le denomina normalmente a las plantillas de carga que dan **una impresión básica del contenido que se va a formar en la página**, nos sirve para prevenir un salto en la página[^1] cuando el contenido carga. Esto es muy vistoso y una de las razones por las que se han vuelto tan populares en los años recientes, por ejemplo:
+
+https://res.cloudinary.com/dyfxhbbnf/video/upload/v1763760035/Zight_Recording_2025-11-21_at_03.17.20_p.m._rwqhqg.mp4
+
+Esto es en realidad muy sencillo de hacer, el procedimiento consiste en definir como se verá el contenido real cuando cargue, y a partir de ahí se crea un "esqueleto"[^2] con una animación básica que de la apariencia de que **algo está cargando**.
+
+Digamos, por ejemplo, que tenemos ésta tarjeta con contenido final:
+
+<AlignWide>
+  <ExampleOne />
+</AlignWide>
+
+```html
+<div className='not-prose rounded-xl border p-4 md:p-8'>
+	<div className='flex w-full flex-col items-center justify-between md:flex-row'>
+		<div className='order-2 md:order-1'>
+			<h3 className='mb-4 text-center text-2xl font-semibold md:text-start'>
+				Lorem Ipsum
+			</h3>
+ 
+			<div className='flex gap-4'>
+				<span className='rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold uppercase dark:bg-gray-700'>
+					Categoría
+				</span>
+				<span className='rounded-lg bg-gray-300 px-2 py-1 text-xs font-semibold uppercase dark:bg-gray-700'>
+					Categoría
+				</span>
+			</div>
+		</div>  
+
+		<div className='order-1 mb-2 md:order-2'>
+			<img
+				className='rounded-full'
+				src='https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763762084/45642b05dc8808c35e8b7cfe967421e71f36a204b5fc86c772df82382ea9ba71_sy92zb.png'
+				alt='Retrato de Mario Aguiar'
+				width='80'
+				height='80'
+				loading='lazy'
+			/>
+		</div>
+	</div>
+
+	<p>
+		Ut posuere non massa et feugiat. Suspendisse felis metus, vehicula
+		dignissim neque sed, pulvinar varius sapien. In semper scelerisque erat,
+		id lobortis diam porta id.
+	</p>
+</div>
+```
+
+Esto nos brinda una tarjeta bastante sencilla que podemos utilizar como base para nuestro esqueleto.
+
+> [!NOTE]
+> A pesar de que parezca contradictorio utilizar el producto finalizado como base, en lugar de utilizar el esqueleto al principio, yo encuentro mucho más sencillo éste método, ya que generalmente recibo los diseños terminados.
+> 
+> Pero por supuesto, cada quién trabaja como mejor le funcione.
+
+A partir de aquí, podemos **identificar qué elementos debemos cubrir en nuestro esqueleto**, cómo referencia utilizaré una imagen con los recuadros que necesitamos:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763763453/Zight_2025-11-21_at_4.14.46_p.m._ke5lfm.jpg](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1763763453/Zight_2025-11-21_at_4.14.46_p.m._ke5lfm.jpg "Borrador rápido de los recuadros a utilizar")
+
+## EL **CARGADOR**
+
+La forma más sencilla de simular el contenido, será crear un recuadro en algún color gris que podamos modificar para alcanzar los tamaños adecuados, como este:
+
+<AlignWide>
+  <ExampleTwo />
+</AlignWide>
+```html
+<div className='h-5 w-full rounded-lg bg-gray-300' />
+```
+
+Así simplemente **reemplazamos el contenido con este recuadro** actualizando el tamaño dependiendo de el tipo de contenido que necesitamos, yo tuve que hacer un par de modificaciones al espacio pero al final mi resultado fue este:
+
+<AlignWide>
+  <ExampleThree />
+</AlignWide>
+
+```html
+<div className='not-prose rounded-xl border p-4 md:p-8'>
+	<div className='mb-4 flex w-full flex-col items-center justify-between md:flex-row'>
+	    <div className='order-2 w-1/2 md:order-1'>
+			<div className='mb-4 h-5 w-full rounded-lg bg-gray-300' />
+			
+			<div className='flex justify-center gap-4 md:justify-start'>
+				<div className='h-5 w-18 rounded-lg bg-gray-300' />
+				<div className='h-5 w-18 rounded-lg bg-gray-300' />
+			</div>
+		</div>
+
+		<div className='order-1 mb-2 md:order-2'>
+			<div className='h-20 w-20 rounded-full bg-gray-300' />
+		</div>
+	</div>
+
+	<div className='mb-2 h-5 w-full rounded-lg bg-gray-300' />
+	<div className='mb-2 h-5 w-full rounded-lg bg-gray-300' />
+	<div className='h-5 w-1/3 rounded-lg bg-gray-300' />
+</div>
+```
+
+## LA **ANIMACIÓN**
+
+Finalmente, necesitamos agregar una animación que haga parecer que **el contenido en realidad está cargando**, para esto simplemente es necesario agregar una clase extra a nuestro ejemplo, [Tailwind](https://tailwindcss.com/) viene con la utilidad `animate-pulse` que es perfecta para ello, simplemente la agregamos al contenedor y este será el resultado:
+
+<AlignWide>
+  <ExampleThree animate />
+</AlignWide>
+
+```html
+<div className='animate-pulse not-prose rounded-xl border p-4 md:p-8'>
+```
+
+¡Y eso es todo! Ahora podemos mover nuestro esqueleto a nuestra aplicación para que sea lo primero que vea el usuario antes de que el contenido termine de cargar, esto dará una **clara indicación de que algo está pasando**, y ya no será una sorpresa el ver cuando carga el contenido.
+
+[^1]: También conocido como CLS (*Content Layout Shift*) en web vitals.
+[^2]: Básicamente una versión reducida que únicamente sirve como guía.
