@@ -1,0 +1,212 @@
+---
+title: Guía para imágenes responsivas en HTML
+publishedOn: '2025-10-04'
+updatedOn: '2025-10-04T21:52:19.061Z'
+description: En este tutorial aprenderás a crear imágenes responsivas en HTML.
+published: true
+readingTime: 360
+---
+
+import AlignWide from '@/components/blog/align-wide';
+import { SrcsetExample, PictureExample } from '@/examples/a-guide-to-responsive-images-in-html/es';
+
+Durante los últimos años –por fortuna– se ha visto un auge en la importancia que se le da al *performance* dentro de la web. No se trata sólo de hacer tus **sitios web más rápidos** para la gente que tiene una velocidad baja en sus conexiones. También debemos tomar en cuenta que no todos los dispositivos son de última generación. Las páginas de internet hoy en día son visitadas desde teléfonos celulares, tabletas (incluso lectores de libros digitales), y finalmente laptops y computadoras de escritorio.
+
+Es por eso que se ha tenido la necesidad de traer mejoras a nuestros sitios, con el fin de que sean más fácilmente navegables, accesibles, y *rápidos*.
+
+Una de esas mejoras, son las imágenes responsivas. A continuación publico una **guía rápida para que nuestras imágenes tengan la calidad que necesitamos** para que carguen lo más rápido posible sin que afecten las demás secciones de nuestro sitio.
+
+## TABLA DE **CONTENIDO**
+
+- [INTRODUCCIÓN](#introducción)
+- [FORMATOS DE IMÁGENES](#formatos-de-imágenes)
+- [WEBP (FIGURAS E IMÁGENES REPRESENTATIVAS)](#webp-figuras-e-imágenes-representativas)
+- [CARGA DIFERIDA (*Lazy Loading*)](#carga-diferente-lazy-loading)
+- [IMÁGENES RESPONSIVAS](#imágenes-responsivas)
+  - [SOURCE SET (`srcset`)](#source-set-srcset)
+  - [LA RELACIÓN `srcset` Y `sizes`](#la-relación-srcset-y-sizes)
+  - [EL ELEMENTO `<picture>`](#el-elemento-picture)
+- [CONCLUSIÓN](#conclusión)
+
+## INTRODUCCIÓN
+
+Cuando hablamos de **imágenes responsivas**, no sólo nos referimos a que cambien de tamaño cuando pasamos de teléfonos móviles a ordenadores de escritorio. Si no que también engloba el *como y cuando debemos cargar nuestras imágenes*, así como también el formato más óptimo para mantener una buena relación entre **calidad, y tamaño del archivo**.
+
+## FORMATOS DE **IMÁGENES**
+
+Dependiendo de las necesidades que tengamos para nuestro sitio, debemos escoger el formato que mejor nos convenga. Hoy en día tenemos muchas opciones disponibles, sin embargo también tenemos un consenso general sobre cuales son las más óptimas para usos generales.
+
+### **SVG** (íconos)
+Cuando utilizamos imágenes muy pequeñas –como íconos– lo más conveniente en la mayoría de los casos es utilizar el formato **svg**[^svg]. Ésto nos permitirá incluso incluir el archivo directamente en nuestro código HTML de una manera sencilla y rápida, sin utilizar mucho espacio. Por lo cual generalmente su tamaño es **muy pequeño**, sin embargo, cuando la complejidad del ícono aumenta demasiado generalmente lo mejor es movernos hacia una *imagen rasterizada* en su lugar.
+
+> [!NOTE]
+> La diferencia entre **imagen rasterizada** (webp) e **imagen vectorial** (svg) radica en varios puntos, pero el principal en este artículo es la *intención*.
+> 
+> - Una imagen rasterizada funciona por medio de **pixeles**, que en conjunto crean una imagen bastante detallada sin necesidad de incrementar mucho su tamaño en disco
+> - Una imagen vectorial funciona a través de **formulas matemáticas y formas geométricas**, lo que permite que sean fáciles de redimensionar sin que estas pierdan su calidad
+>
+>Así, una imagen vectorial funciona mejor en *íconos* que podemos utilizar en distintos tamaños sin preocuparnos mucho por el resultado. Mientras que una imagen rasterizada es más útil en *imágenes complejas* de un sólo uso más espécifico.
+
+### **WEBP** (figuras e imágenes representativas)
+En el pasado, cuando necesitabamos mostrar alguna figura[^figure], las opciones más comunes eran ya sea un JPEG[^jpeg], o un PNG[^png]. Si bien ambos formatos tenían sus usos y funcionaron bien en su momento, hoy en día se les considera anticuados y sus ventajas han sido sobrepasadas por otros formatos más eficientes, como el más usado actualmente: **WEBP**.
+
+WEBP es un formato de compresión desarrollado por [Google](https://developers.google.com/speed/webp), soporta compresión con o sin pérdida y fue lanzado en el 2010 como una alternativa a los populares JPEG y PNG.
+
+Las mayores ventajas con respecto a sus competidores son que a diferencia de JPEG, este formato **si soporta transparencia**, por lo cual ya no es necesario cambiar de JPEG a PNG cuando necesitamos que algo esté sobrepuesto. También nos brinda generalmente un **menor tamaño en disco** comparado con PNG debido a que si podemos tener algo de pérdida en la compresión.
+
+> [!IMPORTANT]
+> Además de las ventajas que ofrece sobre JPEG y PNG. Vale la pena mencionar que WebP también soporta animaciones como lo hace un GIF[^gif]. Pero a diferencia del GIF, éste soporta más de 256 colores.
+> Se podría decir que tenemos **lo mejor de cualquier mundo**.
+
+## CARGA **DIFERIDA** (*Lazy Loading*)
+Si bien el tamaño y formato de la imagen ayudan mucho a hacer más eficiente la carga de las imágenes, otra técnica bastante útil es el *lazy loading*, la lógica es la siguiente:
+
+1. El navegador **lee todo el código HTML** de la página, busca **cada una de las etiquetas** –incluidas las imágenes– y después **imprime todo en la página**
+2. Cuando el navegador encuentra etiqueta de imagen, busca el atributo `src`, y hace una petición hacia la dirección de la imagen que **la descarga en la memoria cache del sistema**
+
+Esto significa que en condiciones normales, **el navegador descargará todas las imágenes que encuentre** para poder imprimirlas en pantalla. Esto es un problema por una simple razón: *el usuario aún no sabe si se quedará el tiempo suficiente para verlas*.
+
+Recordemos que, en la mayoría de los casos, una **página de internet será más larga que la pantalla que la muestra**[^1], lo que significa que el usuario inicialmente sólo ve una pequeña parte de la página, hasta el momento que comience a hacer *scroll* y pueda ver las demás partes de ella.
+
+Así que, podemos concluir que en la mayoría de los casos, **no es necesario que el navegador descargue todas las imágenes desde un principio**, cuando podemos en su lugar solicitarlos sólo cuando las necesitamos.
+
+Por fortuna, desde hace varios años, esto es bastante sencillo, basta con agregar el atributo `loading` a nuestra etiqueta de imagen, para especificar que queremos que sea `lazy`.
+
+```html
+<img src="https://picsum.photos/800/600" loading="lazy" />
+```
+
+Esto le dirá al navegador que debe cargar la imagen sólo cuando el usuario **comience a acercarse a ella**, lo que evitará que se descargue una imagen a menos que estemos seguros que el usuario podrá verla.
+
+> [!TIP]
+> Además de `lazy`, también podemos utilizar la directiva `eager`, que le indica al navegador que debe cargar la imagen **lo más rápido posible**. Esto es útil en situaciones donde la imagen se encuentra muy arriba en la pantalla, como en imágenes destacadas.
+> ```html
+> <img src="https://picsum.photos/800/600" loading="eager" />
+> ```
+
+## IMÁGENES **RESPONSIVAS**
+
+Ahora estamos listos para la parte principal de éste artículo, las **imágenes responsivas**. Básicamente, tenemos la posibilidad de utilizar distintos tamaños (o incluso distintas versiones) de una imagen dependiendo del tipo de dispositivo, o del tamaño de dispositivo que el usuario esté utilizando.
+
+La forma más común de conseguir esto es mediante los atributos `srcset` y `sizes` de la etiqueta de imagen, pero en lo personal yo prefiero utilizar la etiqueta `picture`, comencemos por lo básico.
+
+### **SOURCE** SET (`srcset`)
+
+El atributo `srcset` nos permite definir uno o más **candidatos de imagen**, junto con su **set de circunstancias** óptimas para que estas sean utilizadas.
+
+Esto permite que **el navegador escoja la mejor versión de la imagen a utilizar** con base en si las circunstancias para su elección son alcanzadas o no. Junto a esto debemos seleccionar una imagen a ser utilizada por defecto en caso de que ninguna de las circunstancias establecidas sea cumplida.
+
+Las circunstancias pueden ser definidas en dos modalidades, ya sea por un *ancho en pixeles*[^width], o por una *densidad en pixeles*[^density]. Siendo el ancho la versión más utilizada.
+
+> [!NOTE]
+> Cuando utilizamos `srcset`, **es un requisito** utilizar también el atributo `sizes`, este debe contener una **lista de tamaños y circunstancias a utilizar**, el navegador buscará la circunstancia que mejor se adapte al estado actual, tomará nota del tamaño que se define, y buscará en el atributo `srcset` la URL de la imagen correspondiente a ese tamaño, o la imagen que sea más grande que ese tamaño si no encuentra un «match» exacto.
+
+Aquí tenemos un ejemplo de como funciona, suponiendo que tenemos esta etiqueta:
+```html
+<!-- Se aplica formato para facilitar la lectura -->
+<img
+	src="https://picsum.photos/400/225"
+	srcset="https://picsum.photos/400/225 400w,
+			https://picsum.photos/800/450 800w"
+	sizes="(max-width: 700px) 400px,
+		   800px"
+	alt="Imagen Responsiva"
+/>
+```
+
+Nos daría este resultado:
+
+<AlignWide>
+  <SrcsetExample />
+</AlignWide>
+
+> [!CAUTION]
+> Dependiendo de tu pantalla, puede que en realidad estés viendo **la imagen grande** 800px, esto es porque además de el ancho de la pantalla, el navegador toma en cuenta la *densidad de pixeles*, por ejemplo, en mi *retina display* aún en versión móvil, en una ventana de 490px **yo veo la imagen de 800px**. ¿Por qué? porque la densidad de mi pantalla multiplica los pixeles por dos, así que en una ventana de 490 pixeles el navegador espera una imagen de 490x2 = 980px. Por lo que decide que la versión grande de 800px es la más cercana.
+> 
+> Esta es la principal razón por la que yo personalmente no soy muy devoto a esta técnica.
+
+Debido a que el navegador escoge cual es la mejor versión de la imagen **se pierde algo de control**, pero es muy útil si por ejemplo estamos trabajando con algún CMS[^cms] en el que no queremos preocuparnos por seleccionar la mejor imagen cada vez que se crea una página, y en lugar de eso **queremos una solución más genérica que cubra muchas bases**.
+### LA **RELACIÓN** `srcset` y `sizes`
+Una forma sencilla de ver como es que relacionan los atributos `srcset` y `sizes` es imaginándolos como una lista, donde un atributo hace referencia a los contenidos del otro, si tomamos nuestro ejemplo anterior:
+
+```html
+<!-- Se aplica formato para facilitar la lectura -->
+<img
+	srcset="https://picsum.photos/400/225 400w,
+			https://picsum.photos/800/450 800w"
+	sizes="(max-width: 700px) 400px,
+		   800px"
+/>
+```
+
+| Source                        | Ancho reportado | Sizes                    |
+| ----------------------------- | --------------- | ------------------------ |
+| https://picsum.photos/400/225 | 400w            | (max-width: 700px) 400px |
+| https://picsum.photos/800/450 | 800w            | 800px                    |
+* El **ancho reportado** somos nosotros diciéndole al navegador que independientemente de la imagen, nosotros la tratamos como si tuviera este ancho, esto nos ayuda a utilizar imágenes un poco más grandes para mantener la calidad.
+* Sizes se compone de un *media query* (opcional) y el **ancho que esta imagen debe mostrar en el navegador**. En este ejemplo decimos que *hasta un ancho del dispositivo de 700px*, nuestra imagen va a mostrarse a un **máximo** de 400px;
+* El source es únicamente la dirección donde nuestra imagen está alojada
+
+Con estos datos el navegador decide **cual de las imágenes reportadas funcionará mejor para el ancho máximo en el que será utilizada**.
+
+> [!TIP]
+> Toma en cuenta que el ancho reportado **no necesariamente debe ser el ancho real de la imagen**, así, podemos "mentirle" un poco al navegador para mejorar nuestras imagenes, nada nos impide hacer algo como esto:
+> 
+> ```html
+> <!-- Se aplica formato para facilitar la lectura -->
+> <img
+>   srcset="https://picsum.photos/400/225 600w,
+>           https://picsum.photos/800/450 1000w"
+>   sizes="(max-width: 700px) 400px,
+>          800px"
+> />
+> ```
+
+### EL **ELEMENTO** `<picture>`
+
+Ahora que vimos la forma genérica de utilizar imágenes responsivas, podemos comenzar con mi forma preferida de utilizaras, y la que yo creo brinda **más control sobre nuestro sitio**, el elemento `<picture>`.
+
+A diferencia de `srcset` y `sizes`, `<picture>` funciona más como un contenedor de nuestro elemento `<img>`. Cuando usamos `<picture>`, el navegador no *elige* la mejor imagen a utilizar, en lugar de eso, se limita a obedecer las indicaciones que nosotros le brindamos. Es por esto que no es tan genérico como el ejemplo anterior, pero si más sencillo de utilizar:
+
+```html
+<picture>
+	<source srcset="https://picsum.photos/800/450" media="(min-width: 700px)" />
+	<img src="https://picsum.photos/400/225" alt="Imagen Responsiva" />
+</picture>
+```
+
+Esto nos daría un resultado como:
+
+<AlignWide>
+  <PictureExample />
+</AlignWide>
+
+En este caso, especificamos que si nuestra pantalla es de al menos 700px entonces debemos mostrar la imagen asignama al atributo `srcset` del elemento `<source>`. El navegador simplemente tomará esta indicación y mostrará la imagen, sin tener que tomar desciciones por su cuenta.
+
+> [!NOTE]
+> El atributo `media` soporta cualquier *media query*, ya sea de dispositivo, tamaño de *viewport*, o incluso de contenedor. por ejemplo:
+> ```html
+> <source srcset="https://picsum.photos/225/400" media="(orientation: portrait)" />
+> ```
+
+## CONCLUSIÓN
+En un mundo donde nuestras páginas de internet pueden ser visualizadas en prácticamente cualquier tipo de dispositivo, y con tantas opciones a nuestro alcance, no olvidemos que también debemos procurar que nuestros usuarios 
+
+[^svg]::
+    *Scalable Vector Graphics* (Gráficos vectoriales escalables) 
+[^figure]::
+	Una imagen, ilustración, un gráfico, que tiene una referencia en el documento principal, pero que también es descriptivo por si mismo
+[^jpeg]:
+	*Joint Photographic Experts Group*, un algoritmo de compresión con pérdida, conocido por no soportar el canal *alfa* (transparencia)
+[^png]:
+	_Portable Network Graphics_, formato de compresión **sin pérdida**. Lo que incrementa enormemente su tamaño, pero mantiene calidad
+[^gif]:
+	*Graphics Interchange Format* formato de imágenes que soporta multiples imágenes en un sólo archivo, lo que brindaba una semejanza al video en tiempos donde los reproductores no eran comunes en las páginas de internet
+[^1]:
+	Con pocas excepciones, o si el usuario ve una página muy pequeña en una tableta en formato vertical
+[^width]:
+	*Pixel width*, se refiere al ancho que el navegador necesita para imprimir la imagen con base en el tamaño del dispositivo que se está utilizando
+[^density]:
+	*Pixel density*, se refiere a la densidad de pixeles de la pantalla. En el pasado, la mayoría de las pantallas contaban con una densidad de *96ppi* (pixeles por pulgada). Esto cambió en los 2000s con dispositivos como el **retina display** que utiliza una densidad de *192ppi* –el doble– por lo que se comenzó a decir que poseian una densidad de "2x" (*two times*, "dos veces", o "el doble")
+[^cms]:
+	*Content Management System*, como puede ser WordPress, Drupal, Ghost, etc.
