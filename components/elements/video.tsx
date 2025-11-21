@@ -1,4 +1,4 @@
-export function Video(props: { children?: React.ReactNode; src: string }) {
+export function Video(props: any) {
   const { children, src } = props;
 
   return (
