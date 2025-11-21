@@ -12,4 +12,3 @@ export function Video(props: { children?: React.ReactNode; src: string }) {
     </video>
   );
 }
- 
