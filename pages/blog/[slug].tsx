@@ -85,13 +85,19 @@ export default function PostPage({
           ],
         }}
       />
-      <header className='mb-20 flex max-w-screen-sm flex-col gap-6 px-4 text-xl/9 md:mx-auto md:items-center lg:mx-auto lg:mb-16 lg:max-w-screen-lg'>
+      <header
+        className={clsx(
+          'mx-auto mb-20 flex max-w-screen-sm flex-col gap-6 px-4 text-xl/9',
+          'md:items-center',
+          'lg:mx-auto lg:mb-16 lg:max-w-screen-lg'
+        )}
+      >
         <H1>{title}</H1>
 
         <BlogMeta
           publishedOn={publishedOn}
           updatedOn={updatedOn}
-          readingTime={readingTime / 60}
+          readingTime={Math.ceil(readingTime / 60)}
           locale={locale}
         />
       </header>
