@@ -1,7 +1,7 @@
 ---
 title: Introducción a la Interactivity API de WordPress
-publishedOn: '2025-12-19'
-updatedOn: '2025-12-19T23:12:58.641Z'
+publishedOn: '2025-12-23'
+updatedOn: '2025-12-23T20:01:18.138Z'
 description: >-
   Una breve introducción a la Interactivity API de WordPress, crearemos un
   bloque muy simple utilizando las nuevas herramientas disponibles.
@@ -10,17 +10,16 @@ readingTime: 240
 ---
 La *Interactivity API*[^1] de WordPress fue lanzada en la versión 6.5[^2], y proporciona un **método para poder agregar interacciones en el Frontend de nuestros bloques**, en éste breve tutorial, crearemos un bloque muy simple utilizando estas herramientas de mostrando el proceso paso a paso.
 
-## Pre-requisitos
+## **PRE-REQUISITOS**
 * WordPress 6.5 o superior
 * Soporte para Node.js y npm
-## ¿QUÉ CONTRUIREMOS?
+## ¿QUÉ **CONTRUIREMOS**?
 
-Para este bloque simplemente construiremos una pantalla de notificaciones de chat, buscará a un usuario al azar de la base de datos y nos mostrará un recuadro con una ventana de texto (también al azar).
-
-## PASO 1: LA BASE DEL BLOQUE
+Para este bloque simplemente construiremos una **pantalla de notificaciones de chat**, simplemente nos mostrará un recuadro con una ventana de texto.
+## PASO 1: **LA BASE DEL BLOQUE**
 Comenzaremos con la **creación básica del bloque**, no voy a profundizar mucho en este tema porque realmente no es el punto de este tutorial, pero para hacer las cosas más sencillas utilizaré la [herramienta oficial de WordPress](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) `@wordpress/create-block`:
 
-Simplemente necesitamos ejecutar estos comandos (`slug` es el nombre del directorio donde se creará el plugin).
+Simplemente necesitamos ejecutar estos comandos (`mah-interactivity-block` es el nombre del directorio donde se creará el plugin).
 
 ```bash
 npx @wordpress/create-block@latest mah-interactivity-block --wp-env --template @wordpress/create-block-interactive-template
@@ -43,8 +42,7 @@ npm start
 > [!TIP]
 > La bandera `--template` nos permite definir una base a utilizar para el nuevo bloque, y utilizamos el template `@wordpress/create-block-interactive-template` para hacer las cosas más rápido.
 
-
-Una vez instalado podemos buscar en el archivo `block.json` los attributos importantes, en este caso:
+Una vez instalado podemos buscar en el archivo `block.json` los atributos importantes, en este caso:
 
 ```json
 // block.json
@@ -57,7 +55,7 @@ Una vez instalado podemos buscar en el archivo `block.json` los attributos impor
 }
 ```
 
-Esto le dice a WordPress que vamos a utilizar la API en este bloque, ahora estamos listos para comenzar. Así que iniciamos el comando para poder empezar a trabajar en nuestro bloque.
+Esto le dice a WordPress que **vamos a utilizar la API en este bloque**, ahora estamos listos para comenzar. Así que iniciamos el comando para poder empezar a trabajar en nuestro bloque.
 
 ```bash
 npm run start
@@ -83,11 +81,6 @@ import { store } from '@wordpress/interactivity';
 const BLOCK_NAME = 'mah/interactivity-api'
 
 const { state } = store( BLOCK_NAME, {
-	// Creamos el estado inicial.
-	state: {
-		isOpen: false,
-	},  
-
 	actions: {
 		// Acción para alternar el estado de la ventana entre abierto y cerrado.
 		toggleOpen() {
@@ -97,13 +90,18 @@ const { state } = store( BLOCK_NAME, {
 } );
 ```
 
-## PASO 3: CREAR EL MARKUP DE NUESTRO BLOQUE
+## PASO 3: CREAR EL **MARKUP** DE NUESTRO BLOQUE
 
-Lo que sigue es crear las etiquetas necesarias en nuestro bloque. Como por ahora sólo debemos abrir y cerrar la ventana, esta será una tarea sencilla, simplemente creamos un contenedor con su *header* y algo de texto de muestra:
+Lo que sigue es **crear las etiquetas necesarias en nuestro bloque**. Como por ahora sólo debemos abrir y cerrar la ventana, esta será una tarea sencilla, simplemente creamos un contenedor con su *header* y algo de texto de muestra:
 
 ```php
 <?php
 // file://render.php
+// Definimos el state.
+wp_interactivity_state( 'mah/interactivity-api', [
+	'isOpen' => false,
+] );
+
 // Cremos un ID único para el botón.
 $unique_id = wp_unique_id( 'mah-' );
 ?>
@@ -156,15 +154,40 @@ $unique_id = wp_unique_id( 'mah-' );
 }
 ```
 
+> [!NOTE]
+> La función `wp_interactivity_state`[^3] es la forma en PHP que se utiliza para crear el state, esto sería el equivalente a esto en JS:
+> 
+> ```js
+> const { state } = store( BLOCK_NAME, {
+> 	state: {
+> 		isOpen: false,
+> 	},
+> 	
+>	actions: {
+>		// Acción para alternar el estado de la ventana entre abierto y cerrado.
+>		toggleOpen() {
+>			state.isOpen = ! state.isOpen;
+>		}
+>	}
+>} );
+> ```
+> 
+> Es recomendable iniciarlo en PHP cuando sea posible (cuando utilicemos le archivo `render.php`) porque así nos aseguramos que **se ejecute antes que cualquier código en JS**, pero funciona de ambas formas.
+
 Si agregamos nuestro bloque en un post, veremos algo como esto en el frontend:
 
 ![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1766184002/Zight_2025-12-19_at_4.36.10_p.m._v5patb.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1766184002/Zight_2025-12-19_at_4.36.10_p.m._v5patb.png)
 
-Por ahora sólo tenemos el bloque, aún no está ligado a nuestro código, así que para ello, debemos agregar algunos atributos `data-` al nuestro HTML:
+Por ahora sólo tenemos el bloque, **aún no está ligado a nuestro código**, así que para ello, debemos agregar algunos atributos `data-` al nuestro HTML:
 
 ```php
 <?php
 // file://render.php
+// Definimos el state.
+wp_interactivity_state( 'mah/interactivity-api', [
+	'isOpen' => false,
+] );
+
 // Cremos un ID único para el botón.
 $unique_id = wp_unique_id( 'mah-' );
 ?>
@@ -193,9 +216,220 @@ $unique_id = wp_unique_id( 'mah-' );
 </div>
 ```
 
-Y ahora si recarcamos nuestro bloque, podremos ver nuestra acción en funcionamiento:
+Y ahora si recargamos nuestro bloque, podremos ver nuestra acción en funcionamiento:
 
 ![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1766185805/Zight_Recording_2025-12-19_at_05.09.43_p.m._cdvaby.gif](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1766185805/Zight_Recording_2025-12-19_at_05.09.43_p.m._cdvaby.gif)
 
+> [!NOTE]
+> Las directivas que estamos utilizando son las siguientes:
+> 
+> * `data-wp-interactive`: es la principal, le dice a WP que habilitaremos la API en este elemento y todos sus hijos.
+> * `data-wp-class`: indica que dependiendo de la orden, se activará o quitará la clase que coloquemos después del doble guión—en este caso `.is-open`.
+> * `data-wp-on`: especifica el evento (y la función) a ejecutar, en este caso ejecutamos la función `toggleIsOpen` dentro de `actions` cuando el evento `click` se ejecute.
+
+## PASO 4: **RECIBIR** UN MENSAJE
+
+Ahora que podemos abrir y cerrar nuestro chat, **¿qué tal si imitamos la recepción de un mensaje?** Para esto simplemente crearemos un *intervalo*[^4] que envíe un mensaje después de cierto tiempo, y prepararemos nuestro código para la recepción del mensaje y la notificación.
+
+Lo primero que hacer es agregar un nuevo espacio en nuestro `state`, a este lo llamaremos `messages`, entonces modificamos el código así:
+
+```php
+// file://render.php
+
+// Definimos el state.
+wp_interactivity_state( 'mah/interactivity-api', [
+	'isOpen' => false,
+	'messages' => [
+		[
+			'user'      => 'John Doe',
+			'content'   => 'Duis neque turpis, bibendum sit.',
+			'timestamp' => get_the_time( 'T' ),
+		],
+	],
+] );
+
+// Cremos un ID único para el botón.
+$unique_id = wp_unique_id( 'mah-' );
+?>
+
+<div
+	<?php echo get_block_wrapper_attributes(); ?>
+	data-wp-interactive="mah/interactivity-api"
+	<?php // Indicamos que función debe correr en window.load. ?>
+	data-wp-on-window--load="actions.initMessagingTimer"
+>
+	<button
+		class="chat-toggle-button"
+		id="button-<?php echo esc_attr( $unique_id ); ?>"
+		data-wp-on--click="actions.toggleOpen"
+	>
+		<?php esc_html_e( 'Chat', 'mah-interactivity-block' ); ?>
+
+		<?php // Modifica el contenido de texto con `newMessagesCount`. ?>
+		<span class="chat-notification-dot" data-wp-text="state.newMessagesCount"></span>
+	</button>
+
+	<div
+		class="chat-window"
+		data-wp-class--is-open="state.isOpen"
+	>
+		<div class="chat-content">
+			<p><?php esc_html_e( '¡Bienvenido al chat!', 'mah-interactivity-block' ); ?></p>
+		</div>
+	</div>
+</div>
+
+```
+
+```js
+// file://view.js
+/**
+ * WordPress dependencies
+ */
+import { store } from '@wordpress/interactivity';
+
+const BLOCK_NAME = 'mah/interactivity-api'
+
+const { state } = store( BLOCK_NAME, {
+	state: {
+		// Nuevo objeto en el state, únicamente lee la cuenta de mensajes.
+		get newMessagesCount() {
+			return state.messages.length;
+		}
+	},
+
+	actions: {
+		// Acción para alternar el estado de la ventana entre abierto y cerrado. 
+		toggleOpen() {
+			state.isOpen = ! state.isOpen;
+		},
+
+		// Acción para crear un timer que agregue un mensaje cada minuto.
+		initMessagingTimer() {
+			// Si ya existe el intervalo no hagamos nada.
+			if ( state.messagingTimer ) {
+				return;
+			}
+
+			state.messagingTimer = setInterval( () => {
+			
+				const user = 'John Doe';
+				const content = 'Duis neque turpis, bibendum sit.';
+				const timestamp = new Date().toISOString();
+
+				state.messages.push( { user, content, timestamp } );
+			}, 60000 );
+		},
+	},
+} );
+
+```
+
+Y ahora podemos ver algo como esto en nuestro bloque:
+
+![https://res.cloudinary.com/dyfxhbbnf/image/upload/v1766440968/Zight_2025-12-22_at_4.02.28_p.m._oir3j1.png](https://res.cloudinary.com/dyfxhbbnf/image/upload/v1766440968/Zight_2025-12-22_at_4.02.28_p.m._oir3j1.png)
+
+Y si esperamos por lo menos un minuto, ¡veremos como la cuenta aumenta! Esto es porque indicamos que **cada minuto, un nuevo mensaje se agregue** a nuestro `state`. Ahora es tiempo de mostrarlos:
+
+```php
+// file://render.php
+
+<?php
+// Definimos el state.
+wp_interactivity_state( 'mah/interactivity-api', [
+	'isOpen' => false,
+	'messages' => [
+		[
+			'user'      => 'John Doe',
+			'content'   => 'Duis neque turpis, bibendum sit.',
+			'timestamp' => get_the_time( 'T' ),
+		],
+	],
+] );
+
+// Cremos un ID único para el botón.
+$unique_id = wp_unique_id( 'mah-' );
+?>
+
+<div
+	<?php echo get_block_wrapper_attributes(); ?>
+	data-wp-interactive="mah/interactivity-api"
+	data-wp-on-window--load="actions.initMessagingTimer"
+>
+	<button
+		class="chat-toggle-button"
+		id="button-<?php echo esc_attr( $unique_id ); ?>"
+		data-wp-on--click="actions.toggleOpen"
+	>
+		<?php esc_html_e( 'Chat', 'mah-interactivity-block' ); ?>
+
+		<span class="chat-notification-dot" data-wp-text="state.newMessagesCount"></span>
+	</button>
+
+	<div
+		class="chat-window"
+		data-wp-class--is-open="state.isOpen"
+	>
+		<div class="chat-content">
+			<?php // Agregamos un template para mostrar todos los mensajes disponibles. ?>
+			<ul class="chat-messages" data-wp-context="state.messages">
+				<template data-wp-each="state.messages">
+					<li class="chat-message">
+						<strong data-wp-text="context.item.user"></strong>: <span data-wp-text="context.item.content"></span>
+					</li>
+				</template>
+		</div>
+	</div>
+</div>
+
+```
+
+> [!NOTE]
+> La forma en que mostramos la lista es gracias a la directiva `wp-each`, esta, acompañada del contexto que damos—`wp-context`— nos permite **pasar datos que serán utilizados sólo en este elemento y sus hijos**, automáticamente pasan con la variable `item`, así que simplemente debemos leer sus propiedades.
+
+```scss
+// file://style.scss
+
+.chat-messages {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	.chat-message {
+		background-color: aqua;
+		border: 1px solid darkcyan;
+		border-radius: 0.5rem;
+		inline-size: fit-content;
+		margin-block-end: 0.5rem;
+		padding: 0.5rem;
+
+		&:nth-child(2n) {
+			align-self: flex-end;
+			background-color: gray;
+			border-color: lightgray;
+			color: white;
+		}
+	}
+}
+```
+
+Ahora con esto hemos terminado, si recargamos nuestra página podemos ver **una conversación en tiempo real** (mas o menos):
+
+https://res.cloudinary.com/dyfxhbbnf/video/upload/v1766443068/Zight_Recording_2025-12-22_at_04.36.28_p.m._utwmhb.mp4
+
+## **CONCLUSIÓN**
+
+Como podemos ver, no es muy complicado utilizar la Interactivity API en WordPress, pero si es algo más que aprender. Tenemos la ventaja de que **ha sido escrita para trabajar en el frontend**, lo que a mi parecer, siempre ha sido un punto débil al trabajar en WordPress. Pero con esto, estamos un paso más cerca de lograr una buena integración entre el editor de bloques y el frontend de nuestro sitio.
+
+## LEER **MÁS**…
+
+* [API Reference](https://developer.wordpress.org/block-editor/reference-guides/interactivity-api/api-reference)
+* [A first look at the Interactivity API](https://developer.wordpress.org/news/2024/04/a-first-look-at-the-interactivity-api/)
+* [Interactivity API Reference](https://developer.wordpress.org/block-editor/reference-guides/interactivity-api/)
+
 [^1]: API de interactividad en español
 [^2]: La versión 6.5 fue lanzada el [3 de Abril de 2024](https://wordpress.org/documentation/wordpress-version/version-6-5/)
+[^3]: [Documentación de `wp_interactivity_state`](https://developer.wordpress.org/reference/functions/wp_interactivity_state/)
+[^4]: [`setInterval` en mdn](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval)
