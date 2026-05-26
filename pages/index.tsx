@@ -20,15 +20,14 @@ import BlogSlider from '@/components/blog/slider';
 import ContactCTA from '@/components/contact/cta';
 import { getPosts } from '@/lib/posts';
 import { SITE_URL } from '@/lib/data';
+import type { PostItem } from '@/types/post';
 
 export default function Home({
   locale,
   posts,
 }: {
   locale: string;
-  posts: {
-    [key: string]: any;
-  };
+  posts: PostItem[];
 }) {
   const { t } = useTranslation('home');
 
