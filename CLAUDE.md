@@ -20,6 +20,21 @@ Run a single Playwright test file:
 pnpm test tests/<file>.spec.ts
 ```
 
+## Best Practices
+
+All code must conform to the Prettier configuration in `.prettierrc.json`. Run
+`pnpm format` to check and `pnpm format:fix` to auto-correct before committing.
+Write code that already satisfies these rules to avoid needing repeated fix runs:
+
+- **Trailing commas**: Add trailing commas wherever ES5 allows (objects, arrays,
+  function parameters).
+- **Semicolons**: Always end statements with a semicolon.
+- **Indentation**: Use 2 spaces (no tabs).
+- **Quotes**: Use single quotes in JS/TS (`'value'`). Use single quotes in JSX
+  attributes (`prop='value'`).
+- **Tailwind class order**: Classes are sorted automatically by
+  `prettier-plugin-tailwindcss`; do not manually reorder them.
+
 ## Architecture
 
 This is a **Next.js 15** personal portfolio and blog, using the Pages Router (not App Router). TypeScript, Tailwind CSS, and `pnpm` are standard throughout.
