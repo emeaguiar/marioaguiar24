@@ -16,6 +16,7 @@ import FacebookIcon from '@/components/social/icons/facebook';
 import InstagramIcon from '@/components/social/icons/instagram';
 import LinkedInIcon from '@/components/social/icons/linkedin';
 import TwitterIcon from '@/components/social/icons/twitter';
+import YoutubeIcon from '@/components/social/icons/youtube';
 
 const SOCIAL_LINKS = [
   {
@@ -37,6 +38,11 @@ const SOCIAL_LINKS = [
     href: 'https://www.linkedin.com/in/marioaguiar/',
     icon: <LinkedInIcon />,
     label: 'Linkedin',
+  },
+  {
+    href: 'https://www.youtube.com/@emeaguiar',
+    icon: <YoutubeIcon />,
+    label: 'Youtube',
   },
 ];
 
