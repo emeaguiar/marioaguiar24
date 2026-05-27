@@ -23,5 +23,6 @@
   "conferences": "Conferencias",
   "send": "Enviar",
   "readMoreAbout": "Leer más sobre \"{{title}}\"",
-  "copyToClipboard": "Copiar al portapapeles"
+  "copyToClipboard": "Copiar al portapapeles",
+  "changeLanguage": "Cambiar idioma"
 }

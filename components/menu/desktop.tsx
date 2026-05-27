@@ -13,6 +13,7 @@ import Link from 'next/link';
  */
 import { MENU_ITEMS } from '@/lib/data';
 import DarkModeToggle from '@/components/dark-mode-toggle';
+import LanguageToggle from '@/components/language-toggle';
 import { WithUnderline } from '@/components/elements';
 import ContactCTA from '@/components/contact/cta';
 
@@ -33,6 +34,10 @@ export default function DesktopMenu() {
         <MenuItem>
           <ContactCTA />
         </MenuItem>
+
+        <li>
+          <LanguageToggle />
+        </li>
 
         <li>
           <DarkModeToggle />

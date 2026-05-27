@@ -19,6 +19,7 @@ import { usePathname } from 'next/navigation';
  */
 import { MENU_ITEMS } from '@/lib/data';
 import DarkModeToggle from '@/components/dark-mode-toggle';
+import LanguageToggle from '@/components/language-toggle';
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,8 @@ export default function MobileMenu() {
 
   return (
     <>
-      <DarkModeToggle className='ml-auto mr-8 md:hidden' />
+      <LanguageToggle className='ml-auto mr-4 md:hidden' />
+      <DarkModeToggle className='mr-8 md:hidden' />
 
       <button className='md:hidden' onClick={() => setIsOpen(true)}>
         <Bars3Icon className='h-6 w-6' />
