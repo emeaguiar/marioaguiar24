@@ -35,15 +35,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development server at localhost:3000 |
-| `pnpm build` | Production build |
-| `pnpm start` | Run production server |
-| `pnpm lint` | Run ESLint |
-| `pnpm format` | Check Prettier formatting |
-| `pnpm format:fix` | Fix Prettier formatting |
-| `pnpm test` | Run all Playwright E2E tests |
+| Command           | Description                                |
+| ----------------- | ------------------------------------------ |
+| `pnpm dev`        | Start development server at localhost:3000 |
+| `pnpm build`      | Production build                           |
+| `pnpm start`      | Run production server                      |
+| `pnpm lint`       | Run ESLint                                 |
+| `pnpm format`     | Check Prettier formatting                  |
+| `pnpm format:fix` | Fix Prettier formatting                    |
+| `pnpm test`       | Run all Playwright E2E tests               |
 
 Run a single test file:
 
@@ -53,12 +53,12 @@ pnpm test tests/<file>.spec.ts
 
 ## Environment Variables
 
-| Variable | Purpose |
-|----------|---------|
-| `MAILGUN_API_KEY` | Mailgun API key for contact form |
-| `MAILGUN_DOMAIN` | Mailgun domain |
+| Variable                       | Purpose                            |
+| ------------------------------ | ---------------------------------- |
+| `MAILGUN_API_KEY`              | Mailgun API key for contact form   |
+| `MAILGUN_DOMAIN`               | Mailgun domain                     |
 | `NEXT_PUBLIC_DISQUS_SHORTNAME` | Disqus shortname for blog comments |
-| `NEXT_PUBLIC_ANALYTICS_ID` | Google Analytics measurement ID |
+| `NEXT_PUBLIC_ANALYTICS_ID`     | Google Analytics measurement ID    |
 
 ## Project Structure
 
@@ -89,9 +89,9 @@ Posts are MDX files located in `lib/_posts/{es,en}/`. Each file requires YAML fr
 
 ```yaml
 ---
-title: "Post title"
-publishedOn: "2024-01-15"
-description: "Short description for listings and SEO"
+title: 'Post title'
+publishedOn: '2024-01-15'
+description: 'Short description for listings and SEO'
 readingTime: 5
 published: true
 ---

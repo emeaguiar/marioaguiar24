@@ -6,4 +6,4 @@ export interface PostItem {
   publishedOn: string;
   updatedOn: string;
   published: boolean;
-};
+}

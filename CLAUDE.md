@@ -15,13 +15,14 @@ pnpm test         # Run all Playwright E2E tests
 ```
 
 Run a single Playwright test file:
+
 ```bash
 pnpm test tests/<file>.spec.ts
 ```
 
 ## Architecture
 
-This is a **Next.js 14** personal portfolio and blog, using the Pages Router (not App Router). TypeScript, Tailwind CSS, and `pnpm` are standard throughout.
+This is a **Next.js 15** personal portfolio and blog, using the Pages Router (not App Router). TypeScript, Tailwind CSS, and `pnpm` are standard throughout.
 
 ### Internationalization
 
@@ -48,12 +49,12 @@ Tailwind CSS with CSS custom properties for theming (see `globals.css` for `--fo
 
 ### External Services
 
-| Service | Purpose | Config |
-|---------|---------|--------|
-| Cloudinary | Image optimization | `next.config.js` image domains |
-| Mailgun | Contact form email | `MAILGUN_*` env vars |
-| Disqus | Blog comments | `NEXT_PUBLIC_DISQUS_*` env vars |
-| Google Analytics | Analytics | `NEXT_PUBLIC_ANALYTICS_ID` env var |
+| Service          | Purpose            | Config                             |
+| ---------------- | ------------------ | ---------------------------------- |
+| Cloudinary       | Image optimization | `next.config.js` image domains     |
+| Mailgun          | Contact form email | `MAILGUN_*` env vars               |
+| Disqus           | Blog comments      | `NEXT_PUBLIC_DISQUS_*` env vars    |
+| Google Analytics | Analytics          | `NEXT_PUBLIC_ANALYTICS_ID` env var |
 
 ### Key Config Files
 
