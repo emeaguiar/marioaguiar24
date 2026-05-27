@@ -1,40 +1,108 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mario Aguiar — Personal Portfolio & Blog
+
+A bilingual (Spanish/English) personal portfolio and blog built with Next.js 14.
+
+## Tech Stack
+
+- **Next.js 14** (Pages Router) · TypeScript · Tailwind CSS
+- **next-translate** — i18n (Spanish default, English alternative)
+- **mdx-bundler** + **gray-matter** — MDX blog posts with YAML frontmatter
+- **next-themes** — dark mode
+- **next-seo** — SEO meta tags
+- **Playwright** — E2E tests
+- **pnpm** — package manager
+- Cloudinary (image optimization) · Mailgun (contact form) · Disqus (comments)
 
 ## Getting Started
 
-First, run the development server:
+**1. Install dependencies**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**2. Set up environment variables**
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env` (or create `.env`) and fill in the required values (see [Environment Variables](#environment-variables)).
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+**3. Start the development server**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+## Commands
 
-To learn more about Next.js, take a look at the following resources:
+| Command           | Description                                |
+| ----------------- | ------------------------------------------ |
+| `pnpm dev`        | Start development server at localhost:3000 |
+| `pnpm build`      | Production build                           |
+| `pnpm start`      | Run production server                      |
+| `pnpm lint`       | Run ESLint                                 |
+| `pnpm format`     | Check Prettier formatting                  |
+| `pnpm format:fix` | Fix Prettier formatting                    |
+| `pnpm test`       | Run all Playwright E2E tests               |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run a single test file:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+pnpm test tests/<file>.spec.ts
+```
 
-## Deploy on Vercel
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Variable                       | Purpose                            |
+| ------------------------------ | ---------------------------------- |
+| `MAILGUN_API_KEY`              | Mailgun API key for contact form   |
+| `MAILGUN_DOMAIN`               | Mailgun domain                     |
+| `NEXT_PUBLIC_DISQUS_SHORTNAME` | Disqus shortname for blog comments |
+| `NEXT_PUBLIC_ANALYTICS_ID`     | Google Analytics measurement ID    |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Project Structure
+
+```
+pages/                  # Next.js routes
+  index.tsx             # Home page
+  blog/[slug].tsx       # Individual blog post
+  conferences.tsx       # Conferences page
+  api/                  # API routes (contact form, OG image, sitemap)
+components/
+  elements/             # Thin semantic wrappers (A, P, H1–H4, Pre, etc.)
+  blog/                 # Blog-specific components
+  ...                   # Layout, header, footer, dark mode toggle, etc.
+lib/
+  posts.ts              # Blog post file system reading, frontmatter parsing, MDX bundling
+  _posts/
+    es/                 # Spanish MDX blog posts
+    en/                 # English MDX blog posts
+locales/
+  es/                   # Spanish UI translation strings
+  en/                   # English UI translation strings
+public/                 # Static assets
+```
+
+## Blog Posts
+
+Posts are MDX files located in `lib/_posts/{es,en}/`. Each file requires YAML frontmatter:
+
+```yaml
+---
+title: 'Post title'
+publishedOn: '2024-01-15'
+description: 'Short description for listings and SEO'
+readingTime: 5
+published: true
+---
+```
+
+Set `published: false` to hide a post without deleting it.
+
+## Internationalization
+
+Spanish (`es`) is the default locale; English (`en`) is the alternative. The locale is determined by the URL prefix (`/en/...` for English, no prefix for Spanish).
+
+- UI strings: `/locales/{en,es}/`
+- Blog posts: `/lib/_posts/{en,es}/` — separate MDX files per locale
+- Configuration: `i18n.js`

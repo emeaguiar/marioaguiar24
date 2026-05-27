@@ -16,19 +16,18 @@ import Image from 'next/image';
  */
 import styles from '@/styles/home.module.css';
 import { H2 } from '@/components/elements';
-import BlogCards from '@/components/blog/cards';
+import BlogSlider from '@/components/blog/slider';
 import ContactCTA from '@/components/contact/cta';
 import { getPosts } from '@/lib/posts';
 import { SITE_URL } from '@/lib/data';
+import type { PostItem } from '@/types/post';
 
 export default function Home({
   locale,
   posts,
 }: {
   locale: string;
-  posts: {
-    [key: string]: any;
-  };
+  posts: PostItem[];
 }) {
   const { t } = useTranslation('home');
 
@@ -118,7 +117,7 @@ export default function Home({
           />
         </H2>
 
-        <BlogCards posts={posts} />
+        <BlogSlider posts={posts} />
       </div>
 
       <div
@@ -155,7 +154,7 @@ export default function Home({
 }
 
 export async function getStaticProps({ locale }: { locale: 'es' | 'en' }) {
-  const posts = getPosts(locale, 3);
+  const posts = getPosts(locale, 9);
 
   return {
     props: {

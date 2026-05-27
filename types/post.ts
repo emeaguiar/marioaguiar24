@@ -1,4 +1,4 @@
-export type PostItem = {
+export interface PostItem {
   title: string;
   slug: string;
   description: string;
@@ -6,4 +6,4 @@ export type PostItem = {
   publishedOn: string;
   updatedOn: string;
   published: boolean;
-};
+}

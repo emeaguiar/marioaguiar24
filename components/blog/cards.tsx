@@ -28,7 +28,7 @@ export default function Cards({ posts }: { [key: string]: any }) {
   );
 }
 
-function Card({ post }: { post: PostItem }) {
+export function Card({ post }: { post: PostItem }) {
   const { t } = useTranslation('common');
 
   return (

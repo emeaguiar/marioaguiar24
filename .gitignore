@@ -44,3 +44,9 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Plans
+.plans/
+
+# Claude
+.claude/settings.local.json
