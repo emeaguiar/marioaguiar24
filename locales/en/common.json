@@ -22,5 +22,6 @@
   "conferences": "Conferences",
   "send": "Send",
   "readMoreAbout": "Read more about \"{{title}}\"",
-  "copyToClipboard": "Copy to clipboard"
+  "copyToClipboard": "Copy to clipboard",
+  "changeLanguage": "Change language"
 }

@@ -10,7 +10,7 @@ When a locale label is clicked, Next.js replaces the locale prefix in the URL (a
 
 ## Files to Create
 
-### `/components/language-toggle.tsx` *(new)*
+### `/components/language-toggle.tsx` _(new)_
 
 A `'use client'` component. Uses `useRouter()` from `next/router` for `locale` and `asPath`, and `useTranslation('common')` for the aria-label.
 
@@ -37,22 +37,39 @@ export default function LanguageToggle({ className }: { className?: string }) {
   return (
     <nav
       aria-label={t('changeLanguage')}
-      className={clsx('flex items-center gap-1 text-sm font-bold uppercase', className)}
+      className={clsx(
+        'flex items-center gap-1 text-sm font-bold uppercase',
+        className
+      )}
     >
       {isEs ? (
-        <span className='text-primary' aria-current='true'>ES</span>
+        <span className='text-primary' aria-current='true'>
+          ES
+        </span>
       ) : (
-        <Link href={asPath} locale='es' className='text-foreground/50 transition-colors hover:text-primary'>
+        <Link
+          href={asPath}
+          locale='es'
+          className='text-foreground/50 transition-colors hover:text-primary'
+        >
           ES
         </Link>
       )}
 
-      <span aria-hidden='true' className='text-foreground/30'>|</span>
+      <span aria-hidden='true' className='text-foreground/30'>
+        |
+      </span>
 
       {!isEs ? (
-        <span className='text-primary' aria-current='true'>EN</span>
+        <span className='text-primary' aria-current='true'>
+          EN
+        </span>
       ) : (
-        <Link href={asPath} locale='en' className='text-foreground/50 transition-colors hover:text-primary'>
+        <Link
+          href={asPath}
+          locale='en'
+          className='text-foreground/50 transition-colors hover:text-primary'
+        >
           EN
         </Link>
       )}
@@ -62,6 +79,7 @@ export default function LanguageToggle({ className }: { className?: string }) {
 ```
 
 **Design notes:**
+
 - Active locale → `<span aria-current="true">` in `text-primary` (not a link — avoids self-referential navigation)
 - Inactive locale → `<Link locale="es|en">` using `asPath` so query strings are preserved on switch
 - Separator `|` is `aria-hidden` for clean screen reader output
@@ -110,6 +128,7 @@ import LanguageToggle from '@/components/language-toggle';
 ### `/locales/en/common.json`
 
 Add one key:
+
 ```json
 "changeLanguage": "Change language"
 ```
@@ -117,6 +136,7 @@ Add one key:
 ### `/locales/es/common.json`
 
 Add one key:
+
 ```json
 "changeLanguage": "Cambiar idioma"
 ```
