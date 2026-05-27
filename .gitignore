@@ -45,8 +45,5 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-# Plans
-.plans/
-
 # Claude
 .claude/settings.local.json
