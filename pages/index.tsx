@@ -4,7 +4,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import { NextSeo } from 'next-seo';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { useEffect } from 'react';
 
 /**
@@ -34,18 +34,15 @@ export default function Home({
   locale: string;
   posts: PostItem[];
 }) {
+  const prefersReduced = useReducedMotion();
   const { t } = useTranslation('home');
   const [greetingDone, setGreetingDone] = useState(false);
 
   useEffect(() => {
-    const mediaQueryList = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    );
-
-    if (mediaQueryList.matches) {
+    if (prefersReduced) {
       setGreetingDone(true);
     }
-  }, []);
+  }, [prefersReduced]);
 
   return (
     <>
@@ -98,7 +95,7 @@ export default function Home({
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={prefersReduced ? {} : { duration: 0.8, delay: 0.4 }}
           className={`items-baseline lg:mx-auto lg:flex lg:justify-start ${styles.aboutImage}`}
         >
           <Image
