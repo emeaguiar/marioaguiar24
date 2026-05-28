@@ -59,3 +59,32 @@ ul.contains-task-list {
 .prism-code {
   max-width: calc(100vw - 3rem);
 }
+
+@keyframes typewriter-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  position: absolute;
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.1em;
+  background: currentColor;
+  pointer-events: none;
+  animation: typewriter-blink 700ms step-end infinite;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-cursor {
+    display: none;
+  }
+}

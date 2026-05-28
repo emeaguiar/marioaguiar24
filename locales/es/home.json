@@ -17,5 +17,11 @@
   "aboutImageAlt": "Retrato de Mario Aguiar, Desarrollador Frontend. Vistiendo un smoking, en una foto en blanco y negro mirando a la derecha.",
   "aboutTitle": "<0>Sobre</0> mí",
   "sliderPrev": "Publicaciones anteriores",
-  "sliderNext": "Siguientes publicaciones"
+  "sliderNext": "Siguientes publicaciones",
+  "helloLine1": "Hola, mundo.",
+  "helloLine2Pre": "Soy ",
+  "helloLine2Accent": "Mario",
+  "headlineLine1Pre": "Hago Desarrollo de ",
+  "headlineLine1Accent": "Front-End",
+  "headlineLine2": ""
 }

@@ -17,5 +17,11 @@
   "aboutImageAlt": "Portrait of Mario Aguiar, Front-End Developer. Wearing a tuxedo, in a black and white photo looking right.",
   "aboutTitle": "<0>About</0> Me",
   "sliderPrev": "Previous posts",
-  "sliderNext": "Next posts"
+  "sliderNext": "Next posts",
+  "helloLine1": "Hello, world.",
+  "helloLine2Pre": "It's-a ",
+  "helloLine2Accent": "Mario",
+  "headlineLine1Pre": "I do ",
+  "headlineLine1Accent": "Front-End",
+  "headlineLine2": "Development"
 }

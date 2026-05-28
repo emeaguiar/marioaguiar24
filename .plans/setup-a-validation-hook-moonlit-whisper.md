@@ -37,6 +37,7 @@ Add a `hooks` key alongside the existing `permissions` and `plansDirectory` keys
 ```
 
 **Key decisions:**
+
 - **`PostToolUse` event** — fires after a file is written or edited, which is the closest equivalent to "file save" in Claude Code.
 - **Matcher `Write|Edit`** — covers both full file writes and partial edits.
 - **`pnpm format`** (not `pnpm format:fix`) — validates formatting without silently auto-correcting, so failures are visible.
