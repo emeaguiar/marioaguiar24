@@ -75,7 +75,7 @@ export default function Typewriter({
 
   return (
     <Tag
-      ref={containerRef as React.Ref<HTMLElement>}
+      ref={containerRef as React.Ref<never>}
       className={className}
       style={{ position: 'relative' }}
       variants={containerVariants}
