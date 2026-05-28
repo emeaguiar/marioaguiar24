@@ -5,6 +5,7 @@ import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import { NextSeo } from 'next-seo';
 import { motion } from 'motion/react';
+import { useEffect } from 'react';
 
 /**
  * Next dependencies
@@ -24,6 +25,7 @@ import Typewriter from '@/components/typewriter';
 import { getPosts } from '@/lib/posts';
 import { SITE_URL } from '@/lib/data';
 import type { PostItem } from '@/types/post';
+import NoSSR from '@/components/no-ssr';
 
 export default function Home({
   locale,
@@ -34,6 +36,14 @@ export default function Home({
 }) {
   const { t } = useTranslation('home');
   const [greetingDone, setGreetingDone] = useState(false);
+
+  useEffect(() => {
+    const mediaQueryList = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (mediaQueryList.matches) {
+      setGreetingDone(true);
+    }
+  }, []);
 
   return (
     <>
@@ -49,32 +59,36 @@ export default function Home({
       >
         <div className='col-span-2 flex w-full max-w-screen-xl flex-col gap-4 p-4 tracking-wide lg:gap-8'>
           {greetingDone && (
-            <Typewriter
-              as='h1'
-              className='self-start text-4xl uppercase lg:mb-0 lg:mt-auto lg:text-6xl'
-              lines={[
-                [
-                  { text: t('headlineLine1Pre') },
-                  { text: t('headlineLine1Accent'), bold: true },
-                ],
-                ...(t('headlineLine2') ? [[{ text: t('headlineLine2') }]] : []),
-              ]}
-            />
+            <NoSSR>
+              <Typewriter
+                as='h1'
+                className='self-start text-4xl uppercase lg:mb-0 lg:mt-auto lg:text-6xl'
+                lines={[
+                  [
+                    { text: t('headlineLine1Pre') },
+                    { text: t('headlineLine1Accent'), bold: true },
+                  ],
+                  ...(t('headlineLine2') ? [[{ text: t('headlineLine2') }]] : []),
+                ]}
+              />
+            </NoSSR>
           )}
 
-          <Typewriter
-            as='p'
-            className='-order-10 text-7xl font-light uppercase lg:text-8xl'
-            lines={[
-              [{ text: t('helloLine1') }],
-              [
-                { text: t('helloLine2Pre') },
-                { text: t('helloLine2Accent'), bold: true },
-              ],
-            ]}
-            onComplete={() => setGreetingDone(true)}
-            keepCursor={false}
-          />
+          <NoSSR>
+            <Typewriter
+              as='p'
+              className='-order-10 text-7xl font-light uppercase lg:text-8xl'
+              lines={[
+                [{ text: t('helloLine1') }],
+                [
+                  { text: t('helloLine2Pre') },
+                  { text: t('helloLine2Accent'), bold: true },
+                ],
+              ]}
+              onComplete={() => setGreetingDone(true)}
+              keepCursor={false}
+            />
+          </NoSSR>
         </div>
 
         <motion.div
