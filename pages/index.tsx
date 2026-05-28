@@ -4,6 +4,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import { NextSeo } from 'next-seo';
+import { motion } from 'motion/react';
 
 /**
  * Next dependencies
@@ -14,10 +15,12 @@ import Image from 'next/image';
 /**
  * Internal dependencies
  */
+import { useState } from 'react';
 import styles from '@/styles/home.module.css';
 import { H2 } from '@/components/elements';
 import BlogSlider from '@/components/blog/slider';
 import ContactCTA from '@/components/contact/cta';
+import Typewriter from '@/components/typewriter';
 import { getPosts } from '@/lib/posts';
 import { SITE_URL } from '@/lib/data';
 import type { PostItem } from '@/types/post';
@@ -30,6 +33,7 @@ export default function Home({
   posts: PostItem[];
 }) {
   const { t } = useTranslation('home');
+  const [greetingDone, setGreetingDone] = useState(false);
 
   return (
     <>
@@ -44,28 +48,38 @@ export default function Home({
         className='mb-10 w-full max-w-screen-xl md:grid md:grid-cols-3'
       >
         <div className='col-span-2 flex w-full max-w-screen-xl flex-col gap-4 p-4 tracking-wide lg:gap-8'>
-          <h1 className='self-start text-4xl uppercase lg:mb-0 lg:mt-auto lg:text-6xl'>
-            <Trans
-              i18nKey='home:headline'
-              components={[
-                <br key='spacing' />,
-                <strong className='font-black' key='frontend' />,
+          {greetingDone && (
+            <Typewriter
+              as='h1'
+              className='self-start text-4xl uppercase lg:mb-0 lg:mt-auto lg:text-6xl'
+              lines={[
+                [
+                  { text: t('headlineLine1Pre') },
+                  { text: t('headlineLine1Accent'), bold: true },
+                ],
+                ...(t('headlineLine2') ? [[{ text: t('headlineLine2') }]] : []),
               ]}
             />
-          </h1>
+          )}
 
-          <p className='-order-10 text-7xl font-light uppercase lg:text-8xl'>
-            <Trans
-              i18nKey='home:hello'
-              components={[
-                <br key='break' />,
-                <strong className='font-black' key='name' />,
-              ]}
-            />
-          </p>
+          <Typewriter
+            as='p'
+            className='-order-10 text-7xl font-light uppercase lg:text-8xl'
+            lines={[
+              [{ text: t('helloLine1') }],
+              [
+                { text: t('helloLine2Pre') },
+                { text: t('helloLine2Accent'), bold: true },
+              ],
+            ]}
+            onComplete={() => setGreetingDone(true)}
+          />
         </div>
 
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           className={`items-baseline lg:mx-auto lg:flex lg:justify-start ${styles.aboutImage}`}
         >
           <Image
@@ -78,7 +92,7 @@ export default function Home({
             sizes='(max-width: 640px) 100vw, 33vw'
             priority={true}
           />
-        </div>
+        </motion.div>
       </div>
 
       <div
