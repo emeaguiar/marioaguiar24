@@ -38,7 +38,9 @@ export default function Home({
   const [greetingDone, setGreetingDone] = useState(false);
 
   useEffect(() => {
-    const mediaQueryList = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQueryList = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    );
 
     if (mediaQueryList.matches) {
       setGreetingDone(true);
@@ -68,7 +70,9 @@ export default function Home({
                     { text: t('headlineLine1Pre') },
                     { text: t('headlineLine1Accent'), bold: true },
                   ],
-                  ...(t('headlineLine2') ? [[{ text: t('headlineLine2') }]] : []),
+                  ...(t('headlineLine2')
+                    ? [[{ text: t('headlineLine2') }]]
+                    : []),
                 ]}
               />
             </NoSSR>
