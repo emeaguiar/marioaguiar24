@@ -25,6 +25,7 @@ pnpm add motion
 The `Trans` component mixes HTML tags into translation strings, which can't be split character-by-character. We add flat-text keys for each "segment" the typewriter needs.
 
 **`locales/en/home.json`** — add:
+
 ```json
 "helloLine1":         "Hello, world.",
 "helloLine2Pre":      "It's-a ",
@@ -35,6 +36,7 @@ The `Trans` component mixes HTML tags into translation strings, which can't be s
 ```
 
 **`locales/es/home.json`** — add:
+
 ```json
 "helloLine1":         "Hola, mundo.",
 "helloLine2Pre":      "Soy ",
@@ -63,6 +65,7 @@ Props:
 ```
 
 **Animation design:**
+
 - Outer wrapper: `motion.p` (or `motion.h1` — passed via `as` prop) with `variants` set to `{ hidden: {}, visible: { transition: { staggerChildren: speed } } }`
 - Each character: `motion.span` with `variants: { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0 } } }`
 - Lines are joined with `<br />` between them; bold segments use `<strong className='font-black'>`
@@ -74,6 +77,7 @@ Props:
 ### 4. Modify `pages/index.tsx`
 
 **Imports to add:**
+
 ```ts
 import { motion } from 'motion/react';
 import { useState } from 'react';
@@ -81,11 +85,13 @@ import Typewriter from '@/components/typewriter';
 ```
 
 **State:**
+
 ```ts
 const [greetingDone, setGreetingDone] = useState(false);
 ```
 
 **Greeting** — replace the `<p>` / `<Trans i18nKey='home:hello'>` block:
+
 ```tsx
 <Typewriter
   as='p'
@@ -99,20 +105,27 @@ const [greetingDone, setGreetingDone] = useState(false);
 ```
 
 **Headline** — replace the `<h1>` / `<Trans i18nKey='home:headline'>` block. Render only when `greetingDone` is true:
+
 ```tsx
-{greetingDone && (
-  <Typewriter
-    as='h1'
-    className='self-start text-4xl uppercase lg:mb-0 lg:mt-auto lg:text-6xl'
-    lines={[
-      [{ text: t('headlineLine1Pre') }, { text: t('headlineLine1Accent'), bold: true }],
-      ...(t('headlineLine2') ? [[{ text: t('headlineLine2') }]] : []),
-    ]}
-  />
-)}
+{
+  greetingDone && (
+    <Typewriter
+      as='h1'
+      className='self-start text-4xl uppercase lg:mb-0 lg:mt-auto lg:text-6xl'
+      lines={[
+        [
+          { text: t('headlineLine1Pre') },
+          { text: t('headlineLine1Accent'), bold: true },
+        ],
+        ...(t('headlineLine2') ? [[{ text: t('headlineLine2') }]] : []),
+      ]}
+    />
+  );
+}
 ```
 
 **Image** — wrap existing `div` in `motion.div`:
+
 ```tsx
 <motion.div
   initial={{ opacity: 0 }}
@@ -128,13 +141,13 @@ const [greetingDone, setGreetingDone] = useState(false);
 
 ## Files Modified
 
-| File | Change |
-|------|--------|
-| `package.json` / `pnpm-lock.yaml` | Add `motion` |
-| `locales/en/home.json` | Add 6 typewriter segment keys |
-| `locales/es/home.json` | Add 6 typewriter segment keys |
-| `components/typewriter.tsx` | New generic typewriter component |
-| `pages/index.tsx` | Replace `p`/`h1` Trans blocks; add `motion.div` for image; add `greetingDone` state |
+| File                              | Change                                                                              |
+| --------------------------------- | ----------------------------------------------------------------------------------- |
+| `package.json` / `pnpm-lock.yaml` | Add `motion`                                                                        |
+| `locales/en/home.json`            | Add 6 typewriter segment keys                                                       |
+| `locales/es/home.json`            | Add 6 typewriter segment keys                                                       |
+| `components/typewriter.tsx`       | New generic typewriter component                                                    |
+| `pages/index.tsx`                 | Replace `p`/`h1` Trans blocks; add `motion.div` for image; add `greetingDone` state |
 
 The original `Trans`-based `hello` and `headline` blocks are removed from `index.tsx`; those keys can remain in the locale files for any future use.
 

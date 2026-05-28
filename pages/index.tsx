@@ -73,6 +73,7 @@ export default function Home({
               ],
             ]}
             onComplete={() => setGreetingDone(true)}
+            keepCursor={false}
           />
         </div>
 
