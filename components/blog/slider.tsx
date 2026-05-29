@@ -41,21 +41,33 @@ export default function BlogSlider({ posts }: { posts: PostItem[] }) {
 
   // ── Drag / swipe state ────────────────────────────────────────────────────
   const isDragging = useRef(false);
+  const hasDragged = useRef(false);
   const startX = useRef(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [enableTransition, setEnableTransition] = useState(true);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     isDragging.current = true;
+    hasDragged.current = false;
     startX.current = e.clientX;
     setEnableTransition(false);
-    // Capture so we still receive events if the pointer leaves the element
-    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return;
-    setDragOffset(e.clientX - startX.current);
+    const offset = e.clientX - startX.current;
+    setDragOffset(offset);
+    if (Math.abs(offset) > 5) {
+      hasDragged.current = true;
+    }
+  };
+
+  const handleClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (hasDragged.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      hasDragged.current = false;
+    }
   };
 
   const commitDrag = () => {
@@ -112,6 +124,7 @@ export default function BlogSlider({ posts }: { posts: PostItem[] }) {
         onPointerMove={handlePointerMove}
         onPointerUp={commitDrag}
         onPointerLeave={commitDrag}
+        onClickCapture={handleClickCapture}
       >
         <div
           className={
