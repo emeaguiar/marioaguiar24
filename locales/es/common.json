@@ -24,5 +24,8 @@
   "send": "Enviar",
   "readMoreAbout": "Leer más sobre \"{{title}}\"",
   "copyToClipboard": "Copiar al portapapeles",
-  "changeLanguage": "Cambiar idioma"
+  "changeLanguage": "Cambiar idioma",
+  "openMenu": "Abrir menú",
+  "closeMenu": "Cerrar menú",
+  "mainMenu": "Menú Principal"
 }

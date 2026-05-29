@@ -23,5 +23,8 @@
   "send": "Send",
   "readMoreAbout": "Read more about \"{{title}}\"",
   "copyToClipboard": "Copy to clipboard",
-  "changeLanguage": "Change language"
+  "changeLanguage": "Change language",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
+  "mainMenu": "Main menu"
 }
