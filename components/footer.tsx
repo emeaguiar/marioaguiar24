@@ -16,7 +16,7 @@ export default function Footer() {
 
       <Link
         href='/'
-        className='text-foreground hover:text-primary dark:hover:text-sky-300'
+        className='hover:text-foreground/40 text-foreground transition-colors'
       >
         <Logo />
       </Link>

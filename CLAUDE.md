@@ -54,6 +54,22 @@ Posts are MDX files with YAML frontmatter (`title`, `publishedOn`, `description`
 - `/pages/api/og.tsx` — dynamic OG image generation
 - `/pages/sitemap.xml.ts` — XML sitemap
 
+### Design System
+
+The visual identity is strictly **black and white** at its core. Key rules:
+
+- **Color palette**: `--foreground` (black/near-white) and `--background` (white/deep-navy) are the only fills. `--primary` (crimson light / sky-blue dark) and `--secondary` (pink) are accent-only — used exclusively for hover underlines and focus states, never as fills or backgrounds.
+- **Typography**: Logo uses Long Cang (`longCang` from `@/components/fonts`). All UI uses Raleway (`raleway`). Blog editorial uses Merriweather. Code uses Noto Sans Mono. Font weight is the primary emphasis tool — `font-light` (300) base with `font-black` (900) on key words.
+- **Headings**: Always `uppercase`, Raleway light with black-weight accents on the emphasized word.
+- **Border radius**: Zero everywhere — flat, square corners throughout.
+- **Borders**: `1px solid currentColor` on cards; `2px solid` on CTA/submit buttons.
+- **Hover states**:
+  - Nav links: 4px underline bar that `scaleX` from left (`WithUnderline` component).
+  - CTA/submit buttons: fill inverts on hover (transparent → `bg-zinc-900`/`bg-foreground`, text flips to contrast).
+  - Logo (footer): dims to `text-foreground/40` — no accent color.
+- **No gradients, no textures, no shadows** in the base theme.
+- **Dark mode**: `next-themes` class-based (`.dark` on `<html>`). Accent flips crimson → sky-blue. Deep navy background (`hsl(220.9, 39.3%, 11%)`).
+
 ### Styling
 
 Tailwind CSS with CSS custom properties for theming (see `globals.css` for `--foreground`, `--background`, `--primary`, `--secondary` tokens). Dark mode uses `next-themes` with class-based switching. Page-specific styles use CSS Modules alongside Tailwind.
@@ -61,6 +77,10 @@ Tailwind CSS with CSS custom properties for theming (see `globals.css` for `--fo
 ### Component Conventions
 
 `/components/elements/` contains thin semantic wrappers (`A`, `P`, `H1`–`H4`, `Pre`, etc.) — use these instead of raw HTML elements in page content. Import paths use the `@/` alias (maps to project root).
+
+- `WithUnderline` — nav link hover effect (4px bar, `scaleX` left→right, 60% opacity).
+- `ContactCTA` — the "Contact" button used in both desktop nav and mobile menu overlay.
+- `MobileMenu` — full-screen overlay triggered by an asymmetric 3-line hamburger (22/16/10px). Dark mode and language toggles live inside the overlay at the bottom, not in the header.
 
 ### External Services
 

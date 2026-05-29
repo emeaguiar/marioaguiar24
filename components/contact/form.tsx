@@ -95,8 +95,9 @@ export default function ContactForm() {
         disabled={isLoading}
         className={clsx(
           'ml-0 mr-auto flex items-center border-2 border-zinc-900 p-4 text-lg font-extrabold uppercase text-zinc-900',
+          'transition-colors hover:bg-zinc-900 hover:text-white',
           'lg:mr-0',
-          'dark:border-foreground dark:text-foreground'
+          'dark:border-foreground dark:text-foreground dark:hover:bg-foreground dark:hover:text-background'
         )}
       >
         {isLoading && <Spinner />}
@@ -134,7 +135,7 @@ const Input = ({
           'mb-6 w-full border border-zinc-900 p-2 text-foreground',
           'invalid:border-pink-500 invalid:text-pink-600',
           'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
-          'dark:border-slate-800 dark:bg-white dark:text-black',
+          'dark:border-foreground/30 dark:bg-transparent dark:text-foreground',
           {
             'min-h-44': type === 'textarea',
           }
