@@ -35,6 +35,18 @@ Write code that already satisfies these rules to avoid needing repeated fix runs
 - **Tailwind class order**: Classes are sorted automatically by
   `prettier-plugin-tailwindcss`; do not manually reorder them.
 
+## Branch Discipline
+
+**Never touch files on `main` directly.** Before starting any feature, fix, or
+refactor — no matter how small — create a new branch:
+
+```bash
+git checkout -b <branch-name>
+```
+
+All changes must reach `main` through a pull request that is approved and merged
+via GitHub. Direct commits to `main` are not allowed.
+
 ## Architecture
 
 This is a **Next.js 15** personal portfolio and blog, using the Pages Router (not App Router). TypeScript, Tailwind CSS, and `pnpm` are standard throughout.
