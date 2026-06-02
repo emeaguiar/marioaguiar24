@@ -6,6 +6,7 @@ import Trans from 'next-translate/Trans';
 import { NextSeo } from 'next-seo';
 import { motion, useReducedMotion } from 'motion/react';
 import { useEffect } from 'react';
+import clsx from 'clsx';
 
 /**
  * Next dependencies
@@ -57,7 +58,12 @@ export default function Home({
         className='mb-10 w-full max-w-screen-xl md:grid md:grid-cols-3'
       >
         <div className='col-span-2 flex w-full max-w-screen-xl flex-col gap-4 p-4 tracking-wide lg:gap-8'>
-          {greetingDone && (
+          <div
+            className={clsx(
+              'transition-opacity duration-300 motion-reduce:transition-none',
+              greetingDone ? 'opacity-100' : 'opacity-0'
+            )}
+          >
             <NoSSR>
               <Typewriter
                 as='h1'
@@ -71,9 +77,10 @@ export default function Home({
                     ? [[{ text: t('headlineLine2') }]]
                     : []),
                 ]}
+                startAnimation={greetingDone}
               />
             </NoSSR>
-          )}
+          </div>
 
           <NoSSR>
             <Typewriter
