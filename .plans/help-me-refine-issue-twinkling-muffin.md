@@ -11,6 +11,7 @@ The RSS feed in `lib/rss.ts` only includes a `<media:content>` image when a post
 Inside `posts.forEach`, replace the conditional `custom_elements` with one that always emits an image:
 
 **Before:**
+
 ```typescript
 custom_elements: post.image
   ? [{ 'media:content': { _attr: { url: post.image, medium: 'image' } } }]
@@ -18,6 +19,7 @@ custom_elements: post.image
 ```
 
 **After:**
+
 ```typescript
 const imageUrl =
   post.image ?? `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}`;
@@ -33,6 +35,7 @@ custom_elements: [
 The existing frontmatter block at line 90 shows required fields only. Expand it to show the optional `image` field with a comment, and add a note about the RSS fallback.
 
 **Before:**
+
 ```yaml
 ---
 title: 'Post title'
@@ -44,6 +47,7 @@ published: true
 ```
 
 **After:**
+
 ```yaml
 ---
 title: 'Post title'

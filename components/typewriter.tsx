@@ -14,6 +14,7 @@ type Props = {
   speed?: number;
   showCursor?: boolean;
   keepCursor?: boolean;
+  startAnimation?: boolean;
 };
 
 export default function Typewriter({
@@ -24,6 +25,7 @@ export default function Typewriter({
   speed = 40,
   showCursor = true,
   keepCursor = true,
+  startAnimation = true,
 }: Props) {
   const prefersReduced = useReducedMotion();
   const containerRef = useRef<HTMLElement>(null);
@@ -48,6 +50,7 @@ export default function Typewriter({
   };
 
   const initial = prefersReduced ? 'visible' : 'hidden';
+  const animateState = prefersReduced || startAnimation ? 'visible' : 'hidden';
 
   const Tag = motion[as] as typeof motion.p;
 
@@ -80,7 +83,7 @@ export default function Typewriter({
       style={{ position: 'relative' }}
       variants={containerVariants}
       initial={initial}
-      animate='visible'
+      animate={animateState}
       onAnimationComplete={handleAnimationComplete}
     >
       {lines.map((segments, lineIndex) => (

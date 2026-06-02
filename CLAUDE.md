@@ -35,6 +35,37 @@ Write code that already satisfies these rules to avoid needing repeated fix runs
 - **Tailwind class order**: Classes are sorted automatically by
   `prettier-plugin-tailwindcss`; do not manually reorder them.
 
+### Import Order
+
+Imports must be grouped in this order, each group separated by a blank line:
+
+1. **External dependencies** — anything from `node_modules` (React, Framer Motion,
+   third-party libraries, etc.)
+2. **Next dependencies** — imports from `next/*` packages (`next/head`, `next/image`,
+   `next/link`, etc.)
+3. **Internal dependencies** — project-local imports using the `@/` alias or relative
+   paths (components, lib utilities, styles, types, etc.)
+
+```ts
+/**
+ * External dependencies
+ */
+import { useState } from 'react';
+import { motion } from 'motion/react';
+
+/**
+ * Next dependencies
+ */
+import Head from 'next/head';
+import Image from 'next/image';
+
+/**
+ * Internal dependencies
+ */
+import Typewriter from '@/components/typewriter';
+import { getPosts } from '@/lib/posts';
+```
+
 ## Branch Discipline
 
 **Never touch files on `main` directly.** Before starting any feature, fix, or
