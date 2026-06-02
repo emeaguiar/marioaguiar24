@@ -94,6 +94,7 @@ publishedOn: '2024-01-15'
 description: 'Short description for listings and SEO'
 readingTime: 5
 published: true
+image: 'https://res.cloudinary.com/example/image/upload/v1/post-cover.jpg' # optional — used in RSS feed; falls back to /api/og?title=... when omitted
 ---
 ```
 

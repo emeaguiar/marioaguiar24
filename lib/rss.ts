@@ -36,9 +36,18 @@ export function generateRSSFeed(lang: 'en' | 'es'): string {
       description: post.description,
       url: `${blogUrl}/${post.slug}`,
       date: post.publishedOn,
-      custom_elements: post.image
-        ? [{ 'media:content': { _attr: { url: post.image, medium: 'image' } } }]
-        : [],
+      custom_elements: [
+        {
+          'media:content': {
+            _attr: {
+              url:
+                post.image ??
+                `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}`,
+              medium: 'image',
+            },
+          },
+        },
+      ],
     });
   });
 
