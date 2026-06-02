@@ -57,7 +57,7 @@ The site is bilingual (Spanish default, English alternative), powered by `next-t
 
 ### Blog System
 
-Posts are MDX files with YAML frontmatter (`title`, `publishedOn`, `description`, `readingTime`, `published`). Setting `published: false` hides a post. `/lib/posts.ts` handles file system reading, frontmatter parsing (`gray-matter`), and MDX bundling (`mdx-bundler`). Rendering uses `remark-gfm`, `rehype-slug`, `rehype-video`, and `rehype-github-alerts`.
+Posts are MDX files with YAML frontmatter (`title`, `publishedOn`, `description`, `readingTime`, `published`). Setting `published: false` hides a post. An optional `image` field can be added to frontmatter to supply a featured image URL used in RSS enclosures. `/lib/posts.ts` handles file system reading, frontmatter parsing (`gray-matter`), and MDX bundling (`mdx-bundler`). Rendering uses `remark-gfm`, `rehype-slug`, `rehype-video`, and `rehype-github-alerts`.
 
 ### Routing
 
@@ -65,6 +65,7 @@ Posts are MDX files with YAML frontmatter (`title`, `publishedOn`, `description`
 - `/pages/api/contact.ts` — Mailgun-backed contact form
 - `/pages/api/og.tsx` — dynamic OG image generation
 - `/pages/sitemap.xml.ts` — XML sitemap
+- `/pages/rss.xml.ts` — RSS feeds; serves `/rss.xml` (Spanish default) and `/en/rss.xml` (English) via Next.js i18n locale routing. Feed generation lives in `/lib/rss.ts`.
 
 ### Design System
 
