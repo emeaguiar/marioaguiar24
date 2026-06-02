@@ -35,6 +35,18 @@ Write code that already satisfies these rules to avoid needing repeated fix runs
 - **Tailwind class order**: Classes are sorted automatically by
   `prettier-plugin-tailwindcss`; do not manually reorder them.
 
+## Branch Discipline
+
+**Never touch files on `main` directly.** Before starting any feature, fix, or
+refactor — no matter how small — create a new branch:
+
+```bash
+git checkout -b <branch-name>
+```
+
+All changes must reach `main` through a pull request that is approved and merged
+via GitHub. Direct commits to `main` are not allowed.
+
 ## Architecture
 
 This is a **Next.js 15** personal portfolio and blog, using the Pages Router (not App Router). TypeScript, Tailwind CSS, and `pnpm` are standard throughout.
@@ -45,7 +57,7 @@ The site is bilingual (Spanish default, English alternative), powered by `next-t
 
 ### Blog System
 
-Posts are MDX files with YAML frontmatter (`title`, `publishedOn`, `description`, `readingTime`, `published`). Setting `published: false` hides a post. `/lib/posts.ts` handles file system reading, frontmatter parsing (`gray-matter`), and MDX bundling (`mdx-bundler`). Rendering uses `remark-gfm`, `rehype-slug`, `rehype-video`, and `rehype-github-alerts`.
+Posts are MDX files with YAML frontmatter (`title`, `publishedOn`, `description`, `readingTime`, `published`). Setting `published: false` hides a post. An optional `image` field can be added to frontmatter to supply a featured image URL used in RSS enclosures. `/lib/posts.ts` handles file system reading, frontmatter parsing (`gray-matter`), and MDX bundling (`mdx-bundler`). Rendering uses `remark-gfm`, `rehype-slug`, `rehype-video`, and `rehype-github-alerts`.
 
 ### Routing
 
@@ -53,6 +65,7 @@ Posts are MDX files with YAML frontmatter (`title`, `publishedOn`, `description`
 - `/pages/api/contact.ts` — Mailgun-backed contact form
 - `/pages/api/og.tsx` — dynamic OG image generation
 - `/pages/sitemap.xml.ts` — XML sitemap
+- `/pages/rss.xml.ts` — RSS feeds; serves `/rss.xml` (Spanish default) and `/en/rss.xml` (English) via Next.js i18n locale routing. Feed generation lives in `/lib/rss.ts`.
 
 ### Design System
 

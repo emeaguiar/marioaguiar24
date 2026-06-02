@@ -32,6 +32,7 @@ export function getPosts(lang: 'en' | 'es', limit: number = 0) {
         'updatedOn',
         'published',
         'readingTime',
+        'image',
       ])
     )
     .sort((post1, post2) => (post1.publishedOn > post2.publishedOn ? -1 : 1));
@@ -89,6 +90,11 @@ function getPostDataBySlug(
         break;
       case 'readingTime':
         items.readingTime = data.readingTime;
+        break;
+      case 'image':
+        if (data.image) {
+          items.image = data.image;
+        }
         break;
     }
   });
