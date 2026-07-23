@@ -102,6 +102,28 @@ function getPostDataBySlug(
   return items;
 }
 
+export function getCompiledPost(slug: string, lang: 'en' | 'es') {
+  const compiledPostPath = join(
+    process.cwd(),
+    '.compiled-posts',
+    lang,
+    `${slug}.json`
+  );
+
+  if (!fs.existsSync(compiledPostPath)) {
+    throw new Error(
+      `Compiled post not found: ${compiledPostPath}. Run "pnpm build:posts" to compile posts before starting the server.`
+    );
+  }
+
+  const fileContents = fs.readFileSync(compiledPostPath, 'utf8');
+
+  return JSON.parse(fileContents) as {
+    code: string;
+    frontmatter: { [key: string]: any };
+  };
+}
+
 export function generateSiteMap() {
   const enPosts = getPosts('en');
   const esPosts = getPosts('es');

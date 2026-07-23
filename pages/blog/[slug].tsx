@@ -3,15 +3,9 @@
  */
 import clsx from 'clsx';
 import { useMemo } from 'react';
-import { bundleMDX } from 'mdx-bundler';
-import remarkGfm from 'remark-gfm';
-import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import { getMDXComponent } from 'mdx-bundler/client';
-import rehypeSlug from 'rehype-slug';
-import rehypeVideo from 'rehype-video';
 import { NextSeo } from 'next-seo';
 import { usePathname } from 'next/navigation';
-import rehypeUnwrapImages from 'rehype-unwrap-images';
 import useTranslation from 'next-translate/useTranslation';
 
 /**
@@ -42,7 +36,7 @@ import {
   Code as CodeElement,
 } from '@/components/elements';
 import Alert from '@/components/alerts';
-import { getPosts, getPostsDirectory } from '@/lib/posts';
+import { getPosts, getPostsDirectory, getCompiledPost } from '@/lib/posts';
 import BlogMeta from '@/components/blog/meta';
 import { SITE_URL } from '@/lib/data';
 import Comments from '@/components/comments/comments';
@@ -179,37 +173,21 @@ export async function getStaticProps({
   params,
   locale,
 }: {
-  params: {
-    slug: string;
-  };
-  locale: '';
+  params: { slug: string };
+  locale: 'en' | 'es';
 }) {
-  const postLocaleDirectory = getPostsDirectory(locale as 'en' | 'es');
+  if (process.env.NODE_ENV === 'development') {
+    const { compilePost } = await import('@/lib/mdx.mjs');
+    const { code, frontmatter } = await compilePost(
+      `${getPostsDirectory(locale)}/${params.slug}.mdx`
+    );
 
-  const { code, frontmatter } = await bundleMDX({
-    file: `${postLocaleDirectory}/${params.slug}.mdx`,
-    mdxOptions(options: any) {
-      options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
+    return { props: { code, frontmatter, locale } };
+  }
 
-      options.rehypePlugins = [
-        ...(options.rehypePlugins ?? []),
-        rehypeGithubAlerts,
-        rehypeSlug,
-        rehypeUnwrapImages,
-        [rehypeVideo, { details: false }],
-      ];
+  const { code, frontmatter } = getCompiledPost(params.slug, locale);
 
-      return options;
-    },
-  });
-
-  return {
-    props: {
-      code,
-      frontmatter,
-      locale,
-    },
-  };
+  return { props: { code, frontmatter, locale } };
 }
 
 export async function getStaticPaths() {
