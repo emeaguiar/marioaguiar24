@@ -1,0 +1,119 @@
+---
+title: Migrando de Zsh a Fish
+publishedOn: 2026-09-03T00:00:00.000Z
+updatedOn: '2026-09-03T20:11:35.970Z'
+description: Una breve experiencia sobre el proceso de migración desde Zsh hacia Fish
+published: true
+readingTime: 540
+---
+Hace un par de meses por diversas cuestiones tuve que reformatear mi computadora personal, lo que me ha llevado a tener que re-configurar casi todo mi ambiente local y mis herramientas, durante este proceso, he estado tratando de aprovechar la situación y tratar de actualizar mis herramientas, con las que he estado trabajando por la mayor parte de los últimos diez años.
+
+Entre ellas se encuentra **Z Shell** (zsh) y [Oh My Zsh](https://ohmyz.sh/), la cual me agrada mucho, pero recientemente he estado escuchando muy buenas cosas acerca de **Fish[^fish]** , he decidido darle una oportunidad e intentaré mover mis configuraciones desde zsh hacia fish, aquí está el resultado de este experimento:
+
+> [!CAUTION] Advertencia
+> En este artículo he colocado varios _prompts_ para ser utilizados en la terminal, todos son seguros, pero no está de más darles una leida y asegurarse de que no haya nada raro en ellos
+
+## PREPARATIVOS
+
+### Fish (duh)
+
+Antes que nada tuve que instalar fish, esto resultó muy sencillo porque ya tengo [homebrew](https://brew.sh/) instalado en mi sistema, simplemente se ejecuta el comando:
+
+```bash
+> brew install fish
+# confirmamos
+> fish --version
+fish, version 4.9.0 
+```
+
+### Fisher (_plugin manager_)
+
+Investigando un poco me doy cuenta de que hay más de un tipo de _plugin manager_ para fish, he leido que existe Oh My Fish el cual se supone que funciona muy bien si ya estás utilizando OMZ, pero como estamos experimentando esta vez me iré por [Fisher](https://github.com/jorgebucaran/fisher), el cual parece ser el más popular.
+
+```bash
+> curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+```
+
+## CONFIGURANDO **FISH**
+
+Ahora que tenemos lo que necesitamos instalado, vamos a configurar el prompt, yo acababa de comenzar a utilizar Starship y me gustó mucho como quedó de simple, así que trataré de emularlo.
+
+### El archivo de configuración
+
+Como era de esperarse, primero necesitamos crear el archivo de configuración, para fish este se encuentra en el directorio `$HOME/.config/fish` así que lo creamos:
+
+```bash
+> mkdir -p $HOME/.config/fish
+> echo "starship init fish | source" >> $HOME/.config/fish/config.fish
+```
+
+> [!IMPORTANT]
+> Como mencioné anteriormente, yo ya tenía Starship instalado, pero si no lo tienes se puede instalar fácilmente usando homebrew:
+> 
+> ```bash
+> > brew install starship
+> ```
+> 
+> Y este es mi archivo de configuración:
+> 
+> ```toml
+> "$schema" = 'https://starship.rs/config-schema.json'
+> 
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$python\
+$character"""
+>
+[directory]
+style = "blue"
+>
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+>
+[git_branch]
+format = "[$branch]($style)"
+style = "#e24a9c"
+>
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+style = "cyan"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+>
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+>
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
+>
+[python]
+format = "[$virtualenv]($style) "
+style = "bright-black"
+detect_extensions = []
+detect_files = []
+> ```
+
+Ahora vemos el antes y el después:
+
+https://batsov.com/articles/2025/05/20/switching-from-zsh-to-fish/#homebrew
+https://travisbrady.github.io/posts/moving-to-fish-shell/
+https://www.joshfinnie.com/blog/moving-from-oh-my-zsh-to-starship-and-fish-shell/
+
+
+[^fish]: **F**riendly **i**nteractive **sh**ell
